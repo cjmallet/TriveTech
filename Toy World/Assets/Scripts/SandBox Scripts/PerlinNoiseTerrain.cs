@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class PerlinNoiseTerrain : MonoBehaviour
 {
+    //! Mesh variables
     Mesh mesh;
-
     Vector3[] vertices;
     Vector2[] theUV;
     Vector3[] normals;
     Vector4[] tangents;
     int[] triangles;
 
-    public int xSize = 20;
-    public int zSize = 20;
+    //! X and Z sizes
+    public int xSize = 20, zSize = 20;
 
+    //! Variable to adjust perlin noise effect
     [Range(0, 0.5f)]
     public float noiseEffectiveness = .1f;
     public float offsetX = 100, offsetY = 100;
+
+    //! Variable to enable moving terrain (not needed for sand)
     public bool isMovingTerrain = false;
 
-    // Start is called before the first frame update
-    void Start()
+    //! Initializes and creates mesh, sets random perlinnoise positions.
+    void Awake()
     {
         mesh = GetComponent<MeshFilter>().mesh;
         offsetX = Random.Range(0f, 9999f);
@@ -29,7 +32,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         CreateMeshShape();
     }
 
-    // Update is called once per frame
+    //! Update mesh each frame and increase the offset for moving terrain.
     void FixedUpdate()
     {
         CreateMeshShape();
@@ -41,6 +44,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         UpdateMesh();
     }
 
+    //! Draws triangles between vertices
     void CreateMeshShape()
     {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
@@ -71,6 +75,13 @@ public class PerlinNoiseTerrain : MonoBehaviour
         }
     }
 
+    //! Draw all the vertices of the plain
+    /*!
+     *  Draws vertices positions based on X and Z values first,
+     *  then sets the Y value based on the perlin noise effect,
+     *  then sets the UV coordinates.
+     */
+
     void DrawVertices()
     {
         theUV = new Vector2[vertices.Length];
@@ -89,6 +100,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         }
     }
 
+    //! Update the mesh with the new variables
     void UpdateMesh()
     {
         mesh.Clear();
@@ -103,6 +115,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
+    //! Shows veritices with Gizmos
     private void OnDrawGizmos()
     {
         if (vertices == null)
