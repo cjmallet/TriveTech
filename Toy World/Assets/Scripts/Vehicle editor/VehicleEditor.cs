@@ -53,7 +53,7 @@ public class VehicleEditor : MonoBehaviour
         if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part)) //(hit.transform.GetComponent<TempPart>() != null)
         {
             Debug.Log("part was hit");
-            PreviewPart(hit.transform.position + hit.normal);//assuming box colliders
+            PreviewPart(Vector3Int.RoundToInt(hit.transform.position + hit.normal));//assuming box colliders
             Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal}");
         }
         else if (previewedPart.activeSelf)
@@ -67,15 +67,9 @@ public class VehicleEditor : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.R))
-        {
-            if(partRotation.eulerAngles.y == 270)
-            {
-                partRotation.eulerAngles = Vector3.zero;
-            }
-            else
-            {
-                partRotation.eulerAngles = (partRotation.eulerAngles + new Vector3(0, 90, 0));
-            }
+        { 
+            partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+
         }
     }
 
@@ -91,10 +85,11 @@ public class VehicleEditor : MonoBehaviour
        
     }
 
-    void PreviewPart(Vector3 pos)//todo:
+    void PreviewPart(Vector3Int pos)//todo:
     {
         previewedPart.SetActive(true);
-        previewedPart.transform.position = pos;
+        previewedPart.transform.SetPositionAndRotation(pos, partRotation);
+
     }
 
     public void SetSelectedPart(GameObject slctPart)
