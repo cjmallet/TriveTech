@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* TODO:
+ * make a 3D array and check for neighbours to call the attach function for.
+ * ROUND OFF EVERY NORMAL, ROTATION AND POSITION USED to fit in a grid
+ * Delete part function tool
+ * foolproof the editor for whack non-90 degrees rotations
+ * if preview part doesn't fit, show it with a red material
+ * actually for the part class, but make it so you can have parts that are bigger than 1x1x1
+ */
+
 public class VehicleEditor : MonoBehaviour
 {
     private static VehicleEditor instance;
@@ -18,7 +27,7 @@ public class VehicleEditor : MonoBehaviour
 
     private GameObject previewedPart;
     private Vector3 prevMousePos;
-    private Quaternion partRotation;
+    public Quaternion partRotation;
 
     void Awake()
     {
@@ -31,15 +40,14 @@ public class VehicleEditor : MonoBehaviour
     {
         SetSelectedPart(selectedPart);
         coreBlock = GameObject.Find("CoreBlock");
-
     }
 
     void Update()
     {
-        UpdateMouseInput();
+        UpdateInput();
     }
 
-    void UpdateMouseInput()
+    void UpdateInput()
     {
         RaycastHit hit = RaycastMousePosition();
         if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part)) //(hit.transform.GetComponent<TempPart>() != null)
@@ -56,51 +64,31 @@ public class VehicleEditor : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             PlaceSelectedPart(hit);
-            //NormalDirection(hit.normal);
         }
-    }
 
-    void NormalDirection(Vector3 normal)
-    {
-        switch (normal)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            case Vector3 v when v.Equals(Vector3.up):
-                Debug.Log("Up");
-                break;
-            case Vector3 v when v.Equals(Vector3.left):
-                Debug.Log("Left");
-                break;
-            case Vector3 v when v.Equals(Vector3.back):
-                Debug.Log("Back");
-                break;
-            case Vector3 v when v.Equals(Vector3.forward):
-                Debug.Log("Forward");
-                break;
-            case Vector3 v when v.Equals(Vector3.down):
-                Debug.Log("Down");
-                break;
-            case Vector3 v when v.Equals(Vector3.right):
-                Debug.Log("Right");
-                break;
+            if(partRotation.eulerAngles.y == 270)
+            {
+                partRotation.eulerAngles = Vector3.zero;
+            }
+            else
+            {
+                partRotation.eulerAngles = (partRotation.eulerAngles + new Vector3(0, 90, 0));
+            }
         }
-
     }
 
     void PlaceSelectedPart(RaycastHit hit)
     {
         GameObject placedPart = Instantiate(
-            selectedPart, hit.transform.localPosition + hit.normal + coreBlock.transform.position, partRotation,coreBlock.transform);
+            selectedPart, Vector3Int.RoundToInt(hit.transform.localPosition + hit.normal + coreBlock.transform.position), partRotation,coreBlock.transform);
         
         if(placedPart.TryGetComponent(out Part part))
         {
             part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
         }
-
-        /* X instantiate selectedPart
-         * X call the attachPart on the raycast hit and the selected part, but with flipped normal(maybe automate this in the part class?)
-         * X figure out where to run the partToPlace code
-         * make a 3D array and check for neighbours to call the attach fuction for.
-         */
+       
     }
 
     void PreviewPart(Vector3 pos)//todo:
@@ -125,7 +113,7 @@ public class VehicleEditor : MonoBehaviour
      * hype
      * check if raycast hits part
      * check if part has available slot there. 
-     * show preview part, if it doesn't fit, show it with a red material
+     * 
      * if it fits. Click to place the part and tell
     */
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Part : MonoBehaviour
 {
-    [NamedListAttribute (new string[] {  "Right", "Left", "Top", "Bottom", "Back", "Front"})]
+    [NamedListAttribute(new string[] { "Right", "Left", "Top", "Bottom", "Back", "Front" })]
     public List<Part> attachedParts = new List<Part>();
     public int Health { get; set; }
     public int Weight { get; set; }
@@ -69,30 +69,31 @@ public abstract class Part : MonoBehaviour
     /// <returns></returns>
     public Orientation DetermineSide(Vector3 normal)
     {
-        Vector3 n = normal;
-        n = Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z) * n;
-        Debug.Log(n);
+        Vector3Int n = Vector3Int.RoundToInt(Quaternion.Inverse(transform.rotation) * normal);
+
+        Debug.Log("rotated normal is: " + n);
 
         switch (n)
         {
-            case Vector3 v when v.Equals(Vector3.up):
+            case Vector3Int v when v.Equals(Vector3Int.up):
                 Debug.Log("Up");
                 return Orientation.Top;
-            case Vector3 v when v.Equals(Vector3.left):
+            case Vector3Int v when v.Equals(Vector3Int.left):
                 Debug.Log("Left");
                 return Orientation.Left;
-            case Vector3 v when v.Equals(Vector3.back):
+            case Vector3Int v when v.Equals(Vector3Int.back):
                 Debug.Log("Back");
                 return Orientation.Back;
-            case Vector3 v when v.Equals(Vector3.forward):
+            case Vector3Int v when v.Equals(Vector3Int.forward):
                 Debug.Log("Forward");
                 return Orientation.Front;
-            case Vector3 v when v.Equals(Vector3.down):
+            case Vector3Int v when v.Equals(Vector3Int.down):
                 Debug.Log("Down");
                 return Orientation.Bottom;
-            case Vector3 v when v.Equals(Vector3.right):
+            case Vector3Int v when v.Equals(Vector3Int.right):
                 Debug.Log("Right");
                 return Orientation.Right;
+
             default:
                 Debug.Log("NORMAL IS INCORRECT - ERROR ERROR ERROR");
                 return Orientation.Right;//Not actually right at all
