@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class VehicleEditor : MonoBehaviour
 {
-    
+    public static VehicleEditor instance;
+
     [SerializeField] private TempPart coreBlock;
     [SerializeField] private GameObject selectedPart;//
 
     private Vector3 prevMousePos;
-    
+
+    void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     void Start()
     {
         SetSelectedPart(selectedPart);
@@ -21,9 +34,7 @@ public class VehicleEditor : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-            Func();
-
+        Func();
     }
 
     void Func()
