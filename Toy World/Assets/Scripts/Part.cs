@@ -38,7 +38,7 @@ public abstract class Part : MonoBehaviour
             // Set other side
             partToAttachTo.attachedParts[(int)side] = this;
         }
-        else
+        else if (((int)side % 2 != 0))
         {
             attachedParts[(int)side - 1] = partToAttachTo;
             partToAttachTo.attachedParts[(int)side] = this;
