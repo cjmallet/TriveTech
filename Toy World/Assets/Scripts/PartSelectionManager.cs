@@ -26,7 +26,7 @@ public class PartSelectionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Change the selected part with the part connected to the button pressed
     /// </summary>
     /// <param name="chosenPart"></param>
     public void ChangeSelectedPart(GameObject chosenPart)
@@ -34,6 +34,9 @@ public class PartSelectionManager : MonoBehaviour
         selectedPart = chosenPart;
     }
 
+    /// <summary>
+    /// Close the Canvas of the part selection
+    /// </summary>
     public void ClosePartSelectionUI()
     {
         PartSelectionCanvas.SetActive(false);
