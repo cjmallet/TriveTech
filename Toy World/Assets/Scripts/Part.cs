@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class Part : MonoBehaviour
 {
+    [NamedListAttribute (new string[] {  "Top", "Bottom", "Back", "Front", "Left", "Right"})]
     public List<Part> attachedParts = new List<Part>();
     public int Health { get; set; }
     public int Weight { get; set; }
@@ -13,13 +15,14 @@ public abstract class Part : MonoBehaviour
 
     public Part()
     {
-
+        
     }
 
     /// <summary>
     /// This ensures my part is attached to all of it's adjacent parts.
     /// </summary>
     /// <param name="partToAttachTo">Part that's seleted to connect to.</param>
+    /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Orientation side)
     {
         // check who we attach to

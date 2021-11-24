@@ -16,7 +16,7 @@ public class TestPart : Part
     {
         if (connectingPart)
         {
-            AttachPart(collision.transform.GetComponent<Part>(), Orientation.Back);
+            AttachPart(collision.transform.GetComponent<Part>(), Orientation.Bottom);
             connectingPart = false;
         }
     }
