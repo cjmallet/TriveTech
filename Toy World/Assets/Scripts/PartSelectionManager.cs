@@ -21,7 +21,18 @@ public class PartSelectionManager : MonoBehaviour
             GameObject newButton=Instantiate(ButtonPrefab,contentHolder.transform);
             newButton.name = part.name;
             newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part);});
+        }
+    }
+
+    /// <summary>
+    /// Check if the button to close the canvas is pressed
+    /// </summary>
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ClosePartSelectionUI();
         }
     }
 
@@ -39,6 +50,6 @@ public class PartSelectionManager : MonoBehaviour
     /// </summary>
     public void ClosePartSelectionUI()
     {
-        PartSelectionCanvas.SetActive(false);
+        PartSelectionCanvas.SetActive(!PartSelectionCanvas.activeSelf);
     }
 }
