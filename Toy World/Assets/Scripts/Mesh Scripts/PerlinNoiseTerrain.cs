@@ -15,7 +15,10 @@ public class PerlinNoiseTerrain : MonoBehaviour
     public int xSize = 20;
     public int zSize = 20;
 
+    [Range(0, 0.5f)]
+    public float noiseEffectiveness = .1f;
     public float offsetX = 100, offsetY = 100;
+    public bool isMovingTerrain = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +30,14 @@ public class PerlinNoiseTerrain : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CreateMeshShape();
-        offsetX += Time.deltaTime;
-        offsetY += Time.deltaTime;
+        if (isMovingTerrain)
+        {
+            offsetX += Time.deltaTime;
+            offsetY += Time.deltaTime;
+        }
         UpdateMesh();
     }
 
@@ -74,7 +80,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = Mathf.PerlinNoise(x * .3f + offsetX, z * .3f + offsetY) * 2;
+                float y = Mathf.PerlinNoise(x * noiseEffectiveness + offsetX, z * noiseEffectiveness + offsetY) * 2;
                 vertices[iVertices] = new Vector3(x - xSize / 2, y, z - zSize / 2);
                 theUV[iVertices] = new Vector2((float)x / xSize, (float)z / zSize);
                 tangents[iVertices] = tangent;
