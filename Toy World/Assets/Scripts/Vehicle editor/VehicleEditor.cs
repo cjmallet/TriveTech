@@ -22,81 +22,111 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
 
     private GameObject previewedPart;
     private Vector3 prevMousePos;
-    public Quaternion partRotation;
+    private bool playan;
+
 
     void Awake()
     {
         //set the static instance
         if (instance == null) { instance = this; }
         else { Destroy(this); }
+        coreBlock = GameObject.Find("CoreBlock");
     }
 
     void Start()
     {
         SetSelectedPart(selectedPart);
-        coreBlock = GameObject.Find("CoreBlock");
+
     }
 
     void Update()
     {
+        if(!playan)
         UpdateInput();
     }
 
     void UpdateInput()
     {
-        RaycastHit hit = RaycastMousePosition();
-        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part)) //(hit.transform.GetComponent<TempPart>() != null)
+        if (Input.GetKeyDown(KeyCode.P))//testan
         {
-            Debug.Log("part was hit");
-            PreviewPart(Vector3Int.RoundToInt(hit.transform.position + hit.normal));//assuming box colliders
-            Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal}");
+            coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            playan = true;
+            Destroy(previewedPart);
+        }
+
+        RaycastHit hit = RaycastMousePosition();
+        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part))
+        {
+            Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                PlaceSelectedPart(hit);
+                previewedPart.SetActive(false);
+            }
+            else
+            {
+                PreviewPart(hit);//assuming box colliders
+            }
         }
         else if (previewedPart.activeSelf)
         {
             previewedPart.SetActive(false);
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            PlaceSelectedPart(hit);
-        }
-
         if (Input.GetKeyDown(KeyCode.R))
-        { 
+        {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
-
         }
     }
 
     void PlaceSelectedPart(RaycastHit hit)
     {
-        GameObject placedPart = Instantiate(
-            selectedPart, Vector3Int.RoundToInt(hit.transform.localPosition + hit.normal + coreBlock.transform.position), partRotation,coreBlock.transform);
-        
-        if(placedPart.TryGetComponent(out Part part))
+        GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+        //set parent nog een keer?
+        if(hit.transform == coreBlock.transform)
+        {
+            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        }
+        else
+        {
+            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
+        }
+        placedPart.transform.localRotation = partRotation;
+
+        if (placedPart.TryGetComponent(out Part part))
         {
             part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
         }
-       
+
     }
 
-    void PreviewPart(Vector3Int pos)//todo:
+    void PreviewPart(RaycastHit hit)//todo:
     {
         previewedPart.SetActive(true);
-        previewedPart.transform.SetPositionAndRotation(pos, partRotation);
 
+        if (hit.transform == coreBlock.transform)
+        {
+            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        }
+        else
+        {
+            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
+        }
+        previewedPart.transform.localRotation = partRotation;
     }
 
     public void SetSelectedPart(GameObject slctPart)
     {
         Destroy(previewedPart);
         selectedPart = slctPart;
-        previewedPart = Instantiate(selectedPart);
+        previewedPart = Instantiate(selectedPart, coreBlock.transform);
         if (previewedPart.TryGetComponent(out Collider col))
         {
             col.enabled = false;
