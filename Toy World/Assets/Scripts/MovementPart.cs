@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class MovementPart : Part
 {
-    [HideInInspector] public VehicleMovement vehicleMovement;
-
     public MovementPart()
     {
         
     }
 
-    public virtual void Start()
-    {
-        vehicleMovement = transform.parent.GetComponent<VehicleMovement>();
-    }
-
-    public virtual void Forward(int moveAmount)
+    public virtual void ForwardAction(float moveAmount)
     {
         
     }
 
-    public virtual void Turn(int turnAmount)
+    public virtual void BackwardAction(float moveAmount)
+    {
+
+    }
+
+    public virtual void LeftAction(float turnAmount)
+    {
+
+    }
+
+    public virtual void RightAction(float turnAmount)
     {
 
     }

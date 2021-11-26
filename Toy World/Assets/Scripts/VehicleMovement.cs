@@ -7,34 +7,85 @@ using UnityEngine;
 /// </summary>
 public class VehicleMovement : MonoBehaviour
 {
-    [SerializeField] private int movementSpeed;
-    [HideInInspector] public int steeringAngle;
-    [HideInInspector] public bool moveLeft, moveRight;
+    public List<MovementPart> movementParts;
+
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float steeringAngle;
+
+    //input code
+    // input blabla {MoveLeft();}
+
+    private void Awake()
+    {
+        movementSpeed /= 10f;
+        steeringAngle /= 10f;
+    }
+
+    //! Input check in Update
+    private void Update()
+    {
+        if (Input.GetAxis("Horizontal") < 0)
+        {
+            MoveLeft();
+        }
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            MoveRight();
+        }
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            MoveForward();
+        }
+        if (Input.GetAxis("Vertical") < 0)
+        {
+            MoveBackward();
+        }
+        if (Input.GetAxis("Horizontal") == 0)
+        {
+            Idle();
+        }
+    }
 
     public void MoveLeft()
     {
-        transform.Rotate(0,steeringAngle, 0);
-        moveLeft = true;
+        transform.Rotate(0, -steeringAngle, 0);
+        // each movement part activates left movement action
+        foreach (MovementPart movementPart in movementParts)
+        {
+            movementPart.LeftAction(-steeringAngle);
+        }
     }
 
     public void MoveRight()
     {
-        transform.Rotate(0, -steeringAngle, 0);
-        moveRight = true;
+        transform.Rotate(0, steeringAngle, 0);
+        foreach (MovementPart movementPart in movementParts)
+        {
+            movementPart.RightAction(steeringAngle);
+        }
     }
 
     public void MoveForward()
     {
-        transform.localPosition += transform.forward * movementSpeed/10f;
+        Debug.Log(" Im moving ");
+        transform.localPosition += transform.forward * movementSpeed;
+        foreach (MovementPart movementPart in movementParts)
+        {
+            movementPart.ForwardAction(movementSpeed);
+        }
     }
 
     public void MoveBackward()
     {
-        transform.localPosition += -transform.forward * movementSpeed/10f;
+        transform.localPosition += -transform.forward * movementSpeed;
+        foreach (MovementPart movementPart in movementParts)
+        {
+            movementPart.BackwardAction(movementSpeed);
+        }
     }
 
     public void Idle()
     {
-        moveRight= moveLeft = false;
+        
     }
 }

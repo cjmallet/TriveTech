@@ -1,57 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelPart : MovementPart
 {
-    public int steeringAngle { get; set; }
+    public float steeringAngle { get; set; }
     private const int STEERINGMAX = 90;
 
     public WheelPart()
     {
-        this.steeringAngle = 2;
+        this.steeringAngle = 0;
     }
 
-    public override void Start()
+    public override void ForwardAction(float moveAmount)
     {
-        base.Start();
-        vehicleMovement.steeringAngle = steeringAngle;
-    }
-
-    private void Update()
-    {
-        Turn(45);
-    }
-
-    public override void Forward(int moveAmount)
-    {
-        while (moveAmount > 0)
+        if (moveAmount > 0)
         {
-            transform.GetChild(1).Rotate(moveAmount, 0, 0);
+            transform.GetChild(1).Rotate(0, moveAmount, 0);
         }
     }
 
-    public override void Turn(int turnAmount)
+    public override void BackwardAction(float moveAmount)
     {
-        if (vehicleMovement.moveLeft)
+        if (moveAmount > 0)
         {
-            transform.Rotate(0, -turnAmount, 0);
-            //transform.rotation = new Quaternion(transform.rotation.x, transform.localRotation.y - 45, transform.rotation.z, transform.rotation.w);
+            transform.GetChild(1).Rotate(0, -moveAmount, 0);
         }
+    }
 
-        if (vehicleMovement.moveRight)
+    public override void RightAction(float turnAmount = 0)
+    {
+        Debug.Log(transform.localEulerAngles.y);
+        if (turnAmount > 0 && (transform.localEulerAngles.y <= STEERINGMAX))
         {
+            //steeringAngle += turnAmount;
+
             transform.Rotate(0, turnAmount, 0);
-            //transform.rotation = new Quaternion(transform.rotation.x, transform.localRotation.y+45, transform.rotation.z, transform.rotation.w);
         }
+    }
 
-        /*
-        while (turnAmount > 0 && (steeringAngle < STEERINGMAX || steeringAngle > -STEERINGMAX))
+    public override void LeftAction(float turnAmount = 0)
+    {
+        Debug.Log(transform.localEulerAngles.y);
+        if (turnAmount < 0 && (transform.localEulerAngles.y >= (360 - STEERINGMAX)))
         {
-            steeringAngle = turnAmount;
+            //steeringAngle -= turnAmount;
 
-            transform.Rotate(0, steeringAngle, 0);
+            transform.Rotate(0, turnAmount, 0);
         }
-        */
     }
 }
