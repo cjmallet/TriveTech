@@ -29,7 +29,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         mesh = GetComponent<MeshFilter>().mesh;
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
-        CreateMeshShape();
+        CreateMeshShape();       
     }
 
     //! Update mesh each frame and increase the offset for moving terrain.
@@ -113,6 +113,8 @@ public class PerlinNoiseTerrain : MonoBehaviour
         mesh.normals = normals;
 
         mesh.RecalculateNormals();
+
+        GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     //! Shows veritices with Gizmos

@@ -21,7 +21,7 @@ public class PartSelectionManager : MonoBehaviour
             GameObject newButton=Instantiate(ButtonPrefab,contentHolder.transform);
             newButton.name = part.name;
             newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part);});
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); });
         }
     }
 

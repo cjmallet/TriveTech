@@ -12,37 +12,37 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float steeringAngle;
 
-    //input code
-    // input blabla {MoveLeft();}
-
-    private void Awake()
+    public VehicleMovement()
     {
-        movementSpeed /= 10f;
-        steeringAngle /= 10f;
+        movementSpeed = 0.1f;
+        steeringAngle = 1;
     }
 
     //! Input check in Update
     private void Update()
     {
-        if (Input.GetAxis("Horizontal") < 0)
+        if (movementParts.Count != 0)
         {
-            MoveLeft();
-        }        
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            MoveRight();
-        }
-        if (Input.GetAxis("Vertical") > 0)
-        {
-            MoveForward();
-        }
-        if (Input.GetAxis("Vertical") < 0)
-        {
-            MoveBackward();
-        }
-        if (Input.GetAxis("Horizontal") == 0)
-        {
-            Idle();
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                MoveLeft();
+            }
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                MoveRight();
+            }
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                MoveForward();
+            }
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                MoveBackward();
+            }
+            if (Input.GetAxis("Horizontal") == 0)
+            {
+                Idle();
+            }
         }
     }
 

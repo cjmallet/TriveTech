@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
@@ -56,6 +57,10 @@ public class VehicleEditor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))//testan
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            coreBlock.AddComponent<VehicleMovement>();
+            coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
+            Camera.main.enabled = false;
+            coreBlock.GetComponentInChildren<Camera>().enabled = true;
             playan = true;
             Destroy(previewedPart);
         }
