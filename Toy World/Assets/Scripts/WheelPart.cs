@@ -45,6 +45,9 @@ public class WheelPart : MovementPart
         {
             transform.Rotate(0, CenterSpeed, 0);
         }
+
+        if (transform.localEulerAngles.y > -0.05f && transform.localEulerAngles.y < 0.05f)
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
         
     }
 
