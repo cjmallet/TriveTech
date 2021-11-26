@@ -67,7 +67,6 @@ public class VehicleMovement : MonoBehaviour
 
     public void MoveForward()
     {
-        Debug.Log(" Im moving ");
         transform.localPosition += transform.forward * movementSpeed;
         foreach (MovementPart movementPart in movementParts)
         {
