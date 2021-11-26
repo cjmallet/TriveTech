@@ -63,7 +63,7 @@ public class VehicleEditor : MonoBehaviour
         RaycastHit hit = RaycastMousePosition();
         if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part))
         {
-            Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
+            //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -153,7 +153,6 @@ public class VehicleEditor : MonoBehaviour
         RaycastHit hit;
 
         Physics.Raycast(ray, out hit, 200);
-        //Debug.Log("Hit normal vector = "+hit.normal);//remove debug later
         return hit;
     }
 
