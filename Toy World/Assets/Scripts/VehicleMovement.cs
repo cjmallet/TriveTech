@@ -27,7 +27,7 @@ public class VehicleMovement : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0)
         {
             MoveLeft();
-        }
+        }        
         if (Input.GetAxis("Horizontal") > 0)
         {
             MoveRight();
@@ -52,7 +52,7 @@ public class VehicleMovement : MonoBehaviour
         // each movement part activates left movement action
         foreach (MovementPart movementPart in movementParts)
         {
-            movementPart.LeftAction(-steeringAngle);
+            movementPart.LeftAction(steeringAngle);
         }
     }
 
@@ -86,6 +86,9 @@ public class VehicleMovement : MonoBehaviour
 
     public void Idle()
     {
-        
+        foreach (MovementPart movementPart in movementParts)
+        {
+            movementPart.StopAction(false);
+        }
     }
 }

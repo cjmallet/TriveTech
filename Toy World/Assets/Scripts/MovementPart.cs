@@ -28,4 +28,9 @@ public class MovementPart : Part
     {
 
     }
+
+    public virtual void StopAction(bool stopped)
+    {
+
+    }
 }
