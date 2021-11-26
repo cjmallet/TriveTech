@@ -9,7 +9,7 @@ public class PartSelectionManager : MonoBehaviour
     [SerializeField] private GameObject PartSelectionCanvas, ButtonPrefab, contentHolder;
     [SerializeField] private List<GameObject> parts;
 
-    private GameObject selectedPart;
+    //private GameObject selectedPart;
 
     /// <summary>
     /// Initialize the Part selection UI and the button listeners
@@ -42,7 +42,8 @@ public class PartSelectionManager : MonoBehaviour
     /// <param name="chosenPart"></param>
     public void ChangeSelectedPart(GameObject chosenPart)
     {
-        selectedPart = chosenPart;
+        //selectedPart = chosenPart;
+        VehicleEditor._instance.SetSelectedPart(chosenPart);
     }
 
     /// <summary>
