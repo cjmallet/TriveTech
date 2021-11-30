@@ -29,7 +29,7 @@ public class VehicleEditor : MonoBehaviour
 
     private GameObject previewedPart;
     private Vector3 prevMousePos;
-    private bool playan;
+    private bool playan, buildUIOpen;
 
 
     void Awake()
@@ -65,7 +65,7 @@ public class VehicleEditor : MonoBehaviour
         }
 
         RaycastHit hit = RaycastMousePosition();
-        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part))
+        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) &&!buildUIOpen)
         {
             //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
 
@@ -74,7 +74,7 @@ public class VehicleEditor : MonoBehaviour
                 PlaceSelectedPart(hit);
                 previewedPart.SetActive(false);
             }
-            else
+            else 
             {
                 PreviewPart(hit);//assuming box colliders
             }
@@ -138,6 +138,11 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.SetActive(false);
     }
 
+    public void ChangeActiveBuildState()
+    {
+        buildUIOpen = !buildUIOpen;
+    }
+
     /* instantiate 3D array in which every part has it's coordinates 
      * hype
      * check if raycast hits part
@@ -159,5 +164,4 @@ public class VehicleEditor : MonoBehaviour
         Physics.Raycast(ray, out hit, 200);
         return hit;
     }
-
 }
