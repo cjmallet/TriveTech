@@ -43,7 +43,6 @@ public class VehicleEditor : MonoBehaviour
     void Start()
     {
         SetSelectedPart(selectedPart);
-
     }
 
     void Update()
