@@ -88,6 +88,10 @@ public class VehicleEditor : MonoBehaviour
             {
                 previewedPart.SetActive(false);
             }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                DeleteSelectedPart(hit);
+            }
         }
     }
 
@@ -103,7 +107,7 @@ public class VehicleEditor : MonoBehaviour
     void PlaceSelectedPart(RaycastHit hit)
     {
         GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
-        //set parent nog een keer?
+
         if(hit.transform == coreBlock.transform)
         {
             placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
@@ -119,6 +123,24 @@ public class VehicleEditor : MonoBehaviour
             part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
         }
 
+    }
+    /// <summary>
+    /// detaches all parts from hit part and destroys the object.
+    /// </summary>
+    /// <param name="hit">the part that is hit</param>
+    void DeleteSelectedPart(RaycastHit hit)
+    {
+        if (hit.transform != coreBlock.transform)
+        {
+            foreach (Part part in hit.transform.GetComponent<Part>().attachedParts)
+            {
+                if (part != null)
+                {
+                    part.attachedParts[part.attachedParts.IndexOf(hit.transform.GetComponent<Part>())] = null;
+                }
+            }
+            Destroy(hit.transform.gameObject);
+        }
     }
 
     void PreviewPart(RaycastHit hit)//todo:
