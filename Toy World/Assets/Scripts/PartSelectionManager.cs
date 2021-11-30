@@ -21,17 +21,15 @@ public class PartSelectionManager : MonoBehaviour
             GameObject newButton=Instantiate(ButtonPrefab,contentHolder.transform);
             newButton.name = part.name;
             newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
         }
     }
 
-    /// <summary>
-    /// Check if the button to close the canvas is pressed
-    /// </summary>
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
+            VehicleEditor._instance.ChangeActiveBuildState();
             ClosePartSelectionUI();
         }
     }
