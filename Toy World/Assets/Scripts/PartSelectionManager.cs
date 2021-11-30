@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
@@ -25,13 +26,18 @@ public class PartSelectionManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void BuildButton(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (context.performed)
         {
             VehicleEditor._instance.ChangeActiveBuildState();
             ClosePartSelectionUI();
         }
+    }
+
+    private void Update()
+    {
+        
     }
 
     /// <summary>

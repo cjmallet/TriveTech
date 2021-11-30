@@ -31,21 +31,6 @@ public abstract class Part : MonoBehaviour
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
-        /*
-        // check who we attach to
-        if ((int)side % 2 == 0)
-        {
-            // Add to my part list
-            attachedParts[(int)side + 1] = partToAttachTo;
-            // Set other side
-            partToAttachTo.attachedParts[(int)side] = this;
-        }
-        else if (((int)side % 2 != 0))
-        {
-            attachedParts[(int)side - 1] = partToAttachTo;
-            partToAttachTo.attachedParts[(int)side] = this;
-        }
-        */
         attachedParts[(int)DetermineSide(-hitNormal)] = partToAttachTo;
         partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
 
@@ -72,31 +57,23 @@ public abstract class Part : MonoBehaviour
     {
         Vector3Int n = Vector3Int.RoundToInt(Quaternion.Inverse(transform.rotation) * normal);
 
-        Debug.Log("rotated normal is: " + n);
-
         switch (n)
         {
             case Vector3Int v when v.Equals(Vector3Int.up):
-                Debug.Log("Up");
                 return Orientation.Top;
             case Vector3Int v when v.Equals(Vector3Int.left):
-                Debug.Log("Left");
                 return Orientation.Left;
             case Vector3Int v when v.Equals(Vector3Int.back):
-                Debug.Log("Back");
                 return Orientation.Back;
             case Vector3Int v when v.Equals(Vector3Int.forward):
-                Debug.Log("Forward");
                 return Orientation.Front;
             case Vector3Int v when v.Equals(Vector3Int.down):
-                Debug.Log("Down");
                 return Orientation.Bottom;
             case Vector3Int v when v.Equals(Vector3Int.right):
-                Debug.Log("Right");
                 return Orientation.Right;
 
             default:
-                Debug.Log("NORMAL IS INCORRECT - ERROR ERROR ERROR");
+                Debug.LogWarning("NORMAL IS INCORRECT - ERROR ERROR ERROR");
                 return Orientation.Right;//Not actually right at all
         }
     }

@@ -171,6 +171,10 @@ public class VehicleEditor : MonoBehaviour
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
+        if (buildUIOpen)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
     }
 
     /* instantiate 3D array in which every part has it's coordinates 
