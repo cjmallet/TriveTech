@@ -72,12 +72,14 @@ public class VehicleEditor : MonoBehaviour
             RaycastHit hit = RaycastMousePosition();
             if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
             {
-                //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
-
                 if (context.action.name == "LeftClick" && context.performed)
                 {
                     PlaceSelectedPart(hit);
                     previewedPart.SetActive(false);
+                }
+                else if (context.action.name == "RightClick" && context.performed)
+                {
+                    DeleteSelectedPart(hit);
                 }
                 else
                 {
@@ -87,11 +89,7 @@ public class VehicleEditor : MonoBehaviour
             else if (previewedPart.activeSelf)
             {
                 previewedPart.SetActive(false);
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                DeleteSelectedPart(hit);
-            }
+            }            
         }
     }
 
@@ -143,7 +141,7 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
-    void PreviewPart(RaycastHit hit)//todo:
+    void PreviewPart(RaycastHit hit)
     {
         previewedPart.SetActive(true);
 
