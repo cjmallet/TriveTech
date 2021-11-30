@@ -70,7 +70,8 @@ public class VehicleEditor : MonoBehaviour
                     coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
 
                 // Remove direction indication
-                vehiclePart.RemoveDirectionIndicator();
+                if (vehiclePart.useDirectionIndicator)
+                    vehiclePart.RemoveDirectionIndicator();
             }
 
             Camera.main.enabled = false;
