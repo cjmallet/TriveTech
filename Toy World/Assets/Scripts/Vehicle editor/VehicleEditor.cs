@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
@@ -29,7 +30,7 @@ public class VehicleEditor : MonoBehaviour
 
     private GameObject previewedPart;
     private Vector3 prevMousePos;
-    private bool playan, buildUIOpen;
+    private bool playan, buildUIOpen = true;
 
 
     void Awake()
@@ -47,13 +48,12 @@ public class VehicleEditor : MonoBehaviour
 
     void Update()
     {
-        if(!playan)
-        UpdateInput();
+        
     }
 
-    void UpdateInput()
+    public void Play(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.P))//testan
+        if (context.performed && !playan)
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.AddComponent<VehicleMovement>();
@@ -63,30 +63,40 @@ public class VehicleEditor : MonoBehaviour
             playan = true;
             Destroy(previewedPart);
         }
+    }
 
-        RaycastHit hit = RaycastMousePosition();
-        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) &&!buildUIOpen)
+    public void PlacePart(InputAction.CallbackContext context)
+    {
+        if (!playan)
         {
-            //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
-
-            if (Input.GetMouseButtonDown(0))
+            RaycastHit hit = RaycastMousePosition();
+            if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
             {
-                PlaceSelectedPart(hit);
+                //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
+
+                if (context.action.name == "LeftClick" && context.performed)
+                {
+                    PlaceSelectedPart(hit);
+                    previewedPart.SetActive(false);
+                }
+                else
+                {
+                    PreviewPart(hit);//assuming box colliders
+                }
+            }
+            else if (previewedPart.activeSelf)
+            {
                 previewedPart.SetActive(false);
             }
-            else 
-            {
-                PreviewPart(hit);//assuming box colliders
-            }
         }
-        else if (previewedPart.activeSelf)
-        {
-            previewedPart.SetActive(false);
-        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.R))
+    public void RotatePart(InputAction.CallbackContext context)
+    {
+        if (!playan && context.performed)
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+            PlacePart(context);
         }
     }
 
