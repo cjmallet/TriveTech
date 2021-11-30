@@ -9,6 +9,11 @@ public class MovementPart : Part
         
     }
 
+    private void Awake()
+    {
+        ShowFrontDirection();
+    }
+
     public virtual void ForwardAction(float moveAmount)
     {
         
