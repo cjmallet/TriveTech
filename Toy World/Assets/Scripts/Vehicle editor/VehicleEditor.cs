@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
- * ROUND OFF EVERY NORMAL, ROTATION AND POSITION USED to fit in a grid
- * Delete part function tool
- * foolproof the editor for whack non-90 degrees rotations
  * if preview part doesn't fit, show it with a red material
  * actually for the part class, but make it so you can have parts that are bigger than 1x1x1
  */
@@ -62,6 +59,15 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.GetComponentInChildren<Camera>().enabled = true;
             playan = true;
             Destroy(previewedPart);
+        }
+        else if (context.performed && playan)
+        {
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
+            Destroy(coreBlock.GetComponent<Rigidbody>());
+            Destroy(coreBlock.GetComponent<VehicleMovement>());
+            Camera.main.enabled = true;
+            coreBlock.GetComponentInChildren<Camera>().enabled = false;
+            playan = false;
         }
     }
 
