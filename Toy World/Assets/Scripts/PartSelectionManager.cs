@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject PartSelectionCanvas, ButtonPrefab, contentHolder;
+    [SerializeField] private GameObject PartSelectionCanvas, CrossHair, ButtonPrefab, contentHolder;
     [SerializeField] private List<GameObject> parts;
 
     //private GameObject selectedPart;
@@ -52,5 +52,7 @@ public class PartSelectionManager : MonoBehaviour
     public void ClosePartSelectionUI()
     {
         PartSelectionCanvas.SetActive(!PartSelectionCanvas.activeSelf);
+        CrossHair.SetActive(!CrossHair.activeSelf);
+        FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
     }
 }
