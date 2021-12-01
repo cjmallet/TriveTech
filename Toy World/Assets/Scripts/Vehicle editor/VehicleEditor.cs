@@ -57,7 +57,22 @@ public class VehicleEditor : MonoBehaviour
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.AddComponent<VehicleMovement>();
-            coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
+
+            // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
+            List<Part> parts = FindObjectsOfType<Part>().ToList();
+
+            // Remove direction indication
+            foreach (Part vehiclePart in parts)
+            {
+                // Fill list with movement parts for movement script
+                if (vehiclePart is MovementPart)
+                    coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
+
+                // Remove direction indication
+                if (vehiclePart.useDirectionIndicator)
+                    vehiclePart.RemoveDirectionIndicator();
+            }
+
             Camera.main.enabled = false;
             coreBlock.GetComponentInChildren<Camera>().enabled = true;
             playan = true;
