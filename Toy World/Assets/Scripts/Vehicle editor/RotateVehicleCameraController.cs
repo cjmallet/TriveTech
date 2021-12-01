@@ -17,11 +17,8 @@ public class RotateVehicleCameraController : MonoBehaviour
     // Movement vector formed from input
     private Vector3 movementInput;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    // Input value for resetting vehicle rotation
+    bool resetVehicle = false;
 
     // Temporary input in Update
     void Update()
@@ -33,12 +30,16 @@ public class RotateVehicleCameraController : MonoBehaviour
             movementInputZ = -1;
 
         movementInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movementInputZ);
+
+        // Random button for resetting rotation
+        resetVehicle = Input.GetKey(KeyCode.R);
     }
 
     private void FixedUpdate()
     {
         // Wordt in toekomst aangeroepn met Unity event en Input Actions
         RotateVehicleMovement(movementInput);
+        ResetVehicleRotation(resetVehicle);
     }
 
     /* Wordt in de toekomst something like:
@@ -80,4 +81,22 @@ public class RotateVehicleCameraController : MonoBehaviour
             transform.position += transform.forward * zoomDirection * cameraZoomSpeed;
         }
     }
+
+    //! Resets vehicle rotation to original default (0)
+    private void ResetVehicleRotation(bool value)
+    {
+        if (value)
+        {
+            vehicleCore.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
+    }
+    /* Ook hier weer integratie voor new input system:
+     * private void ResetVehicleRotation(InputAction.CallbackContext value)
+     * {
+     *      if (value.started)
+     *      {
+     *          vehicleCore.transform.rotation = new Quaternion(0, 0, 0, 0);        
+     *      }  
+     * }
+     */
 }
