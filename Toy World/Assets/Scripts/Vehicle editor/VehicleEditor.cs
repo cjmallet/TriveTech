@@ -28,6 +28,8 @@ public class VehicleEditor : MonoBehaviour
     private GameObject previewedPart;
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
+    private Camera mainCam;
+    public Camera vehicleCam;
 
 
     void Awake()
@@ -41,6 +43,9 @@ public class VehicleEditor : MonoBehaviour
     void Start()
     {
         SetSelectedPart(selectedPart);
+        mainCam = Camera.main;
+        if (vehicleCam == null)
+            vehicleCam = coreBlock.GetComponentInChildren<Camera>();
     }
 
     void Update()
@@ -55,18 +60,20 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.AddComponent<VehicleMovement>();
             coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
-            Camera.main.enabled = false;
-            coreBlock.GetComponentInChildren<Camera>().enabled = true;
+            mainCam.gameObject.SetActive(false);
+            vehicleCam.enabled = true;
             playan = true;
-            Destroy(previewedPart);
+            previewedPart.SetActive(false);
         }
         else if (context.performed && playan)
         {
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             Destroy(coreBlock.GetComponent<Rigidbody>());
             Destroy(coreBlock.GetComponent<VehicleMovement>());
-            Camera.main.enabled = true;
-            coreBlock.GetComponentInChildren<Camera>().enabled = false;
+            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
+            mainCam.gameObject.SetActive(true);
+
             playan = false;
         }
     }
@@ -164,8 +171,9 @@ public class VehicleEditor : MonoBehaviour
 
     public void SetSelectedPart(GameObject slctPart)
     {
-        Destroy(previewedPart);
         selectedPart = slctPart;
+        //instantiate the selected part for previewing
+        Destroy(previewedPart);
         previewedPart = Instantiate(selectedPart, coreBlock.transform);
         if (previewedPart.TryGetComponent(out Collider col))
         {
@@ -178,14 +186,6 @@ public class VehicleEditor : MonoBehaviour
     {
         buildUIOpen = !buildUIOpen;
     }
-
-    /* instantiate 3D array in which every part has it's coordinates 
-     * hype
-     * check if raycast hits part
-     * check if part has available slot there. 
-     * 
-     * if it fits. Click to place the part and tell
-    */
 
 
     /// <summary>
