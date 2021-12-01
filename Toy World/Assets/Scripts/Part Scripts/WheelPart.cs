@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class WheelPart : MovementPart
 {
+    public WheelPart()
+    {
+        this.speedModifier = 2;
+    }
+
+    /*
     public float steeringAngle { get; set; }
     private const int STEERINGMAX = 30;
     private const float CENTERSPEED = 2f;
@@ -77,4 +83,5 @@ public class WheelPart : MovementPart
     {
         turning = stopped;
     }
+    */ // Old system
 }

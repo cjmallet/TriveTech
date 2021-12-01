@@ -12,7 +12,6 @@ public abstract class Part : MonoBehaviour
 
     public int Width { get; }
     public int Height { get; }
-    public int Speed { get; set; }
 
     private const int SIDES = 6;
 

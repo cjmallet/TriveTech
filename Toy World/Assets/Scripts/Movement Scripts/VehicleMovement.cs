@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Move the vehicle based on the input from the inputManager class
@@ -8,86 +10,72 @@ using UnityEngine;
 public class VehicleMovement : MonoBehaviour
 {
     public List<MovementPart> movementParts;
-
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float steeringAngle;
+    private List<Collider> colliders = new List<Collider>();
+    public int movementSpeed { get; set; }
 
     public VehicleMovement()
     {
-        movementSpeed = 0.1f;
-        steeringAngle = 1;
+        
     }
 
-    //! Input check in Update
-    private void Update()
+    private void Start()
     {
+        movementParts = FindObjectsOfType<MovementPart>().ToList();
+
         if (movementParts.Count != 0)
         {
-            if (Input.GetAxis("Horizontal") < 0)
+            foreach (MovementPart part in movementParts)
             {
-                MoveLeft();
+                movementSpeed += part.speedModifier;
             }
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                MoveRight();
-            }
-            if (Input.GetAxis("Vertical") > 0)
-            {
-                MoveForward();
-            }
-            if (Input.GetAxis("Vertical") < 0)
-            {
-                MoveBackward();
-            }
-            if (Input.GetAxis("Horizontal") == 0)
-            {
-                Idle();
-            }
+            movementSpeed /= movementParts.Count;
         }
     }
 
-    public void MoveLeft()
+    private void Update()
     {
-        transform.Rotate(0, -steeringAngle, 0);
-        // each movement part activates left movement action
-        foreach (MovementPart movementPart in movementParts)
+        
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (enabled)
         {
-            movementPart.LeftAction(steeringAngle);
+            Debug.Log(movementSpeed);
         }
     }
 
-    public void MoveRight()
+    private void OnCollisionEnter(Collision collision)
     {
-        transform.Rotate(0, steeringAngle, 0);
-        foreach (MovementPart movementPart in movementParts)
+        if (collision.gameObject.tag == "Ground")
         {
-            movementPart.RightAction(steeringAngle);
+            foreach (ContactPoint contact in collision.contacts.Where(x => !colliders.Contains(x.thisCollider) && 
+            x.thisCollider.gameObject.TryGetComponent(out MovementPart part)))
+            {
+                colliders.Add(contact.thisCollider);
+                contact.thisCollider.gameObject.GetComponent<MovementPart>().grounded = true;
+            }
+        }
+        else if (collision.gameObject.tag != "Ground")
+        {
+            
         }
     }
 
-    public void MoveForward()
+    private void OnCollisionExit(Collision collision)
     {
-        transform.localPosition += transform.forward * movementSpeed;
-        foreach (MovementPart movementPart in movementParts)
+        if (collision.gameObject.tag == "Ground")
         {
-            movementPart.ForwardAction(movementSpeed);
+            foreach (ContactPoint contact in collision.contacts.Where(x => colliders.Contains(x.thisCollider) && 
+            x.thisCollider.gameObject.TryGetComponent(out MovementPart part)))
+            {
+                colliders.Remove(contact.thisCollider);
+                contact.thisCollider.gameObject.GetComponent<MovementPart>().grounded = false;
+            }
         }
-    }
-
-    public void MoveBackward()
-    {
-        transform.localPosition += -transform.forward * movementSpeed;
-        foreach (MovementPart movementPart in movementParts)
+        else if (collision.gameObject.tag != "Ground")
         {
-            movementPart.BackwardAction(movementSpeed);
-        }
-    }
 
-    public void Idle()
-    {
-        foreach (MovementPart movementPart in movementParts)
-        {
-            movementPart.StopAction(false);
         }
     }
 }

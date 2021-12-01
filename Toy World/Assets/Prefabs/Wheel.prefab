@@ -420,7 +420,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rotationSpeed: 31
 --- !u!65 &5847884760756425979
 BoxCollider:
   m_ObjectHideFlags: 0

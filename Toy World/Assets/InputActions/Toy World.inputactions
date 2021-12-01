@@ -6,7 +6,7 @@
             "id": "403eea16-78bb-469a-b406-eab50439f865",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "BuilderMove",
                     "type": "Value",
                     "id": "b025797e-6cfd-44ec-82e0-bfc03d58a86f",
                     "expectedControlType": "Vector3",
@@ -15,10 +15,19 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MouseMove",
+                    "name": "BuilderMouseMove",
                     "type": "Value",
                     "id": "c78f3f7a-ff6e-4131-b262-a41c832e4aea",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "VehicleMove",
+                    "type": "Value",
+                    "id": "b6841558-eebf-4900-9f51-f6be6f975ede",
+                    "expectedControlType": "Double",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -77,7 +86,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -88,7 +97,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -99,7 +108,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -110,7 +119,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -121,7 +130,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -132,7 +141,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -143,7 +152,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -154,7 +163,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -165,7 +174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -176,7 +185,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Move",
+                    "action": "BuilderMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -187,7 +196,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "MouseMove",
+                    "action": "BuilderMouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +207,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
-                    "action": "MouseMove",
+                    "action": "BuilderMouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -209,7 +218,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "MouseMove",
+                    "action": "BuilderMouseMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -267,6 +276,61 @@
                     "action": "BuildButton",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "WASD",
+                    "id": "9ebd98ec-832d-46c9-8edb-8bdcb01c3a57",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "VehicleMove",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "68fc0388-fcab-4ac6-9687-5339d8bce3a3",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "VehicleMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "8dd3850b-eb8b-4d25-8d7b-a0806423f222",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "VehicleMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "26947fd8-61f9-47f5-a546-f0cc2c1e0db9",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "VehicleMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "40d3913b-b8ed-461a-b0ec-5fa60ae9d5b9",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "VehicleMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

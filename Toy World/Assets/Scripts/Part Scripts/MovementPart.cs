@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class MovementPart : Part
 {
+    public bool grounded { get; set; }
+
+    public int speedModifier { get; set; }
+
     public MovementPart()
     {
-        
+        this.grounded = false;
     }
 
+    /*
     public virtual void ForwardAction(float moveAmount)
     {
         
@@ -32,5 +37,5 @@ public class MovementPart : Part
     public virtual void StopAction(bool stopped)
     {
 
-    }
+    }*/ // Old system
 }
