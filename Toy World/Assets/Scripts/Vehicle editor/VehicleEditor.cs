@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.InputSystem;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
@@ -30,7 +29,7 @@ public class VehicleEditor : MonoBehaviour
 
     private GameObject previewedPart;
     private Vector3 prevMousePos;
-    private bool playan, buildUIOpen = true;
+    private bool playan;
 
 
     void Awake()
@@ -44,83 +43,58 @@ public class VehicleEditor : MonoBehaviour
     void Start()
     {
         SetSelectedPart(selectedPart);
+
     }
 
     void Update()
     {
-        
+        if(!playan)
+        UpdateInput();
     }
 
-    public void Play(InputAction.CallbackContext context)
+    void UpdateInput()
     {
-        if (context.performed && !playan)
+        if (Input.GetKeyDown(KeyCode.P))//testan
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.AddComponent<VehicleMovement>();
-
-            // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
-            List<Part> parts = FindObjectsOfType<Part>().ToList();
-
-            // Remove direction indication
-            foreach (Part vehiclePart in parts)
-            {
-                // Fill list with movement parts for movement script
-                if (vehiclePart is MovementPart)
-                    coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
-
-                // Remove direction indication
-                if (vehiclePart.useDirectionIndicator)
-                    vehiclePart.RemoveDirectionIndicator();
-            }
-
+            coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
             Camera.main.enabled = false;
             coreBlock.GetComponentInChildren<Camera>().enabled = true;
             playan = true;
             Destroy(previewedPart);
         }
-    }
 
-    public void PlacePart(InputAction.CallbackContext context)
-    {
-        if (!playan)
+        RaycastHit hit = RaycastMousePosition();
+        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part))
         {
-            RaycastHit hit = RaycastMousePosition();
-            if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
-            {
-                if (context.action.name == "LeftClick" && context.performed)
-                {
-                    PlaceSelectedPart(hit);
-                    previewedPart.SetActive(false);
-                }
-                else if (context.action.name == "RightClick" && context.performed)
-                {
-                    DeleteSelectedPart(hit);
-                }
-                else
-                {
-                    PreviewPart(hit);//assuming box colliders
-                }
-            }
-            else if (previewedPart.activeSelf)
-            {
-                previewedPart.SetActive(false);
-            }            
-        }
-    }
+            //Debug.Log($"hit pos: {hit.transform.position} hit normal: {hit.normal} local hit normal: {Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal}");
 
-    public void RotatePart(InputAction.CallbackContext context)
-    {
-        if (!playan && context.performed)
+            if (Input.GetMouseButtonDown(0))
+            {
+                PlaceSelectedPart(hit);
+                previewedPart.SetActive(false);
+            }
+            else
+            {
+                PreviewPart(hit);//assuming box colliders
+            }
+        }
+        else if (previewedPart.activeSelf)
+        {
+            previewedPart.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
-            PlacePart(context);
         }
     }
 
     void PlaceSelectedPart(RaycastHit hit)
     {
         GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
-
+        //set parent nog een keer?
         if(hit.transform == coreBlock.transform)
         {
             placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
@@ -137,26 +111,8 @@ public class VehicleEditor : MonoBehaviour
         }
 
     }
-    /// <summary>
-    /// detaches all parts from hit part and destroys the object.
-    /// </summary>
-    /// <param name="hit">the part that is hit</param>
-    void DeleteSelectedPart(RaycastHit hit)
-    {
-        if (hit.transform != coreBlock.transform)
-        {
-            foreach (Part part in hit.transform.GetComponent<Part>().attachedParts)
-            {
-                if (part != null)
-                {
-                    part.attachedParts[part.attachedParts.IndexOf(hit.transform.GetComponent<Part>())] = null;
-                }
-            }
-            Destroy(hit.transform.gameObject);
-        }
-    }
 
-    void PreviewPart(RaycastHit hit)
+    void PreviewPart(RaycastHit hit)//todo:
     {
         previewedPart.SetActive(true);
 
@@ -183,15 +139,6 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.SetActive(false);
     }
 
-    public void ChangeActiveBuildState()
-    {
-        buildUIOpen = !buildUIOpen;
-        if (buildUIOpen || !Camera.main.GetComponent<FPSCameraControllers>().enabled) // If FPS camera controller is disabled cursor is always unlocked
-            Cursor.lockState = CursorLockMode.None;
-        else
-            Cursor.lockState = CursorLockMode.Locked;
-    }
-
     /* instantiate 3D array in which every part has it's coordinates 
      * hype
      * check if raycast hits part
@@ -213,4 +160,5 @@ public class VehicleEditor : MonoBehaviour
         Physics.Raycast(ray, out hit, 200);
         return hit;
     }
+
 }
