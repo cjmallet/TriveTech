@@ -72,7 +72,7 @@ public class VehicleEditor : MonoBehaviour
 
                 // Remove direction indication
                 if (vehiclePart.useDirectionIndicator)
-                    vehiclePart.RemoveDirectionIndicator();
+                    vehiclePart.ToggleDirectionIndicator(false);
             }
 
             mainCam.gameObject.SetActive(false);
@@ -82,7 +82,14 @@ public class VehicleEditor : MonoBehaviour
         }
         else if (context.performed && playan)
         {
-            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
+            List<Part> parts = FindObjectsOfType<Part>().ToList();
+            foreach (Part part in parts)
+            {
+                if (part.useDirectionIndicator)
+                    part.ToggleDirectionIndicator(true);
+            }
+
+                coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             Destroy(coreBlock.GetComponent<Rigidbody>());
             Destroy(coreBlock.GetComponent<VehicleMovement>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);

@@ -101,8 +101,8 @@ public abstract class Part : MonoBehaviour
         myDirectionIndicator.transform.SetParent(this.transform);
     }
 
-    public void RemoveDirectionIndicator()
+    public void ToggleDirectionIndicator(bool visible)
     {
-        Destroy(myDirectionIndicator);
+        myDirectionIndicator.SetActive(visible);
     }
 }
