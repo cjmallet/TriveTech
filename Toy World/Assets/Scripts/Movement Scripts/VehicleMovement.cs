@@ -11,6 +11,8 @@ public class VehicleMovement : MonoBehaviour
 {
     public List<MovementPart> movementParts;
     private List<Collider> colliders = new List<Collider>();
+    private Rigidbody rigidBody;
+    private Vector3 movement, rotation;
     public int movementSpeed { get; set; }
 
     public VehicleMovement()
@@ -20,6 +22,8 @@ public class VehicleMovement : MonoBehaviour
 
     private void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
+
         movementParts = FindObjectsOfType<MovementPart>().ToList();
 
         if (movementParts.Count != 0)
@@ -28,20 +32,19 @@ public class VehicleMovement : MonoBehaviour
             {
                 movementSpeed += part.speedModifier;
             }
-            movementSpeed /= movementParts.Count;
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        
+
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (enabled)
+        if (enabled && context.performed)
         {
-            Debug.Log(movementSpeed);
+            
         }
     }
 
@@ -50,7 +53,7 @@ public class VehicleMovement : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             foreach (ContactPoint contact in collision.contacts.Where(x => !colliders.Contains(x.thisCollider) && 
-            x.thisCollider.gameObject.TryGetComponent(out MovementPart part)))
+            x.thisCollider.gameObject.TryGetComponent(out MovementPart part))) // gotta fix memory issue
             {
                 colliders.Add(contact.thisCollider);
                 contact.thisCollider.gameObject.GetComponent<MovementPart>().grounded = true;
@@ -58,7 +61,10 @@ public class VehicleMovement : MonoBehaviour
         }
         else if (collision.gameObject.tag != "Ground")
         {
-            
+            foreach (ContactPoint contact in collision.contacts.Where(x => !colliders.Contains(x.thisCollider)))
+            {
+                // do something
+            }
         }
     }
 

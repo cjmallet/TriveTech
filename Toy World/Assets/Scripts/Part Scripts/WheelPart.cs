@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class WheelPart : MovementPart
 {
+    private int speed = 5;
+
     public WheelPart()
     {
-        this.speedModifier = 2;
+        this.speedModifier = speed;
     }
 
     /*

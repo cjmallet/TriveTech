@@ -58,6 +58,7 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
             //coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
+            Camera.main.GetComponent<FPSCameraControllers>().enabled = false;
             Camera.main.enabled = false;
             coreBlock.GetComponentInChildren<Camera>().enabled = true;
             playan = true;
