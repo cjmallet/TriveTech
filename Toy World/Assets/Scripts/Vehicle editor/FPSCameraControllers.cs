@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FPSCameraControllers : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class FPSCameraControllers : MonoBehaviour
         }
     }
 
+    private Vector2 lookRotation = Vector2.zero;
+    private Vector3 direction = Vector3.zero;
+
     public static bool canRotate = false;
     const float k_MouseSensitivityMultiplier = 0.01f;
 
@@ -57,14 +61,14 @@ public class FPSCameraControllers : MonoBehaviour
     CameraState m_InterpolatingCameraState = new CameraState();
 
     [Header("Movement Settings")]
-    [Tooltip("Speed of the player character")]
-    public float movementSpeed = 5f;
-    [Tooltip("Time it takes to interpolate camera position 99% of the way to the target."), Range(0.001f, 1f)]
-    public float positionLerpTime = 0.2f;
+    [Tooltip("Speed of the player character"), Range(0.001f, 5f)]
+    public float movementSpeed = 3.5f;
+    [Tooltip("Time it takes to interpolate camera position 99% of the way to the target."), Range(0.001f, 0.2f)]
+    public float mouseSensitivity = 0.1f;
 
     [Header("Rotation Settings")]
     [Tooltip("Multiplier for the sensitivity of the rotation.")]
-    public float mouseSensitivity = 60.0f;
+    public float rotationMultiplier = 60.0f;
 
     [Tooltip("X = Change in mouse position.\nY = Multiplicative factor for camera rotation.")]
     public AnimationCurve mouseSensitivityCurve = new AnimationCurve(new Keyframe(0f, 0.5f, 0f, 5f), new Keyframe(1f, 2.5f, 0f, 0f));
@@ -85,21 +89,14 @@ public class FPSCameraControllers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canRotate)
-        {
-            CameraRotation();
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+        if (canRotate && (lookRotation != Vector2.zero || direction != Vector3.zero))
+            CameraRotation(lookRotation, direction);
     }
 
 
-    public void CameraRotation()
+    public void CameraRotation(Vector2 lookRotation, Vector3 direction)
     {
-        var mouseMovement = GetInputLookRotation() * k_MouseSensitivityMultiplier * mouseSensitivity;
+        var mouseMovement = lookRotation * k_MouseSensitivityMultiplier * rotationMultiplier;
         if (invertY)
             mouseMovement.y = -mouseMovement.y;
 
@@ -109,55 +106,26 @@ public class FPSCameraControllers : MonoBehaviour
         m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
 
 
-        var translation = GetInputTranslationDirection() * Time.deltaTime * movementSpeed;
+        var translation = direction * Time.deltaTime * movementSpeed;
 
         m_TargetCameraState.Translate(translation);
 
         // Framerate-independent interpolation
         // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
-        var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / positionLerpTime) * Time.deltaTime);
+        var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / mouseSensitivity) * Time.deltaTime);
         var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
         m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
 
         m_InterpolatingCameraState.UpdateTransform(transform);
     }
 
-    Vector2 GetInputLookRotation()
+    public void Move(InputAction.CallbackContext context)
     {
-        // try to compensate the diff between the two input systems by multiplying with empirical values
-
-        return new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        direction = context.ReadValue<Vector3>() * movementSpeed;
     }
 
-    Vector3 GetInputTranslationDirection()
+    public void MouseMove(InputAction.CallbackContext context)
     {
-        Vector3 direction = Vector3.zero;
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            direction += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            direction += Vector3.back;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            direction += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            direction += Vector3.right;
-        }
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            direction += Vector3.down;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            direction += Vector3.up;
-        }
-
-        return direction;
+        lookRotation = context.ReadValue<Vector2>() * mouseSensitivity;
     }
 }
