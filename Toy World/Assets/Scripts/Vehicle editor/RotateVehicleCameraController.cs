@@ -8,6 +8,9 @@ public class RotateVehicleCameraController : MonoBehaviour
     [Range(1,3)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
 
+    // Distance between the camera and the core block
+    public int minZoomOutDistance, maxZoomOutDistance;
+
     // Reference to core block so it can be rotated
     public GameObject vehicleCore;
 
@@ -54,9 +57,27 @@ public class RotateVehicleCameraController : MonoBehaviour
         Zoom(inputVector.z);
     }
 
+    //! Lets the player zoom in and out of the vehicle
+    /*!
+     * Zoom limit is calculated based (z-axis) distance towards core block.
+     * this prevents the player from moving through it (or to far away)
+     */
     private void Zoom(float zoomDirection)
     {
         zoomDirection /= ZOOM_SPEED_DAMPNER;
-        transform.position += transform.forward * zoomDirection * cameraZoomSpeed;
+
+        float distance = vehicleCore.transform.position.z - transform.position.z;
+        if (distance < minZoomOutDistance)
+        {
+            transform.Translate(0, 0, (distance - minZoomOutDistance));
+        }
+        else if (distance > maxZoomOutDistance)
+        {
+            transform.Translate(0, 0, (distance - maxZoomOutDistance));
+        }
+        else
+        {
+            transform.position += transform.forward * zoomDirection * cameraZoomSpeed;
+        }
     }
 }
