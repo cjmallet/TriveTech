@@ -32,7 +32,7 @@ public class RotateVehicleCameraController : MonoBehaviour
         movementInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movementInputZ);
 
         // Random button for resetting rotation
-        resetVehicle = Input.GetKey(KeyCode.R);
+        resetVehicle = Input.GetKey(KeyCode.F);
     }
 
     private void FixedUpdate()
