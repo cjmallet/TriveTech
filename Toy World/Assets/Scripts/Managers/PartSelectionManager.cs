@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject PartSelectionCanvas, ButtonPrefab, contentHolder;
+    [SerializeField] private GameObject PartSelectionCanvas, CrossHair, ButtonPrefab, contentHolder;
     [SerializeField] private List<GameObject> parts;
 
     //private GameObject selectedPart;
@@ -21,19 +22,22 @@ public class PartSelectionManager : MonoBehaviour
             GameObject newButton=Instantiate(ButtonPrefab,contentHolder.transform);
             newButton.name = part.name;
             newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
         }
     }
 
-    /// <summary>
-    /// Check if the button to close the canvas is pressed
-    /// </summary>
-    private void Update()
+    public void BuildButton(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (context.performed)
         {
+            VehicleEditor._instance.ChangeActiveBuildState();
             ClosePartSelectionUI();
         }
+    }
+
+    private void Update()
+    {
+        
     }
 
     /// <summary>
@@ -52,5 +56,7 @@ public class PartSelectionManager : MonoBehaviour
     public void ClosePartSelectionUI()
     {
         PartSelectionCanvas.SetActive(!PartSelectionCanvas.activeSelf);
+        CrossHair.SetActive(!CrossHair.activeSelf);
+        FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
     }
 }

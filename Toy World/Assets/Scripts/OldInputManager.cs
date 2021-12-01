@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class OldInputManager : MonoBehaviour
 {
     [SerializeField] private VehicleMovement vehicleMovement;
     [HideInInspector] public string keyPressed;

@@ -14,6 +14,7 @@ public class VehicleMovement : MonoBehaviour
 
     public VehicleMovement()
     {
+        movementParts = new List<MovementPart>();
         movementSpeed = 0.1f;
         steeringAngle = 1;
     }
