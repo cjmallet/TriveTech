@@ -22,7 +22,7 @@ public class RotateVehicleCameraController : RotatingCameraController
     }
 
     /* Wordt in de toekomst something like:
-     * private void RotateVehicle(InputAction.CallbackContext context)
+     * public override void RotateVehicle(InputAction.CallbackContext context)
      * {
      *      Vector3 inputVector = context.ReadValue<Vector3>();
      *      vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
@@ -34,27 +34,7 @@ public class RotateVehicleCameraController : RotatingCameraController
     {
         vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
             inputVector.x * -horizontalRotateSpeed, 0, Space.World);
-        Zoom(inputVector.z);
-        Debug.Log("help");
-    }
-
-    //! Lets the player zoom in and out of the vehicle
-    /*!
-     * Zoom limit is calculated based (z-axis) distance towards core block.
-     * this prevents the player from moving through it (or to far away)
-     */
-    public override void Zoom(float zoomDirection)
-    {
-        zoomDirection /= ZOOM_SPEED_DAMPNER;
-
-        Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
-
-        float newDistance = vehicleCore.transform.position.z - newPosition.z;
-
-        if ((newDistance > minZoomOutDistance) && (newDistance < maxZoomOutDistance))
-        {
-            transform.position = newPosition;
-        }
+        base.RotateVehicleMovement(inputVector);
     }
 
     //! Resets vehicle rotation to original default (0)
@@ -63,7 +43,6 @@ public class RotateVehicleCameraController : RotatingCameraController
         if (value)
         {
             vehicleCore.transform.rotation = new Quaternion(0, 0, 0, 0);
-            Debug.Log("Reset");
         }
     }
     /* Ook hier weer integratie voor new input system:

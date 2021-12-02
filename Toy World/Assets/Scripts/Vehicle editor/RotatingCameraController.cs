@@ -37,7 +37,7 @@ public class RotatingCameraController : MonoBehaviour
     }
 
     /* Wordt in de toekomst something like:
-     * private void RotateVehicle(InputAction.CallbackContext context)
+     * public void RotateVehicle(InputAction.CallbackContext context)
      * {
      *      Vector3 inputVector = context.ReadValue<Vector3>();
      *      vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
@@ -47,6 +47,7 @@ public class RotatingCameraController : MonoBehaviour
      */
     public virtual void RotateVehicleMovement(Vector3 inputVector)
     {
+        Zoom(inputVector.z);
     }
 
     //! Lets the player zoom in and out of the vehicle
@@ -54,7 +55,17 @@ public class RotatingCameraController : MonoBehaviour
      * Zoom limit is calculated based (z-axis) distance towards core block.
      * this prevents the player from moving through it (or to far away)
      */
-    public virtual void Zoom(float zoomDirection)
+    private void Zoom(float zoomDirection)
     {
+        zoomDirection /= ZOOM_SPEED_DAMPNER;
+
+        Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
+
+        float newDistance = (vehicleCore.transform.position - newPosition).magnitude;
+
+        if ((newDistance > minZoomOutDistance) && (newDistance < maxZoomOutDistance))
+        {
+            transform.position = newPosition;
+        }
     }
 }
