@@ -67,18 +67,13 @@ public class RotateVehicleCameraController : MonoBehaviour
     {
         zoomDirection /= ZOOM_SPEED_DAMPNER;
 
-        float distance = vehicleCore.transform.position.z - transform.position.z;
-        if (distance < minZoomOutDistance)
+        Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
+
+        float newDistance = vehicleCore.transform.position.z - newPosition.z;
+
+        if ((newDistance > minZoomOutDistance) && (newDistance < maxZoomOutDistance))
         {
-            transform.Translate(0, 0, (distance - minZoomOutDistance));
-        }
-        else if (distance > maxZoomOutDistance)
-        {
-            transform.Translate(0, 0, (distance - maxZoomOutDistance));
-        }
-        else
-        {
-            transform.position += transform.forward * zoomDirection * cameraZoomSpeed;
+            transform.position = newPosition;
         }
     }
 
