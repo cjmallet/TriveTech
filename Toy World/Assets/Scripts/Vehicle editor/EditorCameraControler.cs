@@ -15,10 +15,8 @@ public class EditorCameraControler : RotatingCameraController
      */
     public override void RotateVehicleMovement(Vector3 inputVector)
     {
-        //vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed,
-        //    inputVector.x * -horizontalRotateSpeed, 0, Space.World);
-
-        transform.RotateAround(vehicleCore.transform.position, transform.up, -inputVector.x * horizontalRotateSpeed);
+        transform.RotateAround(vehicleCore.transform.position, Vector3.up, -inputVector.x * horizontalRotateSpeed);
+        transform.RotateAround(vehicleCore.transform.position, transform.right, inputVector.y * verticalRotateSpeed);
 
         base.RotateVehicleMovement(inputVector);
     }
