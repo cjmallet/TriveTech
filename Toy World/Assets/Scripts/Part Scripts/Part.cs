@@ -12,7 +12,11 @@ public abstract class Part : MonoBehaviour
 
     public int Width { get; }
     public int Height { get; }
-    public int Speed { get; set; }
+
+    //! Arrow object/mesh that is used to indicate the front direction
+    public bool useDirectionIndicator;
+    private GameObject directionIndicatorPrefab;
+    private GameObject myDirectionIndicator;
 
     private const int SIDES = 6;
 
@@ -22,6 +26,12 @@ public abstract class Part : MonoBehaviour
         {
             attachedParts.Add(null);
         }
+    }
+
+    private void Awake()
+    {
+        if (useDirectionIndicator)
+            ShowFrontDirection();
     }
 
     /// <summary>
@@ -76,5 +86,22 @@ public abstract class Part : MonoBehaviour
                 Debug.LogWarning("NORMAL IS INCORRECT - ERROR ERROR ERROR");
                 return Orientation.Right;//Not actually right at all
         }
+    }
+
+    /// <summary>
+    /// Instantiates an arrow to indicate the direction this part is facing.
+    /// </summary>
+    public void ShowFrontDirection()
+    {
+        directionIndicatorPrefab = Resources.Load("DirectionIndicationArrow") as GameObject;
+        myDirectionIndicator = Instantiate(directionIndicatorPrefab, this.transform.position, this.transform.rotation);
+        myDirectionIndicator.transform.Translate(0, 0, 1, Space.Self);
+        myDirectionIndicator.transform.Rotate(90, 0, 0);
+        myDirectionIndicator.transform.SetParent(this.transform);
+    }
+
+    public void ToggleDirectionIndicator(bool visible)
+    {
+        myDirectionIndicator.SetActive(visible);
     }
 }

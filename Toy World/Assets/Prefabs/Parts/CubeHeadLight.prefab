@@ -66,6 +66,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  useDirectionIndicator: 1
+  directionIndicatorPrefab: {fileID: 1520442295271898306, guid: a6fdb457c8932a6429d3fc6ce0b72463, type: 3}
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,15 +93,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8180325155683900324}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.23}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8180325155698316893}
   m_Father: {fileID: 2303121294138833713}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &8180325155683900323
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -89,7 +89,7 @@ public class FPSCameraControllers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canRotate && (lookRotation != Vector2.zero || direction != Vector3.zero))
+        if (canRotate && (lookRotation != Vector2.zero || direction != Vector3.zero) && enabled)
             CameraRotation(lookRotation, direction);
     }
 
