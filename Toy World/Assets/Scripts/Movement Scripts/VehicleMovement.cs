@@ -20,10 +20,13 @@ public class VehicleMovement : MonoBehaviour
         
     }
 
-    private void Start()
+    private void OnEnable()
     {
         rigidBody = GetComponent<Rigidbody>();
+    }
 
+    private void Start()
+    {
         if (movementParts.Count != 0)
         {
             foreach (MovementPart part in movementParts)
