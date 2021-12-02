@@ -58,7 +58,7 @@ public class VehicleEditor : MonoBehaviour
         if (context.performed && !playan)
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.AddComponent<VehicleMovement>();
+            coreBlock.GetComponent<VehicleMovement>().enabled = true;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
@@ -89,9 +89,9 @@ public class VehicleEditor : MonoBehaviour
                     part.ToggleDirectionIndicator(true);
             }
 
-                coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);            
+            coreBlock.GetComponent<VehicleMovement>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
-            Destroy(coreBlock.GetComponent<VehicleMovement>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);

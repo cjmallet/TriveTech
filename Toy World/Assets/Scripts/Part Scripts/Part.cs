@@ -12,7 +12,6 @@ public abstract class Part : MonoBehaviour
 
     public int Width { get; }
     public int Height { get; }
-    public int Speed { get; set; }
 
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;

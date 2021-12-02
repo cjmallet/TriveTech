@@ -1,94 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Move the vehicle based on the input from the inputManager class
 /// </summary>
 public class VehicleMovement : MonoBehaviour
 {
-    public List<MovementPart> movementParts;
-
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float steeringAngle;
+    public List<MovementPart> movementParts = new List<MovementPart>();
+    private List<Collider> colliders = new List<Collider>();
+    private Rigidbody rigidBody;
+    private Vector3 eulerRot, movement;
+    public int movementSpeed { get; set; }
 
     public VehicleMovement()
     {
-        movementParts = new List<MovementPart>();
-        movementSpeed = 0.1f;
-        steeringAngle = 1;
+        
     }
 
-    //! Input check in Update
-    private void Update()
+    private void OnEnable()
+    {
+        rigidBody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
     {
         if (movementParts.Count != 0)
         {
-            if (Input.GetAxis("Horizontal") < 0)
+            foreach (MovementPart part in movementParts)
             {
-                MoveLeft();
-            }
-            if (Input.GetAxis("Horizontal") > 0)
-            {
-                MoveRight();
-            }
-            if (Input.GetAxis("Vertical") > 0)
-            {
-                MoveForward();
-            }
-            if (Input.GetAxis("Vertical") < 0)
-            {
-                MoveBackward();
-            }
-            if (Input.GetAxis("Horizontal") == 0)
-            {
-                Idle();
+                movementSpeed += part.speedModifier;
             }
         }
     }
 
-    public void MoveLeft()
+    private void FixedUpdate()
     {
-        transform.Rotate(0, -steeringAngle, 0);
-        // each movement part activates left movement action
-        foreach (MovementPart movementPart in movementParts)
+        rigidBody.AddRelativeForce(movement);
+
+        Quaternion deltaRot = Quaternion.Euler(eulerRot * Time.fixedDeltaTime);
+        rigidBody.MoveRotation(rigidBody.rotation * deltaRot);
+    }
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        if (enabled && context.performed)
         {
-            movementPart.LeftAction(steeringAngle);
+            movement = new Vector3(0, 0, context.ReadValue<Vector3>().z);
+            movement *= movementSpeed;
+
+            eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
+            eulerRot *= movementSpeed;
         }
     }
 
-    public void MoveRight()
+    private void OnCollisionEnter(Collision collision)
     {
-        transform.Rotate(0, steeringAngle, 0);
-        foreach (MovementPart movementPart in movementParts)
+        if (collision.gameObject.tag == "Ground")
         {
-            movementPart.RightAction(steeringAngle);
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (!colliders.Contains(collision.GetContact(i).thisCollider))
+                    colliders.Add(collision.GetContact(i).thisCollider);
+            }
+        }
+        else if (collision.gameObject.tag != "Ground")
+        {
+
         }
     }
 
-    public void MoveForward()
+    private void OnCollisionExit(Collision collision)
     {
-        transform.localPosition += transform.forward * movementSpeed;
-        foreach (MovementPart movementPart in movementParts)
+        if (collision.gameObject.tag == "Ground")
         {
-            movementPart.ForwardAction(movementSpeed);
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (colliders.Contains(collision.GetContact(i).thisCollider))
+                    colliders.Remove(collision.GetContact(i).thisCollider);
+            }
         }
-    }
-
-    public void MoveBackward()
-    {
-        transform.localPosition += -transform.forward * movementSpeed;
-        foreach (MovementPart movementPart in movementParts)
+        else if (collision.gameObject.tag != "Ground")
         {
-            movementPart.BackwardAction(movementSpeed);
-        }
-    }
 
-    public void Idle()
-    {
-        foreach (MovementPart movementPart in movementParts)
-        {
-            movementPart.StopAction(false);
         }
     }
 }
