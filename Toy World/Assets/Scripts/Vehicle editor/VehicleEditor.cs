@@ -57,8 +57,11 @@ public class VehicleEditor : MonoBehaviour
     {
         if (context.performed && !playan)
         {
+            // Clear list of parts if it still has parts
+            if (coreBlock.GetComponent<VehicleMovement>().movementParts.Count != 0)
+                coreBlock.GetComponent<VehicleMovement>().movementParts.Clear();
+
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<VehicleMovement>().enabled = true;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
@@ -75,6 +78,7 @@ public class VehicleEditor : MonoBehaviour
                     vehiclePart.ToggleDirectionIndicator(false);
             }
 
+            coreBlock.GetComponent<VehicleMovement>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;

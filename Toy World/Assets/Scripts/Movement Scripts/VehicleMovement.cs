@@ -10,10 +10,12 @@ using UnityEngine.InputSystem;
 public class VehicleMovement : MonoBehaviour
 {
     public List<MovementPart> movementParts = new List<MovementPart>();
-    private List<Collider> colliders = new List<Collider>();
+    public List<GameObject> colliders = new List<GameObject>();
     private Rigidbody rigidBody;
     private Vector3 eulerRot, movement;
+    //private bool collisionUpdate = false;
     public int movementSpeed { get; set; }
+    public int rotationSpeed { get; set; }
 
     public VehicleMovement()
     {
@@ -23,17 +25,24 @@ public class VehicleMovement : MonoBehaviour
     private void OnEnable()
     {
         rigidBody = GetComponent<Rigidbody>();
-    }
 
-    private void Start()
-    {
+        movementSpeed = 0;
+        rotationSpeed = 0;
+
         if (movementParts.Count != 0)
         {
             foreach (MovementPart part in movementParts)
             {
-                movementSpeed += part.speedModifier;
+                movementSpeed += part.moveSpeedModifier;
+                rotationSpeed += part.rotationSpeedModifier;
+                rigidBody.mass += part.mass;
             }
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void FixedUpdate()
@@ -52,7 +61,35 @@ public class VehicleMovement : MonoBehaviour
             movement *= movementSpeed;
 
             eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
-            eulerRot *= movementSpeed;
+            eulerRot *= rotationSpeed;
+        }
+    }
+
+    /*private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground" && collisionUpdate)
+        {
+            for (int i = colliders.Count - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < collision.contactCount; j++)
+                {
+                    if (colliders.Contains(collision.GetContact(j).thisCollider.gameObject) && collision.GetContact(j).thisCollider.gameObject.TryGetComponent(out MovementPart part))
+                    {
+                        colliders.Remove(collision.GetContact(j).thisCollider.gameObject);
+                        Debug.Log(" REMOVE " + collision.GetContact(j).thisCollider);
+                    }
+                }
+            }
+
+            collisionUpdate = false;
+        }
+        else if (collision.gameObject.tag == "Ground")
+        {
+            for (int i = 0; i < collision.contactCount; i++)
+            {
+                if (!colliders.Contains(collision.GetContact(i).thisCollider.gameObject) && collision.GetContact(i).thisCollider.gameObject.TryGetComponent(out MovementPart part))
+                    colliders.Add(collision.GetContact(i).thisCollider.gameObject);
+            }
         }
     }
 
@@ -62,8 +99,10 @@ public class VehicleMovement : MonoBehaviour
         {
             for (int i = 0; i < collision.contactCount; i++)
             {
-                if (!colliders.Contains(collision.GetContact(i).thisCollider))
-                    colliders.Add(collision.GetContact(i).thisCollider);
+                if (!colliders.Contains(collision.GetContact(i).thisCollider.gameObject) && collision.GetContact(i).thisCollider.gameObject.TryGetComponent(out MovementPart part))
+                {
+                    colliders.Add(collision.GetContact(i).thisCollider.gameObject);
+                }
             }
         }
         else if (collision.gameObject.tag != "Ground")
@@ -74,17 +113,6 @@ public class VehicleMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            for (int i = 0; i < collision.contactCount; i++)
-            {
-                if (colliders.Contains(collision.GetContact(i).thisCollider))
-                    colliders.Remove(collision.GetContact(i).thisCollider);
-            }
-        }
-        else if (collision.gameObject.tag != "Ground")
-        {
-
-        }
-    }
+        collisionUpdate = true;
+    }*/ // Old collision attempt
 }

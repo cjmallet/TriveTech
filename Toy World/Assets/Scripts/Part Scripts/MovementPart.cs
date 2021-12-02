@@ -6,7 +6,9 @@ public class MovementPart : Part
 {
     public bool grounded { get; set; }
 
-    public int speedModifier { get; set; }
+    public int moveSpeedModifier { get; set; }
+    public int rotationSpeedModifier { get; set; }
+    public float mass { get; set; }
 
     public MovementPart()
     {

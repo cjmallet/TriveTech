@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class WheelPart : MovementPart
 {
-    private int speed = 5;
+    private int moveSpeed = 6;
+    private int rotationSpeed = 10;
+    private float myMass = 0.1f;
 
     public WheelPart()
     {
-        this.speedModifier = speed;
+        this.moveSpeedModifier = moveSpeed;
+        this.rotationSpeedModifier = rotationSpeed;
+        this.mass = myMass;
     }
 
     /*
