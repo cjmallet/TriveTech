@@ -1,44 +1,23 @@
 using UnityEngine;
 
-public class RotateVehicleCameraController : MonoBehaviour
+public class RotateVehicleCameraController : RotatingCameraController
 {
-    const int ZOOM_SPEED_DAMPNER = 10;
-
-    // Speed factors for vehicle rotation and camera zooming
-    [Range(1,3)]
-    public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
-
-    // Distance between the camera and the core block
-    public int minZoomOutDistance, maxZoomOutDistance;
-
-    // Reference to core block so it can be rotated
-    public GameObject vehicleCore;
-
-    // Movement vector formed from input
-    private Vector3 movementInput;
-
     // Input value for resetting vehicle rotation
     bool resetVehicle = false;
 
     // Temporary input in Update
-    void Update()
+    public override void Update()
     {
-        float movementInputZ = 0;
-        if (Input.GetKey(KeyCode.Space))
-            movementInputZ = 1;
-        if (Input.GetKey(KeyCode.LeftShift))
-            movementInputZ = -1;
-
-        movementInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movementInputZ);
+        base.Update();
 
         // Random button for resetting rotation
         resetVehicle = Input.GetKey(KeyCode.F);
     }
 
-    private void FixedUpdate()
+    public override void FixedUpdate()
     {
         // Wordt in toekomst aangeroepn met Unity event en Input Actions
-        RotateVehicleMovement(movementInput);
+        base.FixedUpdate();
         ResetVehicleRotation(resetVehicle);
     }
 
@@ -51,11 +30,12 @@ public class RotateVehicleCameraController : MonoBehaviour
      *      Zoom(inputVector.z);
      * }
      */
-    private void RotateVehicleMovement(Vector3 inputVector)
+    public override void RotateVehicleMovement(Vector3 inputVector)
     {
         vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
             inputVector.x * -horizontalRotateSpeed, 0, Space.World);
         Zoom(inputVector.z);
+        Debug.Log("help");
     }
 
     //! Lets the player zoom in and out of the vehicle
@@ -63,7 +43,7 @@ public class RotateVehicleCameraController : MonoBehaviour
      * Zoom limit is calculated based (z-axis) distance towards core block.
      * this prevents the player from moving through it (or to far away)
      */
-    private void Zoom(float zoomDirection)
+    public override void Zoom(float zoomDirection)
     {
         zoomDirection /= ZOOM_SPEED_DAMPNER;
 
@@ -83,6 +63,7 @@ public class RotateVehicleCameraController : MonoBehaviour
         if (value)
         {
             vehicleCore.transform.rotation = new Quaternion(0, 0, 0, 0);
+            Debug.Log("Reset");
         }
     }
     /* Ook hier weer integratie voor new input system:
