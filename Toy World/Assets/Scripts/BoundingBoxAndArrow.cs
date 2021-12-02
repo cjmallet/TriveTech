@@ -8,8 +8,9 @@ public class BoundingBoxAndArrow : MonoBehaviour
     public float boxW { get; set; }
     public float boxH { get; set; }
 
-    public float arrowL { get; set; }
     public float arrowW { get; set; }
+    public float arrowL { get; set; }
+    
 
 
     public BoundingBoxAndArrow()
@@ -17,5 +18,8 @@ public class BoundingBoxAndArrow : MonoBehaviour
         this.boxW = 20f;
         this.boxL = 20f;
         this.boxH = 10f;
+
+        this.arrowW = 10f;
+        this.arrowL = 10f;
     }
 }

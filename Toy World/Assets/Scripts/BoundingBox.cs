@@ -6,10 +6,10 @@ public class BoundingBox : BoundingBoxAndArrow
 {
     void Start()
     {
-        CreateBoundingBoxWithArrow();
+        CreateBoundingBox();
     }
 
-    private void CreateBoundingBoxWithArrow()
+    private void CreateBoundingBox()
     {
         Vector3[] vertices = {
 
@@ -50,24 +50,43 @@ public class BoundingBox : BoundingBoxAndArrow
         };
 
         Vector2[] uvs = {
-            new Vector2(0, (2f / 3f)),
-            new Vector2(0.25f, (2f / 3f)),
-            new Vector2(0, (1f / 3f)),
-            new Vector2(0.25f, (1f / 3f)),
+            new Vector2(0, 0.625f),
+            new Vector2(0.25f, 0.625f),
+            new Vector2(0, 0.375f),
+            new Vector2(0.25f, 0.375f),
 
-            new Vector2(0.5f, (2f / 3f)),
-            new Vector2(0.5f, (1f / 3f)),
-            new Vector2(0.75f, (2f / 3f)),
-            new Vector2(0.75f, (1f / 3f)),
+            new Vector2(0.5f, 0.625f),
+            new Vector2(0.5f, 0.375f),
+            new Vector2(0.75f, 0.625f),
+            new Vector2(0.75f, 0.375f),
 
-            new Vector2(1, (2f / 3f)),
-            new Vector2(1, (1f / 3f)),
+            new Vector2(1, 0.625f),
+            new Vector2(1, 0.375f),
 
-            new Vector2(0.25f, 1),
-            new Vector2(0.5f, 1),
+            new Vector2(0.25f, 0.875f),
+            new Vector2(0.5f, 0.875f),
 
-            new Vector2(0.25f, 0),
-            new Vector2(0.5f, 0),
+            new Vector2(0.25f, 0.125f),
+            new Vector2(0.5f, 0.125f)
+
+            //new Vector2(0, 1),
+            //new Vector2(1, 1),
+            //new Vector2(0, 0),
+            //new Vector2(1, 0),
+
+            //new Vector2(0, 0),
+            //new Vector2(0, 1),
+            //new Vector2(1, 1),
+            //new Vector2(1, 0),
+
+            //new Vector2(1, 1),
+            //new Vector2(1, 0),
+
+            //new Vector2(1, 1),
+            //new Vector2(0, 1),
+
+            //new Vector2(1, 1),
+            //new Vector2(0, 1),
         };
 
         Mesh mesh = GetComponent<MeshFilter>().mesh;
