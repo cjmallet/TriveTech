@@ -12,7 +12,7 @@ public class VehicleMovement : MonoBehaviour
     public List<MovementPart> movementParts;
     private List<Collider> colliders = new List<Collider>();
     private Rigidbody rigidBody;
-    private Vector3 movement, rotation;
+    private Vector3 eulerRot, movement;
     public int movementSpeed { get; set; }
 
     public VehicleMovement()
@@ -23,8 +23,6 @@ public class VehicleMovement : MonoBehaviour
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-
-        movementParts = FindObjectsOfType<MovementPart>().ToList();
 
         if (movementParts.Count != 0)
         {
@@ -37,14 +35,21 @@ public class VehicleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rigidBody.AddRelativeForce(movement);
 
+        Quaternion deltaRot = Quaternion.Euler(eulerRot * Time.fixedDeltaTime);
+        rigidBody.MoveRotation(rigidBody.rotation * deltaRot);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         if (enabled && context.performed)
         {
-            
+            movement = new Vector3(0, 0, context.ReadValue<Vector3>().z);
+            movement *= movementSpeed;
+
+            eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
+            eulerRot *= movementSpeed;
         }
     }
 
