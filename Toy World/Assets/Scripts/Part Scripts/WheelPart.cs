@@ -13,6 +13,11 @@ public class WheelPart : MovementPart
         this.mass = myMass;
     }
 
+    public override bool IsGrounded()
+    {
+        return base.IsGrounded();
+    }
+
     /*
     public float steeringAngle { get; set; }
     private const int STEERINGMAX = 30;
