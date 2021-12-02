@@ -52,19 +52,15 @@ public class VehicleMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            foreach (ContactPoint contact in collision.contacts.Where(x => !colliders.Contains(x.thisCollider) && 
-            x.thisCollider.gameObject.TryGetComponent(out MovementPart part))) // gotta fix memory issue
+            for (int i = 0; i < collision.contactCount; i++)
             {
-                colliders.Add(contact.thisCollider);
-                contact.thisCollider.gameObject.GetComponent<MovementPart>().grounded = true;
+                if (!colliders.Contains(collision.GetContact(i).thisCollider))
+                    colliders.Add(collision.GetContact(i).thisCollider);
             }
         }
         else if (collision.gameObject.tag != "Ground")
         {
-            foreach (ContactPoint contact in collision.contacts.Where(x => !colliders.Contains(x.thisCollider)))
-            {
-                // do something
-            }
+
         }
     }
 
@@ -72,11 +68,10 @@ public class VehicleMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            foreach (ContactPoint contact in collision.contacts.Where(x => colliders.Contains(x.thisCollider) && 
-            x.thisCollider.gameObject.TryGetComponent(out MovementPart part)))
+            for (int i = 0; i < collision.contactCount; i++)
             {
-                colliders.Remove(contact.thisCollider);
-                contact.thisCollider.gameObject.GetComponent<MovementPart>().grounded = false;
+                if (colliders.Contains(collision.GetContact(i).thisCollider))
+                    colliders.Remove(collision.GetContact(i).thisCollider);
             }
         }
         else if (collision.gameObject.tag != "Ground")
