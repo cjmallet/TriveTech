@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
- * ROUND OFF EVERY NORMAL, ROTATION AND POSITION USED to fit in a grid
- * Delete part function tool
- * foolproof the editor for whack non-90 degrees rotations
  * if preview part doesn't fit, show it with a red material
  * actually for the part class, but make it so you can have parts that are bigger than 1x1x1
  */
@@ -31,6 +28,8 @@ public class VehicleEditor : MonoBehaviour
     private GameObject previewedPart;
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
+    private Camera mainCam;
+    public Camera vehicleCam;
 
 
     void Awake()
@@ -44,6 +43,9 @@ public class VehicleEditor : MonoBehaviour
     void Start()
     {
         SetSelectedPart(selectedPart);
+        mainCam = Camera.main;
+        if (vehicleCam == null)
+            vehicleCam = coreBlock.GetComponentInChildren<Camera>();
     }
 
     void Update()
@@ -57,12 +59,44 @@ public class VehicleEditor : MonoBehaviour
         {
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
-            coreBlock.GetComponent<VehicleMovement>().movementParts = FindObjectsOfType<MovementPart>().ToList();
-            Camera.main.GetComponent<FPSCameraControllers>().enabled = false;
-            Camera.main.enabled = false;
-            coreBlock.GetComponentInChildren<Camera>().enabled = true;
+
+            // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
+            List<Part> parts = FindObjectsOfType<Part>().ToList();
+
+            // Remove direction indication
+            foreach (Part vehiclePart in parts)
+            {
+                // Fill list with movement parts for movement script
+                if (vehiclePart is MovementPart)
+                    coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
+
+                // Remove direction indication
+                if (vehiclePart.useDirectionIndicator)
+                    vehiclePart.ToggleDirectionIndicator(false);
+            }
+
+            mainCam.gameObject.SetActive(false);
+            vehicleCam.enabled = true;
             playan = true;
-            Destroy(previewedPart);
+            previewedPart.SetActive(false);
+        }
+        else if (context.performed && playan)
+        {
+            List<Part> parts = FindObjectsOfType<Part>().ToList();
+            foreach (Part part in parts)
+            {
+                if (part.useDirectionIndicator)
+                    part.ToggleDirectionIndicator(true);
+            }
+
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
+            Destroy(coreBlock.GetComponent<Rigidbody>());
+            Destroy(coreBlock.GetComponent<VehicleMovement>());
+            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
+            mainCam.gameObject.SetActive(true);
+
+            playan = false;
         }
     }
 
@@ -159,8 +193,9 @@ public class VehicleEditor : MonoBehaviour
 
     public void SetSelectedPart(GameObject slctPart)
     {
-        Destroy(previewedPart);
         selectedPart = slctPart;
+        //instantiate the selected part for previewing
+        Destroy(previewedPart);
         previewedPart = Instantiate(selectedPart, coreBlock.transform);
         if (previewedPart.TryGetComponent(out Collider col))
         {
@@ -172,19 +207,11 @@ public class VehicleEditor : MonoBehaviour
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
-        if (buildUIOpen)
+        if (buildUIOpen || !Camera.main.GetComponent<FPSCameraControllers>().enabled) // If FPS camera controller is disabled cursor is always unlocked
             Cursor.lockState = CursorLockMode.None;
         else
             Cursor.lockState = CursorLockMode.Locked;
     }
-
-    /* instantiate 3D array in which every part has it's coordinates 
-     * hype
-     * check if raycast hits part
-     * check if part has available slot there. 
-     * 
-     * if it fits. Click to place the part and tell
-    */
 
 
     /// <summary>

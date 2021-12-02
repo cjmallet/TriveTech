@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSize: 100
   zSize: 100
-  noiseEffectiveness: 0.15
+  noiseEffectiveness: 0.07
   offsetX: 100
   offsetY: 100
   isMovingTerrain: 0

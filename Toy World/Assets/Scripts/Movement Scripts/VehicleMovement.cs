@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class VehicleMovement : MonoBehaviour
 {
-    public List<MovementPart> movementParts;
+    public List<MovementPart> movementParts = new List<MovementPart>();
     private List<Collider> colliders = new List<Collider>();
     private Rigidbody rigidBody;
     private Vector3 eulerRot, movement;
