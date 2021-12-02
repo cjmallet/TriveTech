@@ -39,9 +39,6 @@ public class RotatingCameraController : MonoBehaviour
     /* Wordt in de toekomst something like:
      * public void RotateVehicle(InputAction.CallbackContext context)
      * {
-     *      Vector3 inputVector = context.ReadValue<Vector3>();
-     *      vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
-     *      inputVector.x * -horizontalRotateSpeed, 0, Space.World);
      *      Zoom(inputVector.z);
      * }
      */

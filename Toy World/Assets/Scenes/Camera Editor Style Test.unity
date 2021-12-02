@@ -160,6 +160,7 @@ MonoBehaviour:
   partRotation: {x: 0, y: 0, z: 0, w: 0}
   coreBlock: {fileID: 0}
   selectedPart: {fileID: 3099009681357930406, guid: b5235ee28d97d2c49b8f83f0fa3df775, type: 3}
+  vehicleCam: {fileID: 0}
 --- !u!4 &521375685
 Transform:
   m_ObjectHideFlags: 0
@@ -428,6 +429,7 @@ GameObject:
   - component: {fileID: 1369909578}
   - component: {fileID: 1369909582}
   - component: {fileID: 1369909583}
+  - component: {fileID: 1369909584}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -582,7 +584,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369909576}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37bd83f2ccb0e2a469b3444eb89756ca, type: 3}
   m_Name: 
@@ -593,6 +595,26 @@ MonoBehaviour:
   minZoomOutDistance: 2
   maxZoomOutDistance: 20
   vehicleCore: {fileID: 120727267}
+  movementInput: {x: 0, y: 0, z: 0}
+--- !u!114 &1369909584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369909576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184739be8779d934f90779ec7527330b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontalRotateSpeed: 2
+  verticalRotateSpeed: 2
+  cameraZoomSpeed: 1
+  minZoomOutDistance: 2
+  maxZoomOutDistance: 20
+  vehicleCore: {fileID: 120727267}
+  movementInput: {x: 0, y: 0, z: 0}
 --- !u!1 &1463421483
 GameObject:
   m_ObjectHideFlags: 0

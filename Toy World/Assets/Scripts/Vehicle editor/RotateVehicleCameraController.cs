@@ -26,8 +26,8 @@ public class RotateVehicleCameraController : RotatingCameraController
      * {
      *      Vector3 inputVector = context.ReadValue<Vector3>();
      *      vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
-     *      inputVector.x * -horizontalRotateSpeed, 0, Space.World);
-     *      Zoom(inputVector.z);
+     *          inputVector.x * -horizontalRotateSpeed, 0, Space.World);
+     *      base.RotateVehicleMovement(inputVector);
      * }
      */
     public override void RotateVehicleMovement(Vector3 inputVector)
