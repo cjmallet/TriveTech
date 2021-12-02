@@ -207,7 +207,7 @@ public class VehicleEditor : MonoBehaviour
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
-        if (buildUIOpen)
+        if (buildUIOpen || !Camera.main.GetComponent<FPSCameraControllers>().enabled) // If FPS camera controller is disabled cursor is always unlocked
             Cursor.lockState = CursorLockMode.None;
         else
             Cursor.lockState = CursorLockMode.Locked;
