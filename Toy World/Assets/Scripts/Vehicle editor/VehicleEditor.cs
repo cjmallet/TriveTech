@@ -65,6 +65,7 @@ public class VehicleEditor : MonoBehaviour
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
+            coreBlock.GetComponent<VehicleMovement>().allParts = parts;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)

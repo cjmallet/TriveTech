@@ -10,10 +10,12 @@ using UnityEngine.InputSystem;
 public class VehicleMovement : MonoBehaviour
 {
     public List<MovementPart> movementParts = new List<MovementPart>();
+    [HideInInspector]
+    public List<Part> allParts = new List<Part>();
     private Rigidbody rigidBody;
     private Vector3 eulerRot, movement;
-    public int movementSpeed;
-    public int rotationSpeed;
+    public int movementSpeed { get; set; }
+    public int rotationSpeed { get; set; }
 
     public VehicleMovement()
     {
@@ -29,9 +31,23 @@ public class VehicleMovement : MonoBehaviour
 
         if (movementParts.Count != 0)
         {
+            foreach (Part part in allParts)
+            {
+                rigidBody.mass += part.Weight;
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        movementSpeed = 0;
+        rotationSpeed = 0;
+
+        if (movementParts.Count != 0)
+        {
             foreach (MovementPart part in movementParts)
             {
-                rigidBody.mass += part.mass;
+                part.grounded = false;
             }
         }
     }
@@ -50,7 +66,7 @@ public class VehicleMovement : MonoBehaviour
 
         foreach (MovementPart part in movementParts)
         {
-            if ( part.IsGrounded() && !part.grounded)
+            if (part.IsGrounded() && !part.grounded)
             {
                 movementSpeed += part.moveSpeedModifier;
                 rotationSpeed += part.rotationSpeedModifier;
@@ -70,10 +86,31 @@ public class VehicleMovement : MonoBehaviour
         if (enabled && context.performed)
         {
             movement = new Vector3(0, 0, context.ReadValue<Vector3>().z);
-            movement *= movementSpeed;
-
             eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
+
+            movement *= movementSpeed;
             eulerRot *= rotationSpeed;
+
+            if (eulerRot.y == 0)
+            {
+                foreach (MovementPart part in movementParts)
+                    part.NoTurning();
+            }
+            
+            if (movement.z == 0)
+            {
+                foreach (MovementPart part in movementParts)
+                    part.NoMoving();
+            }
+            
+            if (eulerRot.y != 0 || movement.z != 0)
+            {
+                foreach (MovementPart part in movementParts)
+                {
+                    part.VerticalMovement(moveAmount: movement.z / movementParts.Count);
+                    part.HorizontalMovement(turnAmount: eulerRot.y / movementParts.Count);
+                }
+            }
         }
     }
 }

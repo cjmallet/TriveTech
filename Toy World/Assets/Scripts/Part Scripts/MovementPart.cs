@@ -9,7 +9,6 @@ public class MovementPart : Part
 
     public int moveSpeedModifier { get; set; }
     public int rotationSpeedModifier { get; set; }
-    public float mass { get; set; }
 
     public MovementPart()
     {
@@ -42,29 +41,23 @@ public class MovementPart : Part
         }
     }
 
-    /*
-    public virtual void ForwardAction(float moveAmount)
+    public virtual void VerticalMovement(float moveAmount)
     {
         
     }
 
-    public virtual void BackwardAction(float moveAmount)
+    public virtual void HorizontalMovement(float turnAmount)
     {
 
     }
 
-    public virtual void LeftAction(float turnAmount)
+    public virtual void NoTurning()
     {
 
     }
 
-    public virtual void RightAction(float turnAmount)
+    public virtual void NoMoving()
     {
 
     }
-
-    public virtual void StopAction(bool stopped)
-    {
-
-    }*/ // Old system
 }
