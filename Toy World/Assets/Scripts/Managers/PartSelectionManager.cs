@@ -8,10 +8,13 @@ using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject PartSelectionCanvas, CrossHair, ButtonPrefab, contentHolder;
-    [SerializeField] private List<GameObject> parts;
+    [SerializeField] private GameObject partSelectionCanvas, crossHair, buttonPrefab;
 
-    private GameObject[] partPrefabs;
+    //All lists for the UI categories
+    private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
+    private List<GameObject> categoryHolders = new List<GameObject>();
+
+    private int categoryIndex;
     //private GameObject selectedPart;
 
     /// <summary>
@@ -19,20 +22,74 @@ public class PartSelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        foreach (GameObject part in parts)
+        foreach (ScrollRect categoryHolder in partSelectionCanvas.GetComponentsInChildren<ScrollRect>())
         {
-            GameObject newButton=Instantiate(ButtonPrefab,contentHolder.transform);
-            newButton.name = part.name;
-            newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+            categoryHolders.Add(categoryHolder.gameObject);
         }
 
-        partPrefabs = Resources.LoadAll("Parts", typeof(GameObject)).Cast<GameObject>().ToArray();
-
-        foreach (GameObject part in partPrefabs)
+        movementParts = LoadParts("movementParts");
+        foreach (GameObject part in movementParts)
         {
-            Debug.Log(part.name);
+            CreateButton(part, "Movement");
         }
+
+        meleeParts = LoadParts("meleeParts");
+        foreach (GameObject part in meleeParts)
+        {
+            CreateButton(part, "Melee");
+        }
+
+        utilityParts = LoadParts("utilityParts");
+        foreach (GameObject part in utilityParts)
+        {
+            CreateButton(part, "Utility");
+        }
+
+        defenceParts = LoadParts("defenceParts");
+        foreach (GameObject part in defenceParts)
+        {
+            CreateButton(part, "Defence");
+        }
+
+        rangedParts = LoadParts("rangedParts");
+        foreach (GameObject part in rangedParts)
+        {
+            CreateButton(part, "Ranged");
+        }
+
+        chassisParts = LoadParts("chassisParts");
+        foreach (GameObject part in chassisParts)
+        {
+            CreateButton(part, "Chassis");
+        }
+
+        ChangeCategory("Chassis");
+    }
+
+    private void Update()
+    {
+
+    }
+
+    private List<GameObject> LoadParts(string partName)
+    {
+        return Resources.LoadAll("Parts/"+partName, typeof(GameObject)).Cast<GameObject>().ToList();
+    }
+
+    private void CreateButton(GameObject part, string Category)
+    {
+        for (int x=0; x<categoryHolders.Count;x++)
+        {
+            if (categoryHolders[x].name.Contains(Category))
+            {
+                categoryIndex = x;
+            }
+        }
+
+        GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
+        newButton.name = part.name;
+        newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
+        newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
     }
 
     public void BuildButton(InputAction.CallbackContext context)
@@ -42,11 +99,6 @@ public class PartSelectionManager : MonoBehaviour
             VehicleEditor._instance.ChangeActiveBuildState();
             ClosePartSelectionUI();
         }
-    }
-
-    private void Update()
-    {
-        
     }
 
     /// <summary>
@@ -59,13 +111,28 @@ public class PartSelectionManager : MonoBehaviour
         VehicleEditor._instance.SetSelectedPart(chosenPart);
     }
 
+    public void ChangeCategory(string categoryName)
+    {
+        foreach (GameObject category in categoryHolders)
+        {
+            if (category.name.Contains(categoryName))
+            {
+                category.SetActive(true);
+            }
+            else
+            {
+                category.SetActive(false);
+            }
+        }
+    }
+
     /// <summary>
     /// Close the Canvas of the part selection
     /// </summary>
     public void ClosePartSelectionUI()
     {
-        PartSelectionCanvas.SetActive(!PartSelectionCanvas.activeSelf);
-        CrossHair.SetActive(!CrossHair.activeSelf);
+        partSelectionCanvas.SetActive(!partSelectionCanvas.activeSelf);
+        crossHair.SetActive(!crossHair.activeSelf);
         FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
     }
 }
