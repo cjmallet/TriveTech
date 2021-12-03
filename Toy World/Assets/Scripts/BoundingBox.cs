@@ -68,25 +68,6 @@ public class BoundingBox : BoundingBoxAndArrow
 
             new Vector2(0.25f, 0.125f),
             new Vector2(0.5f, 0.125f)
-
-            //new Vector2(0, 1),
-            //new Vector2(1, 1),
-            //new Vector2(0, 0),
-            //new Vector2(1, 0),
-
-            //new Vector2(0, 0),
-            //new Vector2(0, 1),
-            //new Vector2(1, 1),
-            //new Vector2(1, 0),
-
-            //new Vector2(1, 1),
-            //new Vector2(1, 0),
-
-            //new Vector2(1, 1),
-            //new Vector2(0, 1),
-
-            //new Vector2(1, 1),
-            //new Vector2(0, 1),
         };
 
         Mesh mesh = GetComponent<MeshFilter>().mesh;

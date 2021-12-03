@@ -14,7 +14,7 @@ public class DirectionArrowBoundingBox : BoundingBoxAndArrow
     {
         Vector3[] vertices = {
 
-           // Create bounding box
+           // Create Arrow
             new Vector3(0, 0, 0),
             new Vector3(arrowW, 0, 0),
             new Vector3(0, 0, arrowL),
@@ -22,7 +22,7 @@ public class DirectionArrowBoundingBox : BoundingBoxAndArrow
         };
 
         int[] triangles = {
-            0, 2, 1, // front
+            0, 2, 1, 
 			1, 2, 3
         };
 
@@ -31,8 +31,6 @@ public class DirectionArrowBoundingBox : BoundingBoxAndArrow
             new Vector2(1, 0),
             new Vector2(0, 1),
             new Vector2(1, 1),
-
-           
         };
 
         Mesh mesh = GetComponent<MeshFilter>().mesh;

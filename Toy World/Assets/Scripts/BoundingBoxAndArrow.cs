@@ -19,7 +19,7 @@ public class BoundingBoxAndArrow : MonoBehaviour
         this.boxL = 20f;
         this.boxH = 10f;
 
-        this.arrowW = 10f;
-        this.arrowL = 10f;
+        this.arrowW = 5f;
+        this.arrowL = 5f;
     }
 }
