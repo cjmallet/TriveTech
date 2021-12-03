@@ -202,6 +202,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementParts: []
+--- !u!114 &131919413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: 89a270a2-47eb-4ebf-8b7e-3f0c8f41d49c
 --- !u!1 &220404200
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,8 +390,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 355919138}
   m_HandleRect: {fileID: 355919137}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -503,8 +517,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2022586703}
   m_HandleRect: {fileID: 2022586702}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -758,6 +772,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328463168}
   m_CullTransparentMesh: 1
+--- !u!114 &340097488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: 4c3956cd-e3c8-409a-9594-0de98eee115d
 --- !u!1 &347408712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,8 +1244,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 280230494}
   m_HandleRect: {fileID: 280230493}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2034,7 +2062,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2064,6 +2092,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Movement
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 950933481}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &950933484
@@ -2141,6 +2181,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &970348973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: 02b85870-e287-464b-b7de-7fe301e544fe
 --- !u!1 &1037189981
 GameObject:
   m_ObjectHideFlags: 0
@@ -2224,8 +2278,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1448593280}
   m_HandleRect: {fileID: 1448593279}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2412,8 +2466,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1215955905}
   m_HandleRect: {fileID: 1215955904}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2456,6 +2510,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088929215}
   m_CullTransparentMesh: 1
+--- !u!114 &1158208705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: a5f99132-54ac-4f77-befc-84ba994eeb24
 --- !u!1 &1215955903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,8 +2818,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1966208978}
   m_HandleRect: {fileID: 1966208977}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2877,8 +2945,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 347408714}
   m_HandleRect: {fileID: 347408713}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3114,8 +3182,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 401652146}
   m_HandleRect: {fileID: 401652145}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3576,8 +3644,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1619200872}
   m_HandleRect: {fileID: 1619200871}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3684,7 +3752,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3714,6 +3782,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Melee
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1408303694}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1408303697
@@ -3893,18 +3973,18 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_PointAction: {fileID: 1158208705}
+  m_MoveAction: {fileID: 340097488}
+  m_SubmitAction: {fileID: 1494988260}
+  m_CancelAction: {fileID: 970348973}
+  m_LeftClickAction: {fileID: 1489054626}
+  m_MiddleClickAction: {fileID: 1668664515}
+  m_RightClickAction: {fileID: -4261936817368511195, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ScrollWheelAction: {fileID: 131919413}
+  m_TrackedDevicePositionAction: {fileID: 1598972471792920959, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -4164756987724799568, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
 --- !u!1 &1471716377
 GameObject:
@@ -3970,7 +4050,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4000,6 +4080,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Chassis
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1471716377}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1471716380
@@ -4104,7 +4196,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4134,6 +4226,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Ranged
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1483205447}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1483205450
@@ -4174,6 +4278,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483205447}
   m_CullTransparentMesh: 1
+--- !u!114 &1489054626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: 302a7c8a-ec79-4627-905c-1ca5b278069e
 --- !u!1 &1491714412
 GameObject:
   m_ObjectHideFlags: 0
@@ -4265,6 +4383,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491714412}
   m_CullTransparentMesh: 1
+--- !u!114 &1494988260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: b7be71a7-a8f1-497b-b048-ae1c21ae6686
 --- !u!1 &1522909077
 GameObject:
   m_ObjectHideFlags: 0
@@ -4348,8 +4480,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 511929484}
   m_HandleRect: {fileID: 511929483}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4456,7 +4588,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4486,6 +4618,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Defence
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1544934643}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1544934646
@@ -5069,7 +5213,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0, g: 0.6509804, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5099,6 +5243,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Utility
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1578364982}
+        m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
+        m_MethodName: ChangeSelectedButton
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1653945664}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1653945667
@@ -5230,6 +5386,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667438959}
   m_CullTransparentMesh: 1
+--- !u!114 &1668664515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Asset: {fileID: -944628639613478452, guid: 540865a1d747bf04c9a34d34512a96c6, type: 3}
+  m_ActionId: afa2436e-2244-4022-a98e-17a4c4066fc4
 --- !u!1 &1713605639
 GameObject:
   m_ObjectHideFlags: 0
@@ -6180,8 +6350,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3162971421767411042}
   m_HandleRect: {fileID: 3162971421767411043}
   m_Direction: 2
-  m_Value: 0.530303
-  m_Size: 0.9999946
+  m_Value: 0.5538462
+  m_Size: 0.9999947
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6425,8 +6595,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3162971420303303816}
   m_HandleRect: {fileID: 3162971420303303817}
   m_Direction: 0
-  m_Value: -0.000002224638
-  m_Size: 0.95704937
+  m_Value: -0.0000029661885
+  m_Size: 0.9570494
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6975,6 +7145,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3162971421623312983}
     - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: selectedButton
+      value: 
+      objectReference: {fileID: 1471716377}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: PartSelectionCanvas
       value: 
       objectReference: {fileID: 2791539249823447297}
@@ -7030,6 +7204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3828433662096557566, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1463421487}
     - target: {fileID: 3828433662096557566, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
       value: 3

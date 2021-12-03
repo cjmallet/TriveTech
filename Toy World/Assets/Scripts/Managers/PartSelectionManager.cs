@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
     [SerializeField] private GameObject partSelectionCanvas, crossHair, buttonPrefab;
+    [SerializeField] private GameObject selectedButton;
 
     //All lists for the UI categories
     private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
     private List<GameObject> categoryHolders = new List<GameObject>();
 
     private int categoryIndex;
+    private EventSystem eventSystem;
     //private GameObject selectedPart;
 
     /// <summary>
@@ -22,6 +25,9 @@ public class PartSelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        eventSystem = EventSystem.current;
+        ChangeSelectedButton(selectedButton);
+
         foreach (ScrollRect categoryHolder in partSelectionCanvas.GetComponentsInChildren<ScrollRect>())
         {
             categoryHolders.Add(categoryHolder.gameObject);
@@ -134,5 +140,21 @@ public class PartSelectionManager : MonoBehaviour
         partSelectionCanvas.SetActive(!partSelectionCanvas.activeSelf);
         crossHair.SetActive(!crossHair.activeSelf);
         FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
+        eventSystem.SetSelectedGameObject(selectedButton);
+    }
+
+    public void ChangeSelectedButton(GameObject button)
+    {
+        /*ColorBlock colors = selectedButton.GetComponent<Button>().colors;
+        colors.normalColor= new Color(0, 166, 255, 255);
+        selectedButton.GetComponent<Button>().colors = colors;
+        /*selectedButton.GetComponent<Image>().color = new Color(191, 191, 191, 255);
+        selectedButton.GetComponent<Button>().enabled = true;
+    
+
+        button.GetComponent<Image>().color = new Color(0, 166, 255, 255);
+        button.GetComponent<Button>().enabled = false;
+        */
+        selectedButton = button;
     }
 }
