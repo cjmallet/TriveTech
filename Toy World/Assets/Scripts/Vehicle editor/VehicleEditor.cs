@@ -25,6 +25,9 @@ public class VehicleEditor : MonoBehaviour
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
 
+    private GameObject BoundingBoxPrefab;
+    private GameObject BoundingBox;
+
     private GameObject previewedPart;
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
@@ -45,7 +48,11 @@ public class VehicleEditor : MonoBehaviour
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
         if (vehicleCam == null)
+        {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
+        }
+
+        CreateBoundingBox();
     }
 
     void Update()
@@ -85,6 +92,7 @@ public class VehicleEditor : MonoBehaviour
             vehicleCam.enabled = true;
             playan = true;
             previewedPart.SetActive(false);
+            BoundingBox.SetActive(false);
         }
         else if (context.performed && playan)
         {
@@ -101,6 +109,7 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
+            BoundingBox.SetActive(true);
 
             playan = false;
         }
@@ -218,6 +227,16 @@ public class VehicleEditor : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.Locked;
     }
+
+    private void CreateBoundingBox()
+    {
+        BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
+        BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
+        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f,
+                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.75f,
+                                                    coreBlock.transform.position.z - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
+    }
+
 
 
     /// <summary>
