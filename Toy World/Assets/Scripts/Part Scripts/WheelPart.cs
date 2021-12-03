@@ -29,20 +29,36 @@ public class WheelPart : MovementPart
 
     public override void VerticalMovement(float moveAmount)
     {
-        //Debug.Log(moveAmount);
-
-        /*if (moveAmount > 0) // forward
+        if (moveAmount != 0)
         {
-            transform.GetChild(1).Rotate(0, -moveAmount * rotationSpeed, 0);
             moving = true;
-            CenterWheel(CENTERSPEED);
+            StopCoroutine(MoveWheel(moveAmount));
+            StartCoroutine(MoveWheel(moveAmount));
         }
-        else if (moveAmount < 0) // backward
+    }
+
+    private IEnumerator MoveWheel(float moveAmount)
+    {
+        transform.GetChild(1).Rotate(0, -moveAmount * Time.deltaTime * rotationSpeed, 0);
+        CenterWheel(CENTERSPEED);
+
+        yield return new WaitForEndOfFrame();
+
+        if (moving)
+            yield return StartCoroutine(MoveWheel(moveAmount));
+        else
+            yield break;
+    }
+
+    public override void HorizontalMovement(float turnAmount)
+    {
+        // left is -1, right is 1
+        if (turnAmount != 0)
         {
-            transform.GetChild(1).Rotate(0, moveAmount * rotationSpeed, 0);
-            moving = true;
-            CenterWheel(CENTERSPEED);
-        }*/
+            turning = true;
+            StopCoroutine(TurnWheel(turnAmount));
+            StartCoroutine(TurnWheel(turnAmount));
+        }          
     }
 
     private IEnumerator TurnWheel(float turnAmount)
@@ -69,16 +85,8 @@ public class WheelPart : MovementPart
 
         if (turning)
             yield return StartCoroutine(TurnWheel(turnAmount));
-    }
-
-    public override void HorizontalMovement(float turnAmount)
-    {
-        // left is -1, right is 1
-        if (turnAmount != 0)
-        {
-            turning = true;
-            StartCoroutine(TurnWheel(turnAmount));
-        }          
+        else
+            yield break;
     }
 
     public override void NoTurning()
@@ -91,19 +99,11 @@ public class WheelPart : MovementPart
         moving = false;
     }
 
-    /*private void CenterWheel(float CenterSpeed)
+    private void CenterWheel(float CenterSpeed)
     {
-        if (!turning && transform.localEulerAngles.y != 0 && (CheckIfRight))
+        if (transform.localEulerAngles.y != 0 && !turning)
         {
-            transform.Rotate(0, -CenterSpeed, 0);
+            
         }
-        else if (!turning && transform.localEulerAngles.y != 0 && (CheckIfLeft))
-        {
-            transform.Rotate(0, CenterSpeed, 0);
-        }
-
-        if (transform.localEulerAngles.y > -0.05f && transform.localEulerAngles.y < 0.05f)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
-        
-    }*/
+    }
 }
