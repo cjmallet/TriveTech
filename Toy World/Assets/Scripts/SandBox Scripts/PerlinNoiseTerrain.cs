@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PerlinNoiseTerrain : MonoBehaviour
 {
@@ -23,25 +24,32 @@ public class PerlinNoiseTerrain : MonoBehaviour
     //! Variable to enable moving terrain (not needed for sand)
     public bool isMovingTerrain = false;
 
+    //! Variable for the 
+    private NavMeshSurface navSurface;
+
     //! Initializes and creates mesh, sets random perlinnoise positions.
     void Awake()
     {
         mesh = GetComponent<MeshFilter>().mesh;
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
-        CreateMeshShape();       
+        CreateMeshShape();
+        UpdateMesh();
+
+        navSurface = gameObject.GetComponentInChildren<NavMeshSurface>();
+        navSurface.BuildNavMesh();
     }
 
     //! Update mesh each frame and increase the offset for moving terrain.
     void FixedUpdate()
     {
-        CreateMeshShape();
-        if (isMovingTerrain)
-        {
-            offsetX += Time.deltaTime;
-            offsetY += Time.deltaTime;
-        }
-        UpdateMesh();
+        //CreateMeshShape();
+        //if (isMovingTerrain)
+        //{
+        //    offsetX += Time.deltaTime;
+        //    offsetY += Time.deltaTime;
+        //}
+        //UpdateMesh();
     }
 
     //! Draws triangles between vertices
