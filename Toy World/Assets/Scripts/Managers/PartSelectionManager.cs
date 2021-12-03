@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,7 @@ public class PartSelectionManager : MonoBehaviour
     [SerializeField] private GameObject PartSelectionCanvas, CrossHair, ButtonPrefab, contentHolder;
     [SerializeField] private List<GameObject> parts;
 
+    private GameObject[] partPrefabs;
     //private GameObject selectedPart;
 
     /// <summary>
@@ -23,6 +25,13 @@ public class PartSelectionManager : MonoBehaviour
             newButton.name = part.name;
             newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+        }
+
+        partPrefabs = Resources.LoadAll("Parts", typeof(GameObject)).Cast<GameObject>().ToArray();
+
+        foreach (GameObject part in partPrefabs)
+        {
+            Debug.Log(part.name);
         }
     }
 
