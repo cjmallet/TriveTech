@@ -147,14 +147,14 @@ public class PartSelectionManager : MonoBehaviour
     {
         /*ColorBlock colors = selectedButton.GetComponent<Button>().colors;
         colors.normalColor= new Color(0, 166, 255, 255);
-        selectedButton.GetComponent<Button>().colors = colors;
-        /*selectedButton.GetComponent<Image>().color = new Color(191, 191, 191, 255);
+        selectedButton.GetComponent<Button>().colors = colors;*/
+        selectedButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         selectedButton.GetComponent<Button>().enabled = true;
     
 
-        button.GetComponent<Image>().color = new Color(0, 166, 255, 255);
+        button.GetComponent<Image>().color = new Color32(0, 166, 255, 255);
         button.GetComponent<Button>().enabled = false;
-        */
+        
         selectedButton = button;
     }
 }
