@@ -11,6 +11,7 @@ public class PartSelectionManager : MonoBehaviour
 {
     [SerializeField] private GameObject partSelectionCanvas, crossHair, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
+    [SerializeField] private bool fpsCamera;
 
     //All lists for the UI categories
     private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
@@ -18,7 +19,6 @@ public class PartSelectionManager : MonoBehaviour
 
     private int categoryIndex;
     private EventSystem eventSystem;
-    //private GameObject selectedPart;
 
     /// <summary>
     /// Initialize the Part selection UI and the button listeners
@@ -70,6 +70,11 @@ public class PartSelectionManager : MonoBehaviour
         }
 
         ChangeCategory("Chassis");
+
+        if (!fpsCamera)
+        {
+            VehicleEditor._instance.ChangeActiveBuildState();
+        }
     }
 
     private void Update()
@@ -95,12 +100,20 @@ public class PartSelectionManager : MonoBehaviour
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
         newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-        newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+
+        if (!fpsCamera)
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); /*VehicleEditor._instance.ChangeActiveBuildState();*/ });
+        }
+        else
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+        }
     }
 
     public void BuildButton(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed&&fpsCamera)
         {
             VehicleEditor._instance.ChangeActiveBuildState();
             ClosePartSelectionUI();
@@ -113,7 +126,7 @@ public class PartSelectionManager : MonoBehaviour
     /// <param name="chosenPart"></param>
     public void ChangeSelectedPart(GameObject chosenPart)
     {
-        //selectedPart = chosenPart;
+        Debug.Log("yes");
         VehicleEditor._instance.SetSelectedPart(chosenPart);
     }
 
@@ -137,17 +150,18 @@ public class PartSelectionManager : MonoBehaviour
     /// </summary>
     public void ClosePartSelectionUI()
     {
-        partSelectionCanvas.SetActive(!partSelectionCanvas.activeSelf);
-        crossHair.SetActive(!crossHair.activeSelf);
-        FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
+        if (fpsCamera)
+        {
+            partSelectionCanvas.SetActive(!partSelectionCanvas.activeSelf);
+            FPSCameraControllers.canRotate = !FPSCameraControllers.canRotate;
+            crossHair.SetActive(!crossHair.activeSelf);
+        }
+
         eventSystem.SetSelectedGameObject(selectedButton);
     }
 
     public void ChangeSelectedButton(GameObject button)
     {
-        /*ColorBlock colors = selectedButton.GetComponent<Button>().colors;
-        colors.normalColor= new Color(0, 166, 255, 255);
-        selectedButton.GetComponent<Button>().colors = colors;*/
         selectedButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         selectedButton.GetComponent<Button>().enabled = true;
     
