@@ -48,6 +48,7 @@ public class VehicleEditor : MonoBehaviour
 
     void Start()
     {
+        playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
         if (vehicleCam == null)
