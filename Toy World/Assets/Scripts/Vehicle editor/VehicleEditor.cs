@@ -190,7 +190,12 @@ public class VehicleEditor : MonoBehaviour
                         Debug.Log("neighbour is null");
                         continue;
                     }
-                    part.AttachPart(neighbour, placedPart.transform.localPosition - neighbour.transform.position);
+                    if(neighbour.transform == coreBlock.transform)
+                        part.AttachPart(neighbour, pos);
+
+                    else
+                        part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
+
                 }
             }
             previewedPart.SetActive(false);

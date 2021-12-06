@@ -84,7 +84,7 @@ public abstract class Part : MonoBehaviour
                 return Orientation.Right;
 
             default:
-                Debug.LogWarning("NORMAL IS INCORRECT - ERROR ERROR ERROR");
+                Debug.LogWarning($"NORMAL IS INCORRECT - {n}");
                 return Orientation.Right;//Not actually right at all
         }
     }
