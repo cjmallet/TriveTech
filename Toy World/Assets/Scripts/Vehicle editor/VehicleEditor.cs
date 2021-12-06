@@ -24,6 +24,7 @@ public class VehicleEditor : MonoBehaviour
     public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
+    private PartGrid partGrid;
 
     private GameObject BoundingBoxPrefab;
     private GameObject BoundingBox;
@@ -45,6 +46,7 @@ public class VehicleEditor : MonoBehaviour
 
     void Start()
     {
+        partGrid = coreBlock.GetComponent<PartGrid>();
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
         if (vehicleCam == null)
@@ -143,15 +145,6 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
-    public void RotatePart(InputAction.CallbackContext context)
-    {
-        if (!playan && context.performed)
-        {
-            partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
-            PlacePart(context);
-        }
-    }
-
     void PlaceSelectedPart(RaycastHit hit)
     {
         GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
@@ -168,6 +161,31 @@ public class VehicleEditor : MonoBehaviour
 
         if (placedPart.TryGetComponent(out Part part))
         {
+            part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
+        }
+
+    }
+
+    void PlaceSelectedPart2(RaycastHit hit)
+    {
+        GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+
+        if (hit.transform == coreBlock.transform)
+        {
+            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        }
+        else
+        {
+            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
+        }
+        placedPart.transform.localRotation = partRotation;
+
+        if (placedPart.TryGetComponent(out Part part))
+        {
+            foreach (Part part in partGrid.GetNeighbours())
+            {
+
+            }
             part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
         }
 
