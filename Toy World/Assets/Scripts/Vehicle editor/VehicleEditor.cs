@@ -59,7 +59,7 @@ public class VehicleEditor : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void Play(InputAction.CallbackContext context)
@@ -105,7 +105,7 @@ public class VehicleEditor : MonoBehaviour
                     part.ToggleDirectionIndicator(true);
             }
 
-            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);            
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
@@ -126,8 +126,8 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (context.action.name == "LeftClick" && context.performed)
                 {
-                    PlaceSelectedPart(hit);
-                    previewedPart.SetActive(false);
+                    PlaceSelectedPart2(hit);
+                    
                 }
                 else if (context.action.name == "RightClick" && context.performed)
                 {
@@ -141,7 +141,7 @@ public class VehicleEditor : MonoBehaviour
             else if (previewedPart.activeSelf)
             {
                 previewedPart.SetActive(false);
-            }            
+            }
         }
     }
 
@@ -149,7 +149,7 @@ public class VehicleEditor : MonoBehaviour
     {
         GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
 
-        if(hit.transform == coreBlock.transform)
+        if (hit.transform == coreBlock.transform)
         {
             placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
         }
@@ -168,28 +168,35 @@ public class VehicleEditor : MonoBehaviour
 
     void PlaceSelectedPart2(RaycastHit hit)
     {
-        GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
-
-        if (hit.transform == coreBlock.transform)
+        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
         {
-            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
         }
-        else
-        {
-            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
-        }
-        placedPart.transform.localRotation = partRotation;
 
-        if (placedPart.TryGetComponent(out Part part))
+        if(partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
         {
-            foreach (Part part in partGrid.GetNeighbours())
+            GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+            placedPart.transform.localPosition = pos;
+            placedPart.transform.localRotation = partRotation;
+            partGrid.AddPartToGrid(placedPart.GetComponent<Part>(), pos);
+
+            if (placedPart.TryGetComponent(out Part part))
             {
-
+                foreach (Part neighbour in partGrid.GetNeighbours(Vector3Int.RoundToInt(placedPart.transform.localPosition)))
+                {
+                    if (neighbour == null)
+                    {
+                        Debug.Log("neighbour is null");
+                        continue;
+                    }
+                    part.AttachPart(neighbour, placedPart.transform.localPosition - neighbour.transform.position);
+                }
             }
-            part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
+            previewedPart.SetActive(false);
         }
-
     }
+
     /// <summary>
     /// detaches all parts from hit part and destroys the object.
     /// </summary>
@@ -205,6 +212,7 @@ public class VehicleEditor : MonoBehaviour
                     part.attachedParts[part.attachedParts.IndexOf(hit.transform.GetComponent<Part>())] = null;
                 }
             }
+            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(hit.transform.localPosition));
             Destroy(hit.transform.gameObject);
         }
     }
@@ -213,15 +221,24 @@ public class VehicleEditor : MonoBehaviour
     {
         previewedPart.SetActive(true);
 
-        if (hit.transform == coreBlock.transform)
+        Vector3Int newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
         {
-            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+            newPos += Vector3Int.RoundToInt(hit.transform.localPosition);
+        }
+        previewedPart.transform.localPosition = newPos;
+        previewedPart.transform.localRotation = partRotation;
+
+        if (partGrid.CheckIfInBounds(newPos))
+        {
+            previewedPart.transform.localScale = Vector3.one;
         }
         else
         {
-            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
+            previewedPart.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+           
         }
-        previewedPart.transform.localRotation = partRotation;
     }
 
     public void SetSelectedPart(GameObject slctPart)

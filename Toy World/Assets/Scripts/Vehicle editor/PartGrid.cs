@@ -6,16 +6,41 @@ public class PartGrid : MonoBehaviour
 {
     [SerializeField] private Vector3Int gridDimensions;
     private Part[,,] partGrid;
-    private Vector3Int gridCenterIndex;//refactor to coreblock index when merge with desktop branch
-    GameObject Vader, Luke;
-    // Start is called before the first frame update
+    [SerializeField] private Vector3Int gridCenterIndex;//refactor to coreblock index when merge with desktop branch
+
     void Start()
     {
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
-        gridCenterIndex = new Vector3Int(Mathf.CeilToInt(gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt(gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt(gridDimensions.z * 0.5f) - 1);
-        Luke.transform.SetParent(Vader.transform);//hueheuhue kill me
-
+        gridCenterIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
+        partGrid[gridCenterIndex.x, gridCenterIndex.y, gridCenterIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
     }
+
+    public void AddPartToGrid(Part partToAdd, Vector3Int relativePos)
+    {
+        if (CheckIfInBounds(relativePos))
+        {
+            Vector3Int gridIndex = relativePos + gridCenterIndex;
+            partGrid[gridIndex.x, gridIndex.y, gridIndex.z] = partToAdd;
+        }
+        else
+        {
+            Debug.LogError("INDEX OUT OF BOUNDS");
+        }
+    }
+
+    public void RemovePartFromGrid(Vector3Int relativePos)
+    {
+        if (CheckIfInBounds(relativePos))
+        {
+            Vector3Int gridIndex = relativePos + gridCenterIndex;
+            partGrid[gridIndex.x, gridIndex.y, gridIndex.z] = null;
+        }
+        else
+        {
+            Debug.LogError("INDEX OUT OF BOUNDS");
+        }
+    }
+
     /// <summary>
     /// returns array of index's neighbours in this order: "Right", "Left", "Top", "Bottom", "Back", "Front"
     /// </summary>
@@ -24,33 +49,32 @@ public class PartGrid : MonoBehaviour
     public Part[] GetNeighbours(Vector3Int relativePos)
     {
         Vector3Int gridIndex = relativePos + gridCenterIndex;
-
-
+        Debug.Log("neighbour index: " + gridIndex);
         Part[] neighbours = new Part[6];
         //"Right", "Left", "Top", "Bottom", "Back", "Front"
-        if (gridIndex.x + 1 >= partGrid.GetUpperBound(0) && partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z] != null)
+        if (gridIndex.x + 1 <= partGrid.GetUpperBound(0) && partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z] != null)//TODO: null checks zouden weg kunnen. eerst even zo testen
         {
             neighbours[0] = partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z];
         }
-        if (gridIndex.x - 1 <= partGrid.GetLowerBound(0) && partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z] != null)
+        if (gridIndex.x - 1 >= partGrid.GetLowerBound(0) && partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z] != null)
         {
             neighbours[1] = partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z];
         }
-        if (gridIndex.y + 1 >= partGrid.GetUpperBound(1) && partGrid[gridIndex.x, gridIndex.y + 1, gridIndex.z] != null)
+        if (gridIndex.y + 1 <= partGrid.GetUpperBound(1) && partGrid[gridIndex.x, gridIndex.y + 1, gridIndex.z] != null)
         {
             neighbours[2] = partGrid[gridIndex.x, gridIndex.y + 1, gridIndex.z];
         }
-        if (gridIndex.y - 1 <= partGrid.GetLowerBound(1) && partGrid[gridIndex.x, gridIndex.y - 1, gridIndex.z] != null)
+        if (gridIndex.y - 1 >= partGrid.GetLowerBound(1) && partGrid[gridIndex.x, gridIndex.y - 1, gridIndex.z] != null)
         {
             neighbours[3] = partGrid[gridIndex.x, gridIndex.y - 1, gridIndex.z];
         }
-        if (gridIndex.z + 1 >= partGrid.GetUpperBound(2) && partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z + 1] != null)
+        if (gridIndex.z + 1 <= partGrid.GetUpperBound(2) && partGrid[gridIndex.x, gridIndex.y, gridIndex.z + 1] != null)
         {
-            neighbours[4] = partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z + 1];
+            neighbours[4] = partGrid[gridIndex.x, gridIndex.y, gridIndex.z + 1];
         }
-        if (gridIndex.z - 1 <= partGrid.GetLowerBound(2) && partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z - 1] != null)
+        if (gridIndex.z - 1 >= partGrid.GetLowerBound(2) && partGrid[gridIndex.x, gridIndex.y, gridIndex.z - 1] != null)
         {
-            neighbours[5] = partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z - 1];
+            neighbours[5] = partGrid[gridIndex.x, gridIndex.y, gridIndex.z - 1];
         }
         return neighbours;
     }

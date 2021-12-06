@@ -35,9 +35,10 @@ public abstract class Part : MonoBehaviour
     }
 
     /// <summary>
-    /// This ensures my part is attached to all of it's adjacent parts.
+    /// This attaches the other part to this part and vice versa, in the right direction slots.
+    /// Originally made to attach to a single part, based on the raycast normal of the clicked part.
     /// </summary>
-    /// <param name="partToAttachTo">Part that's seleted to connect to.</param>
+    /// <param name="partToAttachTo">Part that's selected to connect to.</param>
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
