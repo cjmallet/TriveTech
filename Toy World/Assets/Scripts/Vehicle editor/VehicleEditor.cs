@@ -34,6 +34,9 @@ public class VehicleEditor : MonoBehaviour
     private Camera mainCam;
     public Camera vehicleCam;
 
+    [SerializeField]
+    private PlayerInput playerInput;
+
 
     void Awake()
     {
@@ -93,6 +96,8 @@ public class VehicleEditor : MonoBehaviour
             playan = true;
             previewedPart.SetActive(false);
             BoundingBox.SetActive(false);
+
+            playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
         {
@@ -112,6 +117,8 @@ public class VehicleEditor : MonoBehaviour
             BoundingBox.SetActive(true);
 
             playan = false;
+
+            playerInput.SwitchCurrentActionMap("UI");
         }
     }
 
