@@ -10,10 +10,12 @@ using UnityEngine.InputSystem;
 public class VehicleMovement : MonoBehaviour
 {
     public List<MovementPart> movementParts = new List<MovementPart>();
-    private List<Collider> colliders = new List<Collider>();
+    [HideInInspector]
+    public List<Part> allParts = new List<Part>();
     private Rigidbody rigidBody;
     private Vector3 eulerRot, movement;
     public int movementSpeed { get; set; }
+    public int rotationSpeed { get; set; }
 
     public VehicleMovement()
     {
@@ -23,17 +25,36 @@ public class VehicleMovement : MonoBehaviour
     private void OnEnable()
     {
         rigidBody = GetComponent<Rigidbody>();
+
+        movementSpeed = 0;
+        rotationSpeed = 0;
+
+        if (movementParts.Count != 0)
+        {
+            foreach (Part part in allParts)
+            {
+                rigidBody.mass += part.Weight;
+            }
+        }
     }
 
-    private void Start()
+    private void OnDisable()
     {
+        movementSpeed = 0;
+        rotationSpeed = 0;
+
         if (movementParts.Count != 0)
         {
             foreach (MovementPart part in movementParts)
             {
-                movementSpeed += part.speedModifier;
+                part.grounded = false;
             }
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void FixedUpdate()
@@ -42,6 +63,22 @@ public class VehicleMovement : MonoBehaviour
 
         Quaternion deltaRot = Quaternion.Euler(eulerRot * Time.fixedDeltaTime);
         rigidBody.MoveRotation(rigidBody.rotation * deltaRot);
+
+        foreach (MovementPart part in movementParts)
+        {
+            if (part.IsGrounded() && !part.grounded)
+            {
+                movementSpeed += part.moveSpeedModifier;
+                rotationSpeed += part.rotationSpeedModifier;
+                part.grounded = true;
+            }
+            else if (!part.IsGrounded() && part.grounded)
+            {
+                movementSpeed -= part.moveSpeedModifier;
+                rotationSpeed -= part.rotationSpeedModifier;
+                part.grounded = false;
+            }
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -49,42 +86,31 @@ public class VehicleMovement : MonoBehaviour
         if (enabled && context.performed)
         {
             movement = new Vector3(0, 0, context.ReadValue<Vector3>().z);
-            movement *= movementSpeed;
-
             eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
-            eulerRot *= movementSpeed;
-        }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            for (int i = 0; i < collision.contactCount; i++)
+            movement *= movementSpeed;
+            eulerRot *= rotationSpeed;
+
+            if (eulerRot.y == 0)
             {
-                if (!colliders.Contains(collision.GetContact(i).thisCollider))
-                    colliders.Add(collision.GetContact(i).thisCollider);
+                foreach (MovementPart part in movementParts)
+                    part.NoTurning();
             }
-        }
-        else if (collision.gameObject.tag != "Ground")
-        {
-
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            for (int i = 0; i < collision.contactCount; i++)
+            
+            if (movement.z == 0)
             {
-                if (colliders.Contains(collision.GetContact(i).thisCollider))
-                    colliders.Remove(collision.GetContact(i).thisCollider);
+                foreach (MovementPart part in movementParts)
+                    part.NoMoving();
             }
-        }
-        else if (collision.gameObject.tag != "Ground")
-        {
-
+            
+            if (eulerRot.y != 0 || movement.z != 0)
+            {
+                foreach (MovementPart part in movementParts)
+                {
+                    part.VerticalMovement(moveAmount: movement.z / movementParts.Count);
+                    part.HorizontalMovement(turnAmount: eulerRot.y / movementParts.Count);
+                }
+            }
         }
     }
 }

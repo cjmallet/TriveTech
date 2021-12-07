@@ -25,11 +25,17 @@ public class VehicleEditor : MonoBehaviour
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
 
+    private GameObject BoundingBoxPrefab;
+    private GameObject BoundingBox;
+
     private GameObject previewedPart;
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
     public Camera vehicleCam;
+
+    [SerializeField]
+    private PlayerInput playerInput;
 
 
     void Awake()
@@ -42,10 +48,15 @@ public class VehicleEditor : MonoBehaviour
 
     void Start()
     {
+        playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
         if (vehicleCam == null)
+        {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
+        }
+
+        CreateBoundingBox();
     }
 
     void Update()
@@ -57,11 +68,16 @@ public class VehicleEditor : MonoBehaviour
     {
         if (context.performed && !playan)
         {
+            // Clear list of parts if it still has parts
+            if (coreBlock.GetComponent<VehicleMovement>().movementParts.Count != 0)
+                coreBlock.GetComponent<VehicleMovement>().movementParts.Clear();
+
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<VehicleMovement>().enabled = true;
+            coreBlock.GetComponent<Rigidbody>().drag = 1;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
+            coreBlock.GetComponent<VehicleMovement>().allParts = parts;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -75,10 +91,14 @@ public class VehicleEditor : MonoBehaviour
                     vehiclePart.ToggleDirectionIndicator(false);
             }
 
+            coreBlock.GetComponent<VehicleMovement>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;
             previewedPart.SetActive(false);
+            BoundingBox.SetActive(false);
+
+            playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
         {
@@ -95,8 +115,11 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
+            BoundingBox.SetActive(true);
 
             playan = false;
+
+            playerInput.SwitchCurrentActionMap("UI");
         }
     }
 
@@ -212,6 +235,16 @@ public class VehicleEditor : MonoBehaviour
         else
             Cursor.lockState = CursorLockMode.Locked;
     }
+
+    private void CreateBoundingBox()
+    {
+        BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
+        BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
+        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f,
+                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.75f,
+                                                    coreBlock.transform.position.z - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
+    }
+
 
 
     /// <summary>
