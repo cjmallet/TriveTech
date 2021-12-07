@@ -38,6 +38,7 @@ public class PartGrid : MonoBehaviour
         else
         {
             Debug.LogError("INDEX OUT OF BOUNDS");
+            
         }
     }
 
@@ -52,27 +53,27 @@ public class PartGrid : MonoBehaviour
         Debug.Log("neighbour index: " + gridIndex);
         Part[] neighbours = new Part[6];
         //"Right", "Left", "Top", "Bottom", "Back", "Front"
-        if (gridIndex.x + 1 <= partGrid.GetUpperBound(0) && partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z] != null)//TODO: null checks zouden weg kunnen. eerst even zo testen
+        if (gridIndex.x + 1 <= partGrid.GetUpperBound(0))
         {
             neighbours[0] = partGrid[gridIndex.x + 1, gridIndex.y, gridIndex.z];
         }
-        if (gridIndex.x - 1 >= partGrid.GetLowerBound(0) && partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z] != null)
+        if (gridIndex.x - 1 >= partGrid.GetLowerBound(0))
         {
             neighbours[1] = partGrid[gridIndex.x - 1, gridIndex.y, gridIndex.z];
         }
-        if (gridIndex.y + 1 <= partGrid.GetUpperBound(1) && partGrid[gridIndex.x, gridIndex.y + 1, gridIndex.z] != null)
+        if (gridIndex.y + 1 <= partGrid.GetUpperBound(1))
         {
             neighbours[2] = partGrid[gridIndex.x, gridIndex.y + 1, gridIndex.z];
         }
-        if (gridIndex.y - 1 >= partGrid.GetLowerBound(1) && partGrid[gridIndex.x, gridIndex.y - 1, gridIndex.z] != null)
+        if (gridIndex.y - 1 >= partGrid.GetLowerBound(1))
         {
             neighbours[3] = partGrid[gridIndex.x, gridIndex.y - 1, gridIndex.z];
         }
-        if (gridIndex.z + 1 <= partGrid.GetUpperBound(2) && partGrid[gridIndex.x, gridIndex.y, gridIndex.z + 1] != null)
+        if (gridIndex.z + 1 <= partGrid.GetUpperBound(2))
         {
             neighbours[4] = partGrid[gridIndex.x, gridIndex.y, gridIndex.z + 1];
         }
-        if (gridIndex.z - 1 >= partGrid.GetLowerBound(2) && partGrid[gridIndex.x, gridIndex.y, gridIndex.z - 1] != null)
+        if (gridIndex.z - 1 >= partGrid.GetLowerBound(2))
         {
             neighbours[5] = partGrid[gridIndex.x, gridIndex.y, gridIndex.z - 1];
         }
@@ -98,10 +99,34 @@ public class PartGrid : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeGridSize(Vector3Int newDimensions)
     {
 
+        /*
+        for (int j = i; j < length; j++)
+        {
+
+        }
+        */
+
+        gridDimensions = newDimensions;
+
+        Part[,,] newPartArray = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
+        //Vector3Int offset = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1
+
+        for (int i = 0; i < newPartArray.GetLength(0); i++)
+        {
+            for (int j = 0; j < newPartArray.GetLength(0); j++)
+            {
+                for (int k = 0; i < newPartArray.GetLength(0); k++)
+                {
+
+                    //Move the parts from the current array to the new array, relative to where they were
+                    //example: Old array size 20, new array size 30.Block on index 8 would move to index 13, so it looks like 5 spaces are added in each direction
+                }
+            }
+        }
+        gridDimensions = newDimensions;
     }
 }
 

@@ -57,11 +57,6 @@ public class VehicleEditor : MonoBehaviour
         CreateBoundingBox();
     }
 
-    void Update()
-    {
-
-    }
-
     public void Play(InputAction.CallbackContext context)
     {
         if (context.performed && !playan)
