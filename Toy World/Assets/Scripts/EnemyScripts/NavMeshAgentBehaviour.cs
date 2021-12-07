@@ -8,6 +8,8 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject coreBlock;
 
+    public int damage = 1;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -33,6 +33,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         mesh = GetComponent<MeshFilter>().mesh;
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
+
         CreateMeshShape();
         UpdateMesh();
 
@@ -41,16 +42,23 @@ public class PerlinNoiseTerrain : MonoBehaviour
     }
 
     //! Update mesh each frame and increase the offset for moving terrain.
-    void FixedUpdate()
-    {
-        //CreateMeshShape();
-        //if (isMovingTerrain)
-        //{
-        //    offsetX += Time.deltaTime;
-        //    offsetY += Time.deltaTime;
-        //}
-        //UpdateMesh();
-    }
+    //void FixedUpdate()
+    //{
+    //    //if (isMovingTerrain)
+    //    //{
+    //    //    offsetX += Time.deltaTime;
+    //    //    offsetY += Time.deltaTime;
+    //    //}
+    //    //UpdateMesh();
+
+    //    if (isMovingTerrain)
+    //    {
+    //        offsetX += Time.deltaTime;
+    //        offsetY += Time.deltaTime;
+    //    }
+    //    UpdateMesh();
+
+    //}
 
     //! Draws triangles between vertices
     void CreateMeshShape()

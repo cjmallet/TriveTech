@@ -66,4 +66,14 @@ public class VehicleStats : MonoBehaviour
     {
         Debug.Log("YOU DIED LOSER");
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Enemy"))
+        {
+            TakeDamage(collision.gameObject.GetComponent<NavMeshAgentBehaviour>().damage);
+
+            Destroy(collision.gameObject);
+        }
+    }
 }

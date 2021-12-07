@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6427372711600780249}
   - component: {fileID: 6427372711600780248}
   - component: {fileID: 6427372711600780231}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,3 +133,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acf29ebc915f4e24f8ebe15b9296a340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
