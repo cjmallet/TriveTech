@@ -180,15 +180,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RotateVerticalButton",
-                    "type": "Button",
-                    "id": "c3d29e7f-9021-4549-b14d-d0958d911a6a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "LeftClick",
                     "type": "Button",
                     "id": "302a7c8a-ec79-4627-905c-1ca5b278069e",
@@ -223,6 +214,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ResetRotation",
+                    "type": "Button",
+                    "id": "0cb6ed94-8d11-4306-9570-dbaae4305bca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -404,12 +404,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2e8c79d9-19e6-4253-9d2a-ff17bb18293c",
-                    "path": "<Keyboard>/t",
+                    "id": "93d89854-fff3-42c1-879f-a605774c9076",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "RotateVerticalButton",
+                    "action": "ResetRotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
