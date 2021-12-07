@@ -6,13 +6,13 @@ public class RotateVehicleCameraController : RotatingCameraController
     bool resetVehicle = false;
 
     // Temporary input in Update
-    public override void Update()
-    {
-        base.Update();
-
-        // Random button for resetting rotation
-        resetVehicle = Input.GetKey(KeyCode.F);
-    }
+    //public override void Update()
+    //{
+    //    base.Update();
+    //
+    //    // Random button for resetting rotation
+    //    resetVehicle = Input.GetKey(KeyCode.F);
+    //}
 
     public override void FixedUpdate()
     {
@@ -32,7 +32,7 @@ public class RotateVehicleCameraController : RotatingCameraController
      */
     public override void RotateVehicleMovement(Vector3 inputVector)
     {
-        vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
+        vehicleCore.transform.Rotate(inputVector.z * verticalRotateSpeed, 
             inputVector.x * -horizontalRotateSpeed, 0, Space.World);
         base.RotateVehicleMovement(inputVector);
     }
