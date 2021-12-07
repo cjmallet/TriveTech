@@ -81,6 +81,7 @@ public class VehicleEditor : MonoBehaviour
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
+            coreBlock.GetComponent<VehicleStats>().allParts = parts;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -95,6 +96,7 @@ public class VehicleEditor : MonoBehaviour
             }
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
+            coreBlock.GetComponent<VehicleStats>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;
@@ -114,6 +116,7 @@ public class VehicleEditor : MonoBehaviour
 
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);            
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
+            coreBlock.GetComponent<VehicleStats>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             vehicleCam.enabled = false;
