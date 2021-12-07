@@ -6,6 +6,7 @@ public class WheelPart : MovementPart
     private int moveSpeed = 15;
     private int rotationSpeed = 5;
     private float myMass = 0.1f;
+    private int myHealth = 5;
 
     private float vertSpeed, horSpeed;
 
@@ -21,6 +22,7 @@ public class WheelPart : MovementPart
         this.moveSpeedModifier = moveSpeed;
         this.rotationSpeedModifier = rotationSpeed;
         this.Weight = myMass;
+        this.Health = myHealth;
     }
 
     public override bool IsGrounded()
