@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PerlinNoiseTerrain : MonoBehaviour
 {
+
+
     //! Mesh variables
     Mesh mesh;
     Vector3[] vertices;
@@ -14,6 +16,9 @@ public class PerlinNoiseTerrain : MonoBehaviour
 
     //! X and Z sizes
     public int xSize = 20, zSize = 20;
+
+    //! Gizmos toggle
+    public bool gizmos;
 
     //! Variable to adjust perlin noise effect
     [Range(0, 0.5f)]
@@ -41,7 +46,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
     //! Update mesh each frame and increase the offset for moving terrain.
     void FixedUpdate()
     {
-        
+
     }
 
     //! Draws triangles between vertices
@@ -120,7 +125,10 @@ public class PerlinNoiseTerrain : MonoBehaviour
     //! Shows veritices with Gizmos
     private void OnDrawGizmos()
     {
-        if (vertices == null)
+
+
+
+        if (vertices == null || !gizmos)
             return;
 
         Gizmos.color = Color.yellow;
@@ -128,6 +136,7 @@ public class PerlinNoiseTerrain : MonoBehaviour
         {
             Gizmos.DrawSphere(vertices[iVertices], .1f);
         }
+
     }
 }
 

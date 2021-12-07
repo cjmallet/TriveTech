@@ -182,12 +182,10 @@ public class VehicleEditor : MonoBehaviour
                 {
                     if (neighbour == null)
                     {
-                        Debug.Log("neighbour is null");
                         continue;
                     }
                     if(neighbour.transform == coreBlock.transform)
                         part.AttachPart(neighbour, pos);
-
                     else
                         part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
 

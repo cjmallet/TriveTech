@@ -252,7 +252,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridDimensions: {x: 10, y: 10, z: 10}
-  gridCenterIndex: {x: 0, y: 0, z: 0}
+  coreBlockIndex: {x: 0, y: 0, z: 0}
+  cubePrefab: {fileID: 8489225857888346534, guid: 2cc79ad617e394f469f4b1dde3791e4f, type: 3}
 --- !u!114 &120727273
 MonoBehaviour:
   m_ObjectHideFlags: 0
