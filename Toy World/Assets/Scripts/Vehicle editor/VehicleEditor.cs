@@ -33,7 +33,7 @@ public class VehicleEditor : MonoBehaviour
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
 
-    private int rCount,vCount;
+    private int vCount;
 
     public Camera vehicleCam;
 
@@ -161,12 +161,6 @@ public class VehicleEditor : MonoBehaviour
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
-            rCount++;
-
-            if (rCount==4)
-            {
-                rCount = 0;
-            }
         }
     }
 
@@ -174,17 +168,13 @@ public class VehicleEditor : MonoBehaviour
     {
         if (!playan && context.performed)
         {
-            if (vCount < 2)
+            if (vCount < 2 ||vCount>2)
             {
                 partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
             }
             else if (vCount == 2)
             {
                 partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
-            }
-            else
-            {
-                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
             }
             
             vCount++;
