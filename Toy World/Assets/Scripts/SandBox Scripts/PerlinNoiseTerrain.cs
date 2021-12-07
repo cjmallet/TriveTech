@@ -34,7 +34,6 @@ public class PerlinNoiseTerrain : MonoBehaviour
         offsetX = Random.Range(0f, 9999f);
         offsetY = Random.Range(0f, 9999f);
         CreateMeshShape();
-<<<<<<< HEAD
         UpdateMesh();
 
         navSurface = gameObject.GetComponentInChildren<NavMeshSurface>();
@@ -51,20 +50,6 @@ public class PerlinNoiseTerrain : MonoBehaviour
         //    offsetY += Time.deltaTime;
         //}
         //UpdateMesh();
-=======
-        if (isMovingTerrain)
-        {
-            offsetX += Time.deltaTime;
-            offsetY += Time.deltaTime;
-        }
-        UpdateMesh();
->>>>>>> development
-    }
-
-    //! Update mesh each frame and increase the offset for moving terrain.
-    void FixedUpdate()
-    {
-        
     }
 
     //! Draws triangles between vertices
