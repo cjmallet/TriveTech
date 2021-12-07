@@ -116,9 +116,9 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            vehicleCam.enabled = false;
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
-            vehicleCam.enabled = false;
             BoundingBox.SetActive(true);
 
             playan = false;
