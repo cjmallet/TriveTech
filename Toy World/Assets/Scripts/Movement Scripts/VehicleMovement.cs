@@ -29,7 +29,7 @@ public class VehicleMovement : MonoBehaviour
         movementSpeed = 0;
         rotationSpeed = 0;
 
-        if (movementParts.Count != 0)
+        if (allParts.Count != 0)
         {
             foreach (Part part in allParts)
             {

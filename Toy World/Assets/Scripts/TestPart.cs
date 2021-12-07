@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestPart : Part
 {
-    private int health = 75;
+    private int health = 10;
     private float myMass = 0.2f;
 
     public TestPart()
