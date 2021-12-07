@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 960508290}
   - component: {fileID: 960508289}
   - component: {fileID: 960508288}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ThirdPersonCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 3459073008343866995}
   - component: {fileID: 2864444615148423900}
   - component: {fileID: 2472005105467639161}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CoreBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,3 +236,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  useDirectionIndicator: 0

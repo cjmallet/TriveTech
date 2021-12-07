@@ -1,89 +1,122 @@
+using System.Collections;
 using UnityEngine;
 
 public class WheelPart : MovementPart
 {
-    private int speed = 5;
+    private int moveSpeed = 15;
+    private int rotationSpeed = 5;
+    private float myMass = 0.1f;
+    private int myHealth = 5;
 
-    public WheelPart()
-    {
-        this.speedModifier = speed;
-    }
+    private float vertSpeed, horSpeed;
 
-    /*
     public float steeringAngle { get; set; }
     private const int STEERINGMAX = 30;
-    private const float CENTERSPEED = 2f;
-    private bool turning = false;
-    [SerializeField]
-    private int rotationSpeed;
+    private bool turning = false, moving = false;
 
-    private bool CheckIfRight { get { return transform.localEulerAngles.y >= 0 && transform.localEulerAngles.y <= STEERINGMAX + 1; } }
-    private bool CheckIfLeft { get { return transform.localEulerAngles.y >= 330 && transform.localEulerAngles.y <= 360; } }
+    private bool CheckIfTurn { get { return (transform.localEulerAngles.y >= 0 && (int)transform.localEulerAngles.y < STEERINGMAX)
+            || ((int)transform.localEulerAngles.y > 360 - STEERINGMAX && transform.localEulerAngles.y <= 360); } }
 
     public WheelPart()
     {
-        this.steeringAngle = 0;
+        this.moveSpeedModifier = moveSpeed;
+        this.rotationSpeedModifier = rotationSpeed;
+        this.Weight = myMass;
+        this.Health = myHealth;
     }
 
-    public override void ForwardAction(float moveAmount)
+    public override bool IsGrounded()
     {
-        if (moveAmount > 0)
+        return base.IsGrounded();
+    }
+
+    private void FixedUpdate()
+    {
+        if (moving)
         {
-            transform.GetChild(1).Rotate(0, -moveAmount * rotationSpeed, 0);
-            CenterWheel(CENTERSPEED);
+            MoveWheel(vertSpeed);
+        }
+
+        if (turning)
+        {
+            TurnWheel(horSpeed);
         }
     }
 
-    public override void BackwardAction(float moveAmount)
+    public override void VerticalMovement(float moveAmount)
     {
-        if (moveAmount > 0)
+        if (moveAmount != 0)
         {
-            transform.GetChild(1).Rotate(0, moveAmount * rotationSpeed, 0);
-            CenterWheel(CENTERSPEED);
+            vertSpeed = moveAmount;
+            moving = true;
         }
+    }
+
+    private void MoveWheel(float moveAmount)
+    {
+        transform.GetChild(1).Rotate(0, -moveAmount * Time.deltaTime * (moveSpeed * 2), 0);
+
+        if (transform.localEulerAngles.y != 0 && moving && !turning)
+            if (moveAmount > 0)
+                CenterWheel(moveAmount);
+            else if (moveAmount < 0)
+                CenterWheel(-moveAmount);
+    }
+
+    public override void HorizontalMovement(float turnAmount)
+    {
+        if (turnAmount != 0)
+        {
+            horSpeed = turnAmount;
+            turning = true;
+        }          
+    }
+
+    private void TurnWheel(float turnAmount)
+    {
+        if (turnAmount > 0 && CheckIfTurn) // right
+        {
+            transform.Rotate(0, turnAmount * Time.deltaTime * rotationSpeed, 0);
+        }
+        else if (turnAmount < 0 && CheckIfTurn) // left
+        {
+            transform.Rotate(0, turnAmount * Time.deltaTime * rotationSpeed, 0);
+        }
+        else
+        {
+            if ((int)transform.localEulerAngles.y == STEERINGMAX && turnAmount < 0) // Can only go left
+                transform.Rotate(0, turnAmount * Time.deltaTime, 0);
+            else if ((int)transform.localEulerAngles.y == 360 - STEERINGMAX && turnAmount > 0) // Can only go right
+                transform.Rotate(0, turnAmount * Time.deltaTime, 0);
+            else if ((int)transform.localEulerAngles.y != STEERINGMAX && (int)transform.localEulerAngles.y != 360 - STEERINGMAX && turning)
+                transform.Rotate(0, turnAmount * Time.deltaTime, 0);
+        }
+    }
+
+    public override void NoTurning()
+    {
+        turning = false;
+    }
+
+    public override void NoMoving()
+    {
+        moving = false;
     }
 
     private void CenterWheel(float CenterSpeed)
     {
-        if (!turning && transform.localEulerAngles.y != 0 && (CheckIfRight))
+        if ((int)transform.localEulerAngles.y <= 360 && (int)transform.localEulerAngles.y >= 360 - STEERINGMAX)
         {
-            transform.Rotate(0, -CenterSpeed, 0);
+            transform.Rotate(0, CenterSpeed * Time.deltaTime * rotationSpeed, 0);
         }
-        else if (!turning && transform.localEulerAngles.y != 0 && (CheckIfLeft))
+        else if ((int)transform.localEulerAngles.y >= 0 && (int)transform.localEulerAngles.y <= STEERINGMAX)
         {
-            transform.Rotate(0, CenterSpeed, 0);
+            transform.Rotate(0, -CenterSpeed * Time.deltaTime * rotationSpeed, 0);
         }
-
-        if (transform.localEulerAngles.y > -0.05f && transform.localEulerAngles.y < 0.05f)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
         
-    }
-
-    public override void RightAction(float turnAmount = 0)
-    {
-        if (turnAmount > 0 && (transform.localEulerAngles.y < STEERINGMAX || (CheckIfLeft)))
+        if ((int)transform.localEulerAngles.y >= 359.5f || (int)transform.localEulerAngles.y <= 0.5f)
         {
-            transform.Rotate(0, turnAmount, 0);
-            turning = true;
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
         }
-        else if (!(transform.localEulerAngles.y >= 0 && transform.localEulerAngles.y <= STEERINGMAX))
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, STEERINGMAX, transform.localEulerAngles.z);
     }
-
-    public override void LeftAction(float turnAmount = 0)
-    {
-        if (-turnAmount < 0 && (transform.localEulerAngles.y > 360 - STEERINGMAX || (CheckIfRight)))
-        {
-            transform.Rotate(0, -turnAmount, 0);
-            turning = true;
-        }
-        else if (transform.localEulerAngles.y < 360 - STEERINGMAX && transform.localEulerAngles.y > STEERINGMAX)
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 360 - STEERINGMAX, transform.localEulerAngles.z);
-    }
-
-    public override void StopAction(bool stopped)
-    {
-        turning = stopped;
-    }
-    */ // Old system
 }
