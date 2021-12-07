@@ -171,6 +171,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "RotateVerticalButton",
+                    "type": "Button",
+                    "id": "c08ccdda-7ad7-459a-8ae3-ec5d44c8fe31",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "BuildButton",
                     "type": "Button",
                     "id": "857b7a18-5d0e-482d-adb1-ec81fb76ba80",
@@ -180,7 +189,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Click",
+                    "name": "LeftClick",
                     "type": "PassThrough",
                     "id": "302a7c8a-ec79-4627-905c-1ca5b278069e",
                     "expectedControlType": "Button",
@@ -190,7 +199,7 @@
                 },
                 {
                     "name": "RightClick",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "24818723-c737-4ce1-8024-8675714012a7",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -224,7 +233,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Click",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -235,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Click",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
-                    "action": "Click",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -257,7 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Click",
+                    "action": "LeftClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -390,6 +399,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "PlayButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65ac5500-9a70-4b4a-9bff-0e24abdeb970",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RotateVerticalButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

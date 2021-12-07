@@ -32,6 +32,9 @@ public class VehicleEditor : MonoBehaviour
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
+
+    private int rCount,vCount;
+
     public Camera vehicleCam;
 
     [SerializeField]
@@ -157,6 +160,38 @@ public class VehicleEditor : MonoBehaviour
         if (!playan && context.performed)
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+            PlacePart(context);
+            rCount++;
+
+            if (rCount==4)
+            {
+                rCount = 0;
+            }
+        }
+    }
+
+    public void RotatePartVertical(InputAction.CallbackContext context)
+    {
+        if (!playan && context.performed)
+        {
+            if (vCount < 2)
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
+            }
+            else if (vCount == 2)
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
+            }
+            else
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
+            }
+            
+            vCount++;
+            if (vCount==4)
+            {
+                vCount = 0;
+            }
             PlacePart(context);
         }
     }
