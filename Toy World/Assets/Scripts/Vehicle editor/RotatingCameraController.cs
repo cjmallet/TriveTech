@@ -6,7 +6,7 @@ public class RotatingCameraController : MonoBehaviour
     public const int ZOOM_SPEED_DAMPNER = 10;
 
     // Vector used to store the input from the InputActions
-    protected Vector3 inputVector;
+    private Vector3 inputVector;
 
     // Speed factors for vehicle rotation and camera zooming
     [Range(1,3)]
@@ -18,29 +18,11 @@ public class RotatingCameraController : MonoBehaviour
     // Reference to core block so it can be rotated
     public GameObject vehicleCore;
 
-    // Temporary input in Update
-    //public virtual void Update()
-    //{
-    //    float movementInputZ = 0;
-    //    if (Input.GetKey(KeyCode.Space))
-    //        movementInputZ = 1;
-    //    if (Input.GetKey(KeyCode.LeftShift))
-    //        movementInputZ = -1;
-    //
-    //    movementInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movementInputZ);
-    //}
-
-    public virtual void FixedUpdate()
+    private void FixedUpdate()
     {
         RotateVehicleMovement(inputVector);
     }
 
-    /* Wordt in de toekomst something like:
-     * public void RotateVehicle(InputAction.CallbackContext context)
-     * {
-     *      Zoom(inputVector.z);
-     * }
-     */
     public virtual void RotateVehicleMovement(Vector3 inputVector)
     {
         Zoom(inputVector.y);
