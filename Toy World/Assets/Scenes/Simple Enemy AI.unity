@@ -171,7 +171,7 @@ MonoBehaviour:
   SpawnDelay: 0
   spawnDistanceMin: 30
   spawnDistanceMax: 40
-  minDistanceBetweenSpawnPoints: 80
+  minDistanceBetweenSpawnPoints: 15
   distanceToActivate: 5
   enemySpawner: {fileID: 1403104182}
 --- !u!1 &120727267 stripped

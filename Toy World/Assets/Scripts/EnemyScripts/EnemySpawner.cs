@@ -52,34 +52,63 @@ public class EnemySpawner : MonoBehaviour
     {
         MeshFilter sandTerrainMesh = sandTerrain.GetComponent<MeshFilter>();
 
+
         for (int i = 0; i < spawnPointList.Count; i++)
         {
-            int vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
-
-            while (Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) < spawnDistanceMin ||
-                   Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) > spawnDistanceMax)
+            bool goodtogo = false;
+            while (goodtogo == false)
             {
-                vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
+                int vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
+
+                if (Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) > spawnDistanceMin &&
+                    Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) < spawnDistanceMax)
+                {
+                    spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
+
+                    for (int j = 0; j < i; j++)
+                    {
+                        if ((spawnPointList[j].transform.position - spawnPointList[i].transform.position).magnitude > minDistanceBetweenSpawnPoints)
+                        {
+                            spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
+                            goodtogo = true;
+                        }
+                    }
+                }
             }
-
-            spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
-
-            //for (int j = 0; j < i; j++)
-            //{
-            //    while ((spawnPointList[j].transform.position - spawnPointList[i].transform.position).magnitude < minDistanceBetweenSpawnPoints)
-            //    {
-            //        Debug.Log("test");
-            //        vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
-            //        spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
-            //    }
-
-            //    Debug.Log("spawnpoint i: " + spawnPointList[i].name + "     spanwpoint pos: " + spawnPointList[i].transform.position + "spawnpoint i: " + spawnPointList[j].name + "     spanwpoint pos: " + spawnPointList[j].transform.position);
-            //    Debug.Log("distance check " + spawnPointList[j].name + ": " + Vector3.Distance(spawnPointList[j].transform.position, spawnPointList[i].transform.position));
-            //}
-
-            //spawnPoint.position = sandTerrainMesh.mesh.vertices[vertIndex];
-            //Debug.Log("spawnpoint " + spawnPoint.name + ": " + spawnPoint.position + "      SpawnPoint distance to player: " + Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position));
         }
+
+
+
+
+
+        //for (int i = 0; i < spawnPointList.Count; i++)
+        //{
+        //    int vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
+
+        //    while (Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) < spawnDistanceMin ||
+        //           Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position) > spawnDistanceMax)
+        //    {
+        //        vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
+        //    }
+
+        //    spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
+
+        //    //for (int j = 0; j < i; j++)
+        //    //{
+        //    //    while ((spawnPointList[j].transform.position - spawnPointList[i].transform.position).magnitude < minDistanceBetweenSpawnPoints)
+        //    //    {
+        //    //        Debug.Log("test");
+        //    //        vertIndex = Random.Range(0, sandTerrainMesh.mesh.vertexCount);
+        //    //        spawnPointList[i].transform.position = sandTerrainMesh.mesh.vertices[vertIndex];
+        //    //    }
+
+        //    //    Debug.Log("spawnpoint i: " + spawnPointList[i].name + "     spanwpoint pos: " + spawnPointList[i].transform.position + "spawnpoint i: " + spawnPointList[j].name + "     spanwpoint pos: " + spawnPointList[j].transform.position);
+        //    //    Debug.Log("distance check " + spawnPointList[j].name + ": " + Vector3.Distance(spawnPointList[j].transform.position, spawnPointList[i].transform.position));
+        //    //}
+
+        //    //spawnPoint.position = sandTerrainMesh.mesh.vertices[vertIndex];
+        //    //Debug.Log("spawnpoint " + spawnPoint.name + ": " + spawnPoint.position + "      SpawnPoint distance to player: " + Vector3.Distance(sandTerrainMesh.mesh.vertices[vertIndex], player.transform.position));
+        //}
     }
 
     private IEnumerator SpawnEnemies(int numberOfEnemiesToSpawn)
