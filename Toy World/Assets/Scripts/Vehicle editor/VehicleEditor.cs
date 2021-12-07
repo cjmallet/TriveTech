@@ -171,13 +171,13 @@ public class VehicleEditor : MonoBehaviour
     {
         if (!playan && context.performed)
         {
-            if (vCount < 2 ||vCount>2)
-            {
-                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
-            }
-            else if (vCount == 2)
+            if (vCount == 2)
             {
                 partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
+            }
+            else
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
             }
             
             vCount++;
