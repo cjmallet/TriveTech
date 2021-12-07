@@ -18,6 +18,18 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = coreBlock.transform.position;
+        Activate();
+    }
+
+    private void Activate()
+    {
+        if (Vector3.Distance(transform.position, coreBlock.transform.position) < EnemySpawner.distanceToActivateValue)
+        {
+            agent.destination = coreBlock.transform.position;
+        }
+        else
+        {
+            agent.destination = this.transform.position - transform.forward * 0.01f;
+        }
     }
 }
