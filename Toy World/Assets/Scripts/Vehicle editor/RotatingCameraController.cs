@@ -41,6 +41,8 @@ public class RotatingCameraController : MonoBehaviour
      */
     private void Zoom(float zoomDirection)
     {
+        Debug.Log(zoomDirection);
+
         zoomDirection /= ZOOM_SPEED_DAMPNER;
 
         Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
