@@ -50,7 +50,7 @@ public class RotatingCameraController : MonoBehaviour
 
     public void GetRightMousePress(InputAction.CallbackContext value)
     {
-        if (value.performed)
+        if (value.started)
         {
             rightMousePressed = true;
             Cursor.lockState = CursorLockMode.Locked;
