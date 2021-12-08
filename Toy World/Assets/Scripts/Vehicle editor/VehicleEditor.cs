@@ -32,6 +32,9 @@ public class VehicleEditor : MonoBehaviour
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
+
+    private int vCount;
+
     public Camera vehicleCam;
 
     [SerializeField]
@@ -78,6 +81,7 @@ public class VehicleEditor : MonoBehaviour
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
+            coreBlock.GetComponent<VehicleStats>().allParts = parts;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -92,6 +96,7 @@ public class VehicleEditor : MonoBehaviour
             }
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
+            coreBlock.GetComponent<VehicleStats>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;
@@ -111,8 +116,10 @@ public class VehicleEditor : MonoBehaviour
 
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);            
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
+            coreBlock.GetComponent<VehicleStats>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            vehicleCam.enabled = false;
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
@@ -156,6 +163,28 @@ public class VehicleEditor : MonoBehaviour
         if (!playan && context.performed)
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+            PlacePart(context);
+        }
+    }
+
+    public void RotatePartVertical(InputAction.CallbackContext context)
+    {
+        if (!playan && context.performed)
+        {
+            if (vCount == 2)
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
+            }
+            else
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
+            }
+            
+            vCount++;
+            if (vCount==4)
+            {
+                vCount = 0;
+            }
             PlacePart(context);
         }
     }
