@@ -14,6 +14,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float distanceToActivate;
     public static float distanceToActivateValue;
 
+    public static int amountOfSpawnPoints;
+
     [SerializeField] private GameObject enemySpawner;
     private List<GameObject> spawnPointList = new List<GameObject>();
 
@@ -23,6 +25,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyPrefab;
     private GameObject sandTerrain;
     private GameObject enemyParent;
+    private GameObject spawnPoint;
+    private GameObject spawnPointParent;
 
 
     // Start is called before the first frame update
@@ -30,27 +34,30 @@ public class EnemySpawner : MonoBehaviour
     {
         enemySpawner = GameObject.Find("EnemySpawnPoints");
         enemyPrefab = Resources.Load("Enemy") as GameObject;
+        enemyParent = GameObject.Find("EnemyParent");
         player = GameObject.Find("CoreBlock").transform;
         sandTerrain = GameObject.Find("SandTerrain");
-        enemyParent = GameObject.Find("EnemyParent");
+        spawnPoint = Resources.Load("SpawnPoint") as GameObject;
+        spawnPointParent = GameObject.Find("EnemySpawnPoints");
 
         distanceToActivateValue = distanceToActivate;
 
-        SetSpawnPoints();
-        StartCoroutine(SpawnEnemies(numberOfEnemiesToSpawn));
-    }
-
-    private void SetSpawnPoints()
-    {
-        foreach (Transform spawnPoint in enemySpawner.transform)
-        {
-            spawnPointList.Add(spawnPoint.gameObject);
-        }
-
+        SetSpawnPoints(amountOfSpawnPoints);
         SetSpawnPointsLocation();
     }
 
-    private void SetSpawnPointsLocation()
+    public void SetSpawnPoints(int amountOfSpawnPoints)
+    {
+        spawnPointList.Clear();
+
+        for (int i = 0; i < amountOfSpawnPoints; i++)
+        {
+            Instantiate(spawnPoint, spawnPointParent.transform);
+            spawnPointList.Add(spawnPoint.gameObject);
+        }
+    }
+
+    public void SetSpawnPointsLocation()
     {
         MeshFilter sandTerrainMesh = sandTerrain.GetComponent<MeshFilter>();
 
@@ -80,7 +87,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemies(int numberOfEnemiesToSpawn)
+    public IEnumerator SpawnEnemies(int numberOfEnemiesToSpawn)
     {
         WaitForSeconds Wait = new WaitForSeconds(SpawnDelay);
         int spawnedEnemies = 0;

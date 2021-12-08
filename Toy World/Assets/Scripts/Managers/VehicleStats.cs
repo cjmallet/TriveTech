@@ -75,5 +75,11 @@ public class VehicleStats : MonoBehaviour
 
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.name.Contains("StartWavesTestBlock"))
+        {
+            EnemyWaveSpawner enemyWaveSpawner = GameObject.Find("EnemyManager").GetComponent<EnemyWaveSpawner>();
+            enemyWaveSpawner.SpawnWave();
+        }
     }
 }
