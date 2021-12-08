@@ -17,11 +17,6 @@ public class VehicleMovement : MonoBehaviour
     public int movementSpeed { get; set; }
     public int rotationSpeed { get; set; }
 
-    public VehicleMovement()
-    {
-        
-    }
-
     private void OnEnable()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -33,7 +28,7 @@ public class VehicleMovement : MonoBehaviour
         {
             foreach (Part part in allParts)
             {
-                rigidBody.mass += part.Weight;
+                rigidBody.mass += part.weight;
             }
         }
     }
@@ -68,14 +63,14 @@ public class VehicleMovement : MonoBehaviour
         {
             if (part.IsGrounded() && !part.grounded)
             {
-                movementSpeed += part.moveSpeedModifier;
-                rotationSpeed += part.rotationSpeedModifier;
+                movementSpeed += part.moveSpeed;
+                rotationSpeed += part.rotationSpeed;
                 part.grounded = true;
             }
             else if (!part.IsGrounded() && part.grounded)
             {
-                movementSpeed -= part.moveSpeedModifier;
-                rotationSpeed -= part.rotationSpeedModifier;
+                movementSpeed -= part.moveSpeed;
+                rotationSpeed -= part.rotationSpeed;
                 part.grounded = false;
             }
         }

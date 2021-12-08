@@ -22,7 +22,7 @@ public class VehicleStats : MonoBehaviour
         {
             foreach (Part part in allParts)
             {
-                totalHealth += part.Health;
+                totalHealth += part.health;
             }
         }
         currentHealth = totalHealth;
