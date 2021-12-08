@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class WheelPart : MovementPart
 {
-    private int moveSpeed = 15;
-    private int rotationSpeed = 5;
-    private float myMass = 0.1f;
-
     private float vertSpeed, horSpeed;
 
     public float steeringAngle { get; set; }
@@ -16,12 +12,6 @@ public class WheelPart : MovementPart
     private bool CheckIfTurn { get { return (transform.localEulerAngles.y >= 0 && (int)transform.localEulerAngles.y < STEERINGMAX)
             || ((int)transform.localEulerAngles.y > 360 - STEERINGMAX && transform.localEulerAngles.y <= 360); } }
 
-    public WheelPart()
-    {
-        this.moveSpeedModifier = moveSpeed;
-        this.rotationSpeedModifier = rotationSpeed;
-        this.Weight = myMass;
-    }
 
     public override bool IsGrounded()
     {

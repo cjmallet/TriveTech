@@ -33,7 +33,13 @@ public class VehicleEditor : MonoBehaviour
     private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
+
+    private int vCount;
+
     public Camera vehicleCam;
+
+    [SerializeField]
+    private PlayerInput playerInput;
 
 
     void Awake()
@@ -47,6 +53,7 @@ public class VehicleEditor : MonoBehaviour
     void Start()
     {
         partGrid = coreBlock.GetComponent<PartGrid>();
+        playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
         if (vehicleCam == null)
@@ -71,6 +78,7 @@ public class VehicleEditor : MonoBehaviour
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = FindObjectsOfType<Part>().ToList();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
+            coreBlock.GetComponent<VehicleStats>().allParts = parts;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -85,6 +93,7 @@ public class VehicleEditor : MonoBehaviour
             }
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
+            coreBlock.GetComponent<VehicleStats>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;
@@ -92,6 +101,7 @@ public class VehicleEditor : MonoBehaviour
             BoundingBox.SetActive(false);
 
             partGrid.ToggleTempBoundingBox(false);
+            playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
         {
@@ -104,14 +114,18 @@ public class VehicleEditor : MonoBehaviour
 
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
+            coreBlock.GetComponent<VehicleStats>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            vehicleCam.enabled = false;
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
             partGrid.ToggleTempBoundingBox(true);
 
             playan = false;
+
+            playerInput.SwitchCurrentActionMap("UI");
         }
     }
 
@@ -140,6 +154,28 @@ public class VehicleEditor : MonoBehaviour
             {
                 previewedPart.SetActive(false);
             }
+        }
+    }
+
+    public void RotatePartVertical(InputAction.CallbackContext context)
+    {
+        if (!playan && context.performed)
+        {
+            if (vCount == 2)
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
+            }
+            else
+            {
+                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
+            }
+            
+            vCount++;
+            if (vCount==4)
+            {
+                vCount = 0;
+            }
+            PlacePart(context);
         }
     }
 

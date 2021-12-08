@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RotatingCameraController : MonoBehaviour
 {
     public const int ZOOM_SPEED_DAMPNER = 10;
+
+    // Vector used to store the input from the InputActions
+    private Vector3 inputVector;
 
     // Speed factors for vehicle rotation and camera zooming
     [Range(1,3)]
@@ -14,37 +18,20 @@ public class RotatingCameraController : MonoBehaviour
     // Reference to core block so it can be rotated
     public GameObject vehicleCore;
 
-    // Movement vector formed from input
-    [HideInInspector]
-    public Vector3 movementInput;
-
-    // Temporary input in Update
-    public virtual void Update()
+    private void FixedUpdate()
     {
-        float movementInputZ = 0;
-        if (Input.GetKey(KeyCode.Space))
-            movementInputZ = 1;
-        if (Input.GetKey(KeyCode.LeftShift))
-            movementInputZ = -1;
-
-        movementInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), movementInputZ);
+        RotateVehicleMovement(inputVector);
     }
 
-    public virtual void FixedUpdate()
-    {
-        // Wordt in toekomst aangeroepn met Unity event en Input Actions
-        RotateVehicleMovement(movementInput);
-    }
-
-    /* Wordt in de toekomst something like:
-     * public void RotateVehicle(InputAction.CallbackContext context)
-     * {
-     *      Zoom(inputVector.z);
-     * }
-     */
     public virtual void RotateVehicleMovement(Vector3 inputVector)
     {
-        Zoom(inputVector.z);
+        Zoom(inputVector.y);
+    }
+
+    // Wordt aangeroepen met Unity event en Input Actions
+    public void GetInputVector(InputAction.CallbackContext context)
+    {
+        inputVector = context.ReadValue<Vector3>();
     }
 
     //! Lets the player zoom in and out of the vehicle

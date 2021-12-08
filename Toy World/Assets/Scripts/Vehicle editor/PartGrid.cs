@@ -104,11 +104,30 @@ public class PartGrid : MonoBehaviour
         }
     }
 
+    public List<Part> ReturnAllParts()
+    {
+        List<Part> allParts = new List<Part>();
+
+        for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
+        {
+            for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
+            {
+                for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
+                {
+                    if (partGrid[i, j, k] != null)
+                    {
+                        allParts.Add(partGrid[i, j, k]);
+                    }
+                }
+            }
+        }
+        return allParts;
+    }
 
     /// <summary>
     /// Moves the vehicle over the grid. Can take multiple axes at once, as long as they're 1 or -1
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context">input</param>
     public void MoveVehicleInGrid(InputAction.CallbackContext context)
     {
         Vector3Int movement = Vector3Int.RoundToInt(context.ReadValue<Vector3>());
@@ -266,12 +285,7 @@ public class PartGrid : MonoBehaviour
             LoopEnd:;
             }
         }
-
-
-
     }
-
-
 
     public void ToggleTempBoundingBox(bool active)
     {

@@ -7,23 +7,8 @@ public class MovementPart : Part
 {
     public bool grounded { get; set; }
 
-    public int moveSpeedModifier { get; set; }
-    public int rotationSpeedModifier { get; set; }
-
-    public MovementPart()
-    {
-        
-    }
-
-    private void Start()
-    {
-        
-    }
-
-    private void FixedUpdate()
-    {
-
-    }
+    public int moveSpeed;
+    public int rotationSpeed;
 
     public virtual bool IsGrounded()
     {
