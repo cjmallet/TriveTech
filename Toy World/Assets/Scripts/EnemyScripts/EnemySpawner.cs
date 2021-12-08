@@ -44,11 +44,23 @@ public class EnemySpawner : MonoBehaviour
 
     public void SetSpawnPoints(int amountOfSpawnPoints)
     {
-        spawnPointList.Clear();
+        /// Used for potential random spawnpoints inside of a level
 
-        for (int i = 0; i < amountOfSpawnPoints; i++)
-        { 
-            Instantiate(spawnPoint, spawnPointParent.transform);
+        //foreach (Transform spawnPoint in spawnPointParent.transform)
+        //{
+        //    Destroy(spawnPoint.gameObject);
+        //}
+
+        //spawnPointList.Clear();
+
+        //for (int i = 0; i < amountOfSpawnPoints; i++)
+        //{ 
+        //    Instantiate(spawnPoint, spawnPointParent.transform);
+        //    spawnPointList.Add(spawnPoint.gameObject);
+        //}
+
+        foreach (Transform spawnPoint in spawnPointParent.transform)
+        {
             spawnPointList.Add(spawnPoint.gameObject);
         }
     }
@@ -72,7 +84,11 @@ public class EnemySpawner : MonoBehaviour
 
                     for (int j = i; j > 0; j--)
                     {
-                        if ((spawnPointList[j - 1].transform.position - spawnPointList[i].transform.position).magnitude < minDistanceBetweenSpawnPoints)
+                        if (spawnPointList[j].gameObject.name == spawnPointList[i].gameObject.name)
+                        {
+                            goodtogo = true;
+                        }
+                        else if ((spawnPointList[j - 1].transform.position - spawnPointList[i].transform.position).magnitude < minDistanceBetweenSpawnPoints)
                         {
                             goodtogo = false;
                             break;

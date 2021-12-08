@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyWaveSpawner : MonoBehaviour
 {
     public int waveNumber = 1;
-    private int amountOfSpawnPoints = 1;
-    private int amountOfEnemiesToSpawn = 1;
+    public float amountOfEnemiesIncreaseFactor;
+
+    private float amountOfSpawnPoints = 1;
+    private float amountOfEnemiesToSpawn = 1;
 
     private EnemySpawner enemyspawner;
 
@@ -20,12 +22,11 @@ public class EnemyWaveSpawner : MonoBehaviour
 
     public void SpawnWave()
     {
-
-        //amountOfSpawnPoints = Mathf.Ceil(0.1f * Mathf.Pow(waveNumber, 2)) * 10;
-        //amountOfEnemiesToSpawn = Mathf.Ceil(0.3f * Mathf.Pow(waveNumber, 2)) * 10;
+        //amountOfSpawnPoints = Mathf.Ceil(1f * Mathf.Pow(waveNumber, 2));
+        amountOfEnemiesToSpawn = Mathf.Ceil(amountOfEnemiesIncreaseFactor * Mathf.Pow(waveNumber, 2));
 
         enemyspawner.SetSpawnPoints((int)amountOfSpawnPoints);
-        enemyspawner.SetSpawnPointsLocation();
+        //enemyspawner.SetSpawnPointsLocation();            // Used for setting of the random spawnpoints locations in the future
         enemyspawner.StartCoroutine(enemyspawner.SpawnEnemies((int)amountOfEnemiesToSpawn));
 
         waveNumber++;
