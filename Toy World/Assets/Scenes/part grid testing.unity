@@ -848,6 +848,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoreBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 5710419817117756348, guid: 7d8c442fcc04afa4ab2e32f6ffe09e63, type: 3}
+      propertyPath: gizmos
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8c442fcc04afa4ab2e32f6ffe09e63, type: 3}
 --- !u!1001 &3828433662548338288
