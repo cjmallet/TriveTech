@@ -90,6 +90,8 @@ public class VehicleEditor : MonoBehaviour
             playan = true;
             previewedPart.SetActive(false);
             BoundingBox.SetActive(false);
+
+            partGrid.ToggleTempBoundingBox(false);
         }
         else if (context.performed && playan)
         {
@@ -107,6 +109,7 @@ public class VehicleEditor : MonoBehaviour
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
+            partGrid.ToggleTempBoundingBox(true);
 
             playan = false;
         }

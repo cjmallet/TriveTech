@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PartGrid : MonoBehaviour
 {
+    public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
     private Part[,,] partGrid;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
@@ -55,8 +56,6 @@ public class PartGrid : MonoBehaviour
     public Part[] GetNeighbours(Vector3Int relativePos)
     {
         Vector3Int gridIndex = relativePos + coreBlockIndex;
-        //Debug.Log("neighbour index: " + gridIndex);
-        //Debug.Log("neighbour index: " + gridIndex);
         Part[] neighbours = new Part[6];
         //"Right", "Left", "Top", "Bottom", "Back", "Front"
         if (gridIndex.x + 1 <= partGrid.GetUpperBound(0))
@@ -106,157 +105,170 @@ public class PartGrid : MonoBehaviour
     }
 
 
-
-    /*
-     * 
-     * 
-     * MAAK 6 LOOPS VOOR ELKE RICHTING
-     * hij laat blokken achter omdat je op negatief of positief checkt. dan skip je de edge planes
-     * doe de checks dan gewoon in de loop zelf.
-     * 
-     * 
-     */ 
     /// <summary>
-    /// Moves the vehicle in the grid by 1 step in a single direction
+    /// Moves the vehicle over the grid. Can take multiple axes at once, as long as they're 1 or -1
     /// </summary>
-    /// <param name="movement"></param>
+    /// <param name="context"></param>
     public void MoveVehicleInGrid(InputAction.CallbackContext context)
     {
         Vector3Int movement = Vector3Int.RoundToInt(context.ReadValue<Vector3>());
-        if (movement.magnitude == 1)//checks if it's just 1 step
+        if (movement != Vector3.zero)
         {
-            //the 3 loops below check if the outer plane of the direction in which we're moving is clear. It can't move outside of the grid.
-            bool weGood = true;
-
-            if (movement.x != 0)
+            if (movement.x == 1)
             {
-                int x = 999999;//alles kapot brrrrah brah brah
-                if (movement.x == 1)
+                for (int x = partGrid.GetUpperBound(0); x >= 0; x--)
                 {
-                    x = partGrid.GetUpperBound(0);
-                }
-                else if (movement.x == -1)
-                {
-                    x = 0;
-                }
-                else
-                    Debug.LogError("xit's all fucked, screw this I'm out");
-
-
-                for (int i = 0; i < partGrid.GetUpperBound(1); i++)
-                {
-                    for (int j = 0; j < partGrid.GetUpperBound(2); j++)
+                    for (int y = partGrid.GetUpperBound(1); y >= 0; y--)
                     {
-                        if (partGrid[x, i, j] != null)
+                        for (int z = partGrid.GetUpperBound(2); z >= 0; z--)
                         {
-                            Debug.Log($"X axis blocked x{x} y{i} z{j} {partGrid[x, i, j]}");
-                            weGood = false;
-                            break;
-                        }
-                    }
-                    if (!weGood)
-                        break;
-                }
-            }
-            else if (movement.y != 0)
-            {
-                int y = 99999;
-                if (movement.y == 1)
-                    y = partGrid.GetUpperBound(1);
-                else if (movement.y == -1)
-                    y = 0;
-                else
-                    Debug.LogError("yit's all fucked");
-
-                for (int i = 0; i < partGrid.GetUpperBound(0); i++)
-                {
-                    for (int j = 0; j < partGrid.GetUpperBound(2); j++)
-                    {
-                        if (partGrid[i, y, j] != null)
-                        {
-                            Debug.Log($"Y axis blocked {partGrid[i, y, j]}");
-                            weGood = false;
-                            break;
-                        }
-
-                    }
-                    if (!weGood)
-                        break;
-                }
-            }
-            else if (movement.z != 0)
-            {
-                int z = 99999;
-                if (movement.z == 1)
-                    z = partGrid.GetUpperBound(2);
-                else if (movement.z == -1)
-                    z = 0;
-                else
-                    Debug.LogError("zit's all fucked, screw this I'm out");
-
-                for (int i = 0; i < partGrid.GetUpperBound(0); i++)
-                {
-                    for (int j = 0; j < partGrid.GetUpperBound(1); j++)
-                    {
-                        if (partGrid[i, j, z] != null)
-                        {
-                            Debug.Log($"Z axis blocked {partGrid[i, j, z]}");
-                            weGood = false;
-                            break;
-                        }
-
-                    }
-                    if (!weGood)
-                        break;
-                }
-            }
-
-            // Below here is where the parts are actually moved, either in a regular or a reverse loop, depending on movement direction
-            // I could also do the above checks during the first loop over a plane, but I would still need 6 different nested for loops for each direction...
-            // actually I'll do that, it's a much neater solution when I think about it. It could expand to multiple steps and checks of multiple layers.
-            if (weGood && (movement.x == -1 || movement.y == -1 || movement.z == -1))
-            {
-                Debug.Log($"weGood is {weGood} movement is {movement} and we are moving now.");
-                for (int i = 1; i < partGrid.GetUpperBound(0); i++)
-                {
-                    for (int j = 1; j < partGrid.GetUpperBound(1); j++)
-                    {
-                        for (int k = 1; k < partGrid.GetUpperBound(2); k++)
-                        {
-                            if (partGrid[i, j, k] != null)
+                            if (partGrid[x, y, z] != null)
                             {
-                                partGrid[i + movement.x, j + movement.y, k + movement.z] = partGrid[i, j, k];
-                                partGrid[i, j, k] = null;
+                                if (x == partGrid.GetUpperBound(0))
+                                {
+                                    //cannot go further on X
+                                    //Debug.Log($"X axis blocked x{x} y{y} z{z}");
+                                    goto LoopEnd;
+                                }
+                                partGrid[x + movement.x, y, z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
                             }
                         }
                     }
                 }
-                coreBlockIndex += movement;
-                Debug.Log($"coreblockIndex is occupied by: {partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z].transform.name}");
+                coreBlockIndex.x += movement.x;
                 ToggleTempBoundingBox(true);
+            LoopEnd:;
             }
-            else if (weGood && (movement.x == 1 || movement.y == 1 || movement.z == 1))
+            else if (movement.x == -1)
             {
-                Debug.Log($"weGood is {weGood} movement is {movement} and we are moving now.");
-                for (int i = partGrid.GetUpperBound(0); i >= 0; i--)
+                for (int x = 0; x <= partGrid.GetUpperBound(0); x++)
                 {
-                    for (int j = partGrid.GetUpperBound(1); j >= 0; j--)
+                    for (int y = 0; y <= partGrid.GetUpperBound(1); y++)
                     {
-                        for (int k = partGrid.GetUpperBound(2); k >= 0; k--)
+                        for (int z = 0; z <= partGrid.GetUpperBound(2); z++)
                         {
-                            if (partGrid[i, j, k] != null)
+                            if (partGrid[x, y, z] != null)
                             {
-                                partGrid[i + movement.x, j + movement.y, k + movement.z] = partGrid[i, j, k];
-                                partGrid[i, j, k] = null;
+                                if (x == 0)
+                                {
+                                    //cannot go further on -X
+                                    goto LoopEnd;
+                                }
+                                partGrid[x + movement.x, y, z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
                             }
                         }
                     }
                 }
-                coreBlockIndex += movement;
-                Debug.Log($"coreblockIndex is occupied by: {partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z].transform.name}");
+                coreBlockIndex.x += movement.x;
                 ToggleTempBoundingBox(true);
+            LoopEnd:;
+            }
+            if (movement.y == 1)
+            {
+                for (int y = partGrid.GetUpperBound(1); y >= 0; y--)
+                {
+                    for (int x = partGrid.GetUpperBound(0); x >= 0; x--)
+                    {
+                        for (int z = partGrid.GetUpperBound(2); z >= 0; z--)
+                        {
+                            if (partGrid[x, y, z] != null)
+                            {
+                                if (y == partGrid.GetUpperBound(1))
+                                {
+                                    
+                                    goto LoopEnd;
+                                }
+                                partGrid[x, y + movement.y, z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
+                            }
+                        }
+                    }
+                }
+                coreBlockIndex.y += movement.y;
+                ToggleTempBoundingBox(true);
+            LoopEnd:;
+            }
+            else if (movement.y == -1)
+            {
+                for (int y = 0; y <= partGrid.GetUpperBound(1); y++)
+                {
+                    for (int x = 0; x <= partGrid.GetUpperBound(0); x++)
+                    {
+                        for (int z = 0; z <= partGrid.GetUpperBound(2); z++)
+                        {
+                            if (partGrid[x, y, z] != null)
+                            {
+                                if (y == 0)
+                                {
+                                    //cannot go further on -Y
+                                    goto LoopEnd;
+                                }
+                                partGrid[x, y + movement.y, z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
+                            }
+                        }
+                    }
+                }
+                coreBlockIndex.y += movement.y;
+                ToggleTempBoundingBox(true);
+            LoopEnd:;
+            }
+            if (movement.z == 1)
+            {
+                for (int z = partGrid.GetUpperBound(2); z >= 0; z--)
+                {
+                    for (int x = partGrid.GetUpperBound(0); x >= 0; x--)
+                    {
+                        for (int y = partGrid.GetUpperBound(1); y >= 0; y--)
+                        {
+                            if (partGrid[x, y, z] != null)
+                            {
+                                if (z == partGrid.GetUpperBound(2))
+                                {
+                                    //cannot go further on Z
+                                    goto LoopEnd;
+                                }
+                                partGrid[x, y, z + movement.z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
+                            }
+                        }
+                    }
+                }
+                coreBlockIndex.z += movement.z;
+                ToggleTempBoundingBox(true);
+            LoopEnd:;
+            }
+            else if (movement.z == -1)
+            {
+                for (int z = 0; z <= partGrid.GetUpperBound(2); z++)
+                {
+                    for (int x = 0; x <= partGrid.GetUpperBound(0); x++)
+                    {
+                        for (int y= 0; y <= partGrid.GetUpperBound(1); y++)
+                        {
+                            if (partGrid[x, y, z] != null)
+                            {
+                                if (z == 0)
+                                {
+                                    //cannot go further on -Z
+                                    goto LoopEnd;
+                                }
+                                partGrid[x, y, z + movement.z] = partGrid[x, y, z];
+                                partGrid[x, y, z] = null;
+                            }
+                        }
+                    }
+                }
+                coreBlockIndex.z += movement.z;
+                ToggleTempBoundingBox(true);
+            LoopEnd:;
             }
         }
+
+
+
     }
 
 
@@ -305,20 +317,24 @@ public class PartGrid : MonoBehaviour
     }
     void OnDrawGizmos()
     {
-        if (partGrid != null)
+        if (gizmos && partGrid != null)
         {
-            for (int i = 0; i < partGrid.GetUpperBound(0); i++)
+            for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
             {
-                for (int j = 0; j < partGrid.GetUpperBound(1); j++)
+                for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
                 {
-                    for (int k = 0; k < partGrid.GetUpperBound(2); k++)
+                    for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
                     {
                         if (partGrid[i, j, k] != null)
+                        {
                             Gizmos.color = Color.red;
+                            Gizmos.DrawCube(new Vector3(i, j + 10, k) * 0.5f, Vector3.one * 0.45f);
+                        }
                         else
+                        {
                             Gizmos.color = Color.black;
-
-                        Gizmos.DrawSphere(new Vector3(i, j + 10, k), 0.1f);
+                            Gizmos.DrawWireCube(new Vector3(i, j + 10, k) *0.5f, Vector3.one * 0.5f);
+                        }
                     }
                 }
             }
