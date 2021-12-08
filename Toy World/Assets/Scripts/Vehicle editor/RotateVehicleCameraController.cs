@@ -5,9 +5,9 @@ public class RotateVehicleCameraController : RotatingCameraController
 {
     public override void RotateVehicleMovement(Vector3 inputVector)
     {
-        vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
-            inputVector.x * -horizontalRotateSpeed, 0, Space.World);
         base.RotateVehicleMovement(inputVector);
+        vehicleCore.transform.Rotate(inputVector.y * (verticalRotateSpeed / 10), 
+            inputVector.x * (-horizontalRotateSpeed / 10), 0, Space.World);
     }
 
     //! Resets vehicle rotation to original default (0)

@@ -10,6 +10,8 @@ public class RotatingCameraController : MonoBehaviour
 
     private float zoomValue;
 
+    private bool rightMousePressed;
+
     // Speed factors for vehicle rotation and camera zooming
     [Range(1,3)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
@@ -35,12 +37,29 @@ public class RotatingCameraController : MonoBehaviour
     // Wordt aangeroepen met Unity event en Input Actions
     public void GetInputVector(InputAction.CallbackContext context)
     {
-        inputVector = context.ReadValue<Vector2>();
+        if (rightMousePressed)
+            inputVector = context.ReadValue<Vector2>();
+        //else
+            //inputVector = Vector2.zero;
     }
 
     public void GetZoomValue(InputAction.CallbackContext value)
     {
         zoomValue = value.ReadValue<float>();
+    }
+
+    public void GetRightMousePress(InputAction.CallbackContext value)
+    {
+        if (value.performed)
+        {
+            rightMousePressed = true;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        if (value.canceled)
+        {
+            rightMousePressed = false;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     //! Lets the player zoom in and out of the vehicle
