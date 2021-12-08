@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     private Transform player;
     private GameObject enemyPrefab;
     private GameObject sandTerrain;
+    private GameObject enemyParent;
 
 
     // Start is called before the first frame update
@@ -31,6 +32,7 @@ public class EnemySpawner : MonoBehaviour
         enemyPrefab = Resources.Load("Enemy") as GameObject;
         player = GameObject.Find("CoreBlock").transform;
         sandTerrain = GameObject.Find("SandTerrain");
+        enemyParent = GameObject.Find("EnemyParent");
 
         distanceToActivateValue = distanceToActivate;
 
@@ -97,6 +99,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy(int spawnPointIndex)
     {
-        Instantiate(enemyPrefab, spawnPointList[spawnPointIndex].transform.position, Quaternion.identity);
+        GameObject instantiatedEnemy = Instantiate(enemyPrefab, spawnPointList[spawnPointIndex].transform.position, Quaternion.identity);
+        instantiatedEnemy.transform.SetParent(enemyParent.transform);
     }
 }
