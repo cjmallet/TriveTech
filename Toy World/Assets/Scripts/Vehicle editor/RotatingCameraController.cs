@@ -43,11 +43,13 @@ public class RotatingCameraController : MonoBehaviour
             inputVector = Vector2.zero;
     }
 
+    // Gets the scroll valuo from Input Actions
     public void GetZoomValue(InputAction.CallbackContext value)
     {
         zoomValue = value.ReadValue<float>();
     }
 
+    // Gets the right mouse button pressed value to check if you may move the camera/vehicle
     public void GetRightMousePress(InputAction.CallbackContext value)
     {
         if (value.started)
@@ -60,6 +62,13 @@ public class RotatingCameraController : MonoBehaviour
             rightMousePressed = false;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    //! Inverses the movement of the mouse for controlling the camera
+    public void InverseRotation()
+    {
+        horizontalRotateSpeed *= -1;
+        verticalRotateSpeed *= -1;
     }
 
     //! Lets the player zoom in and out of the vehicle
