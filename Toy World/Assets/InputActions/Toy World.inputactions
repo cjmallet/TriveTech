@@ -210,10 +210,19 @@
                     "name": "UIRotateMove",
                     "type": "Value",
                     "id": "5c6603bf-a2f5-49d8-a749-057f4386dc76",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "UIZoom",
+                    "type": "PassThrough",
+                    "id": "69eab551-9f29-482a-9133-889aecc1b058",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "UIMouseMove",
@@ -445,7 +454,7 @@
                 {
                     "name": "MouseInput",
                     "id": "fcbc07d5-9ba3-43f4-b536-b7cadc409f53",
-                    "path": "3DVector(mode=1)",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -454,52 +463,8 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "e6c04ed1-f91b-457d-a7de-f1925f2b301e",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "UIRotateMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "0f0992ae-cb77-4d6d-97da-b42a943591fd",
-                    "path": "<Mouse>/scroll/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "UIRotateMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
+                    "name": "Up",
                     "id": "4600476c-da3d-4018-8128-b5c71a00b1e8",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "UIRotateMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "c5a14f43-93a8-49eb-a6ec-66d63b5ef804",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "UIRotateMove",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "forward",
-                    "id": "2f7f7a47-7bd6-47a8-af8c-ffc6740ae489",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -509,8 +474,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "backward",
-                    "id": "bd4e601b-7f2b-41ff-bb24-18e59bef82fe",
+                    "name": "Down",
+                    "id": "c5a14f43-93a8-49eb-a6ec-66d63b5ef804",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -518,6 +483,39 @@
                     "action": "UIRotateMove",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "Left",
+                    "id": "2f7f7a47-7bd6-47a8-af8c-ffc6740ae489",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UIRotateMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "bd4e601b-7f2b-41ff-bb24-18e59bef82fe",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UIRotateMove",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "fd509c84-d10e-4ba5-b6d0-cc234411f8cb",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

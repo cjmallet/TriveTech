@@ -5,7 +5,7 @@ public class RotateVehicleCameraController : RotatingCameraController
 {
     public override void RotateVehicleMovement(Vector3 inputVector)
     {
-        vehicleCore.transform.Rotate(inputVector.z * verticalRotateSpeed, 
+        vehicleCore.transform.Rotate(inputVector.y * verticalRotateSpeed, 
             inputVector.x * -horizontalRotateSpeed, 0, Space.World);
         base.RotateVehicleMovement(inputVector);
     }

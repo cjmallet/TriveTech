@@ -8,10 +8,10 @@ public class EditorCameraControler : RotatingCameraController
     {
         transform.RotateAround(vehicleCore.transform.position, Vector3.up, -inputVector.x * horizontalRotateSpeed);
 
-        if (transform.rotation.eulerAngles.x + inputVector.z * verticalRotateSpeed < 89 
-            || transform.rotation.eulerAngles.x + inputVector.z* verticalRotateSpeed > 271)
+        if (transform.rotation.eulerAngles.x + inputVector.y * verticalRotateSpeed < 89 
+            || transform.rotation.eulerAngles.x + inputVector.y* verticalRotateSpeed > 271)
         {
-            transform.RotateAround(vehicleCore.transform.position, transform.right, inputVector.z * verticalRotateSpeed);
+            transform.RotateAround(vehicleCore.transform.position, transform.right, inputVector.y * verticalRotateSpeed);
         }
 
         base.RotateVehicleMovement(inputVector);

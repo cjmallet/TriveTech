@@ -8,6 +8,8 @@ public class RotatingCameraController : MonoBehaviour
     // Vector used to store the input from the InputActions
     private Vector3 inputVector;
 
+    private float zoomValue;
+
     // Speed factors for vehicle rotation and camera zooming
     [Range(1,3)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
@@ -25,13 +27,20 @@ public class RotatingCameraController : MonoBehaviour
 
     public virtual void RotateVehicleMovement(Vector3 inputVector)
     {
-        Zoom(inputVector.y);
+        inputVector.z = zoomValue;
+        inputVector.Normalize();
+        Zoom(inputVector.z);
     }
 
     // Wordt aangeroepen met Unity event en Input Actions
     public void GetInputVector(InputAction.CallbackContext context)
     {
-        inputVector = context.ReadValue<Vector3>();
+        inputVector = context.ReadValue<Vector2>();
+    }
+
+    public void GetZoomValue(InputAction.CallbackContext value)
+    {
+        zoomValue = value.ReadValue<float>();
     }
 
     //! Lets the player zoom in and out of the vehicle
@@ -41,8 +50,6 @@ public class RotatingCameraController : MonoBehaviour
      */
     private void Zoom(float zoomDirection)
     {
-        Debug.Log(zoomDirection);
-
         zoomDirection /= ZOOM_SPEED_DAMPNER;
 
         Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
