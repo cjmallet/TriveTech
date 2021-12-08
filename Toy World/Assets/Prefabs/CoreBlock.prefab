@@ -236,4 +236,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  health: 10
+  weight: 0.2
   useDirectionIndicator: 0

@@ -7,8 +7,9 @@ public abstract class Part : MonoBehaviour
 {
     [NamedListAttribute(new string[] { "Right", "Left", "Top", "Bottom", "Back", "Front" })]
     public List<Part> attachedParts = new List<Part>();
-    public int Health { get; set; }
-    public float Weight { get; set; }
+
+    public int health;
+    public float weight;
 
     public int Width { get; }
     public int Height { get; }
