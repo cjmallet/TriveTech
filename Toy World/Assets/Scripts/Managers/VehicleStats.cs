@@ -6,6 +6,15 @@ using UnityEngine.UI;
 
 public class VehicleStats : MonoBehaviour
 {
+    private static VehicleStats instance;
+    public static VehicleStats _instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
     public List<Part> allParts = new List<Part>();
 
     public Canvas playerUI;
@@ -18,6 +27,8 @@ public class VehicleStats : MonoBehaviour
 
     private void OnEnable()
     {
+        if (instance == null) { instance = this; }
+
         if (allParts.Count != 0)
         {
             foreach (Part part in allParts)
@@ -65,15 +76,5 @@ public class VehicleStats : MonoBehaviour
     private void Die()
     {
         Debug.Log("YOU DIED LOSER");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("Enemy"))
-        {
-            TakeDamage(collision.gameObject.GetComponent<NavMeshAgentBehaviour>().damage);
-
-            Destroy(collision.gameObject);
-        }
     }
 }
