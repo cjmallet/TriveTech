@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private int numberOfEnemiesToSpawn = 5;
     [SerializeField] private float SpawnDelay = 1f;
     [SerializeField] private float spawnDistanceMin;
     [SerializeField] private float spawnDistanceMax;
@@ -41,9 +40,6 @@ public class EnemySpawner : MonoBehaviour
         spawnPointParent = GameObject.Find("EnemySpawnPoints");
 
         distanceToActivateValue = distanceToActivate;
-
-        SetSpawnPoints(amountOfSpawnPoints);
-        SetSpawnPointsLocation();
     }
 
     public void SetSpawnPoints(int amountOfSpawnPoints)
@@ -51,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
         spawnPointList.Clear();
 
         for (int i = 0; i < amountOfSpawnPoints; i++)
-        {
+        { 
             Instantiate(spawnPoint, spawnPointParent.transform);
             spawnPointList.Add(spawnPoint.gameObject);
         }

@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyWaveSpawner : MonoBehaviour
 {
     public int waveNumber = 1;
-    private float amountOfSpawnPoints = 1;
-    private float amountOfEnemiesToSpawn = 1;
+    private int amountOfSpawnPoints = 1;
+    private int amountOfEnemiesToSpawn = 1;
 
     private EnemySpawner enemyspawner;
 
