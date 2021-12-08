@@ -13,7 +13,7 @@ public class RotatingCameraController : MonoBehaviour
     private bool rightMousePressed;
 
     // Speed factors for vehicle rotation and camera zooming
-    [Range(1,3)]
+    [Range(1,10)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
 
     // Distance between the camera and the core block
