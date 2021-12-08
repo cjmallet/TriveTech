@@ -39,8 +39,8 @@ public class RotatingCameraController : MonoBehaviour
     {
         if (rightMousePressed)
             inputVector = context.ReadValue<Vector2>();
-        //else
-            //inputVector = Vector2.zero;
+        else
+            inputVector = Vector2.zero;
     }
 
     public void GetZoomValue(InputAction.CallbackContext value)
