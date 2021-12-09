@@ -111,10 +111,13 @@ public abstract class Part : MonoBehaviour
     public virtual void HandleCollision(Collider collider)
     {
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
-            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage);
+        {
+            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+            Destroy(collider.gameObject);
+        }
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, Collider collider)
     {
         if (health - damage > 0)
         {
