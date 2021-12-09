@@ -18,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject enemySpawner;
     private List<GameObject> spawnPointList = new List<GameObject>();
 
+    public static List<GameObject> enemyList = new List<GameObject>();
+
     private int spawnPointIndex = 0;
 
     private Transform player;
@@ -120,5 +122,7 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject instantiatedEnemy = Instantiate(enemyPrefab, spawnPointList[spawnPointIndex].transform.position, Quaternion.identity);
         instantiatedEnemy.transform.SetParent(enemyParent.transform);
+        enemyList.Add(instantiatedEnemy);
+        instantiatedEnemy.GetComponent<NavMeshAgentBehaviour>().agentId++;
     }
 }
