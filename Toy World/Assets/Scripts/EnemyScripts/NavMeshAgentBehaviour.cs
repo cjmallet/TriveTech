@@ -8,6 +8,8 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject coreBlock;
 
+    public GameObject explosion;
+
     public int damage = 1;
 
     // Start is called before the first frame update
@@ -33,5 +35,10 @@ public class NavMeshAgentBehaviour : MonoBehaviour
         {
             agent.destination = this.transform.position - transform.forward * 0.01f;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Instantiate(explosion, transform.position, Quaternion.identity);
     }
 }

@@ -112,6 +112,7 @@ public abstract class Part : MonoBehaviour
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
             TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+            Destroy(collider.gameObject);
         }
     }
 
@@ -121,7 +122,6 @@ public abstract class Part : MonoBehaviour
         {
             this.health -= damage;
             VehicleStats._instance.TakeDamage(damage);
-            Destroy(collider.gameObject);
         }
         else
         {
