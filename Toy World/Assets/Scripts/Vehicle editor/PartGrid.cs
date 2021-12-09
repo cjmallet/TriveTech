@@ -291,6 +291,7 @@ public class PartGrid : MonoBehaviour
     {
         if (active)
         {
+            tempBox.SetActive(true);
             tempBox.transform.localPosition = new Vector3(gridDimensions.x * 0.5f - 0.5f, gridDimensions.y * 0.5f - 0.5f, gridDimensions.z * 0.5f - 0.5f) - coreBlockIndex;
             tempBox.transform.localScale = gridDimensions;
         }
