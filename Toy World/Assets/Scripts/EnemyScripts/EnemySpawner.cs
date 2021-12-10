@@ -15,7 +15,6 @@ public class EnemySpawner : MonoBehaviour
 
     public static int amountOfSpawnPoints;
 
-    [SerializeField] private GameObject enemySpawner;
     private List<GameObject> spawnPointList = new List<GameObject>();
 
     public static List<GameObject> enemyList = new List<GameObject>();
@@ -33,7 +32,6 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        enemySpawner = GameObject.Find("EnemySpawnPoints");
         enemyPrefab = Resources.Load("Enemy") as GameObject;
         enemyParent = GameObject.Find("EnemyParent");
         player = GameObject.Find("CoreBlock").transform;

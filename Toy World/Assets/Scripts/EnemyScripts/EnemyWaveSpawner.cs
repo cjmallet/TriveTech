@@ -18,12 +18,15 @@ public class EnemyWaveSpawner : MonoBehaviour
     void Start()
     {
         enemyspawner = GetComponent<EnemySpawner>();
+
+        Debug.Log("test log: " + Mathf.Log(8, 2));
     }
 
     public void SpawnWave()
     {
+
         //amountOfSpawnPoints = Mathf.Ceil(1f * Mathf.Pow(waveNumber, 2));
-        amountOfEnemiesToSpawn = Mathf.Ceil(amountOfEnemiesIncreaseFactor * Mathf.Pow(waveNumber, 2));
+        amountOfEnemiesToSpawn = Mathf.Ceil(amountOfEnemiesIncreaseFactor * Mathf.Log(waveNumber * 5, 2));
 
         enemyspawner.SetSpawnPoints((int)amountOfSpawnPoints);
         //enemyspawner.SetSpawnPointsLocation();            // Used for setting of the random spawnpoints locations in the future
