@@ -53,7 +53,6 @@ public class NavMeshAgentBehaviour : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
     private void OnDestroy()
     {
         EnemySpawner.enemyList.Remove(gameObject);
@@ -110,13 +109,10 @@ public class NavMeshAgentBehaviour : MonoBehaviour
         return flockingVector;
 
     }
-
-=======
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
     }
->>>>>>> development
 }
 
         
