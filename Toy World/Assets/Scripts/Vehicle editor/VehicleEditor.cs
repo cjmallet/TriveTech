@@ -157,6 +157,15 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    public void RotatePart(InputAction.CallbackContext context)
+    {
+        if (!playan && context.performed)
+        {
+            partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+            PlacePart(context);
+        }
+    }
+
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
         if (!playan && context.performed)
