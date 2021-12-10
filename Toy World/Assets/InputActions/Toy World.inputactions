@@ -342,7 +342,7 @@
                 {
                     "name": "down",
                     "id": "ebbbb7e2-8fe4-4b7c-b1fa-f56ce85aee75",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

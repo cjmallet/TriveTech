@@ -26,9 +26,12 @@ public class FPSCameraControllers : MonoBehaviour
 
         public void Translate(Vector3 translation)
         {
+            
+
             Vector3 rotatedTranslation = Quaternion.Euler(pitch, yaw, roll) * translation;
 
             x += rotatedTranslation.x;
+
             y += rotatedTranslation.y;
             z += rotatedTranslation.z;
         }
