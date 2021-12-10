@@ -24,16 +24,15 @@ public class FPSCameraControllers : MonoBehaviour
             z = transform.position.z;
         }
 
-        public void Translate(Vector3 translation)
+        public void Translate(Vector3 translation, Transform transform)
         {
-            
-
-            Vector3 rotatedTranslation = Quaternion.Euler(pitch, yaw, roll) * translation;
-
-            x += rotatedTranslation.x;
-
-            y += rotatedTranslation.y;
-            z += rotatedTranslation.z;
+            Vector3 betterTranslation = Vector3.zero;
+            betterTranslation += translation.x * transform.right;
+            betterTranslation += translation.y * Vector3.up;
+            betterTranslation += translation.z * transform.forward;
+            x += betterTranslation.x;
+            y += betterTranslation.y;
+            z += betterTranslation.z;
         }
 
         public void LerpTowards(CameraState target, float positionLerpPct, float rotationLerpPct)
@@ -64,8 +63,8 @@ public class FPSCameraControllers : MonoBehaviour
     CameraState m_InterpolatingCameraState = new CameraState();
 
     [Header("Movement Settings")]
-    [Tooltip("Speed of the player character"), Range(0.001f, 5f)]
-    public float movementSpeed = 3.5f;
+    [Tooltip("Speed of the player character"), Range(3f, 20f)]
+    public float movementSpeed = 10f;
     [Tooltip("Time it takes to interpolate camera position 99% of the way to the target."), Range(0.001f, 0.2f)]
     public float mouseSensitivity = 0.1f;
 
@@ -111,7 +110,7 @@ public class FPSCameraControllers : MonoBehaviour
 
         var translation = direction * Time.deltaTime * movementSpeed;
 
-        m_TargetCameraState.Translate(translation);
+        m_TargetCameraState.Translate(translation, gameObject.transform);
 
         // Framerate-independent interpolation
         // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
@@ -124,7 +123,7 @@ public class FPSCameraControllers : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        direction = context.ReadValue<Vector3>() * movementSpeed;
+        direction = context.ReadValue<Vector3>();
     }
 
     public void MouseMove(InputAction.CallbackContext context)

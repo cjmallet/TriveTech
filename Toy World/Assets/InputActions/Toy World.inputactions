@@ -320,7 +320,7 @@
                 {
                     "name": "UIWASD",
                     "id": "2e8db7e4-ff39-48ec-b0b2-8f526e46e55d",
-                    "path": "3DVector(mode=1)",
+                    "path": "3DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
