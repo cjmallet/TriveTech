@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc8992ce64bef449a7e68f9ab29ec80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3.5
+  movementSpeed: 10
   mouseSensitivity: 0.1
   rotationMultiplier: 60
   mouseSensitivityCurve:
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalRotateSpeed: 2
   verticalRotateSpeed: 2
-  cameraZoomSpeed: 1
+  cameraZoomSpeed: 4
   minZoomOutDistance: 2
   maxZoomOutDistance: 20
   vehicleCore: {fileID: 120727267}
