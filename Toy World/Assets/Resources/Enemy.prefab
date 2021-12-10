@@ -108,7 +108,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6427372711600780230}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -135,3 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 5566615957712571186, guid: b9bca185d17ae144d9760e307b6110a3, type: 3}
   damage: 1
+  agentId: 0
+  separationWeight: 5
+  cohesionWeight: 5
+  alignmentWeight: 5
+  minDistanceRadius: 3
