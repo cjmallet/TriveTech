@@ -24,6 +24,7 @@ public class VehicleEditor : MonoBehaviour
     public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
+    [SerializeField] private GameObject partSelectionUI;
     private PartGrid partGrid;
 
     private GameObject BoundingBoxPrefab;
@@ -101,6 +102,7 @@ public class VehicleEditor : MonoBehaviour
             BoundingBox.SetActive(false);
 
             partGrid.ToggleTempBoundingBox(false);
+            partSelectionUI.SetActive(false);
             playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
@@ -124,7 +126,7 @@ public class VehicleEditor : MonoBehaviour
             partGrid.ToggleTempBoundingBox(true);
 
             playan = false;
-
+            partSelectionUI.SetActive(!partSelectionUI.activeSelf);
             playerInput.SwitchCurrentActionMap("UI");
         }
     }
