@@ -180,7 +180,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftClick",
+                    "name": "PlaceClick",
                     "type": "Button",
                     "id": "302a7c8a-ec79-4627-905c-1ca5b278069e",
                     "expectedControlType": "Button",
@@ -189,7 +189,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RightClick",
+                    "name": "DeleteClick",
                     "type": "Button",
                     "id": "24818723-c737-4ce1-8024-8675714012a7",
                     "expectedControlType": "Button",
@@ -259,6 +259,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "UIRotateMoveButton",
+                    "type": "Button",
+                    "id": "43b37f67-b3fb-4279-b1b8-1f8e5f160d7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -269,7 +278,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftClick",
+                    "action": "PlaceClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -280,7 +289,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "LeftClick",
+                    "action": "PlaceClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -291,7 +300,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch",
-                    "action": "LeftClick",
+                    "action": "PlaceClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -302,25 +311,25 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "LeftClick",
+                    "action": "PlaceClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "4c191405-5738-4d4b-a523-c6a301dbf754",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "RightClick",
+                    "action": "DeleteClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "UIWASD",
                     "id": "2e8db7e4-ff39-48ec-b0b2-8f526e46e55d",
-                    "path": "3DVector(mode=1)",
+                    "path": "3DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -342,7 +351,7 @@
                 {
                     "name": "down",
                     "id": "ebbbb7e2-8fe4-4b7c-b1fa-f56ce85aee75",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -635,6 +644,17 @@
                     "action": "MoveOverGrid",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e27759a6-a7b8-4aac-94fa-ded5189cf5fe",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UIRotateMoveButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

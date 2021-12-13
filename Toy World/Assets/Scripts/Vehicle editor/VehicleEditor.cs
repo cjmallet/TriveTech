@@ -136,12 +136,12 @@ public class VehicleEditor : MonoBehaviour
             RaycastHit hit = RaycastMousePosition();
             if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
             {
-                if (context.action.name == "LeftClick" && context.performed)
+                if (context.action.name == "PlaceClick" && context.performed)
                 {
                     PlaceSelectedPart2(hit);
                     
                 }
-                else if (context.action.name == "RightClick" && context.performed)
+                else if (context.action.name == "DeleteClick" && context.performed)
                 {
                     DeleteSelectedPart(hit);
                 }
