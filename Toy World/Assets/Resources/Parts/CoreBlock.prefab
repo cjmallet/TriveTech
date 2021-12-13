@@ -524,6 +524,7 @@ GameObject:
   - component: {fileID: 120727273}
   - component: {fileID: 120727279}
   - component: {fileID: 7172637307124276367}
+  - component: {fileID: 2456488435736434707}
   m_Layer: 3
   m_Name: CoreBlock
   m_TagString: Untagged
@@ -681,3 +682,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e4c794073129e4983ed4ad1dab3a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attachedParts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  health: 0
+  weight: 0
+  useDirectionIndicator: 0
+--- !u!114 &2456488435736434707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099009681357930406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8a08f9f0de7f242a4c55030c3f51c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmos: 0
+  gridDimensions: {x: 15, y: 11, z: 15}
+  coreBlockIndex: {x: 0, y: 0, z: 0}
+  cubePrefab: {fileID: 8489225857888346534, guid: 2cc79ad617e394f469f4b1dde3791e4f, type: 3}

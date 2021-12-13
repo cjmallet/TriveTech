@@ -37,9 +37,10 @@ public abstract class Part : MonoBehaviour
     }
 
     /// <summary>
-    /// This ensures my part is attached to all of it's adjacent parts.
+    /// This attaches the other part to this part and vice versa, in the right direction slots.
+    /// Originally made to attach to a single part, based on the raycast normal of the clicked part.
     /// </summary>
-    /// <param name="partToAttachTo">Part that's seleted to connect to.</param>
+    /// <param name="partToAttachTo">Part that's selected to connect to.</param>
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
@@ -85,7 +86,7 @@ public abstract class Part : MonoBehaviour
                 return Orientation.Right;
 
             default:
-                Debug.LogWarning("NORMAL IS INCORRECT - ERROR ERROR ERROR");
+                Debug.LogWarning($"NORMAL IS INCORRECT - {n}");
                 return Orientation.Right;//Not actually right at all
         }
     }
@@ -110,10 +111,13 @@ public abstract class Part : MonoBehaviour
     public virtual void HandleCollision(Collider collider)
     {
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
-            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage);
+        {
+            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+            Destroy(collider.gameObject);
+        }
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, Collider collider)
     {
         if (health - damage > 0)
         {

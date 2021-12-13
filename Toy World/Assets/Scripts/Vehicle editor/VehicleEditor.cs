@@ -24,6 +24,7 @@ public class VehicleEditor : MonoBehaviour
     public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
+    private PartGrid partGrid;
 
     private GameObject BoundingBoxPrefab;
     private GameObject BoundingBox;
@@ -51,6 +52,7 @@ public class VehicleEditor : MonoBehaviour
 
     void Start()
     {
+        partGrid = coreBlock.GetComponent<PartGrid>();
         playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
@@ -60,11 +62,6 @@ public class VehicleEditor : MonoBehaviour
         }
 
         CreateBoundingBox();
-    }
-
-    void Update()
-    {
-        
     }
 
     public void Play(InputAction.CallbackContext context)
@@ -103,6 +100,7 @@ public class VehicleEditor : MonoBehaviour
             previewedPart.SetActive(false);
             BoundingBox.SetActive(false);
 
+            partGrid.ToggleTempBoundingBox(false);
             playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
@@ -114,7 +112,7 @@ public class VehicleEditor : MonoBehaviour
                     part.ToggleDirectionIndicator(true);
             }
 
-            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);            
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
             coreBlock.GetComponent<VehicleStats>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
@@ -123,6 +121,7 @@ public class VehicleEditor : MonoBehaviour
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
+            partGrid.ToggleTempBoundingBox(true);
 
             playan = false;
 
@@ -137,12 +136,12 @@ public class VehicleEditor : MonoBehaviour
             RaycastHit hit = RaycastMousePosition();
             if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
             {
-                if (context.action.name == "LeftClick" && context.performed)
+                if (context.action.name == "PlaceClick" && context.performed)
                 {
-                    PlaceSelectedPart(hit);
-                    previewedPart.SetActive(false);
+                    PlaceSelectedPart2(hit);
+                    
                 }
-                else if (context.action.name == "RightClick" && context.performed)
+                else if (context.action.name == "DeleteClick" && context.performed)
                 {
                     DeleteSelectedPart(hit);
                 }
@@ -154,7 +153,7 @@ public class VehicleEditor : MonoBehaviour
             else if (previewedPart.activeSelf)
             {
                 previewedPart.SetActive(false);
-            }            
+            }
         }
     }
 
@@ -193,7 +192,7 @@ public class VehicleEditor : MonoBehaviour
     {
         GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
 
-        if(hit.transform == coreBlock.transform)
+        if (hit.transform == coreBlock.transform)
         {
             placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
         }
@@ -209,6 +208,41 @@ public class VehicleEditor : MonoBehaviour
         }
 
     }
+
+    void PlaceSelectedPart2(RaycastHit hit)
+    {
+        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
+        {
+            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
+        }
+
+        if(partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
+        {
+            GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+            placedPart.transform.localPosition = pos;
+            placedPart.transform.localRotation = partRotation;
+            partGrid.AddPartToGrid(placedPart.GetComponent<Part>(), pos);
+
+            if (placedPart.TryGetComponent(out Part part))
+            {
+                foreach (Part neighbour in partGrid.GetNeighbours(Vector3Int.RoundToInt(placedPart.transform.localPosition)))
+                {
+                    if (neighbour == null)
+                    {
+                        continue;
+                    }
+                    if(neighbour.transform == coreBlock.transform)
+                        part.AttachPart(neighbour, pos);
+                    else
+                        part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
+
+                }
+            }
+            previewedPart.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// detaches all parts from hit part and destroys the object.
     /// </summary>
@@ -224,6 +258,7 @@ public class VehicleEditor : MonoBehaviour
                     part.attachedParts[part.attachedParts.IndexOf(hit.transform.GetComponent<Part>())] = null;
                 }
             }
+            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(hit.transform.localPosition));
             Destroy(hit.transform.gameObject);
         }
     }
@@ -232,15 +267,24 @@ public class VehicleEditor : MonoBehaviour
     {
         previewedPart.SetActive(true);
 
-        if (hit.transform == coreBlock.transform)
+        Vector3Int newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
         {
-            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+            newPos += Vector3Int.RoundToInt(hit.transform.localPosition);
+        }
+        previewedPart.transform.localPosition = newPos;
+        previewedPart.transform.localRotation = partRotation;
+
+        if (partGrid.CheckIfInBounds(newPos))
+        {
+            previewedPart.transform.localScale = Vector3.one;
         }
         else
         {
-            previewedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
+            previewedPart.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+           
         }
-        previewedPart.transform.localRotation = partRotation;
     }
 
     public void SetSelectedPart(GameObject slctPart)
