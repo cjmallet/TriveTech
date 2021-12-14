@@ -66,8 +66,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  health: 5
+  weight: 0.1
   useDirectionIndicator: 1
-  directionIndicatorPrefab: {fileID: 1520442295271898306, guid: a6fdb457c8932a6429d3fc6ce0b72463, type: 3}
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0

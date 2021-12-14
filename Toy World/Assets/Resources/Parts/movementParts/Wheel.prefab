@@ -423,8 +423,8 @@ MonoBehaviour:
   health: 10
   weight: 0.1
   useDirectionIndicator: 1
-  moveSpeed: 10
-  rotationSpeed: 5
+  moveSpeed: 15
+  rotationSpeed: 10
 --- !u!65 &5847884760756425979
 BoxCollider:
   m_ObjectHideFlags: 0
