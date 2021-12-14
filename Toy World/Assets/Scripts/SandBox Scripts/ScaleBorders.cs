@@ -19,9 +19,9 @@ public class ScaleBorders : MonoBehaviour
         borders[2].transform.localScale = new Vector3(sandTerrain.xSize, borderHeight, 1);
         borders[3].transform.localScale = new Vector3(1, borderHeight, sandTerrain.zSize);
 
-        borders[0].transform.position = new Vector3(0, 1, sandTerrain.zSize / 2);
-        borders[1].transform.position = new Vector3(sandTerrain.xSize / 2, 1, 0);
-        borders[2].transform.position = new Vector3(0, 1, sandTerrain.zSize / -2);
-        borders[3].transform.position = new Vector3(sandTerrain.xSize / -2, 1, 0);
+        borders[0].transform.position = new Vector3(0, 1, (sandTerrain.zSize / 2) + 0.6f);
+        borders[1].transform.position = new Vector3((sandTerrain.xSize / 2) + 0.6f, 1, 0);
+        borders[2].transform.position = new Vector3(0, 1, (sandTerrain.zSize / -2) - 0.6f);
+        borders[3].transform.position = new Vector3((sandTerrain.xSize / -2) - 0.6f, 1, 0);
     }
 }
