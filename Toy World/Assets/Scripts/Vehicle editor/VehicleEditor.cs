@@ -102,7 +102,9 @@ public class VehicleEditor : MonoBehaviour
             BoundingBox.SetActive(false);
 
             partGrid.ToggleTempBoundingBox(false);
+
             partSelectionUI.SetActive(false);
+
             playerInput.SwitchCurrentActionMap("Player");
         }
         else if (context.performed && playan)
@@ -126,7 +128,10 @@ public class VehicleEditor : MonoBehaviour
             partGrid.ToggleTempBoundingBox(true);
 
             playan = false;
-            partSelectionUI.SetActive(!partSelectionUI.activeSelf);
+
+            PartSelectionManager._instance.ClosePartSelectionUI();
+            ChangeActiveBuildState();
+
             playerInput.SwitchCurrentActionMap("UI");
         }
     }
@@ -305,7 +310,7 @@ public class VehicleEditor : MonoBehaviour
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
-        if (buildUIOpen || !Camera.main.GetComponent<FPSCameraControllers>().enabled) // If FPS camera controller is disabled cursor is always unlocked
+        if (buildUIOpen)
             Cursor.lockState = CursorLockMode.None;
         else
             Cursor.lockState = CursorLockMode.Locked;
