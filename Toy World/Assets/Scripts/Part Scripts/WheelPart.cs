@@ -70,13 +70,6 @@ public class WheelPart : MovementPart
             transform.Rotate(0, turnAmount * Time.deltaTime * rotationSpeed, 0);
         else if ((int)transform.localEulerAngles.y == 0 && turning)
             transform.Rotate(0, turnAmount * Time.deltaTime * rotationSpeed, 0);
-
-        /*if ((int)transform.localEulerAngles.y == STEERINGMAX && turnAmount < 0) // Can only go left
-                transform.Rotate(0, turnAmount * Time.deltaTime, 0);
-            else if ((int)transform.localEulerAngles.y == 360 - STEERINGMAX && turnAmount > 0) // Can only go right
-                transform.Rotate(0, turnAmount * Time.deltaTime, 0);
-            else if ((int)transform.localEulerAngles.y != STEERINGMAX && (int)transform.localEulerAngles.y != 360 - STEERINGMAX && turning)
-                transform.Rotate(0, turnAmount * Time.deltaTime, 0);*/
     }
 
     public override void NoTurning()
@@ -91,16 +84,16 @@ public class WheelPart : MovementPart
 
     private void CenterWheel(float CenterSpeed)
     {
-        if ((int)transform.localEulerAngles.y <= 360 && (int)transform.localEulerAngles.y >= 360 - STEERINGMAX)
+        if ((int)transform.localEulerAngles.y <= 360 && (int)transform.localEulerAngles.y >= 300)
         {
             transform.Rotate(0, CenterSpeed * Time.deltaTime * rotationSpeed, 0);
         }
-        else if ((int)transform.localEulerAngles.y >= 0 && (int)transform.localEulerAngles.y <= STEERINGMAX)
+        else if ((int)transform.localEulerAngles.y >= 0 && (int)transform.localEulerAngles.y <= 60)
         {
             transform.Rotate(0, -CenterSpeed * Time.deltaTime * rotationSpeed, 0);
         }
         
-        if ((int)transform.localEulerAngles.y >= 359.5f || (int)transform.localEulerAngles.y <= 0.5f)
+        if ((int)transform.localEulerAngles.y >= Mathf.FloorToInt(360f - (rotationSpeed / 10f)) || (int)transform.localEulerAngles.y <= Mathf.CeilToInt(0 + (rotationSpeed / 10f)))
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
         }
