@@ -319,12 +319,10 @@ public class VehicleEditor : MonoBehaviour
         if (buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.None;
-            Debug.Log("open");
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Debug.Log("locked");
         }
     }
 
