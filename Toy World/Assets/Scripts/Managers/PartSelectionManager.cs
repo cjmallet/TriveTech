@@ -18,8 +18,9 @@ public class PartSelectionManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private GameObject partSelectionCanvas, crossHair, buttonPrefab;
+    [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
+    public GameObject crossHair;
 
     //All lists for the UI categories
     private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;

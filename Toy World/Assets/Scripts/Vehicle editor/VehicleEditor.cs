@@ -101,9 +101,14 @@ public class VehicleEditor : MonoBehaviour
             previewedPart.SetActive(false);
             BoundingBox.SetActive(false);
 
-            partGrid.ToggleTempBoundingBox(false);
+            if (buildUIOpen)
+            {
+                PartSelectionManager._instance.ClosePartSelectionUI();
+                ChangeActiveBuildState();
+            }
+            PartSelectionManager._instance.crossHair.SetActive(false);
 
-            partSelectionUI.SetActive(false);
+            partGrid.ToggleTempBoundingBox(false);
 
             playerInput.SwitchCurrentActionMap("Player");
         }
@@ -127,10 +132,11 @@ public class VehicleEditor : MonoBehaviour
             BoundingBox.SetActive(true);
             partGrid.ToggleTempBoundingBox(true);
 
-            playan = false;
-
             PartSelectionManager._instance.ClosePartSelectionUI();
             ChangeActiveBuildState();
+            PartSelectionManager._instance.crossHair.SetActive(false);
+
+            playan = false;
 
             playerInput.SwitchCurrentActionMap("UI");
         }
@@ -311,9 +317,15 @@ public class VehicleEditor : MonoBehaviour
     {
         buildUIOpen = !buildUIOpen;
         if (buildUIOpen)
+        {
             Cursor.lockState = CursorLockMode.None;
+            Debug.Log("open");
+        }
         else
+        {
             Cursor.lockState = CursorLockMode.Locked;
+            Debug.Log("locked");
+        }
     }
 
     private void CreateBoundingBox()
