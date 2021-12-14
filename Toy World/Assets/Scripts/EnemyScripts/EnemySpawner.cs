@@ -28,7 +28,6 @@ public class EnemySpawner : MonoBehaviour
     private GameObject spawnPoint;
     private GameObject spawnPointParent;
 
-
     // Start is called before the first frame update
     void Start()
     {

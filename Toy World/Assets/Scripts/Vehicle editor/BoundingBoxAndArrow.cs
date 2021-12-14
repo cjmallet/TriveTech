@@ -4,22 +4,34 @@ using UnityEngine;
 
 public class BoundingBoxAndArrow : MonoBehaviour
 {
-    public float boxL { get; set; }
-    public float boxW { get; set; }
-    public float boxH { get; set; }
+    public float boxL;
+    public float boxW;
+    public float boxH;
 
-    public float arrowW { get; set; }
-    public float arrowL { get; set; }
-    
+    public float arrowW;
+    public float arrowL;
 
+    public float MyLength { get; set; }
+    public float MyWidth { get; set; }
+    public float MyHeight { get; set; }
+    public float MyArrowWidth { get; set; }
+    public float MyArrowLength { get; set; }
 
-    public BoundingBoxAndArrow()
+    private void Start()
     {
-        this.boxW = 20f;
-        this.boxL = 20f;
-        this.boxH = 10f;
+        MyLength = boxL;
+        MyWidth = boxW;
+        MyHeight = boxH;
+        MyArrowWidth = arrowW;
+        MyArrowLength = arrowL;
 
-        this.arrowW = 5f;
-        this.arrowL = 5f;
+        transform.GetChild(0).GetComponent<BoundingBox>().MyHeight = MyHeight;
+        transform.GetChild(0).GetComponent<BoundingBox>().MyWidth = MyWidth;
+        transform.GetChild(0).GetComponent<BoundingBox>().MyLength = MyLength;
+
+        transform.GetChild(0).transform.GetChild(0).GetComponent<DirectionArrowBoundingBox>().MyArrowWidth = MyArrowWidth;
+        transform.GetChild(0).transform.GetChild(0).GetComponent<DirectionArrowBoundingBox>().MyArrowLength = MyArrowLength;
+        transform.GetChild(0).transform.GetChild(0).GetComponent<DirectionArrowBoundingBox>().MyWidth = MyWidth;
+        transform.GetChild(0).transform.GetChild(0).GetComponent<DirectionArrowBoundingBox>().MyLength = MyLength;
     }
 }

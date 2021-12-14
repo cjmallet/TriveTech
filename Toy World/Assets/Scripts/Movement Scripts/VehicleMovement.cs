@@ -47,11 +47,6 @@ public class VehicleMovement : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
         rigidBody.AddRelativeForce(movement);

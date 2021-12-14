@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectionArrowBoundingBox : BoundingBoxAndArrow
+public class DirectionArrowBoundingBox : MonoBehaviour
 {
+    public float MyArrowWidth { get; set; }
+    public float MyArrowLength { get; set;}
+    public float MyWidth { get; set; }
+    public float MyLength { get; set; }
+
     void Start()
     {
         CreateArrow();
@@ -16,9 +21,9 @@ public class DirectionArrowBoundingBox : BoundingBoxAndArrow
 
            // Create Arrow
             new Vector3(0, 0, 0),
-            new Vector3(arrowW, 0, 0),
-            new Vector3(0, 0, arrowL),
-            new Vector3(arrowW, 0, arrowL),
+            new Vector3(MyArrowWidth, 0, 0),
+            new Vector3(0, 0, MyArrowLength),
+            new Vector3(MyArrowWidth, 0, MyArrowLength),
         };
 
         int[] triangles = {
@@ -44,6 +49,6 @@ public class DirectionArrowBoundingBox : BoundingBoxAndArrow
 
     private void SetPosition()
     {
-        transform.localPosition = new Vector3((boxW / 2) - (arrowW / 2), 0, (boxL / 2) - (arrowL / 2));
+        transform.localPosition = new Vector3((MyWidth / 2) - (MyArrowWidth / 2), 0, (MyLength / 2) - (MyArrowLength / 2));
     }
 }

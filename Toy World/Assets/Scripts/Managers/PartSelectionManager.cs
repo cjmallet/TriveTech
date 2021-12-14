@@ -88,11 +88,6 @@ public class PartSelectionManager : MonoBehaviour
         ChangeCategory("Chassis");
     }
 
-    private void Update()
-    {
-
-    }
-
     private List<GameObject> LoadParts(string partName)
     {
         return Resources.LoadAll("Parts/"+partName, typeof(GameObject)).Cast<GameObject>().ToList();

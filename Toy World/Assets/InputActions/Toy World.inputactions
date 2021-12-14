@@ -225,15 +225,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "ResetRotation",
-                    "type": "Button",
-                    "id": "0cb6ed94-8d11-4306-9570-dbaae4305bca",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "RotateVerticalButton",
                     "type": "Button",
                     "id": "a25b8023-c41b-4063-8a76-75f38bc14312",
@@ -318,7 +309,7 @@
                 {
                     "name": "",
                     "id": "4c191405-5738-4d4b-a523-c6a301dbf754",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -444,17 +435,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "PlayButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "93d89854-fff3-42c1-879f-a605774c9076",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ResetRotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

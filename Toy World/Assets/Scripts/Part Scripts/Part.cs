@@ -46,8 +46,6 @@ public abstract class Part : MonoBehaviour
     {
         attachedParts[(int)DetermineSide(-hitNormal)] = partToAttachTo;
         partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
-
-        // check if any adjacent parts also exist and add them to my list
     }
 
     public enum Orientation : int

@@ -60,8 +60,6 @@ public class NavMeshAgentBehaviour : MonoBehaviour
 
     private Vector3 FlockingBehaviour()
     {
-        
-
         Vector3 cohesionVector = new Vector3();
         Vector3 separateVector = new Vector3();
         Vector3 forwardVector = new Vector3();

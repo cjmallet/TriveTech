@@ -24,14 +24,12 @@ public class VehicleEditor : MonoBehaviour
     public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     [SerializeField] private GameObject selectedPart;
-    [SerializeField] private GameObject partSelectionUI;
     private PartGrid partGrid;
 
     private GameObject BoundingBoxPrefab;
     private GameObject BoundingBox;
 
     private GameObject previewedPart;
-    private Vector3 prevMousePos;
     private bool playan, buildUIOpen = true;
     private Camera mainCam;
 
@@ -152,7 +150,7 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (context.action.name == "PlaceClick" && context.performed)
                 {
-                    PlaceSelectedPart2(hit);
+                    PlaceSelectedPart(hit);
                     
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
@@ -203,27 +201,6 @@ public class VehicleEditor : MonoBehaviour
     }
 
     void PlaceSelectedPart(RaycastHit hit)
-    {
-        GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
-
-        if (hit.transform == coreBlock.transform)
-        {
-            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        }
-        else
-        {
-            placedPart.transform.localPosition = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal + hit.transform.localPosition);
-        }
-        placedPart.transform.localRotation = partRotation;
-
-        if (placedPart.TryGetComponent(out Part part))
-        {
-            part.AttachPart(hit.transform.GetComponent<Part>(), hit.normal);
-        }
-
-    }
-
-    void PlaceSelectedPart2(RaycastHit hit)
     {
         Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
         if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 

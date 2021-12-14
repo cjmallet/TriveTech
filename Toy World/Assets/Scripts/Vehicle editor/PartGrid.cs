@@ -303,14 +303,6 @@ public class PartGrid : MonoBehaviour
 
     public void ChangeGridSize(Vector3Int newDimensions)
     {
-
-        /*
-        for (int j = i; j < length; j++)
-        {
-
-        }
-        */
-
         gridDimensions = newDimensions;
 
         Part[,,] newPartArray = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];

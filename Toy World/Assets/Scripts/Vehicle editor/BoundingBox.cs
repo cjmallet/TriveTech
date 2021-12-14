@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundingBox : BoundingBoxAndArrow
+public class BoundingBox : MonoBehaviour
 {
+    public float MyHeight { get; set; }
+    public float MyWidth { get; set; }
+    public float MyLength { get; set; }
+
+
     void Start()
     {
         CreateBoundingBox();
@@ -14,24 +19,24 @@ public class BoundingBox : BoundingBoxAndArrow
         Vector3[] vertices = {
 
             // Create bounding box
-            new Vector3(0, boxH, 0),
+            new Vector3(0, MyHeight, 0),
             new Vector3(0, 0, 0),
-            new Vector3(boxW, boxH, 0),
-            new Vector3(boxW, 0, 0),
+            new Vector3(MyWidth, MyHeight, 0),
+            new Vector3(MyWidth, 0, 0),
             
-            new Vector3(0, 0, boxL),
-            new Vector3(boxW, 0, boxL),
-            new Vector3(0, boxH, boxL),
-            new Vector3(boxW, boxH, boxL),
+            new Vector3(0, 0, MyLength),
+            new Vector3(MyWidth, 0, MyLength),
+            new Vector3(0, MyHeight, MyLength),
+            new Vector3(MyWidth, MyHeight, MyLength),
 
-            new Vector3(0, boxH, 0),
-            new Vector3(boxW, boxH, 0),
+            new Vector3(0, MyHeight, 0),
+            new Vector3(MyWidth, MyHeight, 0),
 
-            new Vector3(0, boxH, 0),
-            new Vector3(0, boxH, boxL),
+            new Vector3(0, MyHeight, 0),
+            new Vector3(0, MyHeight, MyLength),
 
-            new Vector3(boxW, boxH, 0),
-            new Vector3(boxW, boxH, boxL),
+            new Vector3(MyWidth, MyHeight, 0),
+            new Vector3(MyWidth, MyHeight, MyLength),
         };
 
         int[] triangles = {

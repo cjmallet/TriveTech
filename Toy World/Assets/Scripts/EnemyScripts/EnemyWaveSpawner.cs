@@ -12,8 +12,6 @@ public class EnemyWaveSpawner : MonoBehaviour
 
     private EnemySpawner enemyspawner;
 
-
-
     // Start is called before the first frame update
     void Start()
     {

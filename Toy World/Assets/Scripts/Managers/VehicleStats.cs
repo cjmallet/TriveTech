@@ -77,13 +77,4 @@ public class VehicleStats : MonoBehaviour
     {
         Debug.Log("YOU DIED LOSER");
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("StartWavesTestBlock") && GameObject.Find("EnemyParent").transform.childCount == 0)
-        {
-            EnemyWaveSpawner enemyWaveSpawner = GameObject.Find("EnemyManager").GetComponent<EnemyWaveSpawner>();
-            enemyWaveSpawner.SpawnWave();
-        }
-    }
 }

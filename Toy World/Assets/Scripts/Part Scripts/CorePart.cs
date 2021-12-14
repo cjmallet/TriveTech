@@ -18,5 +18,11 @@ public class CorePart : Part
         }
 
         colliders.Clear();
+
+        if (collision.gameObject.name.Contains("StartWavesTestBlock") && GameObject.Find("EnemyParent").transform.childCount == 0)
+        {
+            EnemyWaveSpawner enemyWaveSpawner = GameObject.Find("EnemyManager").GetComponent<EnemyWaveSpawner>();
+            enemyWaveSpawner.SpawnWave();
+        }
     }
 }

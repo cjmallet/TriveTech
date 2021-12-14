@@ -16,7 +16,7 @@ public class MovementPart : Part
             transform.position.y - 0.4f, transform.position.z), -transform.up);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 0.2f))
+        if (Physics.Raycast(ray, out hit, 0.1f))
         {
             return true;        
         }
