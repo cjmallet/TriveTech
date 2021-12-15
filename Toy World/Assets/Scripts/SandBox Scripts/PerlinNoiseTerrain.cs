@@ -37,8 +37,8 @@ public class PerlinNoiseTerrain : MonoBehaviour
         CreateMeshShape();
         UpdateMesh();
 
-        navSurface = gameObject.GetComponentInChildren<NavMeshSurface>();
-        navSurface.BuildNavMesh();
+        //navSurface = gameObject.GetComponentInChildren<NavMeshSurface>();
+        //navSurface.BuildNavMesh();
     }
 
     //! Update mesh each frame and increase the offset for moving terrain.

@@ -110,7 +110,17 @@ public abstract class Part : MonoBehaviour
     {
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
-            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+            if (this.gameObject.GetComponent<MeleePart>())
+            {
+                TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage / 2, collider);
+                Debug.Log("spike hit so less damage");
+            }
+            else
+            {
+                TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+                Debug.Log("biig damage");
+            }
+
             Destroy(collider.gameObject);
         }
     }
