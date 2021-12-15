@@ -30,8 +30,7 @@ public class VehicleEditor : MonoBehaviour
     private GameObject BoundingBox;
 
     private GameObject previewedPart;
-    public bool playan; 
-    private bool buildUIOpen = true;
+    private bool playan, buildUIOpen = true;
     private Camera mainCam;
 
     private int vCount;
