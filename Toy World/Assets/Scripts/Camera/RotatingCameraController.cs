@@ -12,6 +12,9 @@ public class RotatingCameraController : MonoBehaviour
 
     private bool rightMousePressed;
 
+    //! Turn of that you need to right click to rotate camera
+    public bool needRightMouse = false;
+
     // Speed factors for vehicle rotation and camera zooming
     [Range(1,10)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
@@ -37,10 +40,14 @@ public class RotatingCameraController : MonoBehaviour
     // Wordt aangeroepen met Unity event en Input Actions
     public void GetInputVector(InputAction.CallbackContext context)
     {
-        if (rightMousePressed)
-            inputVector = context.ReadValue<Vector2>();
-        else
-            inputVector = Vector2.zero;
+        if (needRightMouse)
+        {
+            if (rightMousePressed)
+                inputVector = context.ReadValue<Vector2>();
+            else
+                inputVector = Vector2.zero;
+        }
+        else inputVector = context.ReadValue<Vector2>();
     }
 
     // Gets the scroll valuo from Input Actions
