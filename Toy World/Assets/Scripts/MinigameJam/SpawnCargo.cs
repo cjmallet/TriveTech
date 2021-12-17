@@ -26,7 +26,7 @@ public class SpawnCargo : MonoBehaviour
         {
             timer = 0;
             itemsSpawned++;
-            GameObject wood=Instantiate(cargoPrefab, cargoSpawnPoint.transform);
+            GameObject wood = Instantiate(cargoPrefab, cargoSpawnPoint.transform.position, Quaternion.identity);
             cargo.Add(wood);
         }
 

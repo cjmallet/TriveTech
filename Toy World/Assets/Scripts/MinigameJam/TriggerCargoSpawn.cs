@@ -9,7 +9,7 @@ public class TriggerCargoSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cargoSpawner = transform.parent.GetComponent<SpawnCargo>();
+        cargoSpawner = transform.GetChild(0).GetComponent<SpawnCargo>();
     }
 
     // Update is called once per frame
