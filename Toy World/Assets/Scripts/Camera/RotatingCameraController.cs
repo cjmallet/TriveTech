@@ -59,7 +59,7 @@ public class RotatingCameraController : MonoBehaviour
     // Gets the right mouse button pressed value to check if you may move the camera/vehicle
     public void GetRightMousePress(InputAction.CallbackContext value)
     {
-        if (enabled)
+        if (needRightMouse)
         {
             if (value.started)
             {
