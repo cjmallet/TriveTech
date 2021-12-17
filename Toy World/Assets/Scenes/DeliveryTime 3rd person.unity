@@ -1292,9 +1292,9 @@ MonoBehaviour:
   needRightMouse: 0
   horizontalRotateSpeed: 2
   verticalRotateSpeed: 2
-  cameraZoomSpeed: 2
+  cameraZoomSpeed: 5
   minZoomOutDistance: 2
-  maxZoomOutDistance: 10
+  maxZoomOutDistance: 15
   vehicleCore: {fileID: 2049624666}
 --- !u!1001 &761692391
 PrefabInstance:
