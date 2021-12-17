@@ -63,9 +63,9 @@ public class VehicleEditor : MonoBehaviour
         CreateBoundingBox();
     }
 
-    public void Play(InputAction.CallbackContext context)
+    public void Play()
     {
-        if (context.performed && !playan)
+        if (!playan)
         {
             // Clear list of parts if it still has parts
             if (coreBlock.GetComponent<VehicleMovement>().movementParts.Count != 0)
@@ -111,7 +111,7 @@ public class VehicleEditor : MonoBehaviour
 
             playerInput.SwitchCurrentActionMap("Player");
         }
-        else if (context.performed && playan)
+        else if (playan)
         {
             List<Part> parts = FindObjectsOfType<Part>().ToList();
             foreach (Part part in parts)
