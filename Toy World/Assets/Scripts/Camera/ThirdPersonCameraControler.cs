@@ -22,5 +22,10 @@ public class ThirdPersonCameraControler : RotatingCameraController
         {
             transform.RotateAround(vehicleCore.transform.position, transform.right, -inputVector.y * verticalRotateSpeed);
         }
+
+        // Lock z rotation
+        Vector3 currentEulerAngles = transform.eulerAngles;
+        currentEulerAngles.z = 0;
+        transform.eulerAngles = currentEulerAngles;
     }
 }

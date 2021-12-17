@@ -96,7 +96,6 @@ public class RotatingCameraController : MonoBehaviour
 
         if ((newDistance > minZoomOutDistance) && (newDistance < maxZoomOutDistance))
         {
-            Debug.Log(zoomDirection);
             transform.position = newPosition;
         }
     }
