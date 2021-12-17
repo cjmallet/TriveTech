@@ -15,6 +15,33 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "ThirdPersonRotateMoveButton",
+                    "type": "Button",
+                    "id": "ccca6a2f-f7d9-4c3a-bc73-67236eb66b43",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThirdPersonMouseMove",
+                    "type": "Value",
+                    "id": "73764f2a-728a-46f6-a54d-645887ad8b8b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ThirdPersonZoom",
+                    "type": "PassThrough",
+                    "id": "6208a1dc-7f10-4fd6-9620-bbe8014f6fc7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PlayButton",
                     "type": "Button",
                     "id": "cb981a79-a67a-4241-8d34-5996823d625f",
@@ -143,6 +170,72 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "PlayButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acb71590-bffb-4587-a211-f0c2614de8d5",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Zoom Buttons",
+                    "id": "ece0f959-9b70-4255-a235-084f0a89e251",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "2062f777-8fdf-470d-8043-566194e83d1d",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "53f9b9d8-47b1-4f14-b72f-07fa0298f035",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7de7e9b1-916b-467e-a726-a2aac81a3543",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "ThirdPersonMouseMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4a3c70c-8c37-463d-97a3-a77598c96eb7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonRotateMoveButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
