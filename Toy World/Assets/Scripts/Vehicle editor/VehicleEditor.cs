@@ -68,8 +68,8 @@ public class VehicleEditor : MonoBehaviour
         if (!playan)
         {
             // Clear list of parts if it still has parts
-            if (coreBlock.GetComponent<VehicleMovement>().movementParts.Count != 0)
-                coreBlock.GetComponent<VehicleMovement>().movementParts.Clear();
+            if (coreBlock.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
+                coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlock.GetComponent<Rigidbody>().mass = 1500;
@@ -85,7 +85,7 @@ public class VehicleEditor : MonoBehaviour
                 // Fill list with movement parts for movement script
                 if (vehiclePart is MovementPart)
                 {
-                    coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
+                    coreBlock.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
                     vehiclePart.GetComponent<MovementPart>().SwitchColliders();
                 }
 
