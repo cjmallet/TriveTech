@@ -4315,7 +4315,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 120727273, guid: 7d8c442fcc04afa4ab2e32f6ffe09e63, type: 3}
       propertyPath: maxMotorTorgue
-      value: 400
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 120727273, guid: 7d8c442fcc04afa4ab2e32f6ffe09e63, type: 3}
       propertyPath: maxSteeringAngle

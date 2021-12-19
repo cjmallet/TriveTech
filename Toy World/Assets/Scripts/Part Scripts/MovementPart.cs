@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class MovementPart : Part
 {
+    public bool frontPart { get; set; }
+
     public virtual void SwitchColliders()
     {
 

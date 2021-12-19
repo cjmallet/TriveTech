@@ -72,7 +72,8 @@ public class VehicleEditor : MonoBehaviour
                 coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().mass = 1500;
+            coreBlock.GetComponent<Rigidbody>().mass = 1000f;
+            coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
@@ -85,6 +86,10 @@ public class VehicleEditor : MonoBehaviour
                 // Fill list with movement parts for movement script
                 if (vehiclePart is MovementPart)
                 {
+                    if (vehiclePart.transform.position.z > 0)
+                        vehiclePart.GetComponent<MovementPart>().frontPart = true;
+                    else
+                        vehiclePart.GetComponent<MovementPart>().frontPart = false;
                     coreBlock.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
                     vehiclePart.GetComponent<MovementPart>().SwitchColliders();
                 }
