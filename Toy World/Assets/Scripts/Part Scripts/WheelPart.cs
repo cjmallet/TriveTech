@@ -18,6 +18,12 @@ public class WheelPart : MovementPart
         return base.IsGrounded();
     }
 
+    public override void SwitchColliders()
+    {
+        GetComponent<BoxCollider>().enabled = !GetComponent<BoxCollider>().enabled;
+        GetComponent<WheelCollider>().enabled = !GetComponent<WheelCollider>().enabled;
+    }
+
     private void FixedUpdate()
     {
         if (moving)

@@ -45,4 +45,9 @@ public class MovementPart : Part
     {
 
     }
+
+    public virtual void SwitchColliders()
+    {
+
+    }
 }

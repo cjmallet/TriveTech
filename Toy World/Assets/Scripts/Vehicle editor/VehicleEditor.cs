@@ -72,8 +72,7 @@ public class VehicleEditor : MonoBehaviour
                 coreBlock.GetComponent<VehicleMovement>().movementParts.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().drag = 1;
-            coreBlock.GetComponent<Rigidbody>().mass = 0;
+            coreBlock.GetComponent<Rigidbody>().mass = 1500;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
             List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
@@ -85,7 +84,10 @@ public class VehicleEditor : MonoBehaviour
             {
                 // Fill list with movement parts for movement script
                 if (vehiclePart is MovementPart)
+                {
                     coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
+                    vehiclePart.GetComponent<MovementPart>().SwitchColliders();
+                }
 
                 // Remove direction indication
                 if (vehiclePart.useDirectionIndicator)
@@ -118,6 +120,11 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (part.useDirectionIndicator)
                     part.ToggleDirectionIndicator(true);
+
+                if (part is MovementPart)
+                {
+                    part.GetComponent<MovementPart>().SwitchColliders();
+                }
             }
 
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
@@ -208,9 +215,15 @@ public class VehicleEditor : MonoBehaviour
             pos += Vector3Int.RoundToInt(hit.transform.localPosition);
         }
 
-        if(partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
+        if (partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
         {
-            GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+            GameObject placedPart;
+
+            if (selectedPart.GetComponent<Part>() is MovementPart)
+                placedPart = Instantiate(selectedPart, coreBlock.transform.GetChild(0).transform);
+            else
+                placedPart = Instantiate(selectedPart, coreBlock.transform);
+
             placedPart.transform.localPosition = pos;
             placedPart.transform.localRotation = partRotation;
             partGrid.AddPartToGrid(placedPart.GetComponent<Part>(), pos);
@@ -223,7 +236,7 @@ public class VehicleEditor : MonoBehaviour
                     {
                         continue;
                     }
-                    if(neighbour.transform == coreBlock.transform)
+                    if (neighbour.transform == coreBlock.transform)
                         part.AttachPart(neighbour, pos);
                     else
                         part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
