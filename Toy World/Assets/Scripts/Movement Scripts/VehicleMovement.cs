@@ -60,15 +60,11 @@ public class VehicleMovement : MonoBehaviour
         wheel.wheel = part.gameObject.GetComponent<WheelCollider>();
 
         if (part.frontPart) // Steering wheel
-        {
-            wheel.motor = false;
             wheel.steering = true;
-        }
         else // Engine wheel
-        {
-            wheel.motor = true;
             wheel.steering = false;
-        }
+
+        wheel.motor = true;
 
         wheelInfos.Add(wheel);
     }
