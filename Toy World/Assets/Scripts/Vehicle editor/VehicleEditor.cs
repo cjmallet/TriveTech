@@ -68,15 +68,15 @@ public class VehicleEditor : MonoBehaviour
         if (!playan)
         {
             // Clear list of parts if it still has parts
-            if (coreBlock.GetComponent<VehicleMovement>().movementParts.Count != 0)
-                coreBlock.GetComponent<VehicleMovement>().movementParts.Clear();
+            if (coreBlock.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
+                coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().drag = 1;
-            coreBlock.GetComponent<Rigidbody>().mass = 0;
+            coreBlock.GetComponent<Rigidbody>().mass = 1000f;
+            coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
-            List<Part> parts = FindObjectsOfType<Part>().ToList();
+            List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
             coreBlock.GetComponent<VehicleStats>().allParts = parts;
 
@@ -85,7 +85,14 @@ public class VehicleEditor : MonoBehaviour
             {
                 // Fill list with movement parts for movement script
                 if (vehiclePart is MovementPart)
-                    coreBlock.GetComponent<VehicleMovement>().movementParts.Add((MovementPart)vehiclePart);
+                {
+                    if (vehiclePart.transform.position.z > 0)
+                        vehiclePart.GetComponent<MovementPart>().frontPart = true;
+                    else
+                        vehiclePart.GetComponent<MovementPart>().frontPart = false;
+                    coreBlock.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
+                    vehiclePart.GetComponent<MovementPart>().SwitchColliders();
+                }
 
                 // Remove direction indication
                 if (vehiclePart.useDirectionIndicator)
@@ -118,6 +125,11 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (part.useDirectionIndicator)
                     part.ToggleDirectionIndicator(true);
+
+                if (part is MovementPart)
+                {
+                    part.GetComponent<MovementPart>().SwitchColliders();
+                }
             }
 
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
@@ -208,9 +220,15 @@ public class VehicleEditor : MonoBehaviour
             pos += Vector3Int.RoundToInt(hit.transform.localPosition);
         }
 
-        if(partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
+        if (partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
         {
-            GameObject placedPart = Instantiate(selectedPart, coreBlock.transform);
+            GameObject placedPart;
+
+            if (selectedPart.GetComponent<Part>() is MovementPart)
+                placedPart = Instantiate(selectedPart, coreBlock.transform.GetChild(0).transform);
+            else
+                placedPart = Instantiate(selectedPart, coreBlock.transform);
+
             placedPart.transform.localPosition = pos;
             placedPart.transform.localRotation = partRotation;
             partGrid.AddPartToGrid(placedPart.GetComponent<Part>(), pos);
@@ -223,7 +241,7 @@ public class VehicleEditor : MonoBehaviour
                     {
                         continue;
                     }
-                    if(neighbour.transform == coreBlock.transform)
+                    if (neighbour.transform == coreBlock.transform)
                         part.AttachPart(neighbour, pos);
                     else
                         part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
