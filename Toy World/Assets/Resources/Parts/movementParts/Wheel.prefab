@@ -423,9 +423,9 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 000001000000
   health: 10
-  weight: 5
+  weight: 10
   useDirectionIndicator: 1
-  maxTorgue: 50
+  maxTorgue: 100
 --- !u!65 &5847884760756425979
 BoxCollider:
   m_ObjectHideFlags: 0
