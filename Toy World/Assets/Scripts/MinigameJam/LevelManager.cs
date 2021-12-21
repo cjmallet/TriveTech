@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
         levelTrigger.levelStarted = false;
         canvasText.SetActive(false);
         panel.SetActive(false);
+        timerObject.GetComponent<TextMeshProUGUI>().text = "";
         cargoSpawner.ResetItems();
     }
 

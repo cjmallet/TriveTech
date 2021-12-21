@@ -11,6 +11,8 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
+    public static bool firstTimeAfterRestart = false;
+
 
     private Vector3 coreBlockPositionStart;
     private Quaternion coreBlockRotationStart;
@@ -33,7 +35,7 @@ public class EscMenuBehaviour : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (!VehicleEditor._instance.buildUIOpen)
+        if (VehicleEditor._instance.playan)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -52,11 +54,11 @@ public class EscMenuBehaviour : MonoBehaviour
         {
             VehicleEditor._instance.Play();
 
-            Camera.main.transform.position = buildCameraPositionStart;
-            Camera.main.transform.rotation = buildCameraRotationStart;
-
             coreBlock.transform.position = coreBlockPositionStart;
             coreBlock.transform.rotation = coreBlockRotationStart;
+
+            Camera.main.transform.position = buildCameraPositionStart;
+            Camera.main.transform.rotation = buildCameraRotationStart;
         }
         else
         {
