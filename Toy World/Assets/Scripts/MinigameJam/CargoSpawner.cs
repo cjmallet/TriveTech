@@ -43,4 +43,11 @@ public class CargoSpawner : MonoBehaviour
     {
         spawningCargo = true;
     }
+
+    public void ResetItems()
+    {
+        spawningCargo = false;
+        itemsSpawned = 0;
+        finishedSpawning = false;
+    }
 }

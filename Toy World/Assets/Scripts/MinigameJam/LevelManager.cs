@@ -50,6 +50,13 @@ public class LevelManager : MonoBehaviour
         timerStarted = true;
     }
 
+    public void StopTimer()
+    {
+        timerStarted = true;
+        timer = 0;
+        cargoSpawner.ResetItems();
+    }
+
     public void StartLevel()
     {
         cargoSpawner.SpawnItems();

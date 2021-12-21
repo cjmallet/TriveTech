@@ -41,9 +41,10 @@ public class EscMenuBehaviour : MonoBehaviour
         Time.timeScale = 1;
         escMenu.SetActive(false);
 
+        LevelManager.Instance.StopTimer();
+
         if (!VehicleEditor._instance.buildUIOpen)
         {
-            VehicleEditor._instance.playan = true;
             VehicleEditor._instance.Play();
 
             coreBlock.transform.position = coreBlockPositionStart;
