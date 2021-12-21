@@ -271,7 +271,6 @@ public class VehicleEditor : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Not correct placement");
             return false;
         }
     }
