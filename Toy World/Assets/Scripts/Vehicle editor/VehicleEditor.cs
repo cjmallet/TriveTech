@@ -215,7 +215,7 @@ public class VehicleEditor : MonoBehaviour
     {
         Vector3Int pos= GetLocalPosition(hit);
 
-        if (CheckCorrectPlacement(hit))//check if the position the part would be placed in is in grid bounds
+        if (CheckPlacementValidity(hit))
         {
             GameObject placedPart;
 
@@ -261,7 +261,7 @@ public class VehicleEditor : MonoBehaviour
     /// Check if the part has attachmentPoints available and is within the PartGrid bounds.
     /// </summary>
     /// <param name="pos"></param>
-    private bool CheckCorrectPlacement(RaycastHit hit)
+    private bool CheckPlacementValidity(RaycastHit hit)
     {
         Vector3Int localposition = GetLocalPosition(hit);
         Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
@@ -305,7 +305,7 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.transform.localPosition = newPos;
         previewedPart.transform.localRotation = partRotation;
 
-        if (CheckCorrectPlacement(hit))
+        if (CheckPlacementValidity(hit))
         {
             previewedPart.transform.localScale = Vector3.one;
         }
