@@ -13,13 +13,16 @@ public class LevelManager : MonoBehaviour
     }
 
     public CargoSpawner cargoSpawner;
-    [SerializeField] private int timeLevelCompletion;
-    [SerializeField] private GameObject canvasText, panel, timerObject;
+    public int cargoCompletionAmount;
 
+    [SerializeField] private int timeLevelCompletion;
+    [SerializeField] private GameObject levelUI;
+
+    private GameObject objectiveUI,panel,canvasText,timerObject;
     private float timer = 0;
     private bool timerStarted = false;
 
-    public int collectedCargo;
+    [HideInInspector]public int collectedCargo;
 
     private void Awake()
     {
@@ -27,6 +30,14 @@ public class LevelManager : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+    }
+
+    private void Start()
+    {
+        panel = levelUI.transform.Find("Panel").gameObject;
+        canvasText = levelUI.transform.Find("FinishText").gameObject;
+        timerObject = levelUI.transform.Find("TimerObject").gameObject;
+        objectiveUI = levelUI.transform.Find("Goals").gameObject;
     }
 
     private void FixedUpdate()
@@ -40,10 +51,16 @@ public class LevelManager : MonoBehaviour
         if (timer > timeLevelCompletion)
         {
             timerStarted = false;
-            canvasText.GetComponent<TextMeshProUGUI>().text = "You ran out of time";
-            canvasText.SetActive(true);
-            panel.SetActive(true);
+            OpenEndScreen("You ran out of time");
         }
+    }
+
+    private void OpenEndScreen(string completionMessage)
+    {
+        canvasText.GetComponent<TextMeshProUGUI>().text = completionMessage;
+        canvasText.SetActive(true);
+        panel.SetActive(true);
+        objectiveUI.SetActive(false);
     }
 
     public void StartTimer()
@@ -56,24 +73,26 @@ public class LevelManager : MonoBehaviour
         cargoSpawner.SpawnItems();
     }
 
+    public void LoseCargo()
+    {
+        collectedCargo--;
+        objectiveUI.GetComponent<ObjectiveProgress>().LoseCargo();
+    }
+
     public void FinishLevel()
     {
         timerStarted = false;
 
         if (timer < timeLevelCompletion)
         {
-            if (collectedCargo > 2)
+            if (collectedCargo >= cargoCompletionAmount)
             {
-                canvasText.GetComponent<TextMeshProUGUI>().text = "You Finished!\tCargo:" + collectedCargo + "/10 \tTime left: " + (int)(timeLevelCompletion - timer);
-                canvasText.SetActive(true);
-                panel.SetActive(true);
+                OpenEndScreen("You Finished!\nCargo:" + collectedCargo + "/10 \nTime left: " + (int)(timeLevelCompletion - timer));
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name,1);
             }
             else
             {
-                canvasText.GetComponent<TextMeshProUGUI>().text = "You lost too much cargo";
-                canvasText.SetActive(true);
-                panel.SetActive(true);
+                OpenEndScreen("You lost too much cargo");
             }
         }
     }
