@@ -11,7 +11,6 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
-    public static bool firstTimeAfterRestart = false;
 
 
     private Vector3 coreBlockPositionStart;
@@ -59,6 +58,9 @@ public class EscMenuBehaviour : MonoBehaviour
 
             Camera.main.transform.position = buildCameraPositionStart;
             Camera.main.transform.rotation = buildCameraRotationStart;
+
+            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_TargetCameraState.SetFromTransform(Camera.main.transform);
+            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);            
         }
         else
         {

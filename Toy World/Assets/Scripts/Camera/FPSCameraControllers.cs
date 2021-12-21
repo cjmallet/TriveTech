@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class FPSCameraControllers : MonoBehaviour
 {
-    class CameraState
+    public class CameraState
     {
         public float yaw;
         public float pitch;
@@ -59,8 +59,8 @@ public class FPSCameraControllers : MonoBehaviour
     public static bool canRotate = false;
     const float k_MouseSensitivityMultiplier = 0.01f;
 
-    CameraState m_TargetCameraState = new CameraState();
-    CameraState m_InterpolatingCameraState = new CameraState();
+    [HideInInspector] public CameraState m_TargetCameraState = new CameraState();
+    [HideInInspector] public CameraState m_InterpolatingCameraState = new CameraState();
 
     [Header("Movement Settings")]
     [Tooltip("Speed of the player character"), Range(3f, 20f)]
@@ -91,12 +91,6 @@ public class FPSCameraControllers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EscMenuBehaviour.firstTimeAfterRestart)
-        {
-            OnEnable();
-            EscMenuBehaviour.firstTimeAfterRestart = false;
-        }
-
         if (canRotate && (lookRotation != Vector2.zero || direction != Vector3.zero) && enabled)
             CameraRotation(lookRotation, direction);
     }
