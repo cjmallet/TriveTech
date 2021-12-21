@@ -848,7 +848,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819184265ffe7174db29e892761bc4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentHolder: {fileID: 2141385786}
   buttonPrefab: {fileID: 5746736382726457273, guid: 4a16d08df9193cc47ba45574244a6033, type: 3}
 --- !u!1 &2100573913
 GameObject:
@@ -1055,11 +1054,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5746736382726457274, guid: 4a16d08df9193cc47ba45574244a6033, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1897.4639
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5746736382726457274, guid: 4a16d08df9193cc47ba45574244a6033, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5302.309
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5746736382726457274, guid: 4a16d08df9193cc47ba45574244a6033, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
