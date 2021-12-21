@@ -7,7 +7,11 @@ using UnityEngine.Events;
 public abstract class Part : MonoBehaviour
 {
     [NamedListAttribute(new string[] { "Right", "Left", "Top", "Bottom", "Back", "Front" })]
+
+    [Header("Attachable Points")]
     public List<Part> attachedParts = new List<Part>();
+
+    public List<bool> attachablePoints = new List<bool>();
 
     public int health;
     public float weight;
@@ -87,6 +91,15 @@ public abstract class Part : MonoBehaviour
                 Debug.LogWarning($"NORMAL IS INCORRECT - {n}");
                 return Orientation.Right;//Not actually right at all
         }
+    }
+
+    public bool CheckCorrectSide(Vector3 hitNormal)
+    {
+        if (attachablePoints[(int)DetermineSide(hitNormal)])
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
