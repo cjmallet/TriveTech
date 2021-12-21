@@ -675,8 +675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58822d782fd2beb4b83b3210105fe369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementParts: []
   allParts: []
+  wheelInfos: []
+  maxSteeringAngle: 30
 --- !u!114 &120727279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,8 +742,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attachablePoints: 010101010101
   health: 10
-  weight: 0.2
+  weight: 10
   useDirectionIndicator: 0
 --- !u!114 &2456488435736434707
 MonoBehaviour:

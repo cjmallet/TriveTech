@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -61,12 +62,12 @@ public class LevelManager : MonoBehaviour
 
         if (timer < timeLevelCompletion)
         {
-
             if (collectedCargo > 2)
             {
                 canvasText.GetComponent<TextMeshProUGUI>().text = "You Finished!\tCargo:" + collectedCargo + "/10 \tTime left: " + (int)(timeLevelCompletion - timer);
                 canvasText.SetActive(true);
                 panel.SetActive(true);
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name,1);
             }
             else
             {
