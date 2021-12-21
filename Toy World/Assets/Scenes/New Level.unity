@@ -563,6 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cargoSpawner: {fileID: 2093010612}
+  levelTrigger: {fileID: 1166506899}
   timeLevelCompletion: 60
   canvasText: {fileID: 1058202713}
   panel: {fileID: 1487343117}
@@ -3455,6 +3456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9997b44f76e41143ae297e5a2e826d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelStarted: 0
 --- !u!65 &1166506900
 BoxCollider:
   m_ObjectHideFlags: 0

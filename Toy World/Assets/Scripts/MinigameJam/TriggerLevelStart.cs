@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TriggerLevelStart : MonoBehaviour
 {
-    private bool levelStarted;
+    public bool levelStarted;
 
     private void OnTriggerEnter(Collider other)
     {

@@ -42,12 +42,15 @@ public class CargoSpawner : MonoBehaviour
     public void SpawnItems()
     {
         spawningCargo = true;
+        finishedSpawning = false;
+        itemsSpawned = 0;
     }
 
     public void ResetItems()
     {
         spawningCargo = false;
-        itemsSpawned = 0;
-        finishedSpawning = false;
+        finishedSpawning = true;
+        itemsSpawned = cargoToSpawn;
+        LevelManager.Instance.collectedCargo = 0;
     }
 }
