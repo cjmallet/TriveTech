@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EscMenuBehaviour : MonoBehaviour
 {
     public GameObject escMenu;
 
     public GameObject coreBlock;
+
+    public static Vector3 buildCameraPositionStart;
+    public static Quaternion buildCameraRotationStart;
+
     private Vector3 coreBlockPositionStart;
     private Quaternion coreBlockRotationStart;
 
@@ -43,12 +48,19 @@ public class EscMenuBehaviour : MonoBehaviour
 
         LevelManager.Instance.StopTimer();
 
-        if (!VehicleEditor._instance.buildUIOpen)
+        if (VehicleEditor._instance.playan)
         {
             VehicleEditor._instance.Play();
 
+            Camera.main.transform.position = buildCameraPositionStart;
+            Camera.main.transform.rotation = buildCameraRotationStart;
+
             coreBlock.transform.position = coreBlockPositionStart;
             coreBlock.transform.rotation = coreBlockRotationStart;
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

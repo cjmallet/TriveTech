@@ -98,6 +98,8 @@ public class VehicleEditor : MonoBehaviour
                 if (vehiclePart.useDirectionIndicator)
                     vehiclePart.ToggleDirectionIndicator(false);
             }
+            EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
+            EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
             coreBlock.GetComponent<VehicleStats>().enabled = true;
