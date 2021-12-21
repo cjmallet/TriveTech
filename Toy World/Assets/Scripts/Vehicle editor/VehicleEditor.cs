@@ -265,7 +265,8 @@ public class VehicleEditor : MonoBehaviour
     {
         Vector3Int localposition = GetLocalPosition(hit);
         Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
-        if (partGrid.CheckIfInBounds(localposition) &&hit.transform.GetComponent<Part>().CheckCorrectSide(hitNormal))
+        if (partGrid.CheckIfInBounds(localposition) && hit.transform.GetComponent<Part>().CheckCorrectSide(hitNormal) 
+            && previewedPart.transform.GetComponent<Part>().CheckCorrectSide(-hitNormal))
         {
             return true;
         }
