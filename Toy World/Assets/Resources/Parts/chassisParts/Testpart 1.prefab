@@ -119,5 +119,5 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 010101010101
   health: 10
-  weight: 0.2
+  weight: 10
   useDirectionIndicator: 0

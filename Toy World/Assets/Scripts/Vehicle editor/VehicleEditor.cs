@@ -72,7 +72,7 @@ public class VehicleEditor : MonoBehaviour
                 coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().mass = 1000f;
+            coreBlock.GetComponent<Rigidbody>().mass = 0f;
             coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
             // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
