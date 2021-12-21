@@ -10,7 +10,7 @@ public class Wood : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground" && !lost)
         {
-            LevelManager.Instance.collectedCargo--;
+            LevelManager.Instance.LoseCargo();
             lost = true;
         }
     }

@@ -6,8 +6,8 @@ using UnityEngine;
 public class CargoSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject cargoPrefab, cargoSpawnPoint;
-    [SerializeField] private int cargoToSpawn;
     [SerializeField] private float cargoSpawnSpeed;
+    public int cargoToSpawn;
 
     private float itemsSpawned = 0;
     private bool  spawningCargo, finishedSpawning = false;
