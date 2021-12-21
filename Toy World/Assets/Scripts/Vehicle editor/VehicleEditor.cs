@@ -163,7 +163,6 @@ public class VehicleEditor : MonoBehaviour
                 if (context.action.name == "PlaceClick" && context.performed)
                 {
                     PlaceSelectedPart(hit);
-                    
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
                 {
@@ -214,13 +213,9 @@ public class VehicleEditor : MonoBehaviour
 
     void PlaceSelectedPart(RaycastHit hit)
     {
-        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
-        {
-            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
-        }
+        Vector3Int pos= GetLocalPosition(hit);
 
-        if (partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
+        if (CheckCorrectPlacement(hit))//check if the position the part would be placed in is in grid bounds
         {
             GameObject placedPart;
 
@@ -252,6 +247,35 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    private Vector3Int GetLocalPosition(RaycastHit hit)
+    {
+        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
+        {
+            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
+        }
+        return pos;
+    }
+
+    /// <summary>
+    /// Check if the part has attachmentPoints available and is in bounds off the boundingbox.
+    /// </summary>
+    /// <param name="pos"></param>
+    private bool CheckCorrectPlacement(RaycastHit hit)
+    {
+        Vector3Int localposition = GetLocalPosition(hit);
+        Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
+        if (partGrid.CheckIfInBounds(localposition) && hit.transform.GetComponent<Part>().CheckCorrectSide(hitNormal) 
+            && previewedPart.transform.GetComponent<Part>().CheckCorrectSide(-hitNormal))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// detaches all parts from hit part and destroys the object.
     /// </summary>
@@ -276,16 +300,12 @@ public class VehicleEditor : MonoBehaviour
     {
         previewedPart.SetActive(true);
 
-        Vector3Int newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
-        {
-            newPos += Vector3Int.RoundToInt(hit.transform.localPosition);
-        }
+        Vector3Int newPos = GetLocalPosition(hit);
+
         previewedPart.transform.localPosition = newPos;
         previewedPart.transform.localRotation = partRotation;
 
-        if (partGrid.CheckIfInBounds(newPos))
+        if (CheckCorrectPlacement(hit))
         {
             previewedPart.transform.localScale = Vector3.one;
         }
