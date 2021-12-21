@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     }
 
     public CargoSpawner cargoSpawner;
+    [SerializeField] private TriggerLevelStart levelTrigger;
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject canvasText, panel, timerObject;
 
@@ -52,8 +53,11 @@ public class LevelManager : MonoBehaviour
 
     public void StopTimer()
     {
-        timerStarted = true;
+        timerStarted = false;
         timer = 0;
+        levelTrigger.levelStarted = false;
+        canvasText.SetActive(false);
+        panel.SetActive(false);
         cargoSpawner.ResetItems();
     }
 
