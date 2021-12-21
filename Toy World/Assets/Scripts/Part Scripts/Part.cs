@@ -128,4 +128,9 @@ public abstract class Part : MonoBehaviour
             Debug.Log(gameObject.name + " has been destroyed!");
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        
+    }
 }

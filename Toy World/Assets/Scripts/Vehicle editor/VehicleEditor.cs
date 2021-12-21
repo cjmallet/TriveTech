@@ -46,11 +46,11 @@ public class VehicleEditor : MonoBehaviour
         //set the static instance
         if (instance == null) { instance = this; }
         else { Destroy(this); }
-        coreBlock = GameObject.Find("CoreBlock");
     }
 
     void Start()
     {
+        coreBlock = DDOL.Instance.P1Coreblock;//set to whatever coreblock you're editing
         partGrid = coreBlock.GetComponent<PartGrid>();
         playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
