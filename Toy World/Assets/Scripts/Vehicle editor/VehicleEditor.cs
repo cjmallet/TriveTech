@@ -59,8 +59,6 @@ public class VehicleEditor : MonoBehaviour
         {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
         }
-
-        CreateBoundingBox();
     }
 
     public void Play()
@@ -116,7 +114,7 @@ public class VehicleEditor : MonoBehaviour
             }
             PartSelectionManager._instance.crossHair.SetActive(false);
 
-            partGrid.ToggleTempBoundingBox(false);
+            //partGrid.ToggleTempBoundingBox(false);
 
             playerInput.SwitchCurrentActionMap("Player");
         }
@@ -143,7 +141,7 @@ public class VehicleEditor : MonoBehaviour
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
-            partGrid.ToggleTempBoundingBox(true);
+            //partGrid.ToggleTempBoundingBox(true);
 
             PartSelectionManager._instance.ClosePartSelectionUI();
             ChangeActiveBuildState();
@@ -324,13 +322,13 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
-    private void CreateBoundingBox()
+    public void CreateBoundingBox()
     {
         BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
         BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
         BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f,
                                                     coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.75f,
-                                                    coreBlock.transform.position.z - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
+                                                    coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
     }
 
 
