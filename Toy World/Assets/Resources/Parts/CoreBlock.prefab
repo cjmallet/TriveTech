@@ -677,8 +677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allParts: []
   wheelInfos: []
-  maxMotorTorgue: 0
-  maxSteeringAngle: 0
+  maxSteeringAngle: 30
 --- !u!114 &120727279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,7 +744,7 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 010101010101
   health: 10
-  weight: 0.2
+  weight: 20
   useDirectionIndicator: 0
 --- !u!114 &2456488435736434707
 MonoBehaviour:

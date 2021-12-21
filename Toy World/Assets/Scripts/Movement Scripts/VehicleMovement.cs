@@ -12,7 +12,7 @@ public class VehicleMovement : MonoBehaviour
     [HideInInspector]
     public List<Part> allParts = new List<Part>();
     public List<WheelInfo> wheelInfos = new List<WheelInfo>();    
-    public float maxMotorTorgue, maxSteeringAngle;
+    public float maxSteeringAngle;
     private float motor, steering;
     private Rigidbody rigidBody;
     private Vector3 moveVector;
@@ -32,13 +32,13 @@ public class VehicleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        motor = maxMotorTorgue * moveVector.z;
         steering = maxSteeringAngle * moveVector.x;
 
         foreach (WheelInfo wheelInfo in wheelInfos)
         {
             if (wheelInfo.motor)
             {
+                motor = wheelInfo.maxMotorTorgue * moveVector.z;
                 wheelInfo.wheel.motorTorque = motor;
             }
 
@@ -64,6 +64,7 @@ public class VehicleMovement : MonoBehaviour
         else // Engine wheel
             wheel.steering = false;
 
+        wheel.maxMotorTorgue = part.maxTorgue;
         wheel.motor = true;
 
         wheelInfos.Add(wheel);
@@ -75,5 +76,6 @@ public class VehicleMovement : MonoBehaviour
         public WheelCollider wheel;
         public bool motor; // Attached to motor?
         public bool steering; // Attached to steer angle?
+        public float maxMotorTorgue;
     }
 }
