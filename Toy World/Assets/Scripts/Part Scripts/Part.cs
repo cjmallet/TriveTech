@@ -125,7 +125,7 @@ public abstract class Part : MonoBehaviour
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
             TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
-            Destroy(collider.gameObject);
+            //Destroy(collider.gameObject);
         }
     }
 
@@ -139,7 +139,49 @@ public abstract class Part : MonoBehaviour
         else
         {
             this.health = 0;
-            Debug.Log(gameObject.name + " has been destroyed!");
+            RemovePart();
+        }
+    }
+
+    private void RemovePart()
+    {
+        for (int x=0; x<attachedParts.Count;x++)
+        {
+            if (attachedParts[x]!=null)
+            {
+                if (x % 2 == 0)
+                {
+                    attachedParts[x].attachedParts[x + 1] = null;
+                    attachedParts[x].CheckAttached();
+                    attachedParts[x] = null;
+                }
+                else
+                {
+                    attachedParts[x].attachedParts[x - 1] = null;
+                    attachedParts[x].CheckAttached();
+                    attachedParts[x] = null;
+                }
+            }
+        }
+        transform.parent = null;
+        gameObject.AddComponent<Rigidbody>();
+    }
+
+    public void CheckAttached()
+    {
+        int attachments=0;
+
+        foreach(Part part in attachedParts)
+        {
+            if (part!=null)
+            {
+                attachments++;
+            }
+        }
+
+        if (attachments==0)
+        {
+            RemovePart();
         }
     }
 
