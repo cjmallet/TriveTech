@@ -69,26 +69,45 @@ public class EscMenuBehaviour : MonoBehaviour
         }
         else
         {
-            foreach (Transform child in coreBlock.transform)
-            {
-                if (!child.name.Contains("ThirdPersonCam") && 
-                    !child.name.Contains("PlayerUI") &&
-                    !child.name.Contains("Wheels") && 
-                    !child.name.Contains("BoundingBoxWithDirectionArrow") &&
-                    !child.name.Contains("TestPart"))
-                {
-                    Destroy(child.gameObject);
-                }
-            }
+            StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
 
-            foreach (Transform wheelChild in coreBlock.transform.GetChild(0).transform)
-            {
-                Destroy(wheelChild.gameObject);
-            }
-
-            partSelectorUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
             //playerInput.SwitchCurrentActionMap("UI");
+
+            //foreach (Transform child in coreBlock.transform)
+            //{
+            //    if (!child.name.Contains("ThirdPersonCam") && 
+            //        !child.name.Contains("PlayerUI") &&
+            //        !child.name.Contains("Wheels") && 
+            //        !child.name.Contains("BoundingBoxWithDirectionArrow") &&
+            //        !child.name.Contains("TestPart"))
+            //    {
+            //        Destroy(child.gameObject);
+            //    }
+            //}
+
+            //foreach (Transform wheelChild in coreBlock.transform.GetChild(0).transform)
+            //{
+            //    Destroy(wheelChild.gameObject);
+            //}
+
+            //partSelectorUI.SetActive(true);
+            //Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    private IEnumerator LoadScene(string sceneName)
+    {
+        // Start loading the scene
+        AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+       
+        if (FPSCameraControllers.canRotate)
+        {
+            FPSCameraControllers.canRotate = false;
+        }
+        // Wait until the level finish loading
+        while (!asyncLoadLevel.isDone)
+            yield return null;
+        // Wait a frame so every Awake and Start method is called
+        yield return new WaitForEndOfFrame();
     }
 }
