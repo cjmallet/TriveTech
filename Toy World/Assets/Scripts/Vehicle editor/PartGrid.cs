@@ -17,8 +17,8 @@ public class PartGrid : MonoBehaviour
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
         coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
         partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
-        tempBox = Instantiate(cubePrefab, this.transform);
-        ToggleTempBoundingBox(true);
+
+        InstantiateBoundingBoxWithGridSize();
     }
 
     public void AddPartToGrid(Part partToAdd, Vector3Int relativePos)
@@ -156,7 +156,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.x += movement.x;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.x == -1)
@@ -181,7 +181,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.x += movement.x;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             if (movement.y == 1)
@@ -206,7 +206,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.y += movement.y;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.y == -1)
@@ -231,7 +231,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.y += movement.y;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             if (movement.z == 1)
@@ -256,7 +256,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.z += movement.z;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.z == -1)
@@ -281,24 +281,35 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.z += movement.z;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
         }
     }
 
-    public void ToggleTempBoundingBox(bool active)
+    //public void ToggleTempBoundingBox(bool active)
+    //{
+    //    if (active)
+    //    {
+    //        tempBox.SetActive(true);
+    //        tempBox.transform.localPosition = new Vector3(gridDimensions.x * 0.5f - 0.5f, gridDimensions.y * 0.5f - 0.5f, gridDimensions.z * 0.5f - 0.5f) - coreBlockIndex;
+    //        tempBox.transform.localScale = gridDimensions;
+    //    }
+    //    else
+    //    {
+    //        tempBox.SetActive(false);
+    //    }
+    //}
+
+    public void InstantiateBoundingBoxWithGridSize()
     {
-        if (active)
-        {
-            tempBox.SetActive(true);
-            tempBox.transform.localPosition = new Vector3(gridDimensions.x * 0.5f - 0.5f, gridDimensions.y * 0.5f - 0.5f, gridDimensions.z * 0.5f - 0.5f) - coreBlockIndex;
-            tempBox.transform.localScale = gridDimensions;
-        }
-        else
-        {
-            tempBox.SetActive(false);
-        }
+        GameObject boundingBoxAndArrow = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
+
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxW = gridDimensions.x;
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxH = gridDimensions.y;
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxL = gridDimensions.z;
+
+        VehicleEditor._instance.CreateBoundingBox();
     }
 
     public void ChangeGridSize(Vector3Int newDimensions)

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TriggerLevelStart : MonoBehaviour
 {
-    private bool levelStarted;
+    public bool levelStarted;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!levelStarted)
+        if (!levelStarted && other.name == "CoreBlock")
         {
             LevelManager.Instance.StartLevel();
             levelStarted = true;

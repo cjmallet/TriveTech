@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MenuButton",
+                    "type": "Button",
+                    "id": "c90c3454-8882-456d-b30a-4d100ee9bdd5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -238,6 +247,17 @@
                     "action": "ThirdPersonRotateMoveButton",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f59e123b-27ca-4739-93bb-537780c58700",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MenuButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -348,6 +368,15 @@
                     "name": "UIRotateMoveButton",
                     "type": "Button",
                     "id": "43b37f67-b3fb-4279-b1b8-1f8e5f160d7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MenuButton",
+                    "type": "Button",
+                    "id": "0b3b46df-e59d-4828-846c-a0af6aa7e471",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -726,6 +755,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "UIRotateMoveButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be405ccd-75a1-4f88-b3f4-b3da3132e9af",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "MenuButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

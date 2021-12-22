@@ -20,9 +20,8 @@ public class ObjectiveProgress : MonoBehaviour
         mainObjectiveTracker.text = currentCargo + " / " + currentCargo;
     }
 
-    public void LoseCargo()
+    public void UpdateCargo(int cargoAmount)
     {
-        currentCargo--;
-        mainObjectiveTracker.text = currentCargo + " / " + levelManager.cargoSpawner.cargoToSpawn;
+        mainObjectiveTracker.text = cargoAmount + " / " + levelManager.cargoSpawner.cargoToSpawn;
     }
 }
