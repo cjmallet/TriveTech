@@ -38,7 +38,7 @@ public class EscMenuBehaviour : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (VehicleEditor._instance.playan)
+        if (VehicleEditor._instance.playan || !VehicleEditor._instance.buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -54,6 +54,7 @@ public class EscMenuBehaviour : MonoBehaviour
 
         LevelManager.Instance.StopTimer();
         LevelManager.Instance.cargoSpawner.CleanCargo();
+        LevelManager.Instance.ResetCargo();
 
         if (VehicleEditor._instance.playan)
         {
