@@ -30,7 +30,7 @@ public abstract class Part : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
         if (useDirectionIndicator)
             ShowFrontDirection();
