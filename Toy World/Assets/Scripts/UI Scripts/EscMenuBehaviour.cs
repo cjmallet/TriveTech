@@ -53,6 +53,7 @@ public class EscMenuBehaviour : MonoBehaviour
         escMenu.SetActive(false);
 
         LevelManager.Instance.StopTimer();
+        LevelManager.Instance.cargoSpawner.CleanCargo();
 
         if (VehicleEditor._instance.playan)
         {

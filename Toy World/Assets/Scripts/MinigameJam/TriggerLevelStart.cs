@@ -8,7 +8,7 @@ public class TriggerLevelStart : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!levelStarted)
+        if (!levelStarted && other.name == "CoreBlock")
         {
             LevelManager.Instance.StartLevel();
             levelStarted = true;
