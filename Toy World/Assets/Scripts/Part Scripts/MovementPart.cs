@@ -7,6 +7,8 @@ public class MovementPart : Part
 {
     public bool frontPart { get; set; }
 
+    public float maxTorgue;
+
     public virtual void SwitchColliders()
     {
 
