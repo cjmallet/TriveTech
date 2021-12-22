@@ -69,6 +69,8 @@ MonoBehaviour:
   health: 5
   weight: 0.1
   useDirectionIndicator: 1
+  actionType: 2
+  specificActionType: 0
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0

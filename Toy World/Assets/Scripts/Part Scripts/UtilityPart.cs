@@ -13,8 +13,14 @@ public class UtilityPart : Part
      */
     public bool DoAction { get; set; }
 
+    // Action type you can adjust per part in inspector/prefab
     public enum ActionType { Sprint, Jump, Utility }
     public ActionType actionType;
+
+    // Actual action type given in runtime to determine which input slot a utility action responds to
+    public enum SpecificActionType { Sprint, Jump, Utility1, Utility2, Utility3, Utility4 }
+    [HideInInspector]
+    public SpecificActionType specificActionType;
 
     // Start is called before the first frame update
     public override void Awake()
@@ -22,30 +28,8 @@ public class UtilityPart : Part
         base.Awake();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        // UtilityAction();
-    }
-
     public virtual void UtilityAction()
     {
-    
-    }
 
-    public void SetCorrectInputAction()
-    {
-        switch (actionType)
-        {
-            case ActionType.Sprint:
-                break;
-            case ActionType.Jump:
-                break;
-            case ActionType.Utility:
-                break;
-            default:
-                Debug.Log("Not a valid action type!");
-                break;
-        }
     }
 }
