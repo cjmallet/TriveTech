@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
+using TMPro;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
@@ -39,6 +40,8 @@ public class VehicleEditor : MonoBehaviour
 
     [SerializeField]
     private PlayerInput playerInput;
+
+    public TextMeshProUGUI RestartText;
 
 
     void Awake()
@@ -116,6 +119,8 @@ public class VehicleEditor : MonoBehaviour
 
             //partGrid.ToggleTempBoundingBox(false);
 
+            RestartText.text = "Restart";
+
             playerInput.SwitchCurrentActionMap("Player");
         }
         else if (playan)
@@ -148,6 +153,8 @@ public class VehicleEditor : MonoBehaviour
             PartSelectionManager._instance.crossHair.SetActive(false);
 
             playan = false;
+
+            RestartText.text = "Discard";
 
             playerInput.SwitchCurrentActionMap("UI");
         }

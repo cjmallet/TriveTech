@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class EscMenuBehaviour : MonoBehaviour
 {
@@ -11,10 +12,8 @@ public class EscMenuBehaviour : MonoBehaviour
     public PlayerInput playerInput;
     public GameObject partSelectorUI;
 
-
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
-
 
     private Vector3 coreBlockPositionStart;
     private Quaternion coreBlockRotationStart;

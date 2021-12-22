@@ -703,6 +703,7 @@ MonoBehaviour:
   timeLevelCompletion: 60
   levelUI: {fileID: 809173152}
   collectedCargo: 0
+  displayCargoAmount: 0
 --- !u!1001 &219223950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -710,6 +711,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761692395}
     m_Modifications:
+    - target: {fileID: 611104555732792223, guid: c1c187391426cfe47b56211435f3e517, type: 3}
+      propertyPath: m_text
+      value: Discard
+      objectReference: {fileID: 0}
     - target: {fileID: 611104555851067860, guid: c1c187391426cfe47b56211435f3e517, type: 3}
       propertyPath: m_Name
       value: EscMenu
@@ -1388,6 +1393,7 @@ MonoBehaviour:
   buildUIOpen: 1
   vehicleCam: {fileID: 1286571294}
   playerInput: {fileID: 3828433662548338289}
+  RestartText: {fileID: 1388235844}
 --- !u!4 &521375685
 Transform:
   m_ObjectHideFlags: 0
@@ -3705,6 +3711,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374407135}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1388235844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 611104555732792223, guid: c1c187391426cfe47b56211435f3e517, type: 3}
+  m_PrefabInstance: {fileID: 219223950}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1463421483
 GameObject:
   m_ObjectHideFlags: 0
