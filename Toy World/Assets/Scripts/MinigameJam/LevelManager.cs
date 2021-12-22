@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
     private float timer = 0;
     private bool timerStarted = false;
 
-    [HideInInspector] public int collectedCargo;
+    [HideInInspector] public int collectedCargo, displayCargoAmount;
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour
         canvasText = levelUI.transform.Find("FinishText").gameObject;
         timerObject = levelUI.transform.Find("TimerObject").gameObject;
         objectiveUI = levelUI.transform.Find("Goals").gameObject;
+        displayCargoAmount = cargoSpawner.cargoToSpawn;
     }
 
     private void FixedUpdate()
@@ -87,13 +88,14 @@ public class LevelManager : MonoBehaviour
     public void LoseCargo()
     {
         collectedCargo--;
-        objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(collectedCargo);
+        displayCargoAmount--;
+        objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(displayCargoAmount);
     }
 
     public void ResetCargo()
     {
-        collectedCargo = cargoSpawner.cargoToSpawn;
-        objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(collectedCargo);
+        displayCargoAmount = cargoSpawner.cargoToSpawn;
+        objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(displayCargoAmount);
     }
 
     public void FinishLevel()
