@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class EscMenuBehaviour : MonoBehaviour
 {
     public GameObject escMenu;
-
     public GameObject coreBlock;
+    public PlayerInput playerInput;
+    public GameObject partSelectorUI;
+
 
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
@@ -26,6 +29,7 @@ public class EscMenuBehaviour : MonoBehaviour
     public void Pause()
     {
         escMenu.SetActive(true);
+        playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
     }
@@ -39,6 +43,7 @@ public class EscMenuBehaviour : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        playerInput.actions.Enable();
         escMenu.SetActive(false);
     }
 
@@ -64,7 +69,26 @@ public class EscMenuBehaviour : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            foreach (Transform child in coreBlock.transform)
+            {
+                if (!child.name.Contains("ThirdPersonCam") && 
+                    !child.name.Contains("PlayerUI") &&
+                    !child.name.Contains("Wheels") && 
+                    !child.name.Contains("BoundingBoxWithDirectionArrow") &&
+                    !child.name.Contains("TestPart"))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            foreach (Transform wheelChild in coreBlock.transform.GetChild(0).transform)
+            {
+                Destroy(wheelChild.gameObject);
+            }
+
+            partSelectorUI.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            //playerInput.SwitchCurrentActionMap("UI");
         }
     }
 }

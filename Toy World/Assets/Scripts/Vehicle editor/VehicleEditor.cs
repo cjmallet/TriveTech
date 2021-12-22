@@ -326,8 +326,8 @@ public class VehicleEditor : MonoBehaviour
     {
         BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
         BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
-        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f,
-                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.75f,
+        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
+                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH - 1.8f,
                                                     coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
     }
 
