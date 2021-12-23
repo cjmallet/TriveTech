@@ -11,15 +11,6 @@ public class ActivatePartActions : MonoBehaviour
     private List<DefensivePart> allDefensiveParts = new List<DefensivePart>();
     private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
-    private bool attackActionPressed,
-        defenceActionPressed,
-        sprintActionPressed,
-        jumpActionPressed,
-        utilityAction1Pressed,
-        utilityAction2Pressed,
-        utilityAction3Pressed,
-        utilityAction4Pressed;
-
     /// <summary>
     /// Activates attack action for each offensive part on vehicle
     /// </summary>
@@ -39,8 +30,7 @@ public class ActivatePartActions : MonoBehaviour
         foreach (DefensivePart defensivePart in allDefensiveParts)
         {
             defensivePart.DefenceAction();
-        }
-    
+        }   
     }
 
     /// <summary>
@@ -89,31 +79,51 @@ public class ActivatePartActions : MonoBehaviour
                 case UtilityPart.ActionType.Jump:
                     utilityPart.specificActionType = UtilityPart.SpecificActionType.Jump;
                     break;
-                // Other utility actions will get 1 of 4 input slots absed on index devined in first line of this function
+                // Other utility actions will get 1 of 4 input slots based on index devined in first line of this function
+                // Or based on utility parts of same type
                 case UtilityPart.ActionType.Utility:
-                    switch (specificUtilityActionSlot)
+                    bool hasInputSlot = false;
+
+                    // Check if other parts of the same type are already assigned to an input. Yes? Take it as well!
+                    foreach (UtilityPart actionCheckPart in allUtilityParts)
                     {
-                        case 1:
-                            utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility1;
-                            break;
-                        case 2:
-                            utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility2;
-                            break;
-                        case 3:
-                            utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility3;
-                            break;
-                        case 4:
-                            utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility4;
-                            break;
-                        default:
-                            Debug.Log("No valid utility action slot left!");
-                            break;
+                        if (actionCheckPart.GetType() == utilityPart.GetType())
+                        {
+                            if (actionCheckPart.specificActionType != UtilityPart.SpecificActionType.Default)
+                            {
+                                utilityPart.specificActionType = actionCheckPart.specificActionType;
+                                hasInputSlot = true;
+                                break;
+                            }
+                        }
                     }
-                    // Action index goes to next slot, but when 4th slot is filled the action will be bounded to the first slot again
-                    if (specificUtilityActionSlot < 4)
-                        specificUtilityActionSlot++;
-                    else
-                        specificUtilityActionSlot = 1;
+                    // If you are the first part of your kind. Get a new input slot
+                    if (!hasInputSlot)
+                    {
+                        switch (specificUtilityActionSlot)
+                        {
+                            case 1:
+                                utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility1;
+                                break;
+                            case 2:
+                                utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility2;
+                                break;
+                            case 3:
+                                utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility3;
+                                break;
+                            case 4:
+                                utilityPart.specificActionType = UtilityPart.SpecificActionType.Utility4;
+                                break;
+                            default:
+                                Debug.Log("No valid utility action slot left!");
+                                break;
+                        }
+                        // Action index goes to next slot, but when 4th slot is filled the action will be bounded to the first slot again
+                        if (specificUtilityActionSlot < 4)
+                            specificUtilityActionSlot++;
+                        else
+                            specificUtilityActionSlot = 1;
+                    }
                     break;
                 default:
                     Debug.Log("Not a valid action type!");

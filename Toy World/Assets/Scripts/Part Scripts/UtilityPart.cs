@@ -18,9 +18,9 @@ public class UtilityPart : Part
     public ActionType actionType;
 
     // Actual action type given in runtime to determine which input slot a utility action responds to
-    public enum SpecificActionType { Sprint, Jump, Utility1, Utility2, Utility3, Utility4 }
+    public enum SpecificActionType { Default, Sprint, Jump, Utility1, Utility2, Utility3, Utility4 }
     [HideInInspector]
-    public SpecificActionType specificActionType;
+    public SpecificActionType specificActionType = SpecificActionType.Default;
 
     // Start is called before the first frame update
     public override void Awake()
