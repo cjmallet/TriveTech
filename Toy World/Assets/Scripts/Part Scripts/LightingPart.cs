@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class LightingPart : UtilityPart
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private GameObject lightBulb;
+
+    private bool activateLight = true;
+
+    /// <summary>
+    /// Do switchlights with a toggle through 'DoAction' 
+    /// </summary>
+    public override void UtilityAction()
     {
-        
+        if (!DoAction)
+        {
+            LightSwitch();
+            DoAction = true;
+        }
+        else DoAction = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Switch lights on or off
+    /// </summary>
+    private void LightSwitch()
     {
-        
+        activateLight = !activateLight;
+        lightBulb.SetActive(activateLight);
     }
 }

@@ -71,6 +71,7 @@ MonoBehaviour:
   useDirectionIndicator: 1
   actionType: 2
   specificActionType: 0
+  lightBulb: {fileID: 8180325155698316892}
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0

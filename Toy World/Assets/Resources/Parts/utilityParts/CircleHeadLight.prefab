@@ -354,3 +354,4 @@ MonoBehaviour:
   useDirectionIndicator: 1
   actionType: 2
   specificActionType: 0
+  lightBulb: {fileID: 8194517041491285172}

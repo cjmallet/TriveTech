@@ -110,7 +110,7 @@ public class ActivatePartActions : MonoBehaviour
                             break;
                     }
                     // Action index goes to next slot, but when 4th slot is filled the action will be bounded to the first slot again
-                    if (specificUtilityActionSlot <= 4)
+                    if (specificUtilityActionSlot < 4)
                         specificUtilityActionSlot++;
                     else
                         specificUtilityActionSlot = 1;
