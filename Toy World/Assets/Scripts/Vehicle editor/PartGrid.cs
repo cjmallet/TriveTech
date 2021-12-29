@@ -8,6 +8,8 @@ public class PartGrid : MonoBehaviour
     public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
     private Part[,,] partGrid;
+    private Part[,,] floodFill;
+    private List<Part> neighboursToCheck;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     [SerializeField] private GameObject cubePrefab;
     private GameObject tempBox;
@@ -44,7 +46,6 @@ public class PartGrid : MonoBehaviour
         else
         {
             Debug.LogError("INDEX OUT OF BOUNDS");
-
         }
     }
 
@@ -122,6 +123,74 @@ public class PartGrid : MonoBehaviour
             }
         }
         return allParts;
+    }
+
+    public void RemovePart(Vector3Int partPosition)
+    {
+        partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
+    }
+
+    public void CheckConnection()
+    {
+        Part[,,] floodFill = FloodFill();
+
+        for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
+        {
+            for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
+            {
+                for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
+                {
+                    Debug.Log(partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
+                    if (partGrid[i,j,k]!=null&&floodFill[i,j,k]==null)
+                    {
+                        Debug.Log(partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
+                        partGrid[i, j, k] = null;
+                    }
+                }
+            }
+        }
+    }
+
+    private Part[,,] FloodFill()
+    {
+        Part[,,] floodFill = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
+        neighboursToCheck = new List<Part>();
+        floodFill[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z]= this.gameObject.GetComponent<Part>();
+
+        Part[] neighboursCoreBlock=GetNeighbours(new Vector3Int(0,0,0));
+
+        foreach (Part neighbour in neighboursCoreBlock)
+        {
+            if (neighbour!=null)
+            {
+                neighboursToCheck.Add(neighbour);
+                floodFill[(int)(coreBlockIndex.x +neighbour.transform.localPosition.x),
+                (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)] = neighbour;
+            }
+        }
+
+        GetConnectedParts();
+
+        return floodFill;
+    }
+
+    private void GetConnectedParts()
+    {
+        foreach (Part neighbour in neighboursToCheck)
+        {
+            Part[] neighbours=GetNeighbours(Vector3Int.CeilToInt(floodFill[(int)neighbour.transform.localPosition.x,
+                (int)neighbour.transform.localPosition.y, (int)neighbour.transform.localPosition.z].transform.localPosition));
+            
+            foreach (Part newNeighbour in neighbours)
+            {
+                if (newNeighbour!=null)
+                {
+                    neighboursToCheck.Add(newNeighbour);
+                    floodFill[(int)(coreBlockIndex.x + neighbour.transform.localPosition.x),
+                    (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)] = newNeighbour;
+                }
+            }
+        }
     }
 
     /// <summary>

@@ -139,50 +139,39 @@ public abstract class Part : MonoBehaviour
         else
         {
             this.health = 0;
-            RemovePart();
+            RemovePart(true);
         }
     }
 
-    private void RemovePart()
+    public void RemovePart(bool start)
     {
-        for (int x=0; x<attachedParts.Count;x++)
+        for (int x = 0; x < attachedParts.Count; x++)
         {
-            if (attachedParts[x]!=null)
+            if (attachedParts[x] != null)
             {
                 if (x % 2 == 0)
                 {
                     attachedParts[x].attachedParts[x + 1] = null;
-                    attachedParts[x].CheckAttached();
                     attachedParts[x] = null;
                 }
                 else
                 {
                     attachedParts[x].attachedParts[x - 1] = null;
-                    attachedParts[x].CheckAttached();
                     attachedParts[x] = null;
                 }
             }
         }
+
+        transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+        if (!transform.CompareTag("CoreBlock")&&start)
+        {
+            transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
+            start = !start;
+        }
+
         transform.parent = null;
         gameObject.AddComponent<Rigidbody>();
-    }
-
-    public void CheckAttached()
-    {
-        int attachments=0;
-
-        foreach(Part part in attachedParts)
-        {
-            if (part!=null)
-            {
-                attachments++;
-            }
-        }
-
-        if (attachments==0)
-        {
-            RemovePart();
-        }
+        Destroy(gameObject.GetComponent<Part>());
     }
 
     private void OnDrawGizmos()
