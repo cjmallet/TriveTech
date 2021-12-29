@@ -19,6 +19,8 @@ public abstract class Part : MonoBehaviour
     public int Width { get; }
     public int Height { get; }
 
+    [HideInInspector] public bool floodFilled;
+
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
@@ -163,6 +165,7 @@ public abstract class Part : MonoBehaviour
         }
 
         transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+
         if (!transform.CompareTag("CoreBlock")&&start)
         {
             transform.parent.GetComponentInParent<PartGrid>().CheckConnection();

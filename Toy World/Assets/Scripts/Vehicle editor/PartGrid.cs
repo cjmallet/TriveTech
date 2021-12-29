@@ -9,7 +9,6 @@ public class PartGrid : MonoBehaviour
     [SerializeField] private Vector3Int gridDimensions;
     private Part[,,] partGrid;
     private Part[,,] floodFill;
-    private List<Part> neighboursToCheck;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     [SerializeField] private GameObject cubePrefab;
     private GameObject tempBox;
@@ -130,6 +129,9 @@ public class PartGrid : MonoBehaviour
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
 
+    /// <summary>
+    /// Checks if any block is not connected to the vehicle through an array given by a floodfill algorithm
+    /// </summary>
     public void CheckConnection()
     {
         Part[,,] floodFill = FloodFill();
@@ -140,21 +142,31 @@ public class PartGrid : MonoBehaviour
             {
                 for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
                 {
-                    Debug.Log(partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
+                    Debug.Log("Out"+partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
                     if (partGrid[i,j,k]!=null&&floodFill[i,j,k]==null)
                     {
-                        Debug.Log(partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
+                        Debug.Log("IN"+partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
                         partGrid[i, j, k] = null;
+                        //partGrid[i, j, k].RemovePart(false);
+                    }
+                    else if (partGrid[i,j,k]!=null && floodFill[i, j, k] != null)
+                    {
+                        partGrid[i, j, k].floodFilled = false;
                     }
                 }
             }
         }
     }
 
+    /// <summary>
+    /// The floodfill algorithm checks each neighbour and adds it to the array if it is still
+    /// connected to coreblock. Works like the paint bucket tool.
+    /// </summary>
+    /// <returns>An array with all the parts connected with the coreblock</returns>
     private Part[,,] FloodFill()
     {
         Part[,,] floodFill = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
-        neighboursToCheck = new List<Part>();
+        Queue<Part> partsToCheck = new Queue<Part>();
         floodFill[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z]= this.gameObject.GetComponent<Part>();
 
         Part[] neighboursCoreBlock=GetNeighbours(new Vector3Int(0,0,0));
@@ -163,34 +175,30 @@ public class PartGrid : MonoBehaviour
         {
             if (neighbour!=null)
             {
-                neighboursToCheck.Add(neighbour);
+                partsToCheck.Enqueue(neighbour);
+                neighbour.floodFilled = true;
                 floodFill[(int)(coreBlockIndex.x +neighbour.transform.localPosition.x),
                 (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)] = neighbour;
             }
         }
 
-        GetConnectedParts();
-
-        return floodFill;
-    }
-
-    private void GetConnectedParts()
-    {
-        foreach (Part neighbour in neighboursToCheck)
+        while (partsToCheck.Count>0)
         {
-            Part[] neighbours=GetNeighbours(Vector3Int.CeilToInt(floodFill[(int)neighbour.transform.localPosition.x,
-                (int)neighbour.transform.localPosition.y, (int)neighbour.transform.localPosition.z].transform.localPosition));
-            
-            foreach (Part newNeighbour in neighbours)
+            Part part = partsToCheck.Dequeue();
+            Part[] neighbours = GetNeighbours(Vector3Int.CeilToInt(part.transform.localPosition));
+
+            foreach (Part neighbour in neighbours)
             {
-                if (newNeighbour!=null)
+                if (neighbour!=null&&!neighbour.floodFilled)
                 {
-                    neighboursToCheck.Add(newNeighbour);
+                    partsToCheck.Enqueue(neighbour);
+                    neighbour.floodFilled = true;
                     floodFill[(int)(coreBlockIndex.x + neighbour.transform.localPosition.x),
-                    (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)] = newNeighbour;
+                    (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)]= neighbour;
                 }
             }
         }
+        return floodFill;
     }
 
     /// <summary>
