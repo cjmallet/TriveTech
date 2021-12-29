@@ -142,12 +142,9 @@ public class PartGrid : MonoBehaviour
             {
                 for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
                 {
-                    Debug.Log("Out"+partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
                     if (partGrid[i,j,k]!=null&&floodFill[i,j,k]==null)
                     {
-                        Debug.Log("IN"+partGrid[i, j, k] + " but floodfill " + floodFill[i, j, k]);
-                        partGrid[i, j, k] = null;
-                        //partGrid[i, j, k].RemovePart(false);
+                        partGrid[i, j, k].RemovePart(false);
                     }
                     else if (partGrid[i,j,k]!=null && floodFill[i, j, k] != null)
                     {
@@ -184,8 +181,7 @@ public class PartGrid : MonoBehaviour
 
         while (partsToCheck.Count>0)
         {
-            Part part = partsToCheck.Dequeue();
-            Part[] neighbours = GetNeighbours(Vector3Int.CeilToInt(part.transform.localPosition));
+            Part[] neighbours = GetNeighbours(Vector3Int.CeilToInt(partsToCheck.Dequeue().transform.localPosition));
 
             foreach (Part neighbour in neighbours)
             {
