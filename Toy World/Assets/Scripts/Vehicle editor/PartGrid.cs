@@ -8,7 +8,6 @@ public class PartGrid : MonoBehaviour
     public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
     private Part[,,] partGrid;
-    private Part[,,] floodFill;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     [SerializeField] private GameObject cubePrefab;
     private GameObject tempBox;
@@ -134,9 +133,22 @@ public class PartGrid : MonoBehaviour
     /// </summary>
     public void CheckConnection()
     {
-        Part[,,] floodFill = FloodFill();
+        FloodFill();
+        List<Part> allParts = ReturnAllParts();
 
-        for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
+        foreach (Part part in allParts)
+        {
+            if (!part.floodFilled)
+            {
+                part.RemovePart(false);
+            }
+            else
+            {
+                part.floodFilled = false;
+            }
+        }
+
+        /*for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
         {
             for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
             {
@@ -152,30 +164,24 @@ public class PartGrid : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
     }
 
     /// <summary>
     /// The floodfill algorithm checks each neighbour and adds it to the array if it is still
     /// connected to coreblock. Works like the paint bucket tool.
     /// </summary>
-    /// <returns>An array with all the parts connected with the coreblock</returns>
-    private Part[,,] FloodFill()
+    private void FloodFill()
     {
-        Part[,,] floodFill = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
         Queue<Part> partsToCheck = new Queue<Part>();
-        floodFill[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z]= this.gameObject.GetComponent<Part>();
-
         Part[] neighboursCoreBlock=GetNeighbours(new Vector3Int(0,0,0));
 
         foreach (Part neighbour in neighboursCoreBlock)
         {
             if (neighbour!=null)
             {
-                partsToCheck.Enqueue(neighbour);
                 neighbour.floodFilled = true;
-                floodFill[(int)(coreBlockIndex.x +neighbour.transform.localPosition.x),
-                (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)] = neighbour;
+                partsToCheck.Enqueue(neighbour);
             }
         }
 
@@ -187,14 +193,11 @@ public class PartGrid : MonoBehaviour
             {
                 if (neighbour!=null&&!neighbour.floodFilled)
                 {
-                    partsToCheck.Enqueue(neighbour);
                     neighbour.floodFilled = true;
-                    floodFill[(int)(coreBlockIndex.x + neighbour.transform.localPosition.x),
-                    (int)(coreBlockIndex.y + neighbour.transform.localPosition.y), (int)(coreBlockIndex.z + neighbour.transform.localPosition.z)]= neighbour;
+                    partsToCheck.Enqueue(neighbour);
                 }
             }
         }
-        return floodFill;
     }
 
     /// <summary>
