@@ -51,8 +51,12 @@ public abstract class Part : MonoBehaviour
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
-        attachedParts[(int)DetermineSide(-hitNormal)] = partToAttachTo;
-        partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
+        int side = (int)DetermineSide(-hitNormal);
+        if (partToAttachTo.attachablePoints[side]==true)
+        {
+            attachedParts[side] = partToAttachTo;
+            partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
+        }
     }
 
     public enum Orientation : int

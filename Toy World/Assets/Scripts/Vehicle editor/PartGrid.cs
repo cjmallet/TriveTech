@@ -129,7 +129,8 @@ public class PartGrid : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if any block is not connected to the vehicle through an array given by a floodfill algorithm
+    /// Checks if any block is not connected to the vehicle through an list of all parts
+    /// which is checked by the floodfill algorithm
     /// </summary>
     public void CheckConnection()
     {
@@ -147,34 +148,16 @@ public class PartGrid : MonoBehaviour
                 part.floodFilled = false;
             }
         }
-
-        /*for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
-        {
-            for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
-            {
-                for (int k = 0; k <= partGrid.GetUpperBound(2); k++)
-                {
-                    if (partGrid[i,j,k]!=null&&floodFill[i,j,k]==null)
-                    {
-                        partGrid[i, j, k].RemovePart(false);
-                    }
-                    else if (partGrid[i,j,k]!=null && floodFill[i, j, k] != null)
-                    {
-                        partGrid[i, j, k].floodFilled = false;
-                    }
-                }
-            }
-        }*/
     }
 
     /// <summary>
-    /// The floodfill algorithm checks each neighbour and adds it to the array if it is still
-    /// connected to coreblock. Works like the paint bucket tool.
+    /// The floodfill algorithm checks each neighbour and turns the floodfill boolean to true
+    /// if it is still connected to the coreblock. Works like the paint bucket tool.
     /// </summary>
     private void FloodFill()
     {
         Queue<Part> partsToCheck = new Queue<Part>();
-        Part[] neighboursCoreBlock=GetNeighbours(new Vector3Int(0,0,0));
+        List<Part> neighboursCoreBlock= partGrid[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z].attachedParts;
 
         foreach (Part neighbour in neighboursCoreBlock)
         {
@@ -187,7 +170,7 @@ public class PartGrid : MonoBehaviour
 
         while (partsToCheck.Count>0)
         {
-            Part[] neighbours = GetNeighbours(Vector3Int.CeilToInt(partsToCheck.Dequeue().transform.localPosition));
+            List<Part> neighbours = partsToCheck.Dequeue().attachedParts;
 
             foreach (Part neighbour in neighbours)
             {
