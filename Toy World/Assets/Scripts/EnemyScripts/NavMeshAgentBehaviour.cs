@@ -31,10 +31,10 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Activate();
+        //Activate();
     }
 
-    private void Activate()
+    /*private void Activate()
     {
         //agent.velocity += FlockingBehaviour();
         //transform.position += agent.velocity * Time.deltaTime;
@@ -57,7 +57,7 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     {
         EnemySpawner.enemyList.Remove(gameObject);
     }
-
+    /*
     private Vector3 FlockingBehaviour()
     {
         Vector3 cohesionVector = new Vector3();
@@ -106,12 +106,12 @@ public class NavMeshAgentBehaviour : MonoBehaviour
 
         return flockingVector;
 
-    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
-    }
+    }*/
 }
 
-        
+
 
