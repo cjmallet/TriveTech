@@ -17,7 +17,7 @@ public class BoostPart : UtilityPart
     [SerializeField]
     private ParticleSystem boostParticles;
 
-    [SerializeField]
+    [SerializeField] [Range(0,3)]
     private float boostStrenght;
 
     private void FixedUpdate()
@@ -68,7 +68,8 @@ public class BoostPart : UtilityPart
         if (!boostParticles.isPlaying)
             boostParticles.Play();
 
-        transform.parent.GetComponent<Rigidbody>().AddForce(-100 * boostStrenght * transform.forward, ForceMode.Force);
+        transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
+            -15000 * boostStrenght * transform.forward, transform.position, ForceMode.Force);
     }
 
     /// <summary>

@@ -75,7 +75,7 @@ MonoBehaviour:
   rechargeDurationSeconds: 10
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
-  boostStrenght: 100
+  boostStrenght: 1
 --- !u!1001 &2446425495274698624
 PrefabInstance:
   m_ObjectHideFlags: 0
