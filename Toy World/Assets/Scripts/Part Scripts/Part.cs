@@ -133,7 +133,8 @@ public abstract class Part : MonoBehaviour
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
             TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
-            //Destroy(collider.gameObject);
+
+            Debug.Log(transform.name);
         }
     }
 

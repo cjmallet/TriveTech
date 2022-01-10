@@ -189,7 +189,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePart(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed)
+        if (!playan && context.performed &&!previewedPart.name.Contains("Wheel"))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
@@ -198,7 +198,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed)
+        if (!playan && context.performed && !previewedPart.name.Contains("Wheel"))
         {
             if (vCount == 2)
             {
@@ -358,7 +358,10 @@ public class VehicleEditor : MonoBehaviour
                                                     coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
     }
 
-
+    public void ResetPreviewRotation()
+    {
+        partRotation.eulerAngles = Vector3.zero;
+    }
 
     /// <summary>
     /// send a raycast from the mouse position 
