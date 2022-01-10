@@ -187,30 +187,33 @@ public abstract class Part : MonoBehaviour
     {
         for (int i = 0; i < attachablePoints.Count; i++)
         {
-            if (attachablePoints[i]) { Gizmos.color = Color.green; }
-            else { Gizmos.color = Color.red; }
-
-            //{ "Right", "Left", "Top", "Bottom", "Back", "Front" })]
-            switch (i)
+            if(attachedParts[i] == null)
             {
-                case 0:
-                    Gizmos.DrawSphere(transform.right * 0.5f + transform.position, 0.2f);
-                    break;
-                case 1:
-                    Gizmos.DrawSphere(-transform.right * 0.5f + transform.position, 0.2f);
-                    break;
-                case 2:
-                    Gizmos.DrawSphere(transform.up * 0.5f + transform.position, 0.2f);
-                    break;
-                case 3:
-                    Gizmos.DrawSphere(-transform.up * 0.5f + transform.position, 0.2f);
-                    break;
-                case 4:
-                    Gizmos.DrawSphere(-transform.forward * 0.5f + transform.position, 0.2f);
-                    break;
-                case 5:
-                    Gizmos.DrawSphere(transform.forward * 0.5f + transform.position, 0.2f);
-                    break;
+                if (attachablePoints[i]) { Gizmos.color = Color.green; }
+                else { Gizmos.color = Color.red; }
+
+                //{ "Right", "Left", "Top", "Bottom", "Back", "Front" })]
+                switch (i)
+                {
+                    case 0:
+                        Gizmos.DrawSphere(transform.right * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 1:
+                        Gizmos.DrawSphere(-transform.right * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 2:
+                        Gizmos.DrawSphere(transform.up * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 3:
+                        Gizmos.DrawSphere(-transform.up * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 4:
+                        Gizmos.DrawSphere(-transform.forward * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 5:
+                        Gizmos.DrawSphere(transform.forward * 0.5f + transform.position, 0.2f);
+                        break;
+                }
             }
         }
     }
