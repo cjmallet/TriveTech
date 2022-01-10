@@ -7,18 +7,18 @@ public class BoostPart : UtilityPart
 {
     [SerializeField]
     private int rechargeDurationSeconds;
-
     private float rechargeTimer = 0;
-
     private bool boostIsReady = true;
 
     [SerializeField]
     private int boostDurationSeconds;
+    private float boostTimer;
 
     [SerializeField]
     private ParticleSystem boostParticles;
 
-    private float boostTimer;
+    [SerializeField]
+    private float boostStrenght;
 
     private void FixedUpdate()
     {
@@ -67,6 +67,8 @@ public class BoostPart : UtilityPart
     {
         if (!boostParticles.isPlaying)
             boostParticles.Play();
+
+        transform.parent.GetComponent<Rigidbody>().AddForce(-100 * boostStrenght * transform.forward, ForceMode.Force);
     }
 
     /// <summary>
