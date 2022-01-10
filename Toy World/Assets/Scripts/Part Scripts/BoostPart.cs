@@ -22,6 +22,7 @@ public class BoostPart : UtilityPart
 
     private void FixedUpdate()
     {
+        // Timer to check if booster can be used again
         if (rechargeTimer > 0)
         {
             rechargeTimer -= Time.deltaTime;
@@ -32,6 +33,8 @@ public class BoostPart : UtilityPart
             boostIsReady = true;
         }
 
+        // Applies boost each frame while boost timer is still running,
+        // otherwise stops the boost.
         if (DoAction)
         {
             Boost();
@@ -44,6 +47,10 @@ public class BoostPart : UtilityPart
         }
     }
 
+    /// <summary>
+    /// Resets boost duration timer and turns on DoAction to set boost in motion.
+    /// This is only done if the boost is ready based on the recharge timer.
+    /// </summary>
     public override void UtilityAction()
     {
         if (!DoAction && boostIsReady)
@@ -53,12 +60,20 @@ public class BoostPart : UtilityPart
         }
     } 
 
+    /// <summary>
+    /// Applies boost with force and a particle effect.
+    /// </summary>
     private void Boost()
     {
         if (!boostParticles.isPlaying)
             boostParticles.Play();
     }
 
+    /// <summary>
+    /// Stops boost by resetting boost duration timer and recharge timer
+    /// and stopping the particle effect. 
+    /// The boost force is stopped automaticly when the 'Boost' function isn't called.
+    /// </summary>
     private void StopBoost()
     {
         boostParticles.Stop();
