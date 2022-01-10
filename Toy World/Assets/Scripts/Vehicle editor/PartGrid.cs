@@ -125,6 +125,11 @@ public class PartGrid : MonoBehaviour
 
     public void RemovePart(Vector3Int partPosition)
     {
+        MovementPart vehicleMove= partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z].GetComponent<MovementPart>();
+        if (vehicleMove != null)
+        {
+            vehicleMove.SwitchColliders();
+        }
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
 

@@ -52,10 +52,12 @@ public abstract class Part : MonoBehaviour
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
         int side = (int)DetermineSide(-hitNormal);
-        if (partToAttachTo.attachablePoints[side]==true)
+        int sideOpposite = (int)partToAttachTo.DetermineSide(hitNormal);
+
+        if (partToAttachTo.attachablePoints[sideOpposite] && attachablePoints[side])
         {
             attachedParts[side] = partToAttachTo;
-            partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
+            partToAttachTo.attachedParts[sideOpposite] = this;
         }
     }
 
