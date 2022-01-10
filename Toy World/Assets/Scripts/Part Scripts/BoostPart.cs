@@ -6,6 +6,13 @@ using UnityEngine.InputSystem;
 public class BoostPart : UtilityPart
 {
     [SerializeField]
+    private int rechargeDurationSeconds;
+
+    private float rechargeTimer = 0;
+
+    private bool boostIsReady = true;
+
+    [SerializeField]
     private int boostDurationSeconds;
 
     [SerializeField]
@@ -15,21 +22,31 @@ public class BoostPart : UtilityPart
 
     private void FixedUpdate()
     {
+        if (rechargeTimer > 0)
+        {
+            rechargeTimer -= Time.deltaTime;
+            boostIsReady = false;
+        }
+        else
+        {
+            boostIsReady = true;
+        }
+
         if (DoAction)
         {
             Boost();
             boostTimer -= Time.deltaTime;
-        }
-        if (boostTimer <= 0)
-        {
-            DoAction = false;
-            StopBoost();
+            if (boostTimer <= 0)
+            {
+                DoAction = false;
+                StopBoost();
+            }
         }
     }
 
     public override void UtilityAction()
     {
-        if (!DoAction)
+        if (!DoAction && boostIsReady)
         {
             DoAction = true;
             boostTimer = boostDurationSeconds;
@@ -45,5 +62,7 @@ public class BoostPart : UtilityPart
     private void StopBoost()
     {
         boostParticles.Stop();
+        boostTimer = boostDurationSeconds;
+        rechargeTimer = rechargeDurationSeconds;
     }
 }

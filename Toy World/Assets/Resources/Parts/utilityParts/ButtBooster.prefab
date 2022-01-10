@@ -72,6 +72,7 @@ MonoBehaviour:
   useDirectionIndicator: 0
   actionType: 0
   specificActionType: 0
+  rechargeDurationSeconds: 10
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
 --- !u!1001 &2446425495274698624
