@@ -7,13 +7,19 @@ using UnityEngine.Events;
 public abstract class Part : MonoBehaviour
 {
     [NamedListAttribute(new string[] { "Right", "Left", "Top", "Bottom", "Back", "Front" })]
+
+    [Header("Attachable Points")]
     public List<Part> attachedParts = new List<Part>();
+
+    public List<bool> attachablePoints = new List<bool>();
 
     public int health;
     public float weight;
 
     public int Width { get; }
     public int Height { get; }
+
+    [HideInInspector] public bool floodFilled;
 
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
@@ -27,6 +33,7 @@ public abstract class Part : MonoBehaviour
         for (int i = 0; i < SIDES; i++)
         {
             attachedParts.Add(null);
+            attachablePoints.Add(true);
         }
     }
 
@@ -44,8 +51,14 @@ public abstract class Part : MonoBehaviour
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
-        attachedParts[(int)DetermineSide(-hitNormal)] = partToAttachTo;
-        partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
+        int side = (int)DetermineSide(-hitNormal);
+        int sideOpposite = (int)partToAttachTo.DetermineSide(hitNormal);
+
+        if (partToAttachTo.attachablePoints[sideOpposite] && attachablePoints[side])
+        {
+            attachedParts[side] = partToAttachTo;
+            partToAttachTo.attachedParts[sideOpposite] = this;
+        }
     }
 
     public enum Orientation : int
@@ -89,6 +102,15 @@ public abstract class Part : MonoBehaviour
         }
     }
 
+    public bool CheckCorrectSide(Vector3 hitNormal)
+    {
+        if (attachablePoints[(int)DetermineSide(hitNormal)])
+        {
+            return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Instantiates an arrow to indicate the direction this part is facing.
     /// </summary>
@@ -111,7 +133,8 @@ public abstract class Part : MonoBehaviour
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
             TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
-            Destroy(collider.gameObject);
+
+            Debug.Log(transform.name);
         }
     }
 
@@ -125,7 +148,74 @@ public abstract class Part : MonoBehaviour
         else
         {
             this.health = 0;
-            Debug.Log(gameObject.name + " has been destroyed!");
+            RemovePart(true);
+        }
+    }
+
+    public void RemovePart(bool start)
+    {
+        for (int x = 0; x < attachedParts.Count; x++)
+        {
+            if (attachedParts[x] != null)
+            {
+                if (x % 2 == 0)
+                {
+                    attachedParts[x].attachedParts[x + 1] = null;
+                    attachedParts[x] = null;
+                }
+                else
+                {
+                    attachedParts[x].attachedParts[x - 1] = null;
+                    attachedParts[x] = null;
+                }
+            }
+        }
+
+        transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+
+        if (!transform.CompareTag("CoreBlock")&&start)
+        {
+            transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
+            start = !start;
+        }
+
+        transform.parent = null;
+        gameObject.AddComponent<Rigidbody>();
+        Destroy(gameObject.GetComponent<Part>());
+    }
+
+    private void OnDrawGizmos()
+    {
+        for (int i = 0; i < attachablePoints.Count; i++)
+        {
+            if(attachedParts[i] == null)
+            {
+                if (attachablePoints[i]) { Gizmos.color = Color.green; }
+                else { Gizmos.color = Color.red; }
+
+                //{ "Right", "Left", "Top", "Bottom", "Back", "Front" })]
+                switch (i)
+                {
+                    case 0:
+                        Gizmos.DrawSphere(transform.right * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 1:
+                        Gizmos.DrawSphere(-transform.right * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 2:
+                        Gizmos.DrawSphere(transform.up * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 3:
+                        Gizmos.DrawSphere(-transform.up * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 4:
+                        Gizmos.DrawSphere(-transform.forward * 0.5f + transform.position, 0.2f);
+                        break;
+                    case 5:
+                        Gizmos.DrawSphere(transform.forward * 0.5f + transform.position, 0.2f);
+                        break;
+                }
+            }
         }
     }
 }

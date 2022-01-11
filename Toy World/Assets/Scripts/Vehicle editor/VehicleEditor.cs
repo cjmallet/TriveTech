@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.InputSystem;
+using TMPro;
 
 /* TODO:
  * make a 3D array and check for neighbours to call the attach function for.
@@ -30,7 +31,7 @@ public class VehicleEditor : MonoBehaviour
     private GameObject BoundingBox;
 
     private GameObject previewedPart;
-    private bool playan, buildUIOpen = true;
+    public bool playan, buildUIOpen = true;
     private Camera mainCam;
 
     private int vCount;
@@ -39,6 +40,8 @@ public class VehicleEditor : MonoBehaviour
 
     [SerializeField]
     private PlayerInput playerInput;
+
+    public TextMeshProUGUI RestartText;
 
 
     void Awake()
@@ -59,8 +62,6 @@ public class VehicleEditor : MonoBehaviour
         {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
         }
-
-        CreateBoundingBox();
     }
 
     public void Play()
@@ -72,7 +73,7 @@ public class VehicleEditor : MonoBehaviour
                 coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
             coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().mass = 1000f;
+            coreBlock.GetComponent<Rigidbody>().mass = 0f;
             coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
             // Fill parts lists needed for other scripts
@@ -101,6 +102,8 @@ public class VehicleEditor : MonoBehaviour
                 if (vehiclePart.useDirectionIndicator)
                     vehiclePart.ToggleDirectionIndicator(false);
             }
+            EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
+            EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
             coreBlock.GetComponent<VehicleStats>().enabled = true;
@@ -118,7 +121,9 @@ public class VehicleEditor : MonoBehaviour
             }
             PartSelectionManager._instance.crossHair.SetActive(false);
 
-            partGrid.ToggleTempBoundingBox(false);
+            //partGrid.ToggleTempBoundingBox(false);
+
+            RestartText.text = "Restart";
 
             playerInput.SwitchCurrentActionMap("Player");
         }
@@ -146,13 +151,15 @@ public class VehicleEditor : MonoBehaviour
             mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
             BoundingBox.SetActive(true);
-            partGrid.ToggleTempBoundingBox(true);
+            //partGrid.ToggleTempBoundingBox(true);
 
             PartSelectionManager._instance.ClosePartSelectionUI();
             ChangeActiveBuildState();
             PartSelectionManager._instance.crossHair.SetActive(false);
 
             playan = false;
+
+            RestartText.text = "Discard";
 
             playerInput.SwitchCurrentActionMap("UI");
         }
@@ -168,7 +175,6 @@ public class VehicleEditor : MonoBehaviour
                 if (context.action.name == "PlaceClick" && context.performed)
                 {
                     PlaceSelectedPart(hit);
-                    
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
                 {
@@ -188,7 +194,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePart(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed)
+        if (!playan && context.performed &&!previewedPart.name.Contains("Wheel"))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
@@ -197,7 +203,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed)
+        if (!playan && context.performed && !previewedPart.name.Contains("Wheel"))
         {
             if (vCount == 2)
             {
@@ -219,13 +225,9 @@ public class VehicleEditor : MonoBehaviour
 
     void PlaceSelectedPart(RaycastHit hit)
     {
-        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
-        {
-            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
-        }
+        Vector3Int pos= GetLocalPosition(hit);
 
-        if (partGrid.CheckIfInBounds(pos))//check if the position the part would be placed in is in grid bounds
+        if (CheckCorrectPlacement(hit))//check if the position the part would be placed in is in grid bounds
         {
             GameObject placedPart;
 
@@ -257,6 +259,35 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    private Vector3Int GetLocalPosition(RaycastHit hit)
+    {
+        Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
+        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
+        {
+            pos += Vector3Int.RoundToInt(hit.transform.localPosition);
+        }
+        return pos;
+    }
+
+    /// <summary>
+    /// Check if the part has attachmentPoints available and is in bounds off the boundingbox.
+    /// </summary>
+    /// <param name="pos"></param>
+    private bool CheckCorrectPlacement(RaycastHit hit)
+    {
+        Vector3Int localposition = GetLocalPosition(hit);
+        Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
+        if (partGrid.CheckIfInBounds(localposition) && hit.transform.GetComponent<Part>().CheckCorrectSide(hitNormal) 
+            && previewedPart.transform.GetComponent<Part>().CheckCorrectSide(-hitNormal))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// detaches all parts from hit part and destroys the object.
     /// </summary>
@@ -281,16 +312,12 @@ public class VehicleEditor : MonoBehaviour
     {
         previewedPart.SetActive(true);
 
-        Vector3Int newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        newPos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
-        if (hit.transform.parent != null)//the coreblock has no parent and, localPosition of an orphan gameObject would return it's world position. 
-        {
-            newPos += Vector3Int.RoundToInt(hit.transform.localPosition);
-        }
+        Vector3Int newPos = GetLocalPosition(hit);
+
         previewedPart.transform.localPosition = newPos;
         previewedPart.transform.localRotation = partRotation;
 
-        if (partGrid.CheckIfInBounds(newPos))
+        if (CheckCorrectPlacement(hit))
         {
             previewedPart.transform.localScale = Vector3.one;
         }
@@ -327,16 +354,19 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
-    private void CreateBoundingBox()
+    public void CreateBoundingBox()
     {
         BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
         BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
-        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f,
-                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.75f,
-                                                    coreBlock.transform.position.z - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
+        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
+                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH,
+                                                    coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
     }
 
-
+    public void ResetPreviewRotation()
+    {
+        partRotation.eulerAngles = Vector3.zero;
+    }
 
     /// <summary>
     /// send a raycast from the mouse position 

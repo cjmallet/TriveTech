@@ -17,8 +17,8 @@ public class PartGrid : MonoBehaviour
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
         coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
         partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
-        tempBox = Instantiate(cubePrefab, this.transform);
-        ToggleTempBoundingBox(true);
+
+        InstantiateBoundingBoxWithGridSize();
     }
 
     public void AddPartToGrid(Part partToAdd, Vector3Int relativePos)
@@ -44,7 +44,6 @@ public class PartGrid : MonoBehaviour
         else
         {
             Debug.LogError("INDEX OUT OF BOUNDS");
-
         }
     }
 
@@ -124,6 +123,71 @@ public class PartGrid : MonoBehaviour
         return allParts;
     }
 
+    public void RemovePart(Vector3Int partPosition)
+    {
+        MovementPart vehicleMove= partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z].GetComponent<MovementPart>();
+        if (vehicleMove != null)
+        {
+            vehicleMove.SwitchColliders();
+        }
+        partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
+    }
+
+    /// <summary>
+    /// Checks if any block is not connected to the vehicle through an list of all parts
+    /// which is checked by the floodfill algorithm
+    /// </summary>
+    public void CheckConnection()
+    {
+        FloodFill();
+        List<Part> allParts = ReturnAllParts();
+
+        foreach (Part part in allParts)
+        {
+            if (!part.floodFilled)
+            {
+                part.RemovePart(false);
+            }
+            else
+            {
+                part.floodFilled = false;
+            }
+        }
+    }
+
+    /// <summary>
+    /// The floodfill algorithm checks each neighbour and turns the floodfill boolean to true
+    /// if it is still connected to the coreblock. Works like the paint bucket tool.
+    /// </summary>
+    private void FloodFill()
+    {
+        Queue<Part> partsToCheck = new Queue<Part>();
+        List<Part> neighboursCoreBlock= partGrid[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z].attachedParts;
+
+        foreach (Part neighbour in neighboursCoreBlock)
+        {
+            if (neighbour!=null)
+            {
+                neighbour.floodFilled = true;
+                partsToCheck.Enqueue(neighbour);
+            }
+        }
+
+        while (partsToCheck.Count>0)
+        {
+            List<Part> neighbours = partsToCheck.Dequeue().attachedParts;
+
+            foreach (Part neighbour in neighbours)
+            {
+                if (neighbour!=null&&!neighbour.floodFilled)
+                {
+                    neighbour.floodFilled = true;
+                    partsToCheck.Enqueue(neighbour);
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Moves the vehicle over the grid. Can take multiple axes at once, as long as they're 1 or -1
     /// </summary>
@@ -156,7 +220,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.x += movement.x;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.x == -1)
@@ -181,7 +245,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.x += movement.x;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             if (movement.y == 1)
@@ -206,7 +270,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.y += movement.y;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.y == -1)
@@ -231,7 +295,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.y += movement.y;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             if (movement.z == 1)
@@ -256,7 +320,7 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.z += movement.z;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
             else if (movement.z == -1)
@@ -281,24 +345,35 @@ public class PartGrid : MonoBehaviour
                     }
                 }
                 coreBlockIndex.z += movement.z;
-                ToggleTempBoundingBox(true);
+                //ToggleTempBoundingBox(true);
             LoopEnd:;
             }
         }
     }
 
-    public void ToggleTempBoundingBox(bool active)
+    //public void ToggleTempBoundingBox(bool active)
+    //{
+    //    if (active)
+    //    {
+    //        tempBox.SetActive(true);
+    //        tempBox.transform.localPosition = new Vector3(gridDimensions.x * 0.5f - 0.5f, gridDimensions.y * 0.5f - 0.5f, gridDimensions.z * 0.5f - 0.5f) - coreBlockIndex;
+    //        tempBox.transform.localScale = gridDimensions;
+    //    }
+    //    else
+    //    {
+    //        tempBox.SetActive(false);
+    //    }
+    //}
+
+    public void InstantiateBoundingBoxWithGridSize()
     {
-        if (active)
-        {
-            tempBox.SetActive(true);
-            tempBox.transform.localPosition = new Vector3(gridDimensions.x * 0.5f - 0.5f, gridDimensions.y * 0.5f - 0.5f, gridDimensions.z * 0.5f - 0.5f) - coreBlockIndex;
-            tempBox.transform.localScale = gridDimensions;
-        }
-        else
-        {
-            tempBox.SetActive(false);
-        }
+        GameObject boundingBoxAndArrow = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
+
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxW = gridDimensions.x;
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxH = gridDimensions.y;
+        boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxL = gridDimensions.z;
+
+        VehicleEditor._instance.CreateBoundingBox();
     }
 
     public void ChangeGridSize(Vector3Int newDimensions)

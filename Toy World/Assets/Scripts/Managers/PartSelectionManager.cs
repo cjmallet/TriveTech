@@ -106,7 +106,16 @@ public class PartSelectionManager : MonoBehaviour
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
         newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-        newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+
+        if (part.name == "Wheel")
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); 
+                VehicleEditor._instance.ChangeActiveBuildState(); VehicleEditor._instance.ResetPreviewRotation();});
+        }
+        else
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+        }
     }
 
     public void BuildButton(InputAction.CallbackContext context)

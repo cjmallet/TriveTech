@@ -66,12 +66,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attachablePoints: 000000010000
   health: 5
-  weight: 0.1
-  useDirectionIndicator: 1
-  actionType: 2
-  specificActionType: 0
-  lightBulb: {fileID: 8180325155698316892}
+  weight: 2
+  useDirectionIndicator: 0
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,4 +34,9 @@ public class WheelPart : MovementPart
         visualWheel.transform.position = wheelPosition;
         visualWheel.transform.rotation = wheelRotation;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("yes");
+    }
 }
