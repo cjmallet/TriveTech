@@ -424,6 +424,7 @@ MonoBehaviour:
   attachablePoints: 000001000000
   health: 10
   weight: 10
+  floodFilled: 0
   useDirectionIndicator: 1
   maxTorgue: 100
 --- !u!65 &5847884760756425979

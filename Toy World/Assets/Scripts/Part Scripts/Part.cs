@@ -19,6 +19,8 @@ public abstract class Part : MonoBehaviour
     public int Width { get; }
     public int Height { get; }
 
+    [HideInInspector] public bool floodFilled;
+
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
@@ -49,8 +51,14 @@ public abstract class Part : MonoBehaviour
     /// <param name="side">Side that's connecting.</param>
     public void AttachPart(Part partToAttachTo, Vector3 hitNormal)
     {
-        attachedParts[(int)DetermineSide(-hitNormal)] = partToAttachTo;
-        partToAttachTo.attachedParts[(int)partToAttachTo.DetermineSide(hitNormal)] = this;
+        int side = (int)DetermineSide(-hitNormal);
+        int sideOpposite = (int)partToAttachTo.DetermineSide(hitNormal);
+
+        if (partToAttachTo.attachablePoints[sideOpposite] && attachablePoints[side])
+        {
+            attachedParts[side] = partToAttachTo;
+            partToAttachTo.attachedParts[sideOpposite] = this;
+        }
     }
 
     public enum Orientation : int
@@ -125,7 +133,8 @@ public abstract class Part : MonoBehaviour
         if (collider.name.Contains("Enemy") || collider.name.Contains("Projectile"))
         {
             TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
-            Destroy(collider.gameObject);
+
+            Debug.Log(transform.name);
         }
     }
 
@@ -139,8 +148,40 @@ public abstract class Part : MonoBehaviour
         else
         {
             this.health = 0;
-            Debug.Log(gameObject.name + " has been destroyed!");
+            RemovePart(true);
         }
+    }
+
+    public void RemovePart(bool start)
+    {
+        for (int x = 0; x < attachedParts.Count; x++)
+        {
+            if (attachedParts[x] != null)
+            {
+                if (x % 2 == 0)
+                {
+                    attachedParts[x].attachedParts[x + 1] = null;
+                    attachedParts[x] = null;
+                }
+                else
+                {
+                    attachedParts[x].attachedParts[x - 1] = null;
+                    attachedParts[x] = null;
+                }
+            }
+        }
+
+        transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+
+        if (!transform.CompareTag("CoreBlock")&&start)
+        {
+            transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
+            start = !start;
+        }
+
+        transform.parent = null;
+        gameObject.AddComponent<Rigidbody>();
+        Destroy(gameObject.GetComponent<Part>());
     }
 
     private void OnDrawGizmos()

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class FPSCameraControllers : MonoBehaviour
 {
-    class CameraState
+    public class CameraState
     {
         public float yaw;
         public float pitch;
@@ -59,8 +59,8 @@ public class FPSCameraControllers : MonoBehaviour
     public static bool canRotate = false;
     const float k_MouseSensitivityMultiplier = 0.01f;
 
-    CameraState m_TargetCameraState = new CameraState();
-    CameraState m_InterpolatingCameraState = new CameraState();
+    [HideInInspector] public CameraState m_TargetCameraState = new CameraState();
+    [HideInInspector] public CameraState m_InterpolatingCameraState = new CameraState();
 
     [Header("Movement Settings")]
     [Tooltip("Speed of the player character"), Range(3f, 20f)]
@@ -112,12 +112,14 @@ public class FPSCameraControllers : MonoBehaviour
 
         m_TargetCameraState.Translate(translation, gameObject.transform);
 
+        //Debug.Log("main camera position: " + gameObject.transform.position + "          main camera rotation: " + gameObject.transform.rotation);
+
         // Framerate-independent interpolation
         // Calculate the lerp amount, such that we get 99% of the way to our target in the specified time
         var positionLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / mouseSensitivity) * Time.deltaTime);
         var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
-        m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
 
+        m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
         m_InterpolatingCameraState.UpdateTransform(transform);
     }
 
