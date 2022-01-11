@@ -71,6 +71,10 @@ public class ActivatePartActions : MonoBehaviour
         {
             switch (utilityPart.actionType)
             {
+                // Utility parts with no action are set to default
+                case UtilityPart.ActionType.None:
+                    utilityPart.specificActionType = UtilityPart.SpecificActionType.Default;
+                    break;
                 // Sprint utility remains a sprint utility
                 case UtilityPart.ActionType.Sprint:
                     utilityPart.specificActionType = UtilityPart.SpecificActionType.Sprint;

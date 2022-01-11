@@ -14,7 +14,7 @@ public class UtilityPart : Part
     public bool DoAction { get; set; }
 
     // Action type you can adjust per part in inspector/prefab
-    public enum ActionType { Sprint, Jump, Utility }
+    public enum ActionType { Sprint, Jump, Utility, None }
     public ActionType actionType;
 
     // Actual action type given in runtime to determine which input slot a utility action responds to

@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class BoostPart : UtilityPart
 {
+    const int FORCE_MULTIPLIER = 15000;
+
     [SerializeField]
     private int rechargeDurationSeconds;
     private float rechargeTimer = 0;
@@ -69,7 +71,7 @@ public class BoostPart : UtilityPart
             boostParticles.Play();
 
         transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
-            -15000 * boostStrenght * transform.forward, transform.position, ForceMode.Force);
+            -FORCE_MULTIPLIER * boostStrenght * transform.forward, transform.position, ForceMode.Force);
     }
 
     /// <summary>
