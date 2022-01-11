@@ -147,7 +147,7 @@ public abstract class Part : MonoBehaviour
     {
         for (int i = 0; i < attachablePoints.Count; i++)
         {
-            if(attachedParts[i] != null)
+            if(attachedParts[i] == null)
             {
                 if (attachablePoints[i]) { Gizmos.color = Color.green; }
                 else { Gizmos.color = Color.red; }
