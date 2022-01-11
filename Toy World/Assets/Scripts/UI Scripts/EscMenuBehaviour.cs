@@ -66,7 +66,10 @@ public class EscMenuBehaviour : MonoBehaviour
             Camera.main.transform.rotation = buildCameraRotationStart;
 
             Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_TargetCameraState.SetFromTransform(Camera.main.transform);
-            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);            
+            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
+
+            // Reset part actions
+            coreBlock.GetComponent<ActivatePartActions>().ResetAllActions();
         }
         else
         {

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class BoostPart : UtilityPart
 {
-    const int FORCE_MULTIPLIER = 15000;
+    const int FORCE_MULTIPLIER = 1500;
 
     [SerializeField]
     private int rechargeDurationSeconds;
@@ -22,6 +22,8 @@ public class BoostPart : UtilityPart
     [SerializeField] [Range(0,3)]
     private float boostStrenght;
 
+    private bool restart = false;
+
     private void FixedUpdate()
     {
         // Timer to check if booster can be used again
@@ -33,7 +35,8 @@ public class BoostPart : UtilityPart
         else if (!boostIsReady)
         {
             boostIsReady = true;
-            StartCoroutine(BoostReadyIndication());
+            if(!restart)
+                StartCoroutine(BoostReadyIndication());
         }
 
         // Applies boost each frame while boost timer is still running,
@@ -47,6 +50,8 @@ public class BoostPart : UtilityPart
                 DoAction = false;
                 StopBoost();
             }
+            if (restart)
+                restart = false;
         }
     }
 
@@ -85,6 +90,16 @@ public class BoostPart : UtilityPart
         boostParticles.Stop();
         boostTimer = boostDurationSeconds;
         rechargeTimer = rechargeDurationSeconds;
+    }
+
+    /// <summary>
+    /// Reset the booster values like it's used for the first time
+    /// </summary>
+    public override void ResetAction()
+    {
+        boostTimer = boostDurationSeconds;
+        rechargeTimer = 0;
+        restart = true;
     }
 
     /// <summary>

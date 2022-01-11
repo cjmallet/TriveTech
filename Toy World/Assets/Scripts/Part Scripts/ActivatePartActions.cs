@@ -60,6 +60,26 @@ public class ActivatePartActions : MonoBehaviour
     }
 
     /// <summary>
+    /// Resets all actions to be used as of they are used for the first time.
+    /// Used for after resetting level.
+    /// </summary>
+    public void ResetAllActions()
+    {
+        foreach (OffensivePart part in allOffensiveParts)
+        {
+            part.ResetAction();
+        }
+        foreach (DefensivePart part in allDefensiveParts)
+        {
+            part.ResetAction();
+        }
+        foreach (UtilityPart part in allUtilityParts)
+        {
+            part.ResetAction();
+        }
+    }
+
+    /// <summary>
     /// Set specific utility action input slots for all utility parts on the vehicle
     /// </summary>
     public void SetSpecificActionType()

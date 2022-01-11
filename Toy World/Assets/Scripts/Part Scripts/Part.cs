@@ -184,6 +184,14 @@ public abstract class Part : MonoBehaviour
         Destroy(gameObject.GetComponent<Part>());
     }
 
+    /// <summary>
+    /// Function to reset part action values (called in ActivatePartActions)
+    /// </summary>
+    public virtual void ResetAction()
+    {
+
+    }
+
     private void OnDrawGizmos()
     {
         for (int i = 0; i < attachablePoints.Count; i++)
