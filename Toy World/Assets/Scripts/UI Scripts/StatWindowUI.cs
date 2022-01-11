@@ -31,6 +31,27 @@ public class StatWindowUI : MonoBehaviour
         }
     }
 
+    public void UpdateStats(Part updatedPart, bool removed)
+    {
+        if (updatedPart is MovementPart && !removed)
+            currentTorque += (int)updatedPart.GetComponent<MovementPart>().maxTorgue;
+        else if (updatedPart is MovementPart && removed)
+            currentTorque -= (int)updatedPart.GetComponent<MovementPart>().maxTorgue;
+
+        if (!removed)
+            currentWeight += (int)updatedPart.weight;
+        else
+            currentWeight -= (int)updatedPart.weight;
+
+        foreach (Transform child in transform)
+        {
+            if (child.childCount > 0) // Only children with children
+            {
+                SetStat(child.gameObject);
+            }
+        }
+    }
+
     private void SetStat(GameObject stat)
     {
         Image image = stat.transform.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -52,7 +73,7 @@ public class StatWindowUI : MonoBehaviour
             case "TopSpeed":
                 float power = (currentTorque * 600f / 9.5488f);
                 float kmh = (power / currentWeight / 9.81f) * 3.6f;
-                image.color = speedGradient.Evaluate(kmh / 100);
+                image.color = speedGradient.Evaluate(kmh / 200);
                 text.text = kmh.ToString() + " km/h";
                 break;
             default:

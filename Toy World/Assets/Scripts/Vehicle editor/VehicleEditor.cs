@@ -240,6 +240,11 @@ public class VehicleEditor : MonoBehaviour
     {
         Vector3Int pos= GetLocalPosition(hit);
 
+        if (statWindow == null)
+        {
+            statWindow = GameObject.Find("StatWindow");            
+        }
+
         if (CheckCorrectPlacement(hit))//check if the position the part would be placed in is in grid bounds
         {
             GameObject placedPart;
@@ -248,6 +253,8 @@ public class VehicleEditor : MonoBehaviour
                 placedPart = Instantiate(selectedPart, coreBlock.transform.GetChild(0).transform);
             else
                 placedPart = Instantiate(selectedPart, coreBlock.transform);
+
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(placedPart.GetComponent<Part>(), false);
 
             placedPart.transform.localPosition = pos;
             placedPart.transform.localRotation = partRotation;
@@ -317,6 +324,9 @@ public class VehicleEditor : MonoBehaviour
                 }
             }
             partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(hit.transform.localPosition));
+
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(hit.transform.gameObject.GetComponent<Part>(), true);
+
             Destroy(hit.transform.gameObject);
         }
     }
