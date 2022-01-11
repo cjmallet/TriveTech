@@ -76,10 +76,13 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.GetComponent<Rigidbody>().mass = 0f;
             coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
-            // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
+            // Fill parts lists needed for other scripts
             List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
             coreBlock.GetComponent<VehicleStats>().allParts = parts;
+            coreBlock.GetComponent<ActivatePartActions>().allParts = parts;
+            coreBlock.GetComponent<ActivatePartActions>().CategorizePartsInList();
+            coreBlock.GetComponent<ActivatePartActions>().SetSpecificActionType();
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -104,6 +107,7 @@ public class VehicleEditor : MonoBehaviour
 
             coreBlock.GetComponent<VehicleMovement>().enabled = true;
             coreBlock.GetComponent<VehicleStats>().enabled = true;
+            coreBlock.GetComponent<ActivatePartActions>().enabled = true;
             mainCam.gameObject.SetActive(false);
             vehicleCam.enabled = true;
             playan = true;
@@ -140,6 +144,7 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
             coreBlock.GetComponent<VehicleMovement>().enabled = false;
             coreBlock.GetComponent<VehicleStats>().enabled = false;
+            coreBlock.GetComponent<ActivatePartActions>().enabled = false;
             Destroy(coreBlock.GetComponent<Rigidbody>());
             coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             vehicleCam.enabled = false;

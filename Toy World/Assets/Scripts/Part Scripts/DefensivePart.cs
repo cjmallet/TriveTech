@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OffensivePart : Part
+public class DefensivePart : Part
 {
     // Start is called before the first frame update
     void Start()
@@ -15,8 +15,7 @@ public class OffensivePart : Part
     {
         
     }
-
-    public virtual void AttackAction()
+    public virtual void DefenceAction()
     {
 
     }
