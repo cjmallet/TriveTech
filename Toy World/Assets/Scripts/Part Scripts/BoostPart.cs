@@ -97,6 +97,7 @@ public class BoostPart : UtilityPart
     /// </summary>
     public override void ResetAction()
     {
+        boostParticles.Stop();
         boostTimer = boostDurationSeconds;
         rechargeTimer = 0;
         restart = true;

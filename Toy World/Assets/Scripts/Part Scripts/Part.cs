@@ -181,6 +181,7 @@ public abstract class Part : MonoBehaviour
 
         transform.parent = null;
         gameObject.AddComponent<Rigidbody>();
+        gameObject.GetComponent<Part>().ResetAction();
         Destroy(gameObject.GetComponent<Part>());
     }
 
