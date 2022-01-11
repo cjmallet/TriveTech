@@ -144,7 +144,7 @@ public class ActivatePartActions : MonoBehaviour
             ActivateAttackActions();
     }
 
-    public void UseDefenceAction(InputAction.CallbackContext value)
+    public void UseDefenseAction(InputAction.CallbackContext value)
     {
         if (value.started)
             ActivateDefenseActions();
