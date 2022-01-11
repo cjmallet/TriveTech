@@ -30,9 +30,10 @@ public class BoostPart : UtilityPart
             rechargeTimer -= Time.deltaTime;
             boostIsReady = false;
         }
-        else
+        else if (!boostIsReady)
         {
             boostIsReady = true;
+            StartCoroutine(BoostReadyIndication());
         }
 
         // Applies boost each frame while boost timer is still running,
@@ -84,5 +85,16 @@ public class BoostPart : UtilityPart
         boostParticles.Stop();
         boostTimer = boostDurationSeconds;
         rechargeTimer = rechargeDurationSeconds;
+    }
+
+    /// <summary>
+    /// Short particle effect indication to show boost is recharged
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator BoostReadyIndication()
+    {
+        boostParticles.Play();
+        yield return new WaitForSeconds(0.2f);
+        boostParticles.Stop();
     }
 }
