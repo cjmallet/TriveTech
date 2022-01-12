@@ -18,6 +18,7 @@ public class DestructibleObject : MonoBehaviour
             if (collision.GetComponent<OffensivePart>() != null&&rb.velocity.magnitude>=lowDestructionSpeed)
             {
                 rb.velocity *= 0.9f;
+                collision.GetComponent<Part>().TakeDamage(1, collision);
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
 
@@ -26,6 +27,7 @@ public class DestructibleObject : MonoBehaviour
             else if (collision.GetComponent<OffensivePart>()==null &&rb.velocity.magnitude>= highDestructionSpeed)
             {
                 rb.velocity *= 0.5f;
+                collision.GetComponent<Part>().TakeDamage(3,collision);
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
 
