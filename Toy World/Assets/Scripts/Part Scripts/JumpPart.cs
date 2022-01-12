@@ -61,7 +61,7 @@ public class JumpPart : UtilityPart
     private void Jump()
     {
         transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
-            -FORCE_MULTIPLIER * jumpStrenght * transform.forward, transform.position, ForceMode.Impulse);
+            FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
         rechargeTimer = rechargeDurationSeconds;
     }
 
