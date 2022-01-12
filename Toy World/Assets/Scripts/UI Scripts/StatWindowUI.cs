@@ -71,7 +71,7 @@ public class StatWindowUI : MonoBehaviour
                 text.text = currentTorque.ToString() + " nm";
                 break;
             case "TopSpeed":
-                float power = (currentTorque * 600f / 9.5488f);
+                float power = (currentTorque * 360f / 9.5488f); // torque * rpm * ?
                 float kmh = (power / currentWeight / 9.81f) * 3.6f;
                 image.color = speedGradient.Evaluate(kmh / 200);
                 text.text = kmh.ToString() + " km/h";

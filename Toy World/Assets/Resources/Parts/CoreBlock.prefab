@@ -182,12 +182,12 @@ GameObject:
   - component: {fileID: 3459073008343866995}
   - component: {fileID: 2864444615148423900}
   - component: {fileID: 120727273}
-  - component: {fileID: 120727279}
   - component: {fileID: 7172637307124276367}
   - component: {fileID: 2456488435736434707}
+  - component: {fileID: 2864444613395339373}
   m_Layer: 3
   m_Name: CoreBlock
-  m_TagString: Untagged
+  m_TagString: CoreBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -287,51 +287,6 @@ MonoBehaviour:
   allParts: []
   wheelInfos: []
   maxSteeringAngle: 30
---- !u!114 &120727279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3099009681357930406}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 405aa8981dbb435409d16b96a7b48a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allParts: []
-  playerUI: {fileID: 0}
-  healthBar: {fileID: 0}
-  healthText: {fileID: 0}
-  healthGradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 0, b: 0, a: 1}
-    key1: {r: 1, g: 0.9861111, b: 0, a: 1}
-    key2: {r: 0.21765637, g: 1, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 32768
-    ctime2: 65535
-    ctime3: 48380
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_NumColorKeys: 3
-    m_NumAlphaKeys: 2
 --- !u!114 &7172637307124276367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +309,7 @@ MonoBehaviour:
   attachablePoints: 010101010101
   health: 10
   weight: 10
+  floodFilled: 0
   useDirectionIndicator: 0
 --- !u!114 &2456488435736434707
 MonoBehaviour:
@@ -371,3 +327,16 @@ MonoBehaviour:
   gridDimensions: {x: 15, y: 11, z: 15}
   coreBlockIndex: {x: 0, y: 0, z: 0}
   cubePrefab: {fileID: 8489225857888346534, guid: 2cc79ad617e394f469f4b1dde3791e4f, type: 3}
+--- !u!114 &2864444613395339373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099009681357930406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4714b7d9dd323e24eb6a249b4d7e9dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allParts: []
