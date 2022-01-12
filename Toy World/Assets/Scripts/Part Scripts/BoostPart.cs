@@ -20,7 +20,7 @@ public class BoostPart : UtilityPart
     private ParticleSystem boostParticles;
 
     [SerializeField] [Range(0,3)]
-    private float boostStrenght;
+    public float boostStrenght;
 
     private bool restart = false;
 
