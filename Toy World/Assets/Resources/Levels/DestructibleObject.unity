@@ -2271,7 +2271,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 460126035598759074, guid: 3adb92af8e26c984196c87e0d5e37937, type: 3}
-  destructionSpeed: 3
+  highDestructionSpeed: 3
+  lowDestructionSpeed: 1
   collideBox: {fileID: 794529439}
 --- !u!65 &794529439
 BoxCollider:

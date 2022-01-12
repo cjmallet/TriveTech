@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestructibleObject : MonoBehaviour
 {
     [SerializeField] private GameObject particles;
-    [SerializeField] private int destructionSpeed;
+    [SerializeField] private int highDestructionSpeed,lowDestructionSpeed;
     [SerializeField] private BoxCollider collideBox;
     private bool collided;
 
@@ -15,10 +15,20 @@ public class DestructibleObject : MonoBehaviour
         {
             Rigidbody rb = collision.transform.GetComponentInParent<Rigidbody>();
 
-            if (rb.velocity.magnitude>=destructionSpeed)
+            if (collision.GetComponent<OffensivePart>() != null&&rb.velocity.magnitude>=lowDestructionSpeed)
             {
+                rb.velocity *= 0.9f;
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
+
+                collided = !collided;
+            }
+            else if (collision.GetComponent<OffensivePart>()==null &&rb.velocity.magnitude>= highDestructionSpeed)
+            {
+                rb.velocity *= 0.5f;
+                Instantiate(particles, transform.position, transform.rotation);
+                Destroy(transform.gameObject);
+
                 collided = !collided;
             }
             else
