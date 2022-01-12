@@ -21,6 +21,7 @@ public class PartSelectionManager : MonoBehaviour
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
     public GameObject crossHair;
+    public GameObject popupWindow, statUI;
 
     //All lists for the UI categories
     private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
@@ -131,14 +132,89 @@ public class PartSelectionManager : MonoBehaviour
         }
     }
 
-    public void OnHoverOverButton(GameObject part, PointerEventData data)
+    public void OnHoverOverButton(GameObject partObject, PointerEventData data)
     {
-        Debug.Log(data.position);
+        Part part = partObject.GetComponent<Part>();
+
+        popupWindow.transform.position = data.position;
+
+        if (part is MovementPart)
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                    case 3:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Torque: " + part.GetComponent<MovementPart>().maxTorgue;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        else if (part is BoostPart) // Im aware this is double, but that's because more stats might be added.
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                    case 3:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Boost pwr: " + part.GetComponent<BoostPart>().boostStrenght;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            for (int i = 1; i < 3; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        
+        if (!popupWindow.activeSelf)
+            popupWindow.SetActive(true);
     }
 
     public void OnHoverExitButton(GameObject part, PointerEventData data)
     {
-        Debug.Log(data.position);
+        for (int i = 1; i < popupWindow.transform.childCount; i++)
+        {
+            popupWindow.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        if (popupWindow.activeSelf)
+            popupWindow.SetActive(false);
     }
 
     public void BuildButton(InputAction.CallbackContext context)
