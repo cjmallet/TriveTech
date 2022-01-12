@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class JumpPart : UtilityPart
 {
-    const int FORCE_MULTIPLIER = 1500;
+    const int FORCE_MULTIPLIER = 1000;
 
     [SerializeField]
     private int rechargeDurationSeconds;
@@ -60,9 +60,13 @@ public class JumpPart : UtilityPart
     /// </summary>
     private void Jump()
     {
-        transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
+        RaycastHit surfaceHit;
+        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.6f))
+        {
+            transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
-        rechargeTimer = rechargeDurationSeconds;
+            rechargeTimer = rechargeDurationSeconds;
+        }
     }
 
     /// <summary>
