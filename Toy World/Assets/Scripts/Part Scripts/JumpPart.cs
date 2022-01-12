@@ -15,6 +15,8 @@ public class JumpPart : UtilityPart
     [SerializeField] [Range(0,3)]
     private float jumpStrenght;
 
+    public bool PlayAnimation { get; set; }
+
     private bool restart = false;
 
     private void FixedUpdate()
@@ -37,10 +39,14 @@ public class JumpPart : UtilityPart
         if (DoAction)
         {
             Jump();
+            PlayAnimation = true;
             DoAction = false;
             if (restart)
                 restart = false;
         }
+
+        if (PlayAnimation)
+            JumpAnimation();
     }
 
     /// <summary>
@@ -63,12 +69,17 @@ public class JumpPart : UtilityPart
         int layermask = 1 << 3;
         layermask = ~layermask;
         RaycastHit surfaceHit;
-        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.6f, ~(1 << 3)))
+        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.7f, layermask))
         {
             transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
             rechargeTimer = rechargeDurationSeconds;
         }
+    }
+
+    public virtual void JumpAnimation()
+    {
+
     }
 
     /// <summary>
