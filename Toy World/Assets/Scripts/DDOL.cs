@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Use this to keep references of stuff along different scenes
+/// Holds an instance of the coreblock throughout scenes so the player's build doesn't get lost through scene transitions
 /// </summary>
 public class DDOL : MonoBehaviour
 {
@@ -28,11 +28,17 @@ public class DDOL : MonoBehaviour
     void Awake()
     {
         //set the static instance
-        if (_instance == null) { _instance = this; }
+        if (_instance == null) 
+        { 
+            _instance = this;
+            DontDestroyOnLoad(this);
+
+            InstantiatePersistentObjects();
+            DontDestroyOnLoad(_p1Coreblock);
+        }
         else { Destroy(this); }
 
-        DontDestroyOnLoad(this);
-        InstantiatePersistentObjects();
+        
     }
 
     private void InstantiatePersistentObjects()

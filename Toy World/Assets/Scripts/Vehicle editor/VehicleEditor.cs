@@ -13,6 +13,8 @@ using TMPro;
 
 public class VehicleEditor : MonoBehaviour
 {
+
+    GameObject BoundingBox;
     private static VehicleEditor instance;
     public static VehicleEditor _instance
     {
@@ -23,12 +25,10 @@ public class VehicleEditor : MonoBehaviour
     }
 
     public Quaternion partRotation;
-    [SerializeField] private GameObject coreBlock;
+    [SerializeField] private GameObject coreBlock, coreBlockPlayMode;
     [SerializeField] private GameObject selectedPart;
     private PartGrid partGrid;
 
-    private GameObject BoundingBoxPrefab;
-    private GameObject BoundingBox;
 
     private GameObject previewedPart;
     public bool playan, buildUIOpen = true;
@@ -53,7 +53,8 @@ public class VehicleEditor : MonoBehaviour
 
     void Start()
     {
-        coreBlock = DDOL.Instance.P1Coreblock;//set to whatever coreblock you're editing
+        coreBlock = DDOL.Instance.P1Coreblock;
+        coreBlock.SetActive(true);
         partGrid = coreBlock.GetComponent<PartGrid>();
         playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
@@ -68,18 +69,25 @@ public class VehicleEditor : MonoBehaviour
     {
         if (!playan)
         {
+            
+            Destroy(previewedPart);
+            //make a copy of the coreblock for playmode
+            coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
+
             // Clear list of parts if it still has parts
-            if (coreBlock.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
-                coreBlock.GetComponent<VehicleMovement>().wheelInfos.Clear();
+            if (coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
+                coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
-            coreBlock.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlock.GetComponent<Rigidbody>().mass = 0f;
-            coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
+            coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
+            coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);
 
-            // De manier van het vullen van deze list moet uiteraard veranderd worden wanneer het Grid (3D vector) systeem er is.
-            List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
-            coreBlock.GetComponent<VehicleMovement>().allParts = parts;
-            coreBlock.GetComponent<VehicleStats>().allParts = parts;
+            List<Part> parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
+            coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
+            coreBlockPlayMode.GetComponent<VehicleStats>().allParts = parts;
+
+            coreBlockPlayMode.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            coreBlockPlayMode.GetComponent<Rigidbody>().mass = 0f;
+            coreBlockPlayMode.GetComponent<Rigidbody>().drag = 0.5f;
 
             // Remove direction indication
             foreach (Part vehiclePart in parts)
@@ -91,7 +99,7 @@ public class VehicleEditor : MonoBehaviour
                         vehiclePart.GetComponent<MovementPart>().frontPart = true;
                     else
                         vehiclePart.GetComponent<MovementPart>().frontPart = false;
-                    coreBlock.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
+                    coreBlockPlayMode.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
                     vehiclePart.GetComponent<MovementPart>().SwitchColliders();
                 }
 
@@ -102,13 +110,18 @@ public class VehicleEditor : MonoBehaviour
             EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
             EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
-            coreBlock.GetComponent<VehicleMovement>().enabled = true;
-            coreBlock.GetComponent<VehicleStats>().enabled = true;
+            
+
+            coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
+            coreBlockPlayMode.GetComponent<VehicleStats>().enabled = true;
             mainCam.gameObject.SetActive(false);
+            //grab vehiclecam again, because we have a new coreblock instance for playmode
+            vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
             vehicleCam.enabled = true;
             playan = true;
-            previewedPart.SetActive(false);
-            BoundingBox.SetActive(false);
+            
+            coreBlock.SetActive(false);//OG coreblock is disabled until back in build mode
+            
 
             if (buildUIOpen)
             {
@@ -125,6 +138,9 @@ public class VehicleEditor : MonoBehaviour
         }
         else if (playan)
         {
+            //coreBlockPlayMode.SetActive(false);
+
+            /* 
             List<Part> parts = FindObjectsOfType<Part>().ToList();
             foreach (Part part in parts)
             {
@@ -136,17 +152,21 @@ public class VehicleEditor : MonoBehaviour
                     part.GetComponent<MovementPart>().SwitchColliders();
                 }
             }
+            */
 
-            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
-            coreBlock.GetComponent<VehicleMovement>().enabled = false;
-            coreBlock.GetComponent<VehicleStats>().enabled = false;
-            Destroy(coreBlock.GetComponent<Rigidbody>());
-            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
+            //coreBlock.transform.position = coreBlockPlayMode.transform.position + new Vector3(0, 10, 0);
+            //coreBlock.GetComponent<VehicleMovement>().enabled = false;
+            //coreBlock.GetComponent<VehicleStats>().enabled = false;
+            //Destroy(coreBlock.GetComponent<Rigidbody>());
+            //coreBlock.transform.rotation = Quaternion.Euler(0, coreBlockPlayMode.transform.rotation.eulerAngles.y, 0);
+            //mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
+
+            SetSelectedPart(selectedPart);
             vehicleCam.enabled = false;
-            mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
             mainCam.gameObject.SetActive(true);
-            BoundingBox.SetActive(true);
-            //partGrid.ToggleTempBoundingBox(true);
+
+            coreBlock.SetActive(true);//reenable the original coreblock for editing
+            Destroy(coreBlockPlayMode);//get rid of the old one
 
             PartSelectionManager._instance.ClosePartSelectionUI();
             ChangeActiveBuildState();
@@ -173,7 +193,7 @@ public class VehicleEditor : MonoBehaviour
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
                 {
-                    DeleteSelectedPart(hit);
+                    DeleteSelectedPart(hit.transform);
                 }
                 else
                 {
@@ -270,9 +290,8 @@ public class VehicleEditor : MonoBehaviour
     /// <param name="pos"></param>
     private bool CheckPlacementValidity(RaycastHit hit)
     {
-        Vector3Int localposition = GetLocalPosition(hit);
         Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
-        if (partGrid.CheckIfInBounds(localposition) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal) 
+        if (partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal) 
             && previewedPart.transform.GetComponent<Part>().CheckIfAttachable(-hitNormal))
         {
             return true;
@@ -287,19 +306,27 @@ public class VehicleEditor : MonoBehaviour
     /// detaches all parts from hit part and destroys the object.
     /// </summary>
     /// <param name="hit">the part that is hit</param>
-    void DeleteSelectedPart(RaycastHit hit)
+    void DeleteSelectedPart(Transform partToDelete)
     {
-        if (hit.transform != coreBlock.transform)
+        if (partToDelete != coreBlock.transform)
         {
-            foreach (Part part in hit.transform.GetComponent<Part>().attachedParts)
+            foreach (Part part in partToDelete.GetComponent<Part>().attachedParts)
             {
                 if (part != null)
                 {
-                    part.attachedParts[part.attachedParts.IndexOf(hit.transform.GetComponent<Part>())] = null;
+                    part.attachedParts[part.attachedParts.IndexOf(partToDelete.GetComponent<Part>())] = null;
                 }
             }
-            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(hit.transform.localPosition));
-            Destroy(hit.transform.gameObject);
+            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
+            Destroy(partToDelete.gameObject);
+        }
+    }
+
+    public void DeleteAllParts()
+    {
+        foreach (Part part in coreBlock.GetComponentsInChildren<Part>())
+        {
+            DeleteSelectedPart(part.transform);
         }
     }
 
@@ -349,15 +376,16 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /*
     public void CreateBoundingBox()
     {
-        BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
+        GameObject BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
         BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
         BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
                                                     coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH,
                                                     coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
     }
-
+    */
     public void ResetPreviewRotation()
     {
         partRotation.eulerAngles = Vector3.zero;

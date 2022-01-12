@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
     {
         //set coreblock to spawn location
         DDOL.Instance.P1Coreblock.transform.SetPositionAndRotation(playerSpawn.transform.position, playerSpawn.transform.rotation);
+        DDOL.Instance.P1Coreblock.SetActive(true);
         panel = levelUI.transform.Find("Panel").gameObject;
         canvasText = levelUI.transform.Find("FinishText").gameObject;
         timerObject = levelUI.transform.Find("TimerObject").gameObject;
