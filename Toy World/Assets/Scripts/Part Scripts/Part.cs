@@ -37,7 +37,7 @@ public abstract class Part : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
         if (useDirectionIndicator)
             ShowFrontDirection();
@@ -181,7 +181,16 @@ public abstract class Part : MonoBehaviour
 
         transform.parent = null;
         gameObject.AddComponent<Rigidbody>();
+        gameObject.GetComponent<Part>().ResetAction();
         Destroy(gameObject.GetComponent<Part>());
+    }
+
+    /// <summary>
+    /// Function to reset part action values (called in ActivatePartActions)
+    /// </summary>
+    public virtual void ResetAction()
+    {
+
     }
 
     private void OnDrawGizmos()
