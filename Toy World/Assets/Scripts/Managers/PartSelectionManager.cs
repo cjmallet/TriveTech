@@ -29,7 +29,6 @@ public class PartSelectionManager : MonoBehaviour
     private int categoryIndex;
     private EventSystem eventSystem;
 
-
     private void Awake()
     {
         if (instance == null) { instance = this; }
@@ -107,6 +106,20 @@ public class PartSelectionManager : MonoBehaviour
         newButton.name = part.name;
         newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
 
+        EventTrigger trigger = newButton.AddComponent<EventTrigger>();
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry();
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
+        EventTrigger.Entry clickEvent = new EventTrigger.Entry();
+        enterEvent.eventID = EventTriggerType.PointerEnter;
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        clickEvent.eventID = EventTriggerType.PointerClick;
+        enterEvent.callback.AddListener((data) => { OnHoverOverButton(part, (PointerEventData)data); });
+        exitEvent.callback.AddListener((data) => { OnHoverExitButton(part, (PointerEventData)data); });
+        clickEvent.callback.AddListener((data) => { OnHoverExitButton(part, (PointerEventData)data); });
+        trigger.triggers.Add(enterEvent);
+        trigger.triggers.Add(exitEvent);
+        trigger.triggers.Add(clickEvent);
+
         if (part.name == "Wheel")
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); 
@@ -116,6 +129,16 @@ public class PartSelectionManager : MonoBehaviour
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
         }
+    }
+
+    public void OnHoverOverButton(GameObject part, PointerEventData data)
+    {
+        Debug.Log(data.position);
+    }
+
+    public void OnHoverExitButton(GameObject part, PointerEventData data)
+    {
+        Debug.Log(data.position);
     }
 
     public void BuildButton(InputAction.CallbackContext context)
