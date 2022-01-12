@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2303121294138833713}
   - component: {fileID: 2234404771200642732}
   - component: {fileID: 2460585486966863856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CubeHeadLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 8180325155683900320}
   - component: {fileID: 8180325155683900323}
   - component: {fileID: 8180325155683900322}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CubeFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 8180325155698316893}
   - component: {fileID: 8180325155698316891}
   - component: {fileID: 8180325155698316890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 8180325156343058528}
   - component: {fileID: 8180325156343058542}
   - component: {fileID: 8180325156343058529}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}

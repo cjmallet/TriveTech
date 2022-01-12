@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8194517040760034009}
   - component: {fileID: 8194517040760034014}
   - component: {fileID: 8194517040760034015}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CircleHeadLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8194517041491285175}
   - component: {fileID: 8194517041491285168}
   - component: {fileID: 8194517041491285169}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 8194517041968774285}
   - component: {fileID: 8194517041968774287}
   - component: {fileID: 8194517041968774284}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 8194517042181967631}
   - component: {fileID: 8194517042181967628}
   - component: {fileID: 3280167102585765312}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CircleHeadLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

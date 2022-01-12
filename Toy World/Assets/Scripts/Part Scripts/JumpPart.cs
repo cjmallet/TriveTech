@@ -60,8 +60,10 @@ public class JumpPart : UtilityPart
     /// </summary>
     private void Jump()
     {
+        int layermask = 1 << 3;
+        layermask = ~layermask;
         RaycastHit surfaceHit;
-        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.6f))
+        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.6f, ~(1 << 3)))
         {
             transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
