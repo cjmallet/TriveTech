@@ -29,7 +29,7 @@ public class ShootingEnemy : MonoBehaviour
         {
             GameObject spawnedProjectile= Instantiate(projectile, projectileSpawnPoint.transform.position,projectileSpawnPoint.transform.rotation);
             Vector3 direction = (target.transform.position- spawnedProjectile.transform.position).normalized;
-            spawnedProjectile.GetComponent<Rigidbody>().AddForce(direction*speedModifier);
+            spawnedProjectile.GetComponent<Rigidbody>().AddForce(direction*speedModifier*100);
             timer = 0;
         }
     }
