@@ -426,7 +426,7 @@ MonoBehaviour:
   weight: 10
   floodFilled: 0
   useDirectionIndicator: 1
-  maxTorgue: 300
+  maxTorgue: 100
 --- !u!65 &5847884760756425979
 BoxCollider:
   m_ObjectHideFlags: 0
