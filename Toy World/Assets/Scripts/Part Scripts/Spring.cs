@@ -36,7 +36,6 @@ public class Spring : JumpPart
         }
 
         float lerpValue = Mathf.Lerp(0, strechyness, t);
-        Debug.Log(lerpValue);
 
         springPosition = defaultSpringPosition;
         springPosition.y -= lerpValue;
