@@ -14,8 +14,6 @@ public class JumpPart : UtilityPart
 
     public bool PlayAnimation { get; set; }
 
-    private bool restart = false;
-
     private void FixedUpdate()
     {
         // Applies boost each frame while boost timer is still running,
@@ -25,8 +23,6 @@ public class JumpPart : UtilityPart
             Jump();
             PlayAnimation = true;
             DoAction = false;
-            if (restart)
-                restart = false;
         }
 
         if (PlayAnimation)
@@ -55,7 +51,7 @@ public class JumpPart : UtilityPart
         int layermask = 1 << 3;
         layermask = ~layermask;
         RaycastHit surfaceHit;
-        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.7f, layermask))
+        if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.8f, layermask))
         {
             transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
@@ -72,6 +68,8 @@ public class JumpPart : UtilityPart
     /// </summary>
     public override void ResetAction()
     {
-        restart = true;
+        jumpIsReady = true;
+        DoAction = false;
+        PlayAnimation = false;
     }
 }

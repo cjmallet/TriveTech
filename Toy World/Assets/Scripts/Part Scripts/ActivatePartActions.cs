@@ -80,6 +80,9 @@ public class ActivatePartActions : MonoBehaviour
         {
             part.ResetAction();
         }
+        allOffensiveParts.Clear();
+        allDefensiveParts.Clear();
+        allUtilityParts.Clear();
     }
 
     /// <summary>
