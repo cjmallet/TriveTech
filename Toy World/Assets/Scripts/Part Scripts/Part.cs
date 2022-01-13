@@ -143,7 +143,6 @@ public abstract class Part : MonoBehaviour
         if (health - damage > 0)
         {
             this.health -= damage;
-            VehicleStats._instance.TakeDamage(damage);
         }
         else
         {

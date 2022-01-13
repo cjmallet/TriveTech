@@ -55,7 +55,10 @@ public class ActivatePartActions : MonoBehaviour
                 allDefensiveParts.Add((DefensivePart)part);
             else if (part is UtilityPart)
                 allUtilityParts.Add((UtilityPart)part);
-            else Debug.Log("Probably a movement part, do nothing...");
+            else
+            {
+                // do nothing
+            }
         }
     }
 
