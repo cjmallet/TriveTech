@@ -45,6 +45,8 @@ public class VehicleEditor : MonoBehaviour
 
     private GameObject statWindow;
 
+    private List<Part> parts = new List<Part>();
+
     void Awake()
     {
         //set the static instance
@@ -79,7 +81,10 @@ public class VehicleEditor : MonoBehaviour
             coreBlock.GetComponent<Rigidbody>().drag = 0.5f;
 
             // Fill parts lists needed for other scripts
-            List<Part> parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
+            if (parts.Count != 0)
+                parts.Clear();
+
+            parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
             coreBlock.GetComponent<VehicleMovement>().allParts = parts;
             statWindow.GetComponent<StatWindowUI>().allParts = parts;
             coreBlock.GetComponent<ActivatePartActions>().allParts = parts;

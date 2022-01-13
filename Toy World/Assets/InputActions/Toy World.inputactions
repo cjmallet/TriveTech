@@ -279,7 +279,7 @@
                 {
                     "name": "negative",
                     "id": "2062f777-8fdf-470d-8043-566194e83d1d",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/numpadMinus",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -290,7 +290,7 @@
                 {
                     "name": "positive",
                     "id": "53f9b9d8-47b1-4f14-b72f-07fa0298f035",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/numpadPlus",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
