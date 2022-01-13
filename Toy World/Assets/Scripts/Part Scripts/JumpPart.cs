@@ -7,9 +7,6 @@ public class JumpPart : UtilityPart
 {
     const int FORCE_MULTIPLIER = 1000;
 
-    [SerializeField]
-    private int rechargeDurationSeconds;
-    private float rechargeTimer = 0;
     private bool jumpIsReady = true;
 
     [SerializeField] [Range(0,3)]
@@ -21,19 +18,6 @@ public class JumpPart : UtilityPart
 
     private void FixedUpdate()
     {
-        // Timer to check if booster can be used again
-        if (rechargeTimer > 0)
-        {
-            rechargeTimer -= Time.deltaTime;
-            jumpIsReady = false;
-        }
-        else if (!jumpIsReady)
-        {
-            jumpIsReady = true;
-            if(!restart)
-                StartCoroutine(BoostReadyIndication());
-        }
-
         // Applies boost each frame while boost timer is still running,
         // otherwise stops the boost.
         if (DoAction)
@@ -58,7 +42,9 @@ public class JumpPart : UtilityPart
         if (!DoAction && jumpIsReady)
         {
             DoAction = true;
+            jumpIsReady = false;
         }
+        else jumpIsReady = true;
     } 
 
     /// <summary>
@@ -73,7 +59,6 @@ public class JumpPart : UtilityPart
         {
             transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
-            rechargeTimer = rechargeDurationSeconds;
         }
     }
 
@@ -87,16 +72,6 @@ public class JumpPart : UtilityPart
     /// </summary>
     public override void ResetAction()
     {
-        rechargeTimer = 0;
         restart = true;
-    }
-
-    /// <summary>
-    /// Short particle effect indication to show boost is recharged
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator BoostReadyIndication()
-    {
-        yield return new WaitForSeconds(0.2f);
     }
 }
