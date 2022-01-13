@@ -47,18 +47,22 @@ public class ShootingEnemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.name.Contains("Cargo") && !other.GetComponent<Wood>().lost &&cargoInRange.Count!=0)
+        if (other.name.Contains("Cargo") && !other.GetComponent<Wood>().lost && cargoInRange.Count != 0)
         {
             target = other.gameObject;
         }
-        
-        if(other.name.Contains("Cargo") && cargoInRange[cargoInRange.IndexOf(other.gameObject)].GetComponent<Wood>().lost)
+
+        Debug.Log(cargoInRange.IndexOf(other.gameObject) + "         " + cargoInRange.Count);
+
+        if(other.name.Contains("Cargo") && 
+           other.GetComponent<Wood>().lost && 
+           cargoInRange.Count != 0)
         {
             Debug.Log(cargoInRange.Count);
-            cargoInRange.RemoveAt(cargoInRange.IndexOf(other.gameObject));
+            cargoInRange.Remove(other.gameObject);
         }
 
-        if (cargoInRange.Count==0)
+        if (cargoInRange.Count == 0)
         {
             playerInRange = false;
         }
