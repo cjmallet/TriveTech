@@ -43,7 +43,7 @@ public abstract class Part : MonoBehaviour
         {
             ShowFrontDirection();
         }
-            
+
     }
 
     /// <summary>
@@ -151,22 +151,23 @@ public abstract class Part : MonoBehaviour
         {
             return;
         }
+        if (health - damage > 0)
+        {
+            this.health -= damage;
+        }
         else
         {
-            if (health - damage > 0)
-            {
-                this.health -= damage;
-            }
-            else
-            {
-                this.health = 0;
-                RemovePart(true);
-            }
+            this.health = 0;
+            RemovePart(true);
         }
     }
 
     public void RemovePart(bool start)
     {
+        if (gameObject.TryGetComponent(out CorePart core))
+        {
+            return;
+        }
         for (int x = 0; x < attachedParts.Count; x++)
         {
             if (attachedParts[x] != null)
@@ -187,10 +188,9 @@ public abstract class Part : MonoBehaviour
         {
             movePart.SwitchColliders();
         }
-
         transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
 
-        if (!transform.CompareTag("CoreBlock")&&start)
+        if (!transform.CompareTag("CoreBlock") && start)
         {
             transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
             start = !start;
@@ -214,7 +214,7 @@ public abstract class Part : MonoBehaviour
     {
         for (int i = 0; i < attachablePoints.Count; i++)
         {
-            if(attachedParts[i] == null)
+            if (attachedParts[i] == null)
             {
                 if (attachablePoints[i]) { Gizmos.color = Color.green; }
                 else { Gizmos.color = Color.red; }
@@ -242,7 +242,7 @@ public abstract class Part : MonoBehaviour
                         break;
                 }
             }
-            
+
         }
     }
 }

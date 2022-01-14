@@ -27,7 +27,6 @@ public class PartGrid : MonoBehaviour
 
     public void RemakePartGrid()
     {
-        Debug.Log(coreBlockIndex);
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
        
         //coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
