@@ -4,7 +4,7 @@ public class ThirdPersonCameraControler : RotatingCameraController
 {
     private const int UP_ROTATION_MAX = 85;
     private const int DOWN_ROTATION_MAX = 275;
-    private const int ROTATION_SPEED_DAMPNER = 10;
+    private const int ROTATION_SPEED_DAMPNER = 5;
 
     private void Awake()
     {

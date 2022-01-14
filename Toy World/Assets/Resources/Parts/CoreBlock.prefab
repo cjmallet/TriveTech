@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needRightMouse: 0
-  horizontalRotateSpeed: 2
-  verticalRotateSpeed: 2
+  horizontalRotateSpeed: 3
+  verticalRotateSpeed: 3
   cameraZoomSpeed: 5
   minZoomOutDistance: 2
   maxZoomOutDistance: 15
