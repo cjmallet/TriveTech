@@ -14,18 +14,23 @@ public class PartGrid : MonoBehaviour
 
     void Start()
     {
-        partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
-        coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
-        partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
+        if(partGrid == null)
+        {
+            partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
+            coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
+            partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
+        }
 
-        if(_boundingBox == null)
+        if (_boundingBox == null)
             InstantiateBoundingBoxWithGridSize();
     }
 
     public void RemakePartGrid()
     {
+        Debug.Log(coreBlockIndex);
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
-        coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
+       
+        //coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
         partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
         //List<Part> parts = new List<Part>();
         foreach (Part part in transform.GetComponentsInChildren<Part>())
@@ -142,11 +147,6 @@ public class PartGrid : MonoBehaviour
 
     public void RemovePart(Vector3Int partPosition)
     {
-        MovementPart vehicleMove= partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z].GetComponent<MovementPart>();
-        if (vehicleMove != null)
-        {
-            vehicleMove.SwitchColliders();
-        }
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
 

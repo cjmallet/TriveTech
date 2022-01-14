@@ -147,19 +147,21 @@ public abstract class Part : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Collider collider)
     {
-        if (GetComponent<CorePart>()!=null)
+        if (gameObject.TryGetComponent(out CorePart core))
         {
             return;
         }
-
-        if (health - damage > 0)
-        {
-            this.health -= damage;
-        }
         else
         {
-            this.health = 0;
-            RemovePart(true);
+            if (health - damage > 0)
+            {
+                this.health -= damage;
+            }
+            else
+            {
+                this.health = 0;
+                RemovePart(true);
+            }
         }
     }
 
@@ -180,6 +182,10 @@ public abstract class Part : MonoBehaviour
                     attachedParts[x] = null;
                 }
             }
+        }
+        if (gameObject.TryGetComponent(out MovementPart movePart))
+        {
+            movePart.SwitchColliders();
         }
 
         transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
