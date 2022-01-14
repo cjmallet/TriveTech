@@ -105,7 +105,9 @@ public class VehicleEditor : MonoBehaviour
 
                 // Remove direction indication
                 if (vehiclePart.useDirectionIndicator)
+                {
                     vehiclePart.ToggleDirectionIndicator(false);
+                }
             }
             EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
             EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;

@@ -24,7 +24,7 @@ public abstract class Part : MonoBehaviour
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
-    private GameObject myDirectionIndicator;
+    public GameObject myDirectionIndicator;
 
     private const int SIDES = 6;
 
@@ -39,8 +39,11 @@ public abstract class Part : MonoBehaviour
 
     private void Awake()
     {
-        if (useDirectionIndicator)
+        if (useDirectionIndicator && myDirectionIndicator == null)
+        {
             ShowFrontDirection();
+        }
+            
     }
 
     /// <summary>
@@ -126,6 +129,7 @@ public abstract class Part : MonoBehaviour
     public void ToggleDirectionIndicator(bool visible)
     {
         myDirectionIndicator.SetActive(visible);
+        Debug.Log(transform.parent.parent.name);
     }
 
     public virtual void HandleCollision(Collider collider)

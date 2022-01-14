@@ -18,7 +18,8 @@ public class PartGrid : MonoBehaviour
         coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
         partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
 
-        InstantiateBoundingBoxWithGridSize();
+        if(_boundingBox == null)
+            InstantiateBoundingBoxWithGridSize();
     }
 
     public void RemakePartGrid()
@@ -388,12 +389,11 @@ public class PartGrid : MonoBehaviour
 
     public void InstantiateBoundingBoxWithGridSize()
     {
-        /*
         GameObject boundingBoxAndArrow = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxW = gridDimensions.x;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxH = gridDimensions.y;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxL = gridDimensions.z;
-        */
+        
         _boundingBox = Instantiate(Resources.Load("BoundingBoxWithDirectionArrow") as GameObject, transform);
         _boundingBox.transform.Translate(new Vector3(transform.position.x - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
                                                     transform.position.y - _boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH,//waarom zijn deze waardes allemaal anders?

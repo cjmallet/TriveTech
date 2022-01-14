@@ -46,8 +46,10 @@ public class EscMenuBehaviour : MonoBehaviour
     {
         if (VehicleEditor._instance.playan)//restart the level if playing
         {
-            Resume();
+            
             StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            Resume();
+            Cursor.lockState = CursorLockMode.None;
             /*vehicle saves throughout scenes, so reloading a scene -will- reset your camera etc, but will -not- discard your vehicle
             VehicleEditor._instance.Play();
 
