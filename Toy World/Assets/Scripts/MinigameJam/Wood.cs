@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wood : MonoBehaviour
 {
-    private bool lost = false;
+    [HideInInspector]public bool lost = false;
 
     private void OnCollisionEnter(Collision collision)
     {

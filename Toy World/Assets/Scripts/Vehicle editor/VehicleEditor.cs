@@ -122,7 +122,6 @@ public class VehicleEditor : MonoBehaviour
 
 
             coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
-            coreBlockPlayMode.GetComponent<VehicleStats>().enabled = true;
             coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
 
             mainCam.gameObject.SetActive(false);
@@ -355,10 +354,11 @@ public class VehicleEditor : MonoBehaviour
                 if (part != null)
                     part.attachedParts[part.attachedParts.IndexOf(partToDelete.GetComponent<Part>())] = null;
             }
+
+            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
+            Destroy(partToDelete.gameObject);
         }
-        partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
-        statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
-        Destroy(partToDelete.gameObject);
     }
 
     public void DeleteAllParts()
@@ -367,6 +367,7 @@ public class VehicleEditor : MonoBehaviour
         {
             DeleteSelectedPart(part.transform);
         }
+        SetSelectedPart(selectedPart);
     }
 
     void PreviewPart(RaycastHit hit)
