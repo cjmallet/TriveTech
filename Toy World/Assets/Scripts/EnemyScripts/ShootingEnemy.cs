@@ -54,9 +54,7 @@ public class ShootingEnemy : MonoBehaviour
 
         Debug.Log(cargoInRange.IndexOf(other.gameObject) + "         " + cargoInRange.Count);
 
-        if(other.name.Contains("Cargo") && 
-           other.GetComponent<Wood>().lost && 
-           cargoInRange.Count != 0)
+        if(other.name.Contains("Cargo") && other.GetComponent<Wood>().lost && cargoInRange.Count != 0)
         {
             Debug.Log(cargoInRange.Count);
             cargoInRange.Remove(other.gameObject);

@@ -143,6 +143,11 @@ public abstract class Part : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Collider collider)
     {
+        if (GetComponent<CorePart>()!=null)
+        {
+            return;
+        }
+
         if (health - damage > 0)
         {
             this.health -= damage;
@@ -172,7 +177,6 @@ public abstract class Part : MonoBehaviour
                 }
             }
         }
-        Debug.Log(transform.localPosition);
 
         transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
 
