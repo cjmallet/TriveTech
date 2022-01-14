@@ -23,7 +23,8 @@ public class VehicleEditor : MonoBehaviour
     }
 
     public Quaternion partRotation;
-    [SerializeField] private GameObject coreBlock, coreBlockPlayMode;
+    [SerializeField] private GameObject coreBlock;
+    public GameObject coreBlockPlayMode;
     [SerializeField] private GameObject selectedPart;
     private PartGrid partGrid;
 

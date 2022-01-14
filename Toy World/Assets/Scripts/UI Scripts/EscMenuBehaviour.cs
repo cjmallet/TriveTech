@@ -19,6 +19,8 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Pause()
     {
+        if(VehicleEditor._instance.coreBlockPlayMode != null)
+            playerInput = VehicleEditor._instance.coreBlockPlayMode.GetComponent<PlayerInput>();
         escMenu.SetActive(true);
         playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
