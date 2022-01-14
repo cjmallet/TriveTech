@@ -40,6 +40,78 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AttackAction",
+                    "type": "Button",
+                    "id": "ae92315a-79f0-4fe0-af77-eab0380c58e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DefenseAction",
+                    "type": "Button",
+                    "id": "0afb9d59-7f4e-40d4-b3a3-b0716ad7712d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SprintAction",
+                    "type": "Button",
+                    "id": "c151d462-eb7a-4100-adfb-2666489ffbd5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "JumpAction",
+                    "type": "Button",
+                    "id": "9c19ec6b-db3b-473b-b8c5-e64194cf9eb5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UtilityAction1",
+                    "type": "Button",
+                    "id": "1a51a638-c435-4df4-b7cf-a9708ca8df55",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UtilityAction2",
+                    "type": "Button",
+                    "id": "a38fcb59-61e3-443a-8215-b7419b2a212c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UtilityAction3",
+                    "type": "Button",
+                    "id": "1daac116-20f5-4229-9f20-97545fe55334",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "UtilityAction4",
+                    "type": "Button",
+                    "id": "efe58aea-7a62-4520-a765-ae7fbcd000fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -167,7 +239,7 @@
                 {
                     "name": "negative",
                     "id": "78c2587f-b723-4831-9b7f-6bc7c9bfba16",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/numpadMinus",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -178,13 +250,101 @@
                 {
                     "name": "positive",
                     "id": "4027c8da-f2b5-4d88-ad4f-5f6499684cae",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/numpadPlus",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ThirdPersonZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "1d7527c8-5b7c-40df-a95c-9311419f3f45",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "AttackAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67756065-04d3-46e0-922c-989d76e97675",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "DefenseAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8248a9a9-8495-4a7e-8081-6d242faf4008",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SprintAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0005bc21-bd03-42d7-93c3-c55def3c59ec",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "JumpAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "433ee6fd-a7a0-4427-85e0-fe72c7e2500a",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UtilityAction1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f02cbf35-8fb2-485d-b504-8d240e09463f",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UtilityAction2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2478e9d-13d0-43b8-b822-975539d32683",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UtilityAction3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b195bc2f-b423-4868-982f-5dd3068bfb62",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "UtilityAction4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

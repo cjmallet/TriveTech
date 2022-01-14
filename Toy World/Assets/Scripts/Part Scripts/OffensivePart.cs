@@ -15,4 +15,9 @@ public class OffensivePart : Part
     {
         
     }
+
+    public virtual void AttackAction()
+    {
+
+    }
 }

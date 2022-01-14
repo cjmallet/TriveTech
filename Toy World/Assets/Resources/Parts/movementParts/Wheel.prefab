@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5847884759573222168}
   - component: {fileID: 5847884759573222150}
   - component: {fileID: 5847884759573222169}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5847884760144054336}
   - component: {fileID: 5847884760144054351}
   - component: {fileID: 5847884760144054350}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 5847884760575036692}
   - component: {fileID: 5847884760575036690}
   - component: {fileID: 5847884760575036693}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5847884760724353581}
   - component: {fileID: 5847884760724353579}
   - component: {fileID: 5847884760724353578}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5847884761334717227}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 5847884761346023172}
   - component: {fileID: 5847884760756425979}
   - component: {fileID: 375892016523241586}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 0
-  m_Mass: 10
+  m_Mass: 50
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -479,7 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7222243496639768663}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RotatingWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

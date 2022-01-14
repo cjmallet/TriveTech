@@ -58,6 +58,10 @@ public class EscMenuBehaviour : MonoBehaviour
 
             Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_TargetCameraState.SetFromTransform(Camera.main.transform);
             Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
+
+            // Reset part actions
+            coreBlock.GetComponent<ActivatePartActions>().ResetAllActions();
+            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
             */
         }
         else//discard the created vehicle

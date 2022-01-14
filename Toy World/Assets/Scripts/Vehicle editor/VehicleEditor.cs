@@ -13,8 +13,6 @@ using TMPro;
 
 public class VehicleEditor : MonoBehaviour
 {
-
-    GameObject BoundingBox;
     private static VehicleEditor instance;
     public static VehicleEditor _instance
     {
@@ -43,6 +41,9 @@ public class VehicleEditor : MonoBehaviour
 
     public TextMeshProUGUI RestartText;
 
+    private GameObject statWindow;
+
+    private List<Part> parts = new List<Part>();
 
     void Awake()
     {
@@ -56,6 +57,7 @@ public class VehicleEditor : MonoBehaviour
         coreBlock = DDOL.Instance.P1Coreblock;
         coreBlock.SetActive(true);
         partGrid = coreBlock.GetComponent<PartGrid>();
+        statWindow = GameObject.Find("StatWindow");
         playerInput.SwitchCurrentActionMap("UI");
         SetSelectedPart(selectedPart);
         mainCam = Camera.main;
@@ -69,7 +71,7 @@ public class VehicleEditor : MonoBehaviour
     {
         if (!playan)
         {
-            
+
             Destroy(previewedPart);
             //make a copy of the coreblock for playmode
             coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
@@ -81,14 +83,20 @@ public class VehicleEditor : MonoBehaviour
             coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
             coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);
 
-            List<Part> parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
+            // Fill parts lists needed for other scripts
+            if (parts.Count != 0)
+                parts.Clear();
+
+            parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
             coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
-            coreBlockPlayMode.GetComponent<VehicleStats>().allParts = parts;
+            statWindow.GetComponent<StatWindowUI>().allParts = parts;
+            coreBlockPlayMode.GetComponent<ActivatePartActions>().allParts = parts;
+            coreBlockPlayMode.GetComponent<ActivatePartActions>().CategorizePartsInList();
+            coreBlockPlayMode.GetComponent<ActivatePartActions>().SetSpecificActionType();
 
             coreBlockPlayMode.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             coreBlockPlayMode.GetComponent<Rigidbody>().mass = 0f;
             coreBlockPlayMode.GetComponent<Rigidbody>().drag = 0.5f;
-
             // Remove direction indication
             foreach (Part vehiclePart in parts)
             {
@@ -112,24 +120,34 @@ public class VehicleEditor : MonoBehaviour
             EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
             EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
-            
 
             coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
             coreBlockPlayMode.GetComponent<VehicleStats>().enabled = true;
+            coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
+
             mainCam.gameObject.SetActive(false);
             //grab vehiclecam again, because we have a new coreblock instance for playmode
             vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
             vehicleCam.enabled = true;
             playan = true;
-            
+
             coreBlock.SetActive(false);//OG coreblock is disabled until back in build mode
-            
+
 
             if (buildUIOpen)
             {
                 PartSelectionManager._instance.ClosePartSelectionUI();
                 ChangeActiveBuildState();
             }
+
+            if (statWindow == null)
+            {
+                statWindow = GameObject.Find("StatWindow");
+                statWindow.SetActive(false);
+            }
+            else
+                statWindow.SetActive(false);
+
             PartSelectionManager._instance.crossHair.SetActive(false);
 
             //partGrid.ToggleTempBoundingBox(false);
@@ -138,7 +156,7 @@ public class VehicleEditor : MonoBehaviour
 
             playerInput.SwitchCurrentActionMap("Player");
         }
-        else if (playan)
+        else if (playan)//because the level is reset with a LoadScene function, this else shouldn't really be called anymore. I left it in just in case.
         {
             //coreBlockPlayMode.SetActive(false);
 
@@ -162,8 +180,13 @@ public class VehicleEditor : MonoBehaviour
             //Destroy(coreBlock.GetComponent<Rigidbody>());
             //coreBlock.transform.rotation = Quaternion.Euler(0, coreBlockPlayMode.transform.rotation.eulerAngles.y, 0);
             //mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
-
+            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
+            coreBlock.GetComponent<VehicleMovement>().enabled = false;
+            coreBlock.GetComponent<ActivatePartActions>().enabled = false;
+            Destroy(coreBlock.GetComponent<Rigidbody>());
+            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             SetSelectedPart(selectedPart);
+            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
             vehicleCam.enabled = false;
             mainCam.gameObject.SetActive(true);
 
@@ -172,6 +195,15 @@ public class VehicleEditor : MonoBehaviour
 
             PartSelectionManager._instance.ClosePartSelectionUI();
             ChangeActiveBuildState();
+
+            if (statWindow == null)
+            {
+                statWindow = GameObject.Find("StatWindow");
+                statWindow.SetActive(true);
+            }
+            else
+                statWindow.SetActive(true);
+
             PartSelectionManager._instance.crossHair.SetActive(false);
 
             playan = false;
@@ -211,7 +243,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePart(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed &&!previewedPart.name.Contains("Wheel"))
+        if (!playan && context.performed && !previewedPart.name.Contains("Wheel"))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
@@ -230,9 +262,9 @@ public class VehicleEditor : MonoBehaviour
             {
                 partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
             }
-            
+
             vCount++;
-            if (vCount==4)
+            if (vCount == 4)
             {
                 vCount = 0;
             }
@@ -242,9 +274,13 @@ public class VehicleEditor : MonoBehaviour
 
     void PlaceSelectedPart(RaycastHit hit)
     {
-        Vector3Int pos= GetLocalPosition(hit);
+        Vector3Int pos = GetLocalPosition(hit);
+        if (statWindow == null)
+        {
+            statWindow = GameObject.Find("StatWindow");
+        }
 
-        if (CheckPlacementValidity(hit))
+        if (CheckPlacementValidity(hit))//check if the position the part would be placed in is in grid bounds
         {
             GameObject placedPart;
 
@@ -252,6 +288,8 @@ public class VehicleEditor : MonoBehaviour
                 placedPart = Instantiate(selectedPart, coreBlock.transform.GetChild(0).transform);
             else
                 placedPart = Instantiate(selectedPart, coreBlock.transform);
+
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(placedPart.GetComponent<Part>(), false);
 
             placedPart.transform.localPosition = pos;
             placedPart.transform.localRotation = partRotation;
@@ -293,7 +331,7 @@ public class VehicleEditor : MonoBehaviour
     private bool CheckPlacementValidity(RaycastHit hit)
     {
         Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
-        if (partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal) 
+        if (partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal)
             && previewedPart.transform.GetComponent<Part>().CheckIfAttachable(-hitNormal))
         {
             return true;
@@ -315,13 +353,12 @@ public class VehicleEditor : MonoBehaviour
             foreach (Part part in partToDelete.GetComponent<Part>().attachedParts)
             {
                 if (part != null)
-                {
                     part.attachedParts[part.attachedParts.IndexOf(partToDelete.GetComponent<Part>())] = null;
-                }
             }
-            partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
-            Destroy(partToDelete.gameObject);
         }
+        partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
+        statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
+        Destroy(partToDelete.gameObject);
     }
 
     public void DeleteAllParts()
@@ -348,7 +385,7 @@ public class VehicleEditor : MonoBehaviour
         else
         {
             previewedPart.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-           
+
         }
     }
 
