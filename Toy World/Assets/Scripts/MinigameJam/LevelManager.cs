@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
     public int cargoCompletionAmount;
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject levelUI;
+    [SerializeField] private GameObject playerSpawn;
 
     private GameObject objectiveUI, panel, canvasText, timerObject;
     private float timer = 0;
@@ -34,6 +35,9 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        //set coreblock to spawn location
+        DDOL.Instance.P1Coreblock.transform.SetPositionAndRotation(playerSpawn.transform.position, playerSpawn.transform.rotation);
+        DDOL.Instance.P1Coreblock.SetActive(true);
         panel = levelUI.transform.Find("Panel").gameObject;
         canvasText = levelUI.transform.Find("FinishText").gameObject;
         timerObject = levelUI.transform.Find("TimerObject").gameObject;

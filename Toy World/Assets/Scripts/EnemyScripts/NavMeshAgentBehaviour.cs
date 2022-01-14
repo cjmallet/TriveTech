@@ -19,7 +19,7 @@ public class NavMeshAgentBehaviour : MonoBehaviour
     public float alignmentWeight;
     public float minDistanceRadius;
 
-    private bool engaged = false;
+    //private bool engaged = false;
 
     // Start is called before the first frame update
     void Start()

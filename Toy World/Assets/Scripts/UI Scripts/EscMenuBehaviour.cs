@@ -8,7 +8,6 @@ using TMPro;
 public class EscMenuBehaviour : MonoBehaviour
 {
     public GameObject escMenu;
-    public GameObject coreBlock;
     public PlayerInput playerInput;
     public GameObject partSelectorUI;
 
@@ -18,15 +17,10 @@ public class EscMenuBehaviour : MonoBehaviour
     private Vector3 coreBlockPositionStart;
     private Quaternion coreBlockRotationStart;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        coreBlockPositionStart = coreBlock.transform.position;
-        coreBlockRotationStart = coreBlock.transform.rotation;
-    }
-
     public void Pause()
     {
+        if(VehicleEditor._instance.coreBlockPlayMode != null)
+            playerInput = VehicleEditor._instance.coreBlockPlayMode.GetComponent<PlayerInput>();
         escMenu.SetActive(true);
         playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
@@ -41,6 +35,10 @@ public class EscMenuBehaviour : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }  
 
         playerInput.actions.Enable();
         escMenu.SetActive(false);
@@ -48,19 +46,14 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Restart()
     {
-        Time.timeScale = 1;
-        escMenu.SetActive(false);
-
-        LevelManager.Instance.StopTimer();
-        LevelManager.Instance.cargoSpawner.CleanCargo();
-        LevelManager.Instance.ResetCargo();
-
-        if (VehicleEditor._instance.playan)
+        if (VehicleEditor._instance.playan)//restart the level if playing
         {
+            
+            StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            Resume();
+            Cursor.lockState = CursorLockMode.None;
+            /*vehicle saves throughout scenes, so reloading a scene -will- reset your camera etc, but will -not- discard your vehicle
             VehicleEditor._instance.Play();
-
-            coreBlock.transform.position = coreBlockPositionStart;
-            coreBlock.transform.rotation = coreBlockRotationStart;
 
             Camera.main.transform.position = buildCameraPositionStart;
             Camera.main.transform.rotation = buildCameraRotationStart;
@@ -70,10 +63,15 @@ public class EscMenuBehaviour : MonoBehaviour
 
             // Reset part actions
             coreBlock.GetComponent<ActivatePartActions>().ResetAllActions();
+            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
+            */
         }
-        else
+        else//discard the created vehicle
         {
-            StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            VehicleEditor._instance.DeleteAllParts();
+            Resume();
+
+            //StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
 
             //playerInput.SwitchCurrentActionMap("UI");
 

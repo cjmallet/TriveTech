@@ -24,7 +24,7 @@ public abstract class Part : MonoBehaviour
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
-    private GameObject myDirectionIndicator;
+    public GameObject myDirectionIndicator;
 
     private const int SIDES = 6;
 
@@ -39,8 +39,11 @@ public abstract class Part : MonoBehaviour
 
     public virtual void Awake()
     {
-        if (useDirectionIndicator)
+        if (useDirectionIndicator && myDirectionIndicator == null)
+        {
             ShowFrontDirection();
+        }
+
     }
 
     /// <summary>
@@ -102,7 +105,7 @@ public abstract class Part : MonoBehaviour
         }
     }
 
-    public bool CheckCorrectSide(Vector3 hitNormal)
+    public bool CheckIfAttachable(Vector3 hitNormal)
     {
         if (attachablePoints[(int)DetermineSide(hitNormal)])
         {
@@ -126,6 +129,7 @@ public abstract class Part : MonoBehaviour
     public void ToggleDirectionIndicator(bool visible)
     {
         myDirectionIndicator.SetActive(visible);
+        Debug.Log(transform.parent.parent.name);
     }
 
     public virtual void HandleCollision(Collider collider)
@@ -143,11 +147,10 @@ public abstract class Part : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Collider collider)
     {
-        if (GetComponent<CorePart>()!=null)
+        if (gameObject.TryGetComponent(out CorePart core))
         {
             return;
         }
-
         if (health - damage > 0)
         {
             this.health -= damage;
@@ -161,6 +164,10 @@ public abstract class Part : MonoBehaviour
 
     public void RemovePart(bool start)
     {
+        if (gameObject.TryGetComponent(out CorePart core))
+        {
+            return;
+        }
         for (int x = 0; x < attachedParts.Count; x++)
         {
             if (attachedParts[x] != null)
@@ -177,10 +184,13 @@ public abstract class Part : MonoBehaviour
                 }
             }
         }
-
+        if (gameObject.TryGetComponent(out MovementPart movePart))
+        {
+            movePart.SwitchColliders();
+        }
         transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
 
-        if (!transform.CompareTag("CoreBlock")&&start)
+        if (!transform.CompareTag("CoreBlock") && start)
         {
             transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
             start = !start;
@@ -204,7 +214,7 @@ public abstract class Part : MonoBehaviour
     {
         for (int i = 0; i < attachablePoints.Count; i++)
         {
-            if(attachedParts[i] == null)
+            if (attachedParts[i] == null)
             {
                 if (attachablePoints[i]) { Gizmos.color = Color.green; }
                 else { Gizmos.color = Color.red; }
@@ -232,6 +242,7 @@ public abstract class Part : MonoBehaviour
                         break;
                 }
             }
+
         }
     }
 }
