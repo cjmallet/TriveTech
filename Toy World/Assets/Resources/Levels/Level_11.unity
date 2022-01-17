@@ -770,8 +770,10 @@ MonoBehaviour:
   cargoSpawner: {fileID: 2093010612}
   levelTrigger: {fileID: 1166506899}
   cargoCompletionAmount: 3
+  cargoToSpawn: 10
   timeLevelCompletion: 60
   levelUI: {fileID: 809173152}
+  playerSpawn: {fileID: 0}
   collectedCargo: 0
   displayCargoAmount: 0
 --- !u!1001 &219223950
@@ -1331,6 +1333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partRotation: {x: 0, y: 0, z: 0, w: 0}
   coreBlock: {fileID: 671199460}
+  coreBlockPlayMode: {fileID: 0}
   selectedPart: {fileID: 3099009681357930406, guid: b5235ee28d97d2c49b8f83f0fa3df775, type: 3}
   playan: 0
   buildUIOpen: 1
@@ -2100,6 +2103,10 @@ PrefabInstance:
     - target: {fileID: 7691298997526108074, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 405.91504
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310361042228538895, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9078789069015182165, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4836,7 +4843,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   escMenu: {fileID: 219223951}
-  coreBlock: {fileID: 671199460}
   playerInput: {fileID: 3828433662548338289}
   partSelectorUI: {fileID: 761692394}
 --- !u!114 &2068050390 stripped
@@ -4995,7 +5001,6 @@ MonoBehaviour:
   cargoPrefab: {fileID: 9126322411781850709, guid: bb19965139d08884e8e4891fa2b9eef6, type: 3}
   cargoSpawnPoint: {fileID: 2093010610}
   cargoSpawnSpeed: 0.2
-  cargoToSpawn: 10
 --- !u!1 &2548261274292252876
 GameObject:
   m_ObjectHideFlags: 0

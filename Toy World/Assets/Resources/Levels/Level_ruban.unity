@@ -910,7 +910,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cargoSpawner: {fileID: 2093010612}
   levelTrigger: {fileID: 1166506899}
-  cargoCompletionAmount: 3
+  cargoCompletionAmount: 2
+  cargoToSpawn: 3
   timeLevelCompletion: 60
   levelUI: {fileID: 809173152}
   playerSpawn: {fileID: 1736114859}
@@ -6632,7 +6633,6 @@ MonoBehaviour:
   cargoPrefab: {fileID: 9126322411781850709, guid: bb19965139d08884e8e4891fa2b9eef6, type: 3}
   cargoSpawnPoint: {fileID: 2093010610}
   cargoSpawnSpeed: 0.2
-  cargoToSpawn: 4
 --- !u!1 &2121895482
 GameObject:
   m_ObjectHideFlags: 0
