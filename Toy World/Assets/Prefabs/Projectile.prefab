@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   removeTime: 2
   damage: 2
-  speedModifier: 10
+  speedModifier: 25
 --- !u!54 &6059208560609041669
 Rigidbody:
   m_ObjectHideFlags: 0
