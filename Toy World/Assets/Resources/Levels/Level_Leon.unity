@@ -1098,6 +1098,7 @@ MonoBehaviour:
   cargoSpawner: {fileID: 2093010612}
   levelTrigger: {fileID: 1166506899}
   cargoCompletionAmount: 2
+  cargoToSpawn: 6
   timeLevelCompletion: 60
   levelUI: {fileID: 809173152}
   playerSpawn: {fileID: 1736114859}
@@ -7023,7 +7024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4524159465529112, guid: 7c251b344139b0e409fb265cc2c3efc3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3797625
+      value: 1.2517482
       objectReference: {fileID: 0}
     - target: {fileID: 4524159465529112, guid: 7c251b344139b0e409fb265cc2c3efc3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7114,7 +7115,6 @@ MonoBehaviour:
   cargoPrefab: {fileID: 9126322411781850709, guid: bb19965139d08884e8e4891fa2b9eef6, type: 3}
   cargoSpawnPoint: {fileID: 2093010610}
   cargoSpawnSpeed: 0.2
-  cargoToSpawn: 6
 --- !u!1 &2121895482
 GameObject:
   m_ObjectHideFlags: 0
