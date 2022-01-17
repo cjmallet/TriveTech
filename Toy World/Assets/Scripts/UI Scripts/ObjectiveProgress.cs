@@ -13,7 +13,7 @@ public class ObjectiveProgress : MonoBehaviour
     void Start()
     {
         levelManager = LevelManager.Instance;
-        currentCargo = levelManager.cargoSpawner.cargoToSpawn;
+        currentCargo = levelManager.cargoToSpawn;
         mainObjectiveTracker = transform.Find("MainGoalProgress").GetComponent<TextMeshProUGUI>();
 
         transform.Find("MainGoal").GetComponent<TextMeshProUGUI>().text = "Deliver at least "+ levelManager.cargoCompletionAmount+ " pieces of wood";
@@ -22,6 +22,6 @@ public class ObjectiveProgress : MonoBehaviour
 
     public void UpdateCargo(int cargoAmount)
     {
-        mainObjectiveTracker.text = cargoAmount + " / " + levelManager.cargoSpawner.cargoToSpawn;
+        mainObjectiveTracker.text = cargoAmount + " / " + levelManager.cargoToSpawn;
     }
 }

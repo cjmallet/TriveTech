@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
 
     public CargoSpawner cargoSpawner;
     [SerializeField] private TriggerLevelStart levelTrigger;
-    public int cargoCompletionAmount;
+    public int cargoCompletionAmount, cargoToSpawn;
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject levelUI;
     [SerializeField] private GameObject playerSpawn;
@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
         canvasText = levelUI.transform.Find("FinishText").gameObject;
         timerObject = levelUI.transform.Find("TimerObject").gameObject;
         objectiveUI = levelUI.transform.Find("Goals").gameObject;
-        displayCargoAmount = cargoSpawner.cargoToSpawn;
+        displayCargoAmount = cargoToSpawn;
     }
 
     private void FixedUpdate()
@@ -98,7 +98,7 @@ public class LevelManager : MonoBehaviour
 
     public void ResetCargo()
     {
-        displayCargoAmount = cargoSpawner.cargoToSpawn;
+        displayCargoAmount = cargoToSpawn;
         objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(displayCargoAmount);
     }
 
@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
         {
             if (collectedCargo >= cargoCompletionAmount)
             {
-                OpenEndScreen("You Finished!\nCargo:" + collectedCargo + "/10 \nTime left: " + (int)(timeLevelCompletion - timer));
+                OpenEndScreen("You Finished!\nCargo:" + collectedCargo + "/" + cargoToSpawn + "\nTime left: " + (int)(timeLevelCompletion - timer));
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
             }
             else

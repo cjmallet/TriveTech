@@ -7,7 +7,6 @@ public class CargoSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject cargoPrefab, cargoSpawnPoint;
     [SerializeField] private float cargoSpawnSpeed;
-    public int cargoToSpawn;
 
     private GameObject cargoContainer;
 
@@ -17,7 +16,7 @@ public class CargoSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (spawningCargo && itemsSpawned < cargoToSpawn)
+        if (spawningCargo && itemsSpawned < LevelManager.Instance.cargoToSpawn)
         {
             GameObject cargo = Instantiate(cargoPrefab, cargoSpawnPoint.transform.position, Quaternion.identity);
             cargo.transform.parent = cargoContainer.transform;
@@ -27,7 +26,7 @@ public class CargoSpawner : MonoBehaviour
 
             StartCoroutine(SpawnTimer());
         }
-        else if (itemsSpawned >= cargoToSpawn && !finishedSpawning)
+        else if (itemsSpawned >= LevelManager.Instance.cargoToSpawn && !finishedSpawning)
         {
             spawningCargo = false;
             finishedSpawning = true;
@@ -67,7 +66,7 @@ public class CargoSpawner : MonoBehaviour
     {
         spawningCargo = false;
         finishedSpawning = true;
-        itemsSpawned = cargoToSpawn;
+        itemsSpawned = LevelManager.Instance.cargoToSpawn;
         LevelManager.Instance.collectedCargo = 0;
     }
 }
