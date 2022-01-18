@@ -12,6 +12,9 @@ public class PartGrid : MonoBehaviour
     //[SerializeField] private GameObject cubePrefab,tempBox;
     public GameObject _boundingBox;
 
+    [HideInInspector]
+    public List<Part> allParts = new List<Part>();
+
     void Start()
     {
         if(partGrid == null)
@@ -127,7 +130,11 @@ public class PartGrid : MonoBehaviour
 
     public List<Part> ReturnAllParts()
     {
-        List<Part> allParts = new List<Part>();
+        //List<Part> allParts = new List<Part>();
+
+        if (allParts.Count != 0)
+            allParts.Clear();
+
         for (int i = 0; i <= partGrid.GetUpperBound(0); i++)
         {
             for (int j = 0; j <= partGrid.GetUpperBound(1); j++)
@@ -156,7 +163,7 @@ public class PartGrid : MonoBehaviour
     public void CheckConnection()
     {
         FloodFill();
-        List<Part> allParts = ReturnAllParts();
+        allParts = ReturnAllParts();
 
         foreach (Part part in allParts)
         {
