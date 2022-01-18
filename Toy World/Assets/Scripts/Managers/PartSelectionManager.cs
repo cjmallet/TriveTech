@@ -222,6 +222,10 @@ public class PartSelectionManager : MonoBehaviour
         if (context.performed)
         {
             VehicleEditor._instance.ChangeActiveBuildState();
+
+            if (popupWindow.activeSelf)
+                popupWindow.SetActive(false);
+
             ClosePartSelectionUI();
         }
     }
