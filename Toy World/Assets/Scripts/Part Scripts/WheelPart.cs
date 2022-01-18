@@ -18,11 +18,11 @@ public class WheelPart : MovementPart
             ApplyLocalPositionToVisuals();
     }
 
-    public override void SwitchColliders()
-    {
-        GetComponent<BoxCollider>().enabled = !GetComponent<BoxCollider>().enabled;
-        GetComponent<WheelCollider>().enabled = !GetComponent<WheelCollider>().enabled;
-    }
+    //public override void SwitchColliders()
+    //{
+    //    GetComponent<BoxCollider>().enabled = !GetComponent<BoxCollider>().enabled;
+    //    GetComponent<WheelCollider>().enabled = !GetComponent<WheelCollider>().enabled;
+    //}
 
     public override void ApplyLocalPositionToVisuals()
     {

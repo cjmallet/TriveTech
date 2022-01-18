@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2401642928218113435}
   - component: {fileID: 2401642928218113434}
   - component: {fileID: 2401642928218113433}
+  - component: {fileID: 6980316278458715077}
   - component: {fileID: 2401642928218113381}
   m_Layer: 3
   m_Name: Spike
@@ -98,6 +99,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!64 &6980316278458715077
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2401642928218113432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3613567641014311022, guid: 3434307d80c6abd49b9aeeddc3985132, type: 3}
 --- !u!114 &2401642928218113381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,3 +137,6 @@ MonoBehaviour:
   weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}
+  playModeCollider: {fileID: 6980316278458715077}
+  buildModeCollider: {fileID: 2401642928218113433}
