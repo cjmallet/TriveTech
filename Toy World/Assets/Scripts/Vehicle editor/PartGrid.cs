@@ -399,11 +399,16 @@ public class PartGrid : MonoBehaviour
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxW = gridDimensions.x;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxH = gridDimensions.y;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxL = gridDimensions.z;
-        
+
+        Debug.Log(transform.position);
+
         _boundingBox = Instantiate(Resources.Load("BoundingBoxWithDirectionArrow") as GameObject, transform);
-        _boundingBox.transform.Translate(new Vector3(transform.position.x - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
-                                                    transform.position.y - _boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH,//waarom zijn deze waardes allemaal anders?
-                                                    transform.position.z - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
+       
+        Debug.Log(_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f);
+
+        _boundingBox.transform.position = new Vector3(transform.position.x - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f),
+                                                     transform.position.y - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.5f),
+                                                     transform.position.z - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
     }
 
     public void ChangeGridSize(Vector3Int newDimensions)
