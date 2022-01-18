@@ -46,9 +46,8 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Restart()
     {
-        if (VehicleEditor._instance.playan)//restart the level if playing
-        {
-            
+        if (VehicleEditor._instance.playan) //restart the level if playing
+        {            
             StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
             Resume();
             Cursor.lockState = CursorLockMode.None;
@@ -66,7 +65,7 @@ public class EscMenuBehaviour : MonoBehaviour
             Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
             */
         }
-        else//discard the created vehicle
+        else  //discard the created vehicle
         {
             VehicleEditor._instance.DeleteAllParts();
             Resume();

@@ -13,12 +13,13 @@ public class StatWindowUI : MonoBehaviour
     private int currentWeight = 0, currentTorque = 0;
 
     // Start is called before the first frame update
-    void Start()
+    public void SetupAllParts()
     {
         foreach (Part part in allParts)
         {
             currentWeight += (int)part.weight;
-            if (part.GetType() == typeof(MovementPart))
+
+            if (part is MovementPart)
                 currentTorque += (int)part.GetComponent<MovementPart>().maxTorgue;
         }
 
@@ -30,7 +31,6 @@ public class StatWindowUI : MonoBehaviour
             }
         }
     }
-
     public void UpdateStats(Part updatedPart, bool removed)
     {
         if (updatedPart is MovementPart && !removed)

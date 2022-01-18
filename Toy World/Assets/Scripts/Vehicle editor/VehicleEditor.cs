@@ -5,12 +5,6 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using TMPro;
 
-/* TODO:
- * make a 3D array and check for neighbours to call the attach function for.
- * if preview part doesn't fit, show it with a red material
- * actually for the part class, but make it so you can have parts that are bigger than 1x1x1
- */
-
 public class VehicleEditor : MonoBehaviour
 {
     private static VehicleEditor instance;
@@ -27,7 +21,6 @@ public class VehicleEditor : MonoBehaviour
     public GameObject coreBlockPlayMode;
     [SerializeField] private GameObject selectedPart;
     private PartGrid partGrid;
-
 
     private GameObject previewedPart;
     public bool playan, buildUIOpen = true;
@@ -66,13 +59,15 @@ public class VehicleEditor : MonoBehaviour
         {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
         }
+
+        statWindow.GetComponent<StatWindowUI>().allParts = partGrid.allParts;
+        statWindow.GetComponent<StatWindowUI>().SetupAllParts();
     }
 
     public void Play()
     {
         if (!playan)
         {
-
             Destroy(previewedPart);
             //make a copy of the coreblock for playmode
             coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
@@ -88,6 +83,7 @@ public class VehicleEditor : MonoBehaviour
             if (parts.Count != 0)
                 parts.Clear();
 
+            parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
             parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
             coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
             statWindow.GetComponent<StatWindowUI>().allParts = parts;
