@@ -911,6 +911,7 @@ MonoBehaviour:
   cargoSpawner: {fileID: 2093010612}
   levelTrigger: {fileID: 1166506899}
   cargoCompletionAmount: 3
+  cargoToSpawn: 10
   timeLevelCompletion: 60
   levelUI: {fileID: 809173152}
   playerSpawn: {fileID: 1736114859}
@@ -2933,6 +2934,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 1
   vertical: 0
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!114 &790580420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2947,6 +2952,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   vertical: 1
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &804243232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,6 +3519,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 1
   vertical: 0
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &940800152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4733,6 +4746,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   vertical: 1
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &1127615660
 GameObject:
   m_ObjectHideFlags: 0
@@ -6379,6 +6396,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 1
   vertical: 0
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &1610801674
 GameObject:
   m_ObjectHideFlags: 0
@@ -6490,6 +6511,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 0
   vertical: 1
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!114 &1651433785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6504,6 +6529,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 1
   vertical: 1
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &1685298156
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,6 +7056,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontal: 1
   vertical: 0
+  startSide: 0
+  speed: 0
+  damage: 0
+  distance: 0
 --- !u!1 &1973982745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7498,7 +7531,6 @@ MonoBehaviour:
   cargoPrefab: {fileID: 9126322411781850709, guid: bb19965139d08884e8e4891fa2b9eef6, type: 3}
   cargoSpawnPoint: {fileID: 2093010610}
   cargoSpawnSpeed: 0.2
-  cargoToSpawn: 10
 --- !u!1 &2121895482
 GameObject:
   m_ObjectHideFlags: 0
