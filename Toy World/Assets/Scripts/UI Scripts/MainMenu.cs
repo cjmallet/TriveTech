@@ -5,15 +5,17 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private TextMeshProUGUI testText;
 
     private GameObject contentHolder;
     private List<UnityEngine.Object> levels= new List<UnityEngine.Object>();
     private List<int> levelNumbers = new List<int>();
-    private char[] charToTrim;
+    private char[]  charToTrimEnd;
     private string levelPrefix = "Level ";
 
     /// <summary>
@@ -21,13 +23,19 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     void Start()
     {
-        charToTrim = levelPrefix.ToArray();
+        charToTrimEnd = ".unity".ToCharArray();
         contentHolder = GetComponentInChildren<GridLayoutGroup>().gameObject;
         levels = Resources.LoadAll("Levels").ToList();
 
-        foreach (UnityEngine.Object level in levels)
+        for (int x=0; x<SceneManager.sceneCountInBuildSettings;x++)
         {
-            levelNumbers.Add(GetLevelNumber(level.name));
+            if (SceneUtility.GetScenePathByBuildIndex(x).Contains("Level"))
+            {
+                string sceneName = SceneUtility.GetScenePathByBuildIndex(x);
+                sceneName = sceneName.TrimEnd(charToTrimEnd);
+                sceneName = sceneName.Remove(0,30);
+                levelNumbers.Add(Int32.Parse(sceneName));
+            }
         }
 
         levelNumbers.Sort();
@@ -47,12 +55,5 @@ public class MainMenu : MonoBehaviour
                 button.GetComponent<Image>().color = new Color32(255,255,0,255);
             }
         }
-    }
-
-    private int GetLevelNumber(string sceneName)
-    {
-        string levelString = sceneName.Trim(charToTrim);
-        int levelNumber = Int32.Parse(levelString);
-        return levelNumber;
     }
 }
