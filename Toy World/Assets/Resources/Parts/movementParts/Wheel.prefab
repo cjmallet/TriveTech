@@ -425,7 +425,8 @@ MonoBehaviour:
   health: 10
   weight: 10
   floodFilled: 0
-  useDirectionIndicator: 1
+  useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}
   maxTorgue: 100
 --- !u!65 &5847884760756425979
 BoxCollider:
