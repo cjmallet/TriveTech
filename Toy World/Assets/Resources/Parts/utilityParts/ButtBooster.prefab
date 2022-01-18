@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7741658342606787848}
   - component: {fileID: 6415754975100537024}
   - component: {fileID: -3412863804972470142}
-  - component: {fileID: 9032912977083382552}
   m_Layer: 3
   m_Name: ButtBooster
   m_TagString: Untagged
@@ -73,8 +72,7 @@ MonoBehaviour:
   weight: 1
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
-  playModeCollider: {fileID: 9032912977083382552}
+  playModeCollider: {fileID: 1417427312828360608}
   buildModeCollider: {fileID: 6415754975100537024}
   actionType: 0
   specificActionType: 0
@@ -82,20 +80,6 @@ MonoBehaviour:
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
   boostStrenght: 1
---- !u!64 &9032912977083382552
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8035843253155779272}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1001 &2446425495274698624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,8 +232,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5217aa93ce443d040afd88455d0379ca, type: 3}
+--- !u!1 &6181259731278865710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5217aa93ce443d040afd88455d0379ca, type: 3}
+  m_PrefabInstance: {fileID: 6415754974403270783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6810549111595335572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5217aa93ce443d040afd88455d0379ca, type: 3}
   m_PrefabInstance: {fileID: 6415754974403270783}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1417427312828360608
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181259731278865710}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6460370929453961188, guid: 5217aa93ce443d040afd88455d0379ca, type: 3}

@@ -110,7 +110,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3613567641014311022, guid: 3434307d80c6abd49b9aeeddc3985132, type: 3}
 --- !u!114 &2401642928218113381
@@ -137,6 +137,5 @@ MonoBehaviour:
   weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
   playModeCollider: {fileID: 6980316278458715077}
   buildModeCollider: {fileID: 2401642928218113433}
