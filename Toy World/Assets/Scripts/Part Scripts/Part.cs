@@ -129,14 +129,14 @@ public abstract class Part : MonoBehaviour
     public void ToggleDirectionIndicator(bool visible)
     {
         myDirectionIndicator.SetActive(visible);
-        Debug.Log(transform.parent.parent.name);
+        //Debug.Log(transform.parent.parent.name);
     }
 
     public virtual void HandleCollision(Collider collider)
     {
         if (collider.name.Contains("Enemy"))
         {
-            TakeDamage(collider.gameObject.GetComponent<NavMeshAgentBehaviour>().damage, collider);
+            TakeDamage(collider.gameObject.GetComponent<MoveObstacle>().damage, collider);
         }
 
         if (collider.name.Contains("Projectile"))
