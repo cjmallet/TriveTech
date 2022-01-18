@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class MainMenu : MonoBehaviour
             GameObject button = Instantiate(buttonPrefab, contentHolder.transform);
             button.transform.localScale = new Vector3(1, 1, 1);
             button.name = scene.name;
+            button.GetComponentInChildren<TextMeshProUGUI>().text = scene.name;
             button.GetComponent<Button>().onClick.AddListener(() => { button.GetComponent<GenericUIChoices>().LoadScene(scene.name); });
 
             //If the level has been completed
