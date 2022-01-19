@@ -9,11 +9,6 @@ public class MovementPart : Part
 
     public float maxTorgue;
 
-    public virtual void SwitchColliders()
-    {
-
-    }
-
     public virtual void ApplyLocalPositionToVisuals()
     {
 

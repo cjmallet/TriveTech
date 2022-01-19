@@ -178,10 +178,11 @@ GameObject:
   - component: {fileID: 1722046156691385017}
   - component: {fileID: 3459073008343866995}
   - component: {fileID: 2864444615148423900}
+  - component: {fileID: 2153741059816026215}
   - component: {fileID: 2472005105467639161}
   m_Layer: 3
-  m_Name: HeavyHull
-  m_TagString: Part
+  m_Name: Testpart 3
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -267,6 +268,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2153741059816026215
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099009681357930406}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2472005105467639161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +306,8 @@ MonoBehaviour:
   floodFilled: 0
   useDirectionIndicator: 0
   myDirectionIndicator: {fileID: 0}
+  playModeCollider: {fileID: 2153741059816026215}
+  buildModeCollider: {fileID: 2864444615148423900}
 --- !u!1 &6977598292174867740
 GameObject:
   m_ObjectHideFlags: 0

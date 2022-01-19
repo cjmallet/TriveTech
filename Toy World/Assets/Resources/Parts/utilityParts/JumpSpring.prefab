@@ -178,9 +178,10 @@ GameObject:
   - component: {fileID: 8003115270509702074}
   - component: {fileID: 8003115270509702072}
   - component: {fileID: -8556351183091897973}
+  - component: {fileID: 678811577352676575}
   m_Layer: 3
   m_Name: JumpSpring
-  m_TagString: Part
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -239,11 +240,26 @@ MonoBehaviour:
   weight: 1
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
+  playModeCollider: {fileID: 678811577352676575}
+  buildModeCollider: {fileID: 8003115270509702072}
   actionType: 1
   specificActionType: 0
   jumpStrenght: 1
   strechyness: 0.75
+--- !u!136 &678811577352676575
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8003115270509702073}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5
+  m_Height: 1.2897668
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.1448834, z: 0}
 --- !u!1001 &8003115270841130721
 PrefabInstance:
   m_ObjectHideFlags: 0
