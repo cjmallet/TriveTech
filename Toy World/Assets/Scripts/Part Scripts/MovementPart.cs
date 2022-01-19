@@ -9,6 +9,8 @@ public class MovementPart : Part
 
     public float maxTorgue;
 
+    public float steeringAngle;
+
     public virtual void SwitchColliders()
     {
 
