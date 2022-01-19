@@ -23,6 +23,8 @@ public class DestructibleObject : MonoBehaviour
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
 
+                AudioManager._instance.Play(AudioManager._instance.breakDestructibleObject, GetComponent<AudioSource>());
+
                 collided = !collided;
             }
             else if (collision.GetComponent<OffensivePart>()==null &&rb.velocity.magnitude>= highDestructionSpeed)
@@ -31,6 +33,8 @@ public class DestructibleObject : MonoBehaviour
                 collision.GetComponent<Part>().TakeDamage(highPartDamage,collision);
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
+
+                AudioManager._instance.Play(AudioManager._instance.breakDestructibleObject, GetComponent<AudioSource>());
 
                 collided = !collided;
             }

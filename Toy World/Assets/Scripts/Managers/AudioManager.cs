@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -7,6 +8,10 @@ public class AudioManager : MonoBehaviour
 	public AudioSource MusicSource;
 
 	public static AudioManager _instance = null;
+
+	//public List<AudioClip> audioClips = new List<AudioClip>();
+
+	[HideInInspector]public AudioClip breakDestructibleObject;
 	
 
 	private void Awake()
@@ -20,11 +25,16 @@ public class AudioManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		DontDestroyOnLoad(gameObject);
+		//DontDestroyOnLoad(gameObject);
 
-
-
+		//audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
+		SetSounds();
 	}
+
+	private void SetSounds()
+    {
+		breakDestructibleObject = Resources.Load<AudioClip>("Sounds/BreakDestructibleObject");
+    }
 
 	/// <summary>
 	/// Play a single clip through the sound effects source.
