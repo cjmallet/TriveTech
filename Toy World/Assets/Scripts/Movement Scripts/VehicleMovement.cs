@@ -65,6 +65,7 @@ public class VehicleMovement : MonoBehaviour
             wheel.steering = false;
 
         wheel.maxMotorTorgue = part.maxTorgue;
+        wheel.maxSteering = part.steeringAngle;
         wheel.motor = true;
 
         wheelInfos.Add(wheel);
@@ -77,5 +78,6 @@ public class VehicleMovement : MonoBehaviour
         public bool motor; // Attached to motor?
         public bool steering; // Attached to steer angle?
         public float maxMotorTorgue;
+        public float maxSteering;
     }
 }

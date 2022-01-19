@@ -105,7 +105,7 @@ public class PartSelectionManager : MonoBehaviour
 
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
-        newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
+        newButton.transform.GetComponentInChildren<RawImage>().texture = (Texture)Resources.Load("UI/Images/"+part.name);
 
         EventTrigger trigger = newButton.AddComponent<EventTrigger>();
         EventTrigger.Entry enterEvent = new EventTrigger.Entry();
@@ -140,7 +140,7 @@ public class PartSelectionManager : MonoBehaviour
 
         if (part is MovementPart)
         {
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < 5; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
@@ -154,6 +154,9 @@ public class PartSelectionManager : MonoBehaviour
                         break;
                     case 3:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Torque: " + part.GetComponent<MovementPart>().maxTorgue;
+                        break;
+                    case 4:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering: " + part.GetComponent<MovementPart>().steeringAngle;
                         break;
                 }
 
