@@ -138,7 +138,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  attachablePoints: 010101010101
+  attachablePoints: 000001000000
   health: 15
   weight: 15
   floodFilled: 0
