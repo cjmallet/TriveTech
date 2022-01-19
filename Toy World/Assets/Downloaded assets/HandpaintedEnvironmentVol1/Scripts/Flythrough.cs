@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Flythrough : MonoBehaviour
 {
-    float lookSpeed = 1.0f;
+    //float lookSpeed = 1.0f;
     float moveSpeed = 0.07f;
 
-    float rotationX = 0.0f;
-    float rotationY = 0.0f;
+    //float rotationX = 0.0f;
+    //float rotationY = 0.0f;
     public GameObject sun;
     public Camera mycamera;
     private Quaternion baseSunTransform;
