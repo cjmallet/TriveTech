@@ -11,11 +11,6 @@ public class MovementPart : Part
 
     public float steeringAngle;
 
-    public virtual void SwitchColliders()
-    {
-
-    }
-
     public virtual void ApplyLocalPositionToVisuals()
     {
 

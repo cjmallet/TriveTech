@@ -426,7 +426,8 @@ MonoBehaviour:
   weight: 10
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
+  playModeCollider: {fileID: 375892016523241586}
+  buildModeCollider: {fileID: 5847884760756425979}
   maxTorgue: 100
   steeringAngle: 30
 --- !u!65 &5847884760756425979
