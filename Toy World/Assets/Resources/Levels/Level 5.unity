@@ -2239,7 +2239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -2976,7 +2976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -3525,7 +3525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -3722,7 +3722,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -3932,7 +3932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -4059,7 +4059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -4164,7 +4164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -4376,7 +4376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
@@ -4609,7 +4609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: distance
