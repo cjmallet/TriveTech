@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 1722046156691385017}
   - component: {fileID: 3459073008343866995}
   - component: {fileID: 2864444615148423900}
-  - component: {fileID: 8208211779640910609}
+  - component: {fileID: 5472153313512890875}
   - component: {fileID: 2472005105467639161}
   m_Layer: 3
-  m_Name: Testpart 1
-  m_TagString: Untagged
+  m_Name: LightHull
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 04594e28f03809449b4968e6a368ba2e, type: 2}
+  - {fileID: 2100000, guid: 1b77a93a8df4e174cae12f5a9521bd77, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,7 +99,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &8208211779640910609
+--- !u!65 &5472153313512890875
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -132,10 +132,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attachablePoints: 010101010101
-  health: 10
-  weight: 10
+  health: 5
+  weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
-  playModeCollider: {fileID: 8208211779640910609}
+  playModeCollider: {fileID: 5472153313512890875}
   buildModeCollider: {fileID: 2864444615148423900}
