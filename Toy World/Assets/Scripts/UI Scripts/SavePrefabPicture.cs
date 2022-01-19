@@ -13,11 +13,6 @@ public class SavePrefabPicture : MonoBehaviour
     {
         GameObject picturePrefab = GameObject.FindGameObjectWithTag("Part");
 
-        if (picturePrefab==null)
-        {
-            picturePrefab = GameObject.FindGameObjectWithTag("CoreBlock");
-        }
-
         Camera screenshotCam = GetComponent<Camera>();
         screenshotCam.targetTexture = RenderTexture.GetTemporary(Screen.width, Screen.height, 16);
         RenderTexture newRender = screenshotCam.targetTexture;
