@@ -199,6 +199,7 @@ public abstract class Part : MonoBehaviour
         transform.parent = null;
         gameObject.AddComponent<Rigidbody>();
         gameObject.GetComponent<Part>().ResetAction();
+        gameObject.layer = 0;
         Destroy(gameObject.GetComponent<Part>());
     }
 

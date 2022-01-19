@@ -117,9 +117,10 @@ public class VehicleEditor : MonoBehaviour
             EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
             EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
-
             coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
             coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
+
+            coreBlockPlayMode.GetComponent<PartGrid>().CheckConnection();
 
             mainCam.gameObject.SetActive(false);
             //grab vehiclecam again, because we have a new coreblock instance for playmode
