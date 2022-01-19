@@ -180,8 +180,8 @@ GameObject:
   - component: {fileID: 2864444615148423900}
   - component: {fileID: 2472005105467639161}
   m_Layer: 3
-  m_Name: Testpart 3
-  m_TagString: Untagged
+  m_Name: HeavyHull
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,7 +289,9 @@ MonoBehaviour:
   attachablePoints: 010101010101
   health: 15
   weight: 15
+  floodFilled: 0
   useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}
 --- !u!1 &6977598292174867740
 GameObject:
   m_ObjectHideFlags: 0

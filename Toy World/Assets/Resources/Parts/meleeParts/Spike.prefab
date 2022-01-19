@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2401642928218113381}
   m_Layer: 3
   m_Name: Spike
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,3 +122,4 @@ MonoBehaviour:
   weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}

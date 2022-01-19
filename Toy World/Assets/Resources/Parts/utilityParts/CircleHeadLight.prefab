@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 3280167102585765312}
   m_Layer: 3
   m_Name: CircleHeadLight
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -354,6 +354,7 @@ MonoBehaviour:
   weight: 2
   floodFilled: 0
   useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}
   actionType: 2
   specificActionType: 0
   lightBulb: {fileID: 8194517041491285172}

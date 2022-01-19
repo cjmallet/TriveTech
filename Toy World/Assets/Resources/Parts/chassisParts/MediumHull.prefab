@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2864444615148423900}
   - component: {fileID: 2472005105467639161}
   m_Layer: 3
-  m_Name: Testpart 2
-  m_TagString: Untagged
+  m_Name: MediumHull
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1b77a93a8df4e174cae12f5a9521bd77, type: 2}
+  - {fileID: 2100000, guid: 04594e28f03809449b4968e6a368ba2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,6 +118,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attachablePoints: 010101010101
-  health: 5
-  weight: 5
+  health: 10
+  weight: 10
+  floodFilled: 0
   useDirectionIndicator: 0
+  myDirectionIndicator: {fileID: 0}

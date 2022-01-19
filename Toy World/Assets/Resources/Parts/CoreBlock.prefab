@@ -329,6 +329,7 @@ MonoBehaviour:
   gridDimensions: {x: 15, y: 11, z: 15}
   coreBlockIndex: {x: 0, y: 0, z: 0}
   _boundingBox: {fileID: 0}
+  allParts: []
 --- !u!114 &2864444613395339373
 MonoBehaviour:
   m_ObjectHideFlags: 0
