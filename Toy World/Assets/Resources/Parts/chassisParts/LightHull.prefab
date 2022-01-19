@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 5472153313512890875}
   - component: {fileID: 2472005105467639161}
   m_Layer: 3
-  m_Name: Testpart 2
-  m_TagString: Untagged
+  m_Name: LightHull
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,6 +136,5 @@ MonoBehaviour:
   weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
-  myDirectionIndicator: {fileID: 0}
   playModeCollider: {fileID: 5472153313512890875}
   buildModeCollider: {fileID: 2864444615148423900}
