@@ -105,7 +105,7 @@ public class PartSelectionManager : MonoBehaviour
 
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
-        newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
+        newButton.transform.GetComponentInChildren<RawImage>().texture = (Texture)Resources.Load("UI/Images/"+part.name);
 
         EventTrigger trigger = newButton.AddComponent<EventTrigger>();
         EventTrigger.Entry enterEvent = new EventTrigger.Entry();
