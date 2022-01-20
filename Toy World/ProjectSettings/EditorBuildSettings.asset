@@ -22,12 +22,15 @@ EditorBuildSettings:
     guid: 0818ca070167b1044a3ddd34dbc2bf24
   - enabled: 1
     path: Assets/Resources/Levels/Level 5.unity
-    guid: ec91a529df804dc41bd311eb3e2f2022
+    guid: 34b17b98c43a5f444b589ef90bf8baad
   - enabled: 1
     path: Assets/Resources/Levels/Level 6.unity
-    guid: 12f69fa3fcc204f49a3d0336ccf40763
+    guid: ec91a529df804dc41bd311eb3e2f2022
   - enabled: 1
     path: Assets/Resources/Levels/Level 7.unity
+    guid: 12f69fa3fcc204f49a3d0336ccf40763
+  - enabled: 1
+    path: Assets/Resources/Levels/Level 8.unity
     guid: 7313870728b702e4f80af70662497343
   - enabled: 1
     path: Assets/Resources/Levels/Level 11.unity
