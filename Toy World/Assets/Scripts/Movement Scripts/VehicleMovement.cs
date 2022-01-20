@@ -9,20 +9,17 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class VehicleMovement : MonoBehaviour
 {
-    public List<MovementPart> movementParts = new List<MovementPart>();
     [HideInInspector]
     public List<Part> allParts = new List<Part>();
+    public List<WheelInfo> wheelInfos = new List<WheelInfo>();    
+    public float maxSteeringAngle;
+    private float motor, steering;
     private Rigidbody rigidBody;
-    private Vector3 eulerRot, movement;
-    public int movementSpeed { get; set; }
-    public int rotationSpeed { get; set; }
+    private Vector3 moveVector;
 
     private void OnEnable()
     {
         rigidBody = GetComponent<Rigidbody>();
-
-        movementSpeed = 0;
-        rotationSpeed = 0;
 
         if (allParts.Count != 0)
         {
@@ -33,74 +30,54 @@ public class VehicleMovement : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        movementSpeed = 0;
-        rotationSpeed = 0;
-
-        if (movementParts.Count != 0)
-        {
-            foreach (MovementPart part in movementParts)
-            {
-                part.grounded = false;
-            }
-        }
-    }
-
     private void FixedUpdate()
     {
-        rigidBody.AddRelativeForce(movement);
+        steering = maxSteeringAngle * moveVector.x;
 
-        Quaternion deltaRot = Quaternion.Euler(eulerRot * Time.fixedDeltaTime);
-        rigidBody.MoveRotation(rigidBody.rotation * deltaRot);
-
-        foreach (MovementPart part in movementParts)
+        foreach (WheelInfo wheelInfo in wheelInfos)
         {
-            if (part.IsGrounded() && !part.grounded)
+            if (wheelInfo.motor)
             {
-                movementSpeed += part.moveSpeed;
-                rotationSpeed += part.rotationSpeed;
-                part.grounded = true;
+                motor = wheelInfo.maxMotorTorgue * moveVector.z;
+                wheelInfo.wheel.motorTorque = motor;
             }
-            else if (!part.IsGrounded() && part.grounded)
+
+            if (wheelInfo.steering)
             {
-                movementSpeed -= part.moveSpeed;
-                rotationSpeed -= part.rotationSpeed;
-                part.grounded = false;
+                wheelInfo.wheel.steerAngle = steering;
             }
         }
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (enabled && context.performed)
-        {
-            movement = new Vector3(0, 0, context.ReadValue<Vector3>().z);
-            eulerRot = new Vector3(0, context.ReadValue<Vector3>().x, 0);
+        moveVector = context.ReadValue<Vector3>();
+    }
 
-            movement *= movementSpeed;
-            eulerRot *= rotationSpeed;
+    public void AddWheel(MovementPart part)
+    {
+        WheelInfo wheel = new WheelInfo();
+        wheel.wheel = part.gameObject.GetComponent<WheelCollider>();
 
-            if (eulerRot.y == 0)
-            {
-                foreach (MovementPart part in movementParts)
-                    part.NoTurning();
-            }
-            
-            if (movement.z == 0)
-            {
-                foreach (MovementPart part in movementParts)
-                    part.NoMoving();
-            }
-            
-            if (eulerRot.y != 0 || movement.z != 0)
-            {
-                foreach (MovementPart part in movementParts)
-                {
-                    part.VerticalMovement(moveAmount: movement.z / movementParts.Count);
-                    part.HorizontalMovement(turnAmount: eulerRot.y / movementParts.Count);
-                }
-            }
-        }
+        if (part.frontPart) // Steering wheel
+            wheel.steering = true;
+        else // Engine wheel
+            wheel.steering = false;
+
+        wheel.maxMotorTorgue = part.maxTorgue;
+        wheel.maxSteering = part.steeringAngle;
+        wheel.motor = true;
+
+        wheelInfos.Add(wheel);
+    }
+
+    [System.Serializable]
+    public class WheelInfo
+    {
+        public WheelCollider wheel;
+        public bool motor; // Attached to motor?
+        public bool steering; // Attached to steer angle?
+        public float maxMotorTorgue;
+        public float maxSteering;
     }
 }

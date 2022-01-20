@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2303121294138833713}
+  - component: {fileID: 7852081426024516970}
   - component: {fileID: 2234404771200642732}
   - component: {fileID: 2460585486966863856}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CubeHeadLight
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +35,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2234404771200642732
+--- !u!65 &7852081426024516970
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,6 +48,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2234404771200642732
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5395537486711516887}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.61725295}
+  m_Center: {x: 0, y: 0, z: -0.19137351}
 --- !u!114 &2460585486966863856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +80,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attachablePoints: 000000000100
   health: 5
-  weight: 0.1
-  useDirectionIndicator: 1
+  weight: 2
+  floodFilled: 0
+  useDirectionIndicator: 0
+  playModeCollider: {fileID: 2234404771200642732}
+  buildModeCollider: {fileID: 7852081426024516970}
+  actionType: 2
+  specificActionType: 0
+  lightBulb: {fileID: 8180325155698316892}
 --- !u!1 &8180325155683900324
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +101,7 @@ GameObject:
   - component: {fileID: 8180325155683900320}
   - component: {fileID: 8180325155683900323}
   - component: {fileID: 8180325155683900322}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CubeFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +185,7 @@ GameObject:
   - component: {fileID: 8180325155698316893}
   - component: {fileID: 8180325155698316891}
   - component: {fileID: 8180325155698316890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +269,7 @@ GameObject:
   - component: {fileID: 8180325156343058528}
   - component: {fileID: 8180325156343058542}
   - component: {fileID: 8180325156343058529}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -21,6 +21,7 @@ public class PartSelectionManager : MonoBehaviour
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
     public GameObject crossHair;
+    public GameObject popupWindow, statUI;
 
     //All lists for the UI categories
     private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
@@ -28,7 +29,6 @@ public class PartSelectionManager : MonoBehaviour
 
     private int categoryIndex;
     private EventSystem eventSystem;
-
 
     private void Awake()
     {
@@ -105,8 +105,119 @@ public class PartSelectionManager : MonoBehaviour
 
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
-        newButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = part.name;
-        newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+        newButton.transform.GetComponentInChildren<RawImage>().texture = (Texture)Resources.Load("UI/Images/"+part.name);
+
+        EventTrigger trigger = newButton.AddComponent<EventTrigger>();
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry();
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
+        EventTrigger.Entry clickEvent = new EventTrigger.Entry();
+        enterEvent.eventID = EventTriggerType.PointerEnter;
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        clickEvent.eventID = EventTriggerType.PointerClick;
+        enterEvent.callback.AddListener((data) => { OnHoverOverButton(part, (PointerEventData)data); });
+        exitEvent.callback.AddListener((data) => { OnHoverExitButton(part, (PointerEventData)data); });
+        clickEvent.callback.AddListener((data) => { OnHoverExitButton(part, (PointerEventData)data); });
+        trigger.triggers.Add(enterEvent);
+        trigger.triggers.Add(exitEvent);
+        trigger.triggers.Add(clickEvent);
+
+        if (part.name.Contains("Wheel"))
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); 
+                VehicleEditor._instance.ChangeActiveBuildState(); VehicleEditor._instance.ResetPreviewRotation();});
+        }
+        else
+        {
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+        }
+    }
+
+    public void OnHoverOverButton(GameObject partObject, PointerEventData data)
+    {
+        Part part = partObject.GetComponent<Part>();
+
+        popupWindow.transform.position = data.position;
+
+        if (part is MovementPart)
+        {
+            for (int i = 1; i < 5; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                    case 3:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Torque: " + part.GetComponent<MovementPart>().maxTorgue;
+                        break;
+                    case 4:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering: " + part.GetComponent<MovementPart>().steeringAngle;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        else if (part is BoostPart) // Im aware this is double, but that's because more stats might be added.
+        {
+            for (int i = 1; i < 4; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                    case 3:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Boost pwr: " + part.GetComponent<BoostPart>().boostStrenght;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            for (int i = 1; i < 3; i++)
+            {
+                Transform statObject = popupWindow.transform.GetChild(i);
+
+                switch (i)
+                {
+                    case 1:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        break;
+                    case 2:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        break;
+                }
+
+                statObject.gameObject.SetActive(true);
+            }
+        }
+        
+        if (!popupWindow.activeSelf)
+            popupWindow.SetActive(true);
+    }
+
+    public void OnHoverExitButton(GameObject part, PointerEventData data)
+    {
+        for (int i = 1; i < popupWindow.transform.childCount; i++)
+        {
+            popupWindow.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        if (popupWindow.activeSelf)
+            popupWindow.SetActive(false);
     }
 
     public void BuildButton(InputAction.CallbackContext context)
@@ -114,6 +225,10 @@ public class PartSelectionManager : MonoBehaviour
         if (context.performed)
         {
             VehicleEditor._instance.ChangeActiveBuildState();
+
+            if (popupWindow.activeSelf)
+                popupWindow.SetActive(false);
+
             ClosePartSelectionUI();
         }
     }
