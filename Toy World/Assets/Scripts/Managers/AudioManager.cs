@@ -9,9 +9,9 @@ public class AudioManager : MonoBehaviour
 
 	public static AudioManager _instance = null;
 
-	//public List<AudioClip> audioClips = new List<AudioClip>();
+	public List<AudioClip> audioClips = new List<AudioClip>();
 
-	[HideInInspector]public AudioClip breakDestructibleObject;
+	[HideInInspector]public AudioClip breakDestructibleObject, buttBoosterReady, buttBoost, LevelComplete;
 	
 
 	private void Awake()
@@ -27,8 +27,13 @@ public class AudioManager : MonoBehaviour
 
 		//DontDestroyOnLoad(gameObject);
 
-		//audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
-		SetSounds();
+		audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
+
+		foreach (AudioClip clip in audioClips)
+        {
+        }
+
+		//SetSounds();
 	}
 
 	private void SetSounds()
