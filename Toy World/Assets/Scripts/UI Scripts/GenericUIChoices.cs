@@ -17,6 +17,12 @@ public class GenericUIChoices : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        Time.timeScale = 1;
+
+        FPSCameraControllers.canRotate = false;
+
+        Cursor.lockState = CursorLockMode.None;
+
         SceneManager.LoadScene(sceneName);
     }
 }
