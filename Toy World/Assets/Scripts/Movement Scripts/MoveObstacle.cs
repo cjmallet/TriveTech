@@ -32,7 +32,7 @@ public class MoveObstacle : MonoBehaviour
                 transform.position = new Vector3(Mathf.Lerp(startPos.x, startPos.x - distance, t), startPos.y, startPos.z);
             }
 
-            t += 0.5f * Time.deltaTime;
+            t += (0.5f * Time.deltaTime)*speed;
         }
         //else if (active && (horizontal || vertical))
         //{
@@ -56,7 +56,7 @@ public class MoveObstacle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Contains("CoreBlock") || collision.gameObject.name.Contains("part") || collision.gameObject.name.Contains("Spike") || collision.gameObject.name.Contains("Butt"))
+        if (collision.gameObject.CompareTag("Part"))
         {
             StartCoroutine(IAmWalkingHere());
         }
