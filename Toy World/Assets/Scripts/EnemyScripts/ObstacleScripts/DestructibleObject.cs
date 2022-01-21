@@ -18,23 +18,23 @@ public class DestructibleObject : MonoBehaviour
 
             if (collision.GetComponent<OffensivePart>() != null&&rb.velocity.magnitude>=lowDestructionSpeed)
             {
+                AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, collision.GetComponent<AudioSource>());
+
                 rb.velocity *= 0.9f;
                 collision.GetComponent<Part>().TakeDamage(lowPartDamage, collision);
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);
 
-                AudioManager._instance.Play(AudioManager._instance.breakDestructibleObject, GetComponent<AudioSource>());
-
                 collided = !collided;
             }
             else if (collision.GetComponent<OffensivePart>()==null &&rb.velocity.magnitude>= highDestructionSpeed)
             {
+                AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, collision.GetComponentInParent<AudioSource>());
+
                 rb.velocity *= 0.5f;
                 collision.GetComponent<Part>().TakeDamage(highPartDamage,collision);
                 Instantiate(particles, transform.position, transform.rotation);
-                Destroy(transform.gameObject);
-
-                AudioManager._instance.Play(AudioManager._instance.breakDestructibleObject, GetComponent<AudioSource>());
+                Destroy(transform.gameObject);            
 
                 collided = !collided;
             }

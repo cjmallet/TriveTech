@@ -5,58 +5,67 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-	public AudioSource MusicSource;
+	//public AudioSource MusicSource;
 
-	public static AudioManager _instance = null;
+	public static AudioManager Instance = null;
 
-	public List<AudioClip> audioClips = new List<AudioClip>();
+	[HideInInspector]public List<AudioClip> audioClips = new List<AudioClip>();
 
-	[HideInInspector]public AudioClip breakDestructibleObject, buttBoosterReady, buttBoost, LevelComplete;
-	
+	public enum clips
+	{
+		BreakDestructibleObject,
+		ButtBoosterReady,
+		ButtBoost,
+		SpringSound,
+		PlacePart,
+		RemovePart,
+		PartDestruction,
+		MenuOpen,
+		MenuClose,
+		LevelComplete
+	};
 
 	private void Awake()
 	{
-		if (_instance == null)
+		if (Instance == null)
 		{
-			_instance = this;
+			Instance = this;
 		}
-		else if (_instance != this)
+		else if (Instance != this)
 		{
 			Destroy(gameObject);
 		}
 
-		//DontDestroyOnLoad(gameObject);
-
 		audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
-
-		foreach (AudioClip clip in audioClips)
-        {
-        }
-
-		//SetSounds();
 	}
-
-	private void SetSounds()
-    {
-		breakDestructibleObject = Resources.Load<AudioClip>("Sounds/BreakDestructibleObject");
-    }
 
 	/// <summary>
 	/// Play a single clip through the sound effects source.
 	/// </summary>	
-	public void Play(AudioClip clip, AudioSource source)
+	public void Play(clips clipName, AudioSource source)
 	{
-		source.clip = clip;
+		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
+
+		source.clip = toBePlayedClip;
 		source.Play();
 	}
 
 	/// <summary>
-	/// Play a single clip through the music source.
+	/// Stops the sounds played by the audio source.
 	/// </summary>
-	/// <param name="clip"></param>
-	public void PlayMusic(AudioClip clip)
+	/// <param name="source"></param>
+    public void Stop(AudioSource source)
+    {
+        source.Stop();
+    }
+
+    /// <summary>
+    /// Play a single clip through the music source.
+    /// </summary>
+    /// <param name="clip"></param>
+    public void PlayMusic(AudioClip clip)
 	{
-		MusicSource.clip = clip;
-		MusicSource.Play();
+		//MusicSource.clip = clip;
+		//MusicSource.Play();
 	}
 }

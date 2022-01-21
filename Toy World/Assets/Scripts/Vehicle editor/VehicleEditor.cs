@@ -220,10 +220,12 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (context.action.name == "PlaceClick" && context.performed)
                 {
+                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, mainCam.GetComponent<AudioSource>());
                     PlaceSelectedPart(hit);
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
                 {
+                    AudioManager.Instance.Play(AudioManager.clips.RemovePart, mainCam.GetComponent<AudioSource>());
                     DeleteSelectedPart(hit.transform);
                 }
                 else

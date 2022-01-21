@@ -14,6 +14,8 @@ public class JumpPart : UtilityPart
 
     public bool PlayAnimation { get; set; }
 
+    public AudioManager.clips jumpSound;
+
     private void FixedUpdate()
     {
         // Applies boost each frame while boost timer is still running,
@@ -53,6 +55,8 @@ public class JumpPart : UtilityPart
         RaycastHit surfaceHit;
         if (Physics.Raycast(transform.position, -transform.up, out surfaceHit, 0.8f, layermask))
         {
+            AudioManager.Instance.Play(jumpSound, GetComponent<AudioSource>());
+
             transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             FORCE_MULTIPLIER * jumpStrenght * transform.up, transform.position, ForceMode.Impulse);
         }

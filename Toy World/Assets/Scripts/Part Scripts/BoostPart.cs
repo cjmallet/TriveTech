@@ -24,6 +24,8 @@ public class BoostPart : UtilityPart
 
     private bool restart = false;
 
+    public AudioManager.clips boostReadyClip, boostSoundClip;
+
     private void FixedUpdate()
     {
         // Timer to check if booster can be used again
@@ -35,8 +37,12 @@ public class BoostPart : UtilityPart
         else if (!boostIsReady)
         {
             boostIsReady = true;
-            if(!restart)
+            if (!restart)
+            {
                 StartCoroutine(BoostReadyIndication());
+                AudioManager.Instance.Play(boostReadyClip, GetComponent<AudioSource>());
+            }
+                
         }
 
         // Applies boost each frame while boost timer is still running,
@@ -74,7 +80,11 @@ public class BoostPart : UtilityPart
     private void Boost()
     {
         if (!boostParticles.isPlaying)
+        {
             boostParticles.Play();
+            GetComponent<AudioSource>().loop = true;
+            AudioManager.Instance.Play(boostSoundClip, GetComponent<AudioSource>());
+        }
 
         transform.parent.GetComponent<Rigidbody>().AddForceAtPosition(
             -FORCE_MULTIPLIER * boostStrenght * transform.forward, transform.position, ForceMode.Force);
@@ -88,6 +98,8 @@ public class BoostPart : UtilityPart
     private void StopBoost()
     {
         boostParticles.Stop();
+        GetComponent<AudioSource>().loop = false;
+        GetComponent<AudioSource>().Stop();
         boostTimer = boostDurationSeconds;
         rechargeTimer = rechargeDurationSeconds;
     }
