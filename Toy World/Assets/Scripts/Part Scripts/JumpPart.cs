@@ -9,8 +9,8 @@ public class JumpPart : UtilityPart
 
     private bool jumpIsReady = true;
 
-    [SerializeField] [Range(0,3)]
-    private float jumpStrenght;
+    [Range(0,3)]
+    public float jumpStrenght;
 
     public bool PlayAnimation { get; set; }
 
