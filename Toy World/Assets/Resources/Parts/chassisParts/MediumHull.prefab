@@ -134,6 +134,7 @@ MonoBehaviour:
   attachablePoints: 010101010101
   health: 10
   weight: 10
+  description: Stone, the most basic buildblock.
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 8208211779640910609}

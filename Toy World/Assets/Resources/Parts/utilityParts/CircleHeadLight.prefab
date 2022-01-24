@@ -366,6 +366,7 @@ MonoBehaviour:
   attachablePoints: 000000000100
   health: 5
   weight: 5
+  description: Illuminate in a circle
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 8194517042181967628}

@@ -127,18 +127,21 @@ public class PartSelectionManager : MonoBehaviour
 
         popupWindow.transform.position = data.position;
 
-        for (int x=1; x<3;x++)
+        for (int x=0; x<4;x++)
         {
             Transform statObject = popupWindow.transform.GetChild(x);
 
             switch (x)
             {
-                case 1:
+                case 0:
+                    statObject.GetComponent<TextMeshProUGUI>().text = part.description;
+                    break;
+                case 2:
                     statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
                     statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
                     statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
                     break;
-                case 2:
+                case 3:
                     statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
                     statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate(part.weight / 15f);
                     statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.weight / 15f;
@@ -149,28 +152,28 @@ public class PartSelectionManager : MonoBehaviour
 
         if (part is MovementPart)
         {
-            for (int i = 1; i < 5; i++)
+            for (int i = 2; i < 6; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
                 switch (i)
                 {
-                    case 1:
+                    case 2:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
                         break;
-                    case 2:
+                    case 3:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate((part.weight - 5) / 15f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.weight - 5) / 15f;
                         break;
-                    case 3:
+                    case 4:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Acceleration";
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / 225f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / 225f;
                         break;
-                    case 4:
+                    case 5:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering";
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().steeringAngle-10) / 30f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().steeringAngle - 10) / 30f;
@@ -181,13 +184,13 @@ public class PartSelectionManager : MonoBehaviour
         }
         else if (part is BoostPart||part is JumpPart) // Im aware this is double, but that's because more stats might be added.
         {
-            for (int i = 3; i < 4; i++)
+            for (int i = 4; i < 5; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
                 switch (i)
                 {
-                    case 3:
+                    case 4:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power";
                         if (part is BoostPart)
                         {
