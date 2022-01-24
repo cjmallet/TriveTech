@@ -401,6 +401,7 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.SetActive(false);
     }
 
+
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
