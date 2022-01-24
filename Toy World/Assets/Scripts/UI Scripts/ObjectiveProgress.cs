@@ -12,7 +12,7 @@ public class ObjectiveProgress : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelManager = LevelManager.Instance;
+        levelManager = GameManager.Instance.levelManager;
         currentCargo = levelManager.cargoToSpawn;
         mainObjectiveTracker = transform.Find("MainGoalProgress").GetComponent<TextMeshProUGUI>();
 

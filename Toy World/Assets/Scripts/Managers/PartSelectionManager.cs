@@ -9,15 +9,6 @@ using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
-    private static PartSelectionManager instance;
-    public static PartSelectionManager _instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
     public GameObject crossHair;
@@ -29,12 +20,6 @@ public class PartSelectionManager : MonoBehaviour
 
     private int categoryIndex;
     private EventSystem eventSystem;
-
-    private void Awake()
-    {
-        if (instance == null) { instance = this; }
-        else { Destroy(this); }
-    }
 
     /// <summary>
     /// Initialize the Part selection UI and the button listeners
@@ -123,12 +108,12 @@ public class PartSelectionManager : MonoBehaviour
 
         if (part.name.Contains("Wheel"))
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); 
-                VehicleEditor._instance.ChangeActiveBuildState(); VehicleEditor._instance.ResetPreviewRotation();});
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
+                GameManager.Instance.vehicleEditor.ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});
         }
         else
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); GameManager.Instance.vehicleEditor.ChangeActiveBuildState(); });
         }
     }
 
@@ -224,7 +209,7 @@ public class PartSelectionManager : MonoBehaviour
     {
         if (context.performed)
         {
-            VehicleEditor._instance.ChangeActiveBuildState();
+            GameManager.Instance.vehicleEditor.ChangeActiveBuildState();
 
             if (popupWindow.activeSelf)
                 popupWindow.SetActive(false);
@@ -239,7 +224,7 @@ public class PartSelectionManager : MonoBehaviour
     /// <param name="chosenPart"></param>
     public void ChangeSelectedPart(GameObject chosenPart)
     {
-        VehicleEditor._instance.SetSelectedPart(chosenPart);
+        GameManager.Instance.vehicleEditor.SetSelectedPart(chosenPart);
     }
 
     public void ChangeCategory(string categoryName)

@@ -10,7 +10,7 @@ public class TriggerLevelStart : MonoBehaviour
     {
         if (!levelStarted && other.CompareTag("CoreBlock"))
         {
-            LevelManager.Instance.StartLevel();
+            GameManager.Instance.levelManager.StartLevel();
             levelStarted = true;
         }
     }
