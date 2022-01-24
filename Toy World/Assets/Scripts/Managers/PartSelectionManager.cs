@@ -152,7 +152,7 @@ public class PartSelectionManager : MonoBehaviour
 
         if (part is MovementPart)
         {
-            for (int i = 2; i < 6; i++)
+            for (int i = 2; i < 7; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
@@ -168,18 +168,21 @@ public class PartSelectionManager : MonoBehaviour
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate((part.weight - 5) / 15f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.weight - 5) / 15f;
                         break;
-                    case 4:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Acceleration";
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / 225f);
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / 225f;
-                        break;
                     case 5:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering";
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().steeringAngle-10) / 30f);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().steeringAngle - 10) / 30f;
                         break;
+                    case 6:
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Acceleration";
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / 225f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / 225f;
+                        break;
                 }
-                statObject.gameObject.SetActive(true);
+                if (i!=4)
+                {
+                    statObject.gameObject.SetActive(true);
+                }
             }
         }
         else if (part is BoostPart||part is JumpPart) // Im aware this is double, but that's because more stats might be added.

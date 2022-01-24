@@ -20,7 +20,9 @@ public class StatWindowUI : MonoBehaviour
             currentWeight += (int)part.weight;
 
             if (part is MovementPart)
+            {
                 currentTorque += (int)part.GetComponent<MovementPart>().maxTorgue;
+            }
         }
 
         foreach (Transform child in transform)
@@ -55,7 +57,6 @@ public class StatWindowUI : MonoBehaviour
     private void SetStat(GameObject stat)
     {
         Image image = stat.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-        TextMeshProUGUI text = stat.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
 
         if (currentWeight == 0)
             currentWeight = 10;
@@ -63,18 +64,19 @@ public class StatWindowUI : MonoBehaviour
         switch (stat.name)
         {
             case "Mass":
-                image.color = statGradient.Evaluate((float)currentWeight / 1000f);
-                text.text = currentWeight.ToString() + " kg";
+                float mass = (float)currentWeight / 1000f;
+                image.color = statGradient.Evaluate(mass);
+                image.transform.GetComponentInChildren<Image>().fillAmount= mass;
                 break;
-            case "Torque":
-                image.color = speedGradient.Evaluate((float)currentTorque / ((float)currentWeight * 10f)); // 2000 is max torque possible
-                text.text = currentTorque.ToString() + " nm";
+            case "Acceleration":
+                float acceleration = (float)currentTorque / ((float)currentWeight * 10f);
+                image.color = speedGradient.Evaluate(acceleration); // 2000 is max torque possible
+                image.transform.GetComponentInChildren<Image>().fillAmount = acceleration;
                 break;
-            case "TopSpeed":
-                float power = (currentTorque * 360f / 9.5488f); // torque * rpm * ?
-                float kmh = (power / currentWeight / 9.81f) * 3.6f;
-                image.color = speedGradient.Evaluate(kmh / 200);
-                text.text = kmh.ToString() + " km/h";
+            case "Speed":
+                float power = (float)(currentTorque / (currentWeight*5f));
+                image.color = speedGradient.Evaluate(power);
+                image.transform.GetComponentInChildren<Image>().fillAmount = power;
                 break;
             default:
                 // code
