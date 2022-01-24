@@ -9,7 +9,7 @@ public class ActivatePartActions : MonoBehaviour
     public List<Part> allParts;
     private List<OffensivePart> allOffensiveParts = new List<OffensivePart>();
     private List<DefensivePart> allDefensiveParts = new List<DefensivePart>();
-    private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
+    public List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
     /// <summary>
     /// Activates attack action for each offensive part on vehicle
