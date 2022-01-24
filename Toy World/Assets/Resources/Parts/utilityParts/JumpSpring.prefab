@@ -237,7 +237,7 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 000001000000
   health: 5
-  weight: 1
+  weight: 5
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 678811577352676575}

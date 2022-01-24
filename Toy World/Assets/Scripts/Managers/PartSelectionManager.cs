@@ -20,6 +20,7 @@ public class PartSelectionManager : MonoBehaviour
 
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
+    [SerializeField] private Gradient statGradient, weightGradient;
     public GameObject crossHair;
     public GameObject popupWindow, statUI;
 
@@ -126,6 +127,26 @@ public class PartSelectionManager : MonoBehaviour
 
         popupWindow.transform.position = data.position;
 
+        for (int x=1; x<3;x++)
+        {
+            Transform statObject = popupWindow.transform.GetChild(x);
+
+            switch (x)
+            {
+                case 1:
+                    statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
+                    break;
+                case 2:
+                    statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate(part.weight / 15f);
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.weight / 15f;
+                    break;
+            }
+            statObject.gameObject.SetActive(true);
+        }
+
         if (part is MovementPart)
         {
             for (int i = 1; i < 5; i++)
@@ -135,64 +156,57 @@ public class PartSelectionManager : MonoBehaviour
                 switch (i)
                 {
                     case 1:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
                         break;
                     case 2:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate((part.weight - 5) / 15f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.weight - 5) / 15f;
                         break;
                     case 3:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Torque: " + part.GetComponent<MovementPart>().maxTorgue;
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Acceleration";
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / 225f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / 225f;
                         break;
                     case 4:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering: " + part.GetComponent<MovementPart>().steeringAngle;
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering";
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().steeringAngle-10) / 30f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().steeringAngle - 10) / 30f;
                         break;
                 }
-
                 statObject.gameObject.SetActive(true);
             }
         }
-        else if (part is BoostPart) // Im aware this is double, but that's because more stats might be added.
+        else if (part is BoostPart||part is JumpPart) // Im aware this is double, but that's because more stats might be added.
         {
-            for (int i = 1; i < 4; i++)
+            for (int i = 3; i < 4; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
                 switch (i)
                 {
-                    case 1:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
-                        break;
-                    case 2:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
-                        break;
                     case 3:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Boost pwr: " + part.GetComponent<BoostPart>().boostStrenght;
-                        break;
+                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power";
+                        if (part is BoostPart)
+                        {
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<BoostPart>().boostStrenght / 3f);
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<BoostPart>().boostStrenght / 3f;
+                            break;
+                        }
+                        else
+                        {
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<JumpPart>().jumpStrenght / 3f);
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<JumpPart>().jumpStrenght / 3f;
+                            break;
+                        }
+                        
                 }
-
                 statObject.gameObject.SetActive(true);
             }
         }
-        else
-        {
-            for (int i = 1; i < 3; i++)
-            {
-                Transform statObject = popupWindow.transform.GetChild(i);
 
-                switch (i)
-                {
-                    case 1:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health: " + part.health;
-                        break;
-                    case 2:
-                        statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight: " + part.weight;
-                        break;
-                }
-
-                statObject.gameObject.SetActive(true);
-            }
-        }
-        
         if (!popupWindow.activeSelf)
             popupWindow.SetActive(true);
     }
