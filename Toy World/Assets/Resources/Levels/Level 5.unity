@@ -5497,7 +5497,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: statGradient.key1.g
-      value: 0.9861111
+      value: 0.3974151
       objectReference: {fileID: 0}
     - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: statGradient.key2.g
@@ -5541,7 +5541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: weightGradient.key1.g
-      value: 0.9861111
+      value: 0.39607847
       objectReference: {fileID: 0}
     - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: weightGradient.key2.g
