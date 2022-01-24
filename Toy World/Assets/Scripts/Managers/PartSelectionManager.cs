@@ -24,7 +24,7 @@ public class PartSelectionManager : MonoBehaviour
     public GameObject popupWindow, statUI;
 
     //All lists for the UI categories
-    private List<GameObject> movementParts, meleeParts, utilityParts, defenceParts, rangedParts, chassisParts;
+    private List<GameObject> movementParts, offensiveParts, utilityParts, chassisParts;
     private List<GameObject> categoryHolders = new List<GameObject>();
 
     private int categoryIndex;
@@ -55,28 +55,16 @@ public class PartSelectionManager : MonoBehaviour
             CreateButton(part, "Movement");
         }
 
-        meleeParts = LoadParts("meleeParts");
-        foreach (GameObject part in meleeParts)
+        offensiveParts = LoadParts("offensiveParts");
+        foreach (GameObject part in offensiveParts)
         {
-            CreateButton(part, "Melee");
+            CreateButton(part, "Offensive");
         }
 
         utilityParts = LoadParts("utilityParts");
         foreach (GameObject part in utilityParts)
         {
             CreateButton(part, "Utility");
-        }
-
-        defenceParts = LoadParts("defenceParts");
-        foreach (GameObject part in defenceParts)
-        {
-            CreateButton(part, "Defence");
-        }
-
-        rangedParts = LoadParts("rangedParts");
-        foreach (GameObject part in rangedParts)
-        {
-            CreateButton(part, "Ranged");
         }
 
         chassisParts = LoadParts("chassisParts");
