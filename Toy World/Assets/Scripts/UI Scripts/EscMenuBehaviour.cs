@@ -44,8 +44,9 @@ public class EscMenuBehaviour : MonoBehaviour
     public void Restart()
     {
         if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing) //restart the level if playing
-        {            
+        {
             StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Building;
             Resume();
         }
         else  //discard the created vehicle

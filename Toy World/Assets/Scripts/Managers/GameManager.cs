@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
         //set the static instance
         if (instance == null) { instance = this; }
         else { Destroy(this); }
+
+        Cursor.lockState = CursorLockMode.None; // Always start the game with the mouse unlocked.
     }
 
     public VehicleEditor vehicleEditor;

@@ -14,16 +14,10 @@ public class VehicleEditor : MonoBehaviour
     private PartGrid partGrid;
 
     private GameObject previewedPart;
-    private Camera mainCam;
 
     private int vCount;
 
     public Camera vehicleCam;
-
-    [SerializeField]
-    private PlayerInput playerInput;
-
-    public TextMeshProUGUI RestartText;
 
     private GameObject statWindow;
 
@@ -34,10 +28,9 @@ public class VehicleEditor : MonoBehaviour
         coreBlock = DDOL.Instance.P1Coreblock;
         coreBlock.SetActive(true);
         partGrid = coreBlock.GetComponent<PartGrid>();
-        statWindow = GameObject.Find("StatWindow");
-        playerInput.SwitchCurrentActionMap("UI");
+        statWindow = GameObject.Find("StatWindow");        
         SetSelectedPart(selectedPart);
-        mainCam = Camera.main;
+        
         if (vehicleCam == null)
         {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
@@ -49,6 +42,18 @@ public class VehicleEditor : MonoBehaviour
 
     public void PrepareVehicle()
     {
+        DestroyImmediate(previewedPart);
+
+        if (statWindow == null)
+        {
+            statWindow = GameObject.Find("StatWindow");
+            statWindow.SetActive(false);
+        }
+        else
+            statWindow.SetActive(false);
+
+        coreBlock.SetActive(false); //OG coreblock is disabled until back in build mode
+
         //make a copy of the coreblock for playmode
         coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
 
@@ -98,40 +103,8 @@ public class VehicleEditor : MonoBehaviour
         //grab vehiclecam again, because we have a new coreblock instance for playmode
         vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
         vehicleCam.enabled = true;
-    }
 
-    public void Play()
-    {
-        GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Playing;
-
-        Destroy(previewedPart);       
-
-        EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
-        EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;       
-
-        mainCam.gameObject.SetActive(false);        
-
-        coreBlock.SetActive(false);//OG coreblock is disabled until back in build mode
-
-        if (GameManager.Instance.partSelectionManager.buildUIOpen)
-        {
-            GameManager.Instance.partSelectionManager.ClosePartSelectionUI();
-            GameManager.Instance.partSelectionManager.ChangeActiveBuildState();
-        }
-
-        if (statWindow == null)
-        {
-            statWindow = GameObject.Find("StatWindow");
-            statWindow.SetActive(false);
-        }
-        else
-            statWindow.SetActive(false);
-
-        GameManager.Instance.partSelectionManager.crossHair.SetActive(false);
-
-        RestartText.text = "Restart";
-
-        playerInput.SwitchCurrentActionMap("Player");
+        coreBlockPlayMode.SetActive(true);
     }
 
     public void PlacePart(InputAction.CallbackContext context)
@@ -152,7 +125,7 @@ public class VehicleEditor : MonoBehaviour
                 PreviewPart(hit);//assuming box colliders
             }
         }
-        else if (previewedPart.activeSelf)
+        else if (previewedPart != null && previewedPart.activeSelf)
         {
             previewedPart.SetActive(false);
         }
@@ -332,10 +305,14 @@ public class VehicleEditor : MonoBehaviour
     /// <returns>RaycastHit</returns>
     RaycastHit RaycastMousePosition()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        if (Camera.main != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-        Physics.Raycast(ray, out hit, 200);
-        return hit;
+            Physics.Raycast(ray, out hit, 200);
+            return hit;
+        }
+        return new RaycastHit(); // fake
     }
 }
