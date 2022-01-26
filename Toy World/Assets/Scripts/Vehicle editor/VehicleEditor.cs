@@ -431,6 +431,11 @@ public class VehicleEditor : MonoBehaviour
         partRotation.eulerAngles = Vector3.zero;
     }
 
+    public void RemovePreviewPart()
+    {
+        Destroy(previewedPart);
+    }
+
     /// <summary>
     /// send a raycast from the mouse position 
     /// </summary>

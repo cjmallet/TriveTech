@@ -14,9 +14,6 @@ public class EscMenuBehaviour : MonoBehaviour
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
 
-    private Vector3 coreBlockPositionStart;
-    private Quaternion coreBlockRotationStart;
-
     public void Pause()
     {
         if(VehicleEditor._instance.coreBlockPlayMode != null)
@@ -96,11 +93,16 @@ public class EscMenuBehaviour : MonoBehaviour
         }
     }
 
+    public void RemoveButton()
+    {
+        VehicleEditor._instance.RemovePreviewPart();
+    } 
+
     private IEnumerator LoadScene(string sceneName)
     {
         // Start loading the scene
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-       
+
         if (FPSCameraControllers.canRotate)
         {
             FPSCameraControllers.canRotate = false;
