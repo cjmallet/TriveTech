@@ -135,6 +135,7 @@ MonoBehaviour:
   attachablePoints: 000000000100
   health: 10
   weight: 5
+  description: Smashes objects easily and survives more hits.
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 6980316278458715077}

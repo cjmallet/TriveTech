@@ -272,11 +272,11 @@ public class VehicleEditor : MonoBehaviour
 
         if (CheckPlacementValidity(hit))
         {
-            previewedPart.transform.localScale = Vector3.one;
+            previewedPart.GetComponent<PreviewPart>().SetMaterialColor(true);
         }
         else
         {
-            previewedPart.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+            previewedPart.GetComponent<PreviewPart>().SetMaterialColor(false);
 
         }
     }
@@ -287,6 +287,7 @@ public class VehicleEditor : MonoBehaviour
         //instantiate the selected part for previewing
         Destroy(previewedPart);
         previewedPart = Instantiate(selectedPart, coreBlock.transform);
+        previewedPart.AddComponent<PreviewPart>();
         if (previewedPart.TryGetComponent(out Collider col))
         {
             col.enabled = false;

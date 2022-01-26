@@ -237,7 +237,8 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 000001000000
   health: 5
-  weight: 1
+  weight: 5
+  description: Jump over any problem in your way
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 678811577352676575}

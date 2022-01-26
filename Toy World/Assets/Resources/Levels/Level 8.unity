@@ -4376,7 +4376,7 @@ GameObject:
   - component: {fileID: 2016841380}
   m_Layer: 0
   m_Name: Street
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4882,6 +4882,90 @@ PrefabInstance:
       propertyPath: partSelectionCanvas
       value: 
       objectReference: {fileID: 6615035262857608099}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.ctime0
+      value: 22937
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.ctime1
+      value: 45875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key1.g
+      value: 0.3974151
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.key2.r
+      value: 0.21765637
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.ctime0
+      value: 22937
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.ctime1
+      value: 45875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.ctime2
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.key0.r
+      value: 0.21960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.key1.g
+      value: 0.39607847
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.key2.r
+      value: 0.9921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: statGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1293045213262484854, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
+      propertyPath: weightGradient.m_NumColorKeys
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3828433661511721277, guid: ce338ca5f81a3634b8cc3584d36eecb9, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -6059,6 +6143,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2068050390}
+    - target: {fileID: 7684428198680018396, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Offensive
+      objectReference: {fileID: 0}
     - target: {fileID: 7805784324929746553, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

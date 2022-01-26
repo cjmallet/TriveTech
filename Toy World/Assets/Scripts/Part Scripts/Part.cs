@@ -15,6 +15,7 @@ public abstract class Part : MonoBehaviour
 
     public int health;
     public float weight;
+    public string description;
 
     public int Width { get; }
     public int Height { get; }
