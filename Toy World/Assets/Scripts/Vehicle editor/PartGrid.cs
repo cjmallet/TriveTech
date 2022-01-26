@@ -400,11 +400,7 @@ public class PartGrid : MonoBehaviour
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxH = gridDimensions.y;
         boundingBoxAndArrow.GetComponent<BoundingBoxAndArrow>().boxL = gridDimensions.z;
 
-        Debug.Log(transform.position);
-
         _boundingBox = Instantiate(Resources.Load("BoundingBoxWithDirectionArrow") as GameObject, transform);
-       
-        Debug.Log(_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f);
 
         _boundingBox.transform.position = new Vector3(transform.position.x - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f),
                                                      transform.position.y - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH * 0.5f),

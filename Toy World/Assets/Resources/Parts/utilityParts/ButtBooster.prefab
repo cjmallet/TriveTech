@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7741658342606787848}
   - component: {fileID: 6415754975100537024}
   - component: {fileID: -3412863804972470142}
+  - component: {fileID: 6597778181677201141}
   m_Layer: 3
   m_Name: ButtBooster
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,15 +70,32 @@ MonoBehaviour:
   - {fileID: 0}
   attachablePoints: 000000000100
   health: 5
-  weight: 1
+  weight: 5
+  description: Flatulation working in your favor.
   floodFilled: 0
   useDirectionIndicator: 0
+  playModeCollider: {fileID: 6597778181677201141}
+  buildModeCollider: {fileID: 6415754975100537024}
   actionType: 0
   specificActionType: 0
   rechargeDurationSeconds: 10
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
   boostStrenght: 1
+--- !u!136 &6597778181677201141
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035843253155779272}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.41683507
+  m_Height: 0.987841
+  m_Direction: 0
+  m_Center: {x: 0.0007022321, y: -0.0086147785, z: -0.53224456}
 --- !u!1001 &2446425495274698624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115,15 +133,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2446425495241298960, guid: 6b1801cde56e4d74d8896bdf071209c0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2446425495241298960, guid: 6b1801cde56e4d74d8896bdf071209c0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2446425495241298960, guid: 6b1801cde56e4d74d8896bdf071209c0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2446425495241298960, guid: 6b1801cde56e4d74d8896bdf071209c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

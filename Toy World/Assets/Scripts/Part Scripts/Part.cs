@@ -15,6 +15,7 @@ public abstract class Part : MonoBehaviour
 
     public int health;
     public float weight;
+    public string description;
 
     public int Width { get; }
     public int Height { get; }
@@ -24,7 +25,10 @@ public abstract class Part : MonoBehaviour
     //! Arrow object/mesh that is used to indicate the front direction
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
-    public GameObject myDirectionIndicator;
+    private GameObject myDirectionIndicator;
+
+    //! Colliders to switch between
+    public Collider playModeCollider, buildModeCollider;
 
     private const int SIDES = 6;
 
@@ -201,6 +205,15 @@ public abstract class Part : MonoBehaviour
         gameObject.GetComponent<Part>().ResetAction();
         gameObject.layer = 0;
         Destroy(gameObject.GetComponent<Part>());
+    }
+
+    /// <summary>
+    /// Switches colliders between the one used in playmode and the one used to build (1 by 1 boxes)
+    /// </summary>
+    public virtual void SwitchColliders()
+    {
+        buildModeCollider.enabled = !buildModeCollider.enabled;
+        playModeCollider.enabled = !playModeCollider.enabled;
     }
 
     /// <summary>

@@ -105,8 +105,8 @@ public class VehicleEditor : MonoBehaviour
                     else
                         vehiclePart.GetComponent<MovementPart>().frontPart = false;
                     coreBlockPlayMode.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
-                    vehiclePart.GetComponent<MovementPart>().SwitchColliders();
                 }
+                vehiclePart.SwitchColliders();
 
                 // Remove direction indication
                 if (vehiclePart.useDirectionIndicator)
