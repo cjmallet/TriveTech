@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;
-    [SerializeField] private TextMeshProUGUI testText;
 
     private GameObject contentHolder;
     private List<UnityEngine.Object> levels= new List<UnityEngine.Object>();
@@ -47,6 +46,7 @@ public class MainMenu : MonoBehaviour
             button.transform.localScale = new Vector3(1, 1, 1);
             button.name = levelName;
             button.GetComponentInChildren<TextMeshProUGUI>().text = levelName;
+            //button.GetComponent<Image>().sprite=(Sprite)Resources.Load("UI/"+levelName,typeof(Sprite));
             button.GetComponent<Button>().onClick.AddListener(() => { button.GetComponent<GenericUIChoices>().LoadScene(levelName); });
 
             //If the level has been completed

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 using UnityEngine.SceneManagement;
 
@@ -23,6 +22,5 @@ public class SavePrefabPicture : MonoBehaviour
 
         byte[] textureBytes = readableTexture.EncodeToPNG();
         File.WriteAllBytes("Assets/Resources/UI/Images/"+picturePrefab.name+".PNG", textureBytes);
-        AssetDatabase.Refresh();
     }
 }

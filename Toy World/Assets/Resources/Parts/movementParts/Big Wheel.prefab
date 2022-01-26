@@ -203,8 +203,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attachablePoints: 000001000000
-  health: 20
+  health: 15
   weight: 20
+  description: BIG WHEEL
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 202751778}

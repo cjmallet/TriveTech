@@ -12,7 +12,7 @@ public class DestructibleObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (!collided && collision.CompareTag("CoreBlock"))
+        if (!collided && collision.CompareTag("Part"))
         {
             Rigidbody rb = collision.transform.GetComponentInParent<Rigidbody>();
 

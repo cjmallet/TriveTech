@@ -139,8 +139,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attachablePoints: 000001000000
-  health: 15
+  health: 10
   weight: 15
+  description: Old wooden wheel that isn't special
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 3034447777157267235}
