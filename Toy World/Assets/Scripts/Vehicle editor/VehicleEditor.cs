@@ -14,7 +14,6 @@ public class VehicleEditor : MonoBehaviour
     private PartGrid partGrid;
 
     private GameObject previewedPart;
-    public bool buildUIOpen = true;
     private Camera mainCam;
 
     private int vCount;
@@ -48,11 +47,8 @@ public class VehicleEditor : MonoBehaviour
         statWindow.GetComponent<StatWindowUI>().SetupAllParts();
     }
 
-    public void Play()
+    public void PrepareVehicle()
     {
-        GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Playing;
-
-        Destroy(previewedPart);
         //make a copy of the coreblock for playmode
         coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
 
@@ -60,24 +56,20 @@ public class VehicleEditor : MonoBehaviour
         if (coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
             coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
-        coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
-        coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);
-
-        // Fill parts lists needed for other scripts
         if (parts.Count != 0)
             parts.Clear();
 
-        parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
+        coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
+        coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);        
+
         parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
         coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
-        statWindow.GetComponent<StatWindowUI>().allParts = parts;
-        coreBlockPlayMode.GetComponent<ActivatePartActions>().allParts = parts;
-        coreBlockPlayMode.GetComponent<ActivatePartActions>().CategorizePartsInList();
-        coreBlockPlayMode.GetComponent<ActivatePartActions>().SetSpecificActionType();
+        coreBlockPlayMode.GetComponent<ActivatePartActions>().CategorizePartsInList(parts);
 
         coreBlockPlayMode.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         coreBlockPlayMode.GetComponent<Rigidbody>().mass = 0f;
         coreBlockPlayMode.GetComponent<Rigidbody>().drag = 0.5f;
+
         // Remove direction indication
         foreach (Part vehiclePart in parts)
         {
@@ -98,26 +90,33 @@ public class VehicleEditor : MonoBehaviour
                 vehiclePart.ToggleDirectionIndicator(false);
             }
         }
-        EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
-        EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
         coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
         coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
-
         coreBlockPlayMode.GetComponent<PartGrid>().CheckConnection();
 
-        mainCam.gameObject.SetActive(false);
         //grab vehiclecam again, because we have a new coreblock instance for playmode
         vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
         vehicleCam.enabled = true;
+    }
+
+    public void Play()
+    {
+        GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Playing;
+
+        Destroy(previewedPart);       
+
+        EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
+        EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;       
+
+        mainCam.gameObject.SetActive(false);        
 
         coreBlock.SetActive(false);//OG coreblock is disabled until back in build mode
 
-
-        if (buildUIOpen)
+        if (GameManager.Instance.partSelectionManager.buildUIOpen)
         {
             GameManager.Instance.partSelectionManager.ClosePartSelectionUI();
-            ChangeActiveBuildState();
+            GameManager.Instance.partSelectionManager.ChangeActiveBuildState();
         }
 
         if (statWindow == null)
@@ -130,8 +129,6 @@ public class VehicleEditor : MonoBehaviour
 
         GameManager.Instance.partSelectionManager.crossHair.SetActive(false);
 
-        //partGrid.ToggleTempBoundingBox(false);
-
         RestartText.text = "Restart";
 
         playerInput.SwitchCurrentActionMap("Player");
@@ -140,7 +137,7 @@ public class VehicleEditor : MonoBehaviour
     public void PlacePart(InputAction.CallbackContext context)
     {
         RaycastHit hit = RaycastMousePosition();
-        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
+        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !GameManager.Instance.partSelectionManager.buildUIOpen)
         {
             if (context.action.name == "PlaceClick" && context.performed)
             {
@@ -322,19 +319,6 @@ public class VehicleEditor : MonoBehaviour
             col.enabled = false;
         }
         previewedPart.SetActive(false);
-    }
-
-    public void ChangeActiveBuildState()
-    {
-        buildUIOpen = !buildUIOpen;
-        if (buildUIOpen)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
     }
 
     public void ResetPreviewRotation()

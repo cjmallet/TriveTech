@@ -1009,8 +1009,6 @@ MonoBehaviour:
   coreBlock: {fileID: 0}
   coreBlockPlayMode: {fileID: 0}
   selectedPart: {fileID: 3099009681357930406, guid: b5235ee28d97d2c49b8f83f0fa3df775, type: 3}
-  playan: 0
-  buildUIOpen: 1
   vehicleCam: {fileID: 0}
   playerInput: {fileID: 1832821646}
   RestartText: {fileID: 611104555513570321}
@@ -3629,7 +3627,7 @@ MonoBehaviour:
       - m_Target: {fileID: 521375684}
         m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
         m_MethodName: Play
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4399,6 +4397,7 @@ MonoBehaviour:
   crossHair: {fileID: 4686433354019395165}
   popupWindow: {fileID: 1772950356}
   statUI: {fileID: 0}
+  buildUIOpen: 1
 --- !u!4 &2652767397258261255
 Transform:
   m_ObjectHideFlags: 0
@@ -4786,6 +4785,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5288080775217031948, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5288080775217031948, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764714323903551173, guid: ce5aed886770fdf43ad1a4a82d097350, type: 3}

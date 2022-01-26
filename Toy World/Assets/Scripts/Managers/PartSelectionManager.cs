@@ -21,6 +21,9 @@ public class PartSelectionManager : MonoBehaviour
     private int categoryIndex;
     private EventSystem eventSystem;
 
+    [HideInInspector]
+    public bool buildUIOpen = true;
+
     /// <summary>
     /// Initialize the Part selection UI and the button listeners
     /// </summary>
@@ -109,11 +112,11 @@ public class PartSelectionManager : MonoBehaviour
         if (part.name.Contains("Wheel"))
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
-                GameManager.Instance.vehicleEditor.ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});
+                ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});
         }
         else
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); GameManager.Instance.vehicleEditor.ChangeActiveBuildState(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); ChangeActiveBuildState(); });
         }
     }
 
@@ -209,12 +212,25 @@ public class PartSelectionManager : MonoBehaviour
     {
         if (context.performed)
         {
-            GameManager.Instance.vehicleEditor.ChangeActiveBuildState();
+            ChangeActiveBuildState();
 
             if (popupWindow.activeSelf)
                 popupWindow.SetActive(false);
 
             ClosePartSelectionUI();
+        }
+    }
+
+    public void ChangeActiveBuildState()
+    {
+        buildUIOpen = !buildUIOpen;
+        if (buildUIOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

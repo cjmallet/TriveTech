@@ -28,7 +28,7 @@ public class EscMenuBehaviour : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (!GameManager.Instance.vehicleEditor.buildUIOpen)
+        if (!GameManager.Instance.partSelectionManager.buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }

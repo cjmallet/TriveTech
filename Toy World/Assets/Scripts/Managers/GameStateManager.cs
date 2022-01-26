@@ -22,7 +22,8 @@ public class GameStateManager : MonoBehaviour
 
     private void SwitchState(GameState previousState, GameState nextState)
     {
-
+        if (nextState == GameState.Playing && previousState == GameState.Building)
+            GameManager.Instance.vehicleEditor.PrepareVehicle();
     }
 
     public enum GameState : int
