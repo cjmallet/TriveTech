@@ -16,8 +16,8 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Pause()
     {
-        if(VehicleEditor._instance.coreBlockPlayMode != null)
-            playerInput = VehicleEditor._instance.coreBlockPlayMode.GetComponent<PlayerInput>();
+        if (GameManager.Instance.vehicleEditor.coreBlockPlayMode != null)
+            playerInput = GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>();
         escMenu.SetActive(true);
         playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
@@ -28,14 +28,14 @@ public class EscMenuBehaviour : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        if (VehicleEditor._instance.playan || !VehicleEditor._instance.buildUIOpen)
+        if (!GameManager.Instance.partSelectionManager.buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
-        }  
+        }
 
         playerInput.actions.Enable();
         escMenu.SetActive(false);
@@ -43,23 +43,23 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Restart()
     {
-        if (VehicleEditor._instance.playan) //restart the level if playing
-        {            
+        if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing) //restart the level if playing
+        {
             StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Building;
             Resume();
-            Cursor.lockState = CursorLockMode.None;
         }
         else  //discard the created vehicle
         {
-            VehicleEditor._instance.DeleteAllParts();
+            GameManager.Instance.vehicleEditor.DeleteAllParts();
             Resume();
         }
     }
 
-    public void RemoveButton()
+    public void RemovePreview()
     {
-        VehicleEditor._instance.RemovePreviewPart();
-    } 
+        GameManager.Instance.vehicleEditor.RemovePreviewPart();
+    }
 
     private IEnumerator LoadScene(string sceneName)
     {

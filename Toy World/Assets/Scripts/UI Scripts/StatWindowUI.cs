@@ -14,7 +14,6 @@ public class StatWindowUI : MonoBehaviour
 
     public void SetupAllParts()
     {
-        Debug.Log(allParts.Count);
         foreach (Part part in allParts)
         {
             currentWeight += (int)part.weight;

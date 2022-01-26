@@ -12,30 +12,33 @@ EditorBuildSettings:
     path: Assets/Resources/Levels/Level 1.unity
     guid: f84c5370fcc580044bcbf5b758150636
   - enabled: 1
-    path: Assets/Resources/Levels/2 - old.unity
-    guid: ce8372cbca30ba44e9b208c49d315969
+    path: Assets/Resources/Levels/Level 2.unity
+    guid: 977c99e80f31685489d503bc99bad81b
   - enabled: 1
-    path: Assets/Resources/Levels/3 - old.unity
-    guid: 0818ca070167b1044a3ddd34dbc2bf24
+    path: Assets/Resources/Levels/Level 3.unity
+    guid: ad69eb51e5228a04cb84ead567f70f74
   - enabled: 1
-    path: Assets/Resources/Levels/5 - old.unity
-    guid: 34b17b98c43a5f444b589ef90bf8baad
+    path: Assets/Resources/Levels/Level 4.unity
+    guid: 031293f25437dc0438910f873f09fd7d
+  - enabled: 0
+    path: Assets/Resources/Levels/def5.unity
+    guid: 4c968a683d168844f826920b418f5db2
+  - enabled: 0
+    path: Assets/Resources/Levels/def6.unity
+    guid: 138c84805b387bf408c963c422e82f6f
+  - enabled: 0
+    path: Assets/Resources/Levels/def7.unity
+    guid: 51bd97ebfe36937498c02dc2e913c45f
   - enabled: 1
-    path: Assets/Resources/Levels/6 - old.unity
-    guid: 590df4f75e7a2f24ab781287a82933b2
+    path: Assets/Resources/Levels/def8.unity
+    guid: 12c551fe0934ba547bc531dce76facd6
   - enabled: 1
-    path: Assets/Resources/Levels/4 - old.unity
-    guid: ec91a529df804dc41bd311eb3e2f2022
+    path: Assets/Resources/Levels/def9.unity
+    guid: 30b1251b05d34104b9fff888f883bde7
   - enabled: 1
-    path: Assets/Resources/Levels/8 - old.unity
-    guid: cea3975caceac5846bd5ac18b6df8ba6
+    path: Assets/Resources/Levels/def10.unity
+    guid: 8b03b1096d49ee445bd8fd557aa08ee1
   - enabled: 1
-    path: Assets/Resources/Levels/9 - old.unity
-    guid: 7313870728b702e4f80af70662497343
-  - enabled: 1
-    path: Assets/Resources/Levels/10 - old.unity
-    guid: a287cbfb075b929499cfe3bec51783c6
-  - enabled: 1
-    path: Assets/Resources/Levels/7 - old.unity
-    guid: f611698cbf4a6324990fa3863222a006
+    path: Assets/Resources/Levels/def11.unity
+    guid: 04a4b0529f54c4b4fa32722b25112158
   m_configObjects: {}
