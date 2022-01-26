@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
         {
             if (collectedCargo >= cargoCompletionAmount)
             {
-                AudioManager.Instance.Play(AudioManager.clips.LevelComplete, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
+                AudioManager.Instance.Play(AudioManager.clips.LevelComplete, FindObjectOfType<CorePart>().GetComponent<AudioSource>());
                 OpenEndScreen("You Finished!\nCargo:" + collectedCargo + "/" + cargoToSpawn + "\nTime left: " + (int)(timeLevelCompletion - timer));
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
             }

@@ -18,7 +18,7 @@ public class DestructibleObject : MonoBehaviour
 
             if (collision.GetComponent<OffensivePart>() != null&&rb.velocity.magnitude>=lowDestructionSpeed)
             {
-                AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, collision.GetComponent<AudioSource>());
+                HandleDestructionSound();
 
                 rb.velocity *= 0.9f;
                 collision.GetComponent<Part>().TakeDamage(lowPartDamage, collision);
@@ -29,10 +29,10 @@ public class DestructibleObject : MonoBehaviour
             }
             else if (collision.GetComponent<OffensivePart>()==null &&rb.velocity.magnitude>= highDestructionSpeed)
             {
-                AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, collision.GetComponentInParent<AudioSource>());
+                HandleDestructionSound();
 
                 rb.velocity *= 0.5f;
-                collision.GetComponent<Part>().TakeDamage(highPartDamage,collision);
+                collision.GetComponent<Part>().TakeDamage(highPartDamage, collision);
                 Instantiate(particles, transform.position, transform.rotation);
                 Destroy(transform.gameObject);            
 
@@ -49,4 +49,13 @@ public class DestructibleObject : MonoBehaviour
     {
         collideBox.enabled = false;
     }
+
+    private void HandleDestructionSound()
+    {
+        GameObject audioSource = AudioManager.Instance.GetPooledAudioSourceObject();
+        audioSource.transform.localPosition = gameObject.transform.position;
+        audioSource.SetActive(true);
+
+        AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, audioSource.GetComponent<AudioSource>());
+    }  
 }

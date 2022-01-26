@@ -206,6 +206,7 @@ public abstract class Part : MonoBehaviour
         gameObject.AddComponent<Rigidbody>();
         gameObject.GetComponent<Part>().ResetAction();
         gameObject.layer = 0;
+        gameObject.tag = "Untagged";
         Destroy(gameObject.GetComponent<Part>());
     }
 
