@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
 	public static AudioManager Instance = null;
 
 	[HideInInspector]public List<AudioClip> audioClips = new List<AudioClip>();
-	private ActivatePartActions coreBlock;
+	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
 
@@ -39,12 +39,8 @@ public class AudioManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-	}
 
-    private void Start()
-    {
 		audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
-		coreBlock = FindObjectsOfType<ActivatePartActions>().First();	
 	}
 
     /// <summary>
@@ -52,20 +48,21 @@ public class AudioManager : MonoBehaviour
     /// </summary>	
     public void Play(clips clipName, AudioSource source)
 	{
+		// Checks the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
 		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
 
+		coreBlock = GameObject.FindWithTag("CoreBlock");
+
 		if (allUtilityParts.Count == 0)
-		allUtilityParts = coreBlock.allUtilityParts;
+		allUtilityParts = coreBlock.GetComponent<ActivatePartActions>().allUtilityParts;
 
-		Debug.Log(allUtilityParts.Count);
-
+		// Checks each active utility part before playing the sound
+		// and stops the audioSource if multiple of the same Utility part are activated.
 		foreach (UtilityPart utilityPart in allUtilityParts)
         {
-			Debug.Log(utilityPart.gameObject.name);
 			if (utilityPart.GetComponent<AudioSource>().isPlaying && 
 				utilityPart.GetComponent<AudioSource>().clip.name == clipName.ToString())
             {
-				Debug.Log("test");
 				Stop(utilityPart.GetComponent<AudioSource>());
 			}
         }

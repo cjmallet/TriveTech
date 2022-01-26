@@ -220,12 +220,10 @@ public class VehicleEditor : MonoBehaviour
             {
                 if (context.action.name == "PlaceClick" && context.performed)
                 {
-                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, mainCam.GetComponent<AudioSource>());
-                    PlaceSelectedPart(hit);
+                   PlaceSelectedPart(hit);
                 }
                 else if (context.action.name == "DeleteClick" && context.performed)
                 {
-                    AudioManager.Instance.Play(AudioManager.clips.RemovePart, mainCam.GetComponent<AudioSource>());
                     DeleteSelectedPart(hit.transform);
                 }
                 else
@@ -298,12 +296,17 @@ public class VehicleEditor : MonoBehaviour
             {
                 foreach (Part neighbour in partGrid.GetNeighbours(Vector3Int.RoundToInt(placedPart.transform.localPosition)))
                 {
+                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, mainCam.GetComponent<AudioSource>());
+
                     if (neighbour == null)
                     {
                         continue;
                     }
                     if (neighbour.transform == coreBlock.transform)
+                    {
+                        
                         part.AttachPart(neighbour, pos);
+                    }                        
                     else
                         part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
 
@@ -357,6 +360,7 @@ public class VehicleEditor : MonoBehaviour
 
             partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
             statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
+            AudioManager.Instance.Play(AudioManager.clips.RemovePart, mainCam.GetComponent<AudioSource>());
             Destroy(partToDelete.gameObject);
         }
     }
