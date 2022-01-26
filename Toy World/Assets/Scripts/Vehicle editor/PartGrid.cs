@@ -155,7 +155,6 @@ public class PartGrid : MonoBehaviour
     {
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
-
     /// <summary>
     /// Checks if any block is not connected to the vehicle through an list of all parts
     /// which is checked by the floodfill algorithm

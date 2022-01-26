@@ -192,19 +192,24 @@ public abstract class Part : MonoBehaviour
         {
             movePart.SwitchColliders();
         }
-        transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
 
-        if (!transform.CompareTag("CoreBlock") && start)
+        if (transform.parent!=null)
         {
-            transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
-            start = !start;
-        }
+            transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
 
-        transform.parent = null;
-        gameObject.AddComponent<Rigidbody>();
-        gameObject.GetComponent<Part>().ResetAction();
-        gameObject.layer = 0;
-        Destroy(gameObject.GetComponent<Part>());
+            if (!transform.CompareTag("CoreBlock") && start)
+            {
+                transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
+                start = !start;
+            }
+
+            transform.parent = null;
+            gameObject.AddComponent<Rigidbody>();
+            gameObject.GetComponent<Part>().ResetAction();
+            gameObject.layer = 0;
+            gameObject.tag = "Untagged";
+            Destroy(gameObject.GetComponent<Part>());
+        }
     }
 
     /// <summary>
