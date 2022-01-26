@@ -12,9 +12,9 @@ public class StatWindowUI : MonoBehaviour
 
     private int currentWeight = 0, currentTorque = 0;
 
-    // Start is called before the first frame update
     public void SetupAllParts()
     {
+        Debug.Log(allParts.Count);
         foreach (Part part in allParts)
         {
             currentWeight += (int)part.weight;
@@ -33,6 +33,7 @@ public class StatWindowUI : MonoBehaviour
             }
         }
     }
+
     public void UpdateStats(Part updatedPart, bool removed)
     {
         if (updatedPart is MovementPart && !removed)

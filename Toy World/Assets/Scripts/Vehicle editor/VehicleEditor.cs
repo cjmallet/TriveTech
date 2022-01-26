@@ -60,7 +60,7 @@ public class VehicleEditor : MonoBehaviour
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
         }
 
-        statWindow.GetComponent<StatWindowUI>().allParts = partGrid.allParts;
+        statWindow.GetComponent<StatWindowUI>().allParts = partGrid.ReturnAllParts();
         statWindow.GetComponent<StatWindowUI>().SetupAllParts();
     }
 
