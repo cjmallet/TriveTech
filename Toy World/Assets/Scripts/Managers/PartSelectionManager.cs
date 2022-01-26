@@ -9,15 +9,6 @@ using UnityEngine.UI;
 
 public class PartSelectionManager : MonoBehaviour
 {
-    private static PartSelectionManager instance;
-    public static PartSelectionManager _instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;
     [SerializeField] private GameObject selectedButton;
     [SerializeField] private Gradient statGradient, weightGradient;
@@ -31,11 +22,8 @@ public class PartSelectionManager : MonoBehaviour
     private int categoryIndex;
     private EventSystem eventSystem;
 
-    private void Awake()
-    {
-        if (instance == null) { instance = this; }
-        else { Destroy(this); }
-    }
+    [HideInInspector]
+    public bool buildUIOpen = true;
 
     /// <summary>
     /// Initialize the Part selection UI and the button listeners
@@ -112,12 +100,12 @@ public class PartSelectionManager : MonoBehaviour
 
         if (part.name.Contains("Wheel"))
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); 
-                VehicleEditor._instance.ChangeActiveBuildState(); VehicleEditor._instance.ResetPreviewRotation();});
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
+                ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});
         }
         else
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); VehicleEditor._instance.ChangeActiveBuildState(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); ChangeActiveBuildState(); });
         }
     }
 
@@ -232,12 +220,25 @@ public class PartSelectionManager : MonoBehaviour
     {
         if (context.performed)
         {
-            VehicleEditor._instance.ChangeActiveBuildState();
+            ChangeActiveBuildState();
 
             if (popupWindow.activeSelf)
                 popupWindow.SetActive(false);
 
             ClosePartSelectionUI();
+        }
+    }
+
+    public void ChangeActiveBuildState()
+    {
+        buildUIOpen = !buildUIOpen;
+        if (buildUIOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
@@ -247,7 +248,7 @@ public class PartSelectionManager : MonoBehaviour
     /// <param name="chosenPart"></param>
     public void ChangeSelectedPart(GameObject chosenPart)
     {
-        VehicleEditor._instance.SetSelectedPart(chosenPart);
+        GameManager.Instance.vehicleEditor.SetSelectedPart(chosenPart);
     }
 
     public void ChangeCategory(string categoryName)

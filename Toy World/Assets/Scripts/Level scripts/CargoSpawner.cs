@@ -16,21 +16,21 @@ public class CargoSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (spawningCargo && itemsSpawned < LevelManager.Instance.cargoToSpawn)
+        if (spawningCargo && itemsSpawned < GameManager.Instance.levelManager.cargoToSpawn)
         {
             GameObject cargo = Instantiate(cargoPrefab, cargoSpawnPoint.transform.position, Quaternion.identity);
             cargo.transform.parent = cargoContainer.transform;
             spawningCargo = false;
             itemsSpawned++;
-            LevelManager.Instance.collectedCargo++;
+            GameManager.Instance.levelManager.collectedCargo++;
 
             StartCoroutine(SpawnTimer());
         }
-        else if (itemsSpawned >= LevelManager.Instance.cargoToSpawn && !finishedSpawning)
+        else if (itemsSpawned >= GameManager.Instance.levelManager.cargoToSpawn && !finishedSpawning)
         {
             spawningCargo = false;
             finishedSpawning = true;
-            LevelManager.Instance.StartTimer();
+            GameManager.Instance.levelManager.StartTimer();
         }
     }
 
@@ -66,7 +66,7 @@ public class CargoSpawner : MonoBehaviour
     {
         spawningCargo = false;
         finishedSpawning = true;
-        itemsSpawned = LevelManager.Instance.cargoToSpawn;
-        LevelManager.Instance.collectedCargo = 0;
+        itemsSpawned = GameManager.Instance.levelManager.cargoToSpawn;
+        GameManager.Instance.levelManager.collectedCargo = 0;
     }
 }

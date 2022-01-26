@@ -25,7 +25,7 @@ public class RotatingCameraController : MonoBehaviour
     // Reference to core block so it can be rotated
     public GameObject vehicleCore;
 
-    private void FixedUpdate()
+    private void Update()
     {
         RotateVehicleMovement(inputVector);
     }
