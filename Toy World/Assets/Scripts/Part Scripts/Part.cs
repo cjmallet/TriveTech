@@ -193,9 +193,16 @@ public abstract class Part : MonoBehaviour
             movePart.SwitchColliders();
         }
 
-        if (transform.parent!=null)
+        if (transform.parent.GetComponent<PartGrid>()!=null|| transform.parent.transform.parent.GetComponent<PartGrid>()!=null)
         {
-            transform.parent.GetComponentInParent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+            if (GetComponent<WheelPart>())
+            {
+                transform.parent.transform.parent.GetComponent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+            }
+            else
+            {
+                transform.parent.GetComponent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+            }
 
             if (!transform.CompareTag("CoreBlock") && start)
             {

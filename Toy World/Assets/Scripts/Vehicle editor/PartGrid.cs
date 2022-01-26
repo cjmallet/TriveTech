@@ -7,7 +7,7 @@ public class PartGrid : MonoBehaviour
 {
     public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
-    [SerializeField] private Part[,,] partGrid;
+    [SerializeField] public Part[,,] partGrid;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     //[SerializeField] private GameObject cubePrefab,tempBox;
     public GameObject _boundingBox;
