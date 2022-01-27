@@ -189,12 +189,17 @@ public class VehicleEditor : MonoBehaviour
             {
                 foreach (Part neighbour in partGrid.GetNeighbours(Vector3Int.RoundToInt(placedPart.transform.localPosition)))
                 {
+                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, Camera.main.GetComponent<AudioSource>());
+
                     if (neighbour == null)
                     {
                         continue;
                     }
                     if (neighbour.transform == coreBlock.transform)
+                    {
+                        
                         part.AttachPart(neighbour, pos);
+                    }                        
                     else
                         part.AttachPart(neighbour, pos - neighbour.transform.localPosition);
 
@@ -248,6 +253,7 @@ public class VehicleEditor : MonoBehaviour
 
             partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
             statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
+            AudioManager.Instance.Play(AudioManager.clips.RemovePart, Camera.main.GetComponent<AudioSource>());
             Destroy(partToDelete.gameObject);
         }
     }
@@ -277,7 +283,6 @@ public class VehicleEditor : MonoBehaviour
         else
         {
             previewedPart.GetComponent<PreviewPart>().SetMaterialColor(false);
-
         }
     }
 

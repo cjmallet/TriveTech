@@ -22,11 +22,13 @@ public class EscMenuBehaviour : MonoBehaviour
         playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
+        AudioListener.pause = true;
     }
 
     public void Resume()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
 
         if (!GameManager.Instance.partSelectionManager.buildUIOpen)
         {
