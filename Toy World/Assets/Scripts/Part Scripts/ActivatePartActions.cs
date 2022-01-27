@@ -45,8 +45,10 @@ public class ActivatePartActions : MonoBehaviour
         }
     }
 
-    public void CategorizePartsInList()
+    public void CategorizePartsInList(List<Part> partList)
     {
+        allParts = partList;
+
         foreach (Part part in allParts)
         {
             if (part is OffensivePart)
@@ -60,6 +62,8 @@ public class ActivatePartActions : MonoBehaviour
                 // do nothing
             }
         }
+
+        SetSpecificActionType();
     }
 
     /// <summary>

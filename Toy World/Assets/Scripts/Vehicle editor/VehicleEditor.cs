@@ -7,15 +7,6 @@ using TMPro;
 
 public class VehicleEditor : MonoBehaviour
 {
-    private static VehicleEditor instance;
-    public static VehicleEditor _instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
     public Quaternion partRotation;
     [SerializeField] private GameObject coreBlock;
     public GameObject coreBlockPlayMode;
@@ -23,38 +14,23 @@ public class VehicleEditor : MonoBehaviour
     private PartGrid partGrid;
 
     private GameObject previewedPart;
-    public bool playan, buildUIOpen = true;
-    private Camera mainCam;
 
     private int vCount;
 
     public Camera vehicleCam;
 
-    [SerializeField]
-    private PlayerInput playerInput;
-
-    public TextMeshProUGUI RestartText;
-
     private GameObject statWindow;
 
     private List<Part> parts = new List<Part>();
-
-    void Awake()
-    {
-        //set the static instance
-        if (instance == null) { instance = this; }
-        else { Destroy(this); }
-    }
 
     void Start()
     {
         coreBlock = DDOL.Instance.P1Coreblock;
         coreBlock.SetActive(true);
         partGrid = coreBlock.GetComponent<PartGrid>();
-        statWindow = GameObject.Find("StatWindow");
-        playerInput.SwitchCurrentActionMap("UI");
+        statWindow = GameObject.Find("StatWindow");        
         SetSelectedPart(selectedPart);
-        mainCam = Camera.main;
+        
         if (vehicleCam == null)
         {
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
@@ -64,183 +40,100 @@ public class VehicleEditor : MonoBehaviour
         statWindow.GetComponent<StatWindowUI>().SetupAllParts();
     }
 
-    public void Play()
+    public void PrepareVehicle()
     {
-        if (!playan)
+        DestroyImmediate(previewedPart);
+
+        if (statWindow == null)
         {
-            Destroy(previewedPart);
-            //make a copy of the coreblock for playmode
-            coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
+            statWindow = GameObject.Find("StatWindow");
+            statWindow.SetActive(false);
+        }
+        else
+            statWindow.SetActive(false);
 
-            // Clear list of parts if it still has parts
-            if (coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
-                coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Clear();
+        coreBlock.SetActive(false); //OG coreblock is disabled until back in build mode
 
-            coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
-            coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);
+        //make a copy of the coreblock for playmode
+        coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
 
-            // Fill parts lists needed for other scripts
-            if (parts.Count != 0)
-                parts.Clear();
+        // Clear list of parts if it still has parts
+        if (coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Count != 0)
+            coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Clear();
 
-            parts = coreBlock.GetComponent<PartGrid>().ReturnAllParts();
-            parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
-            coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
-            statWindow.GetComponent<StatWindowUI>().allParts = parts;
-            coreBlockPlayMode.GetComponent<ActivatePartActions>().allParts = parts;
-            coreBlockPlayMode.GetComponent<ActivatePartActions>().CategorizePartsInList();
-            coreBlockPlayMode.GetComponent<ActivatePartActions>().SetSpecificActionType();
+        if (parts.Count != 0)
+            parts.Clear();
 
-            coreBlockPlayMode.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-            coreBlockPlayMode.GetComponent<Rigidbody>().mass = 0f;
-            coreBlockPlayMode.GetComponent<Rigidbody>().drag = 0.5f;
+        coreBlockPlayMode.GetComponent<PartGrid>().RemakePartGrid();
+        coreBlockPlayMode.GetComponent<PartGrid>().ToggleBoundingBox(false);        
+
+        parts = coreBlockPlayMode.GetComponent<PartGrid>().ReturnAllParts();
+        coreBlockPlayMode.GetComponent<VehicleMovement>().allParts = parts;
+        coreBlockPlayMode.GetComponent<ActivatePartActions>().CategorizePartsInList(parts);
+
+        coreBlockPlayMode.AddComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        coreBlockPlayMode.GetComponent<Rigidbody>().mass = 0f;
+        coreBlockPlayMode.GetComponent<Rigidbody>().drag = 0.5f;
+
+        // Remove direction indication
+        foreach (Part vehiclePart in parts)
+        {
+            // Fill list with movement parts for movement script
+            if (vehiclePart is MovementPart)
+            {
+                if (vehiclePart.transform.position.z > 0)
+                    vehiclePart.GetComponent<MovementPart>().frontPart = true;
+                else
+                    vehiclePart.GetComponent<MovementPart>().frontPart = false;
+                coreBlockPlayMode.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
+            }
+            vehiclePart.SwitchColliders();
+
             // Remove direction indication
-            foreach (Part vehiclePart in parts)
+            if (vehiclePart.useDirectionIndicator)
             {
-                // Fill list with movement parts for movement script
-                if (vehiclePart is MovementPart)
-                {
-                    if (vehiclePart.transform.position.z > 0)
-                        vehiclePart.GetComponent<MovementPart>().frontPart = true;
-                    else
-                        vehiclePart.GetComponent<MovementPart>().frontPart = false;
-                    coreBlockPlayMode.GetComponent<VehicleMovement>().AddWheel((MovementPart)vehiclePart);
-                }
-                vehiclePart.SwitchColliders();
-
-                // Remove direction indication
-                if (vehiclePart.useDirectionIndicator)
-                {
-                    vehiclePart.ToggleDirectionIndicator(false);
-                }
+                vehiclePart.ToggleDirectionIndicator(false);
             }
-            EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
-            EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
-
-            coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
-            coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
-
-            coreBlockPlayMode.GetComponent<PartGrid>().CheckConnection();
-
-            mainCam.gameObject.SetActive(false);
-            //grab vehiclecam again, because we have a new coreblock instance for playmode
-            vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
-            vehicleCam.enabled = true;
-            playan = true;
-
-            coreBlock.SetActive(false);//OG coreblock is disabled until back in build mode
-
-
-            if (buildUIOpen)
-            {
-                PartSelectionManager._instance.ClosePartSelectionUI();
-                ChangeActiveBuildState();
-            }
-
-            if (statWindow == null)
-            {
-                statWindow = GameObject.Find("StatWindow");
-                statWindow.SetActive(false);
-            }
-            else
-                statWindow.SetActive(false);
-
-            PartSelectionManager._instance.crossHair.SetActive(false);
-
-            //partGrid.ToggleTempBoundingBox(false);
-
-            RestartText.text = "Restart";
-
-            playerInput.SwitchCurrentActionMap("Player");
         }
-        else if (playan)//because the level is reset with a LoadScene function, this else shouldn't really be called anymore. I left it in just in case.
-        {
-            //coreBlockPlayMode.SetActive(false);
 
-            /* 
-            List<Part> parts = FindObjectsOfType<Part>().ToList();
-            foreach (Part part in parts)
-            {
-                if (part.useDirectionIndicator)
-                    part.ToggleDirectionIndicator(true);
+        coreBlockPlayMode.GetComponent<VehicleMovement>().enabled = true;
+        coreBlockPlayMode.GetComponent<ActivatePartActions>().enabled = true;
+        coreBlockPlayMode.GetComponent<PartGrid>().CheckConnection();
 
-                if (part is MovementPart)
-                {
-                    part.GetComponent<MovementPart>().SwitchColliders();
-                }
-            }
-            */
+        //grab vehiclecam again, because we have a new coreblock instance for playmode
+        vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
+        vehicleCam.enabled = true;
 
-            //coreBlock.transform.position = coreBlockPlayMode.transform.position + new Vector3(0, 10, 0);
-            //coreBlock.GetComponent<VehicleMovement>().enabled = false;
-            //coreBlock.GetComponent<VehicleStats>().enabled = false;
-            //Destroy(coreBlock.GetComponent<Rigidbody>());
-            //coreBlock.transform.rotation = Quaternion.Euler(0, coreBlockPlayMode.transform.rotation.eulerAngles.y, 0);
-            //mainCam.transform.SetPositionAndRotation(vehicleCam.transform.position, vehicleCam.transform.rotation);
-            coreBlock.transform.position = coreBlock.transform.position + new Vector3(0, 10, 0);
-            coreBlock.GetComponent<VehicleMovement>().enabled = false;
-            coreBlock.GetComponent<ActivatePartActions>().enabled = false;
-            Destroy(coreBlock.GetComponent<Rigidbody>());
-            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
-            SetSelectedPart(selectedPart);
-            coreBlock.transform.rotation = Quaternion.Euler(0, coreBlock.transform.rotation.eulerAngles.y, 0);
-            vehicleCam.enabled = false;
-            mainCam.gameObject.SetActive(true);
-
-            coreBlock.SetActive(true);//reenable the original coreblock for editing
-            Destroy(coreBlockPlayMode);//get rid of the old one
-
-            PartSelectionManager._instance.ClosePartSelectionUI();
-            ChangeActiveBuildState();
-
-            if (statWindow == null)
-            {
-                statWindow = GameObject.Find("StatWindow");
-                statWindow.SetActive(true);
-            }
-            else
-                statWindow.SetActive(true);
-
-            PartSelectionManager._instance.crossHair.SetActive(false);
-
-            playan = false;
-
-            RestartText.text = "Discard";
-
-            playerInput.SwitchCurrentActionMap("UI");
-        }
+        coreBlockPlayMode.SetActive(true);
     }
 
     public void PlacePart(InputAction.CallbackContext context)
     {
-        if (!playan)
+        RaycastHit hit = RaycastMousePosition();
+        if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !GameManager.Instance.partSelectionManager.buildUIOpen)
         {
-            RaycastHit hit = RaycastMousePosition();
-            if (hit.normal != Vector3.zero && hit.transform.TryGetComponent(out Part part) && !buildUIOpen)
+            if (context.action.name == "PlaceClick" && context.performed)
             {
-                if (context.action.name == "PlaceClick" && context.performed)
-                {
-                   PlaceSelectedPart(hit);
-                }
-                else if (context.action.name == "DeleteClick" && context.performed)
-                {
-                    DeleteSelectedPart(hit.transform);
-                }
-                else
-                {
-                    PreviewPart(hit);//assuming box colliders
-                }
+                PlaceSelectedPart(hit);
             }
-            else if (previewedPart.activeSelf)
+            else if (context.action.name == "DeleteClick" && context.performed)
             {
-                previewedPart.SetActive(false);
+                DeleteSelectedPart(hit.transform);
             }
+            else
+            {
+                PreviewPart(hit);//assuming box colliders
+            }
+        }
+        else if (previewedPart != null && previewedPart.activeSelf)
+        {
+            previewedPart.SetActive(false);
         }
     }
 
     public void RotatePart(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed && !previewedPart.name.Contains("Wheel"))
+        if (context.performed && !previewedPart.name.Contains("Wheel"))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
@@ -249,7 +142,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
-        if (!playan && context.performed && !previewedPart.name.Contains("Wheel"))
+        if (context.performed && !previewedPart.name.Contains("Wheel"))
         {
             if (vCount == 2)
             {
@@ -296,7 +189,7 @@ public class VehicleEditor : MonoBehaviour
             {
                 foreach (Part neighbour in partGrid.GetNeighbours(Vector3Int.RoundToInt(placedPart.transform.localPosition)))
                 {
-                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, mainCam.GetComponent<AudioSource>());
+                    AudioManager.Instance.Play(AudioManager.clips.PlacePart, Camera.main.GetComponent<AudioSource>());
 
                     if (neighbour == null)
                     {
@@ -360,7 +253,7 @@ public class VehicleEditor : MonoBehaviour
 
             partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
             statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
-            AudioManager.Instance.Play(AudioManager.clips.RemovePart, mainCam.GetComponent<AudioSource>());
+            AudioManager.Instance.Play(AudioManager.clips.RemovePart, Camera.main.GetComponent<AudioSource>());
             Destroy(partToDelete.gameObject);
         }
     }
@@ -390,7 +283,6 @@ public class VehicleEditor : MonoBehaviour
         else
         {
             previewedPart.GetComponent<PreviewPart>().SetMaterialColor(false);
-
         }
     }
 
@@ -408,30 +300,6 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.SetActive(false);
     }
 
-
-    public void ChangeActiveBuildState()
-    {
-        buildUIOpen = !buildUIOpen;
-        if (buildUIOpen)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-    }
-
-    /*
-    public void CreateBoundingBox()
-    {
-        GameObject BoundingBoxPrefab = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
-        BoundingBox = Instantiate(BoundingBoxPrefab, coreBlock.transform);
-        BoundingBox.transform.Translate(new Vector3(coreBlock.transform.position.x - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxW * 0.5f) - 0.1f,
-                                                    coreBlock.transform.position.y - BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxH,
-                                                    coreBlock.transform.position.z - (BoundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f) - 1f));
-    }
-    */
     public void ResetPreviewRotation()
     {
         partRotation.eulerAngles = Vector3.zero;
@@ -443,10 +311,14 @@ public class VehicleEditor : MonoBehaviour
     /// <returns>RaycastHit</returns>
     RaycastHit RaycastMousePosition()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        if (Camera.main != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-        Physics.Raycast(ray, out hit, 200);
-        return hit;
+            Physics.Raycast(ray, out hit, 200);
+            return hit;
+        }
+        return new RaycastHit(); // fake
     }
 }

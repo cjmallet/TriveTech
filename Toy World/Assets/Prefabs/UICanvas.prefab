@@ -2917,7 +2917,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1979902056896617953}
   m_HandleRect: {fileID: 3633436959186897011}
   m_Direction: 0
-  m_Value: -0.10687023
+  m_Value: -0.122137405
   m_Size: 0.99998915
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7081,8 +7081,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
-        m_MethodName: Play
+        m_TargetAssemblyTypeName: GameStateManager, Assembly-CSharp
+        m_MethodName: SwitchToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

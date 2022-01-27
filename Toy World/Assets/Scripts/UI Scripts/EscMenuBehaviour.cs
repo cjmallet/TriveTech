@@ -14,13 +14,10 @@ public class EscMenuBehaviour : MonoBehaviour
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
 
-    private Vector3 coreBlockPositionStart;
-    private Quaternion coreBlockRotationStart;
-
     public void Pause()
     {
-        if(VehicleEditor._instance.coreBlockPlayMode != null)
-            playerInput = VehicleEditor._instance.coreBlockPlayMode.GetComponent<PlayerInput>();
+        if (GameManager.Instance.vehicleEditor.coreBlockPlayMode != null)
+            playerInput = GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>();
         escMenu.SetActive(true);
         playerInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
@@ -33,14 +30,14 @@ public class EscMenuBehaviour : MonoBehaviour
         Time.timeScale = 1;
         AudioListener.pause = false;
 
-        if (VehicleEditor._instance.playan || !VehicleEditor._instance.buildUIOpen)
+        if (!GameManager.Instance.partSelectionManager.buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
-        }  
+        }
 
         playerInput.actions.Enable();
         escMenu.SetActive(false);
@@ -48,53 +45,16 @@ public class EscMenuBehaviour : MonoBehaviour
 
     public void Restart()
     {
-        if (VehicleEditor._instance.playan) //restart the level if playing
-        {            
+        if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing) //restart the level if playing
+        {
             StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            GameManager.Instance.stateManager.CurrentGameState = GameStateManager.GameState.Building;
             Resume();
-            Cursor.lockState = CursorLockMode.None;
-            /*vehicle saves throughout scenes, so reloading a scene -will- reset your camera etc, but will -not- discard your vehicle
-            VehicleEditor._instance.Play();
-
-            Camera.main.transform.position = buildCameraPositionStart;
-            Camera.main.transform.rotation = buildCameraRotationStart;
-
-            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_TargetCameraState.SetFromTransform(Camera.main.transform);
-            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
-
-            // Reset part actions
-            coreBlock.GetComponent<ActivatePartActions>().ResetAllActions();
-            Camera.main.gameObject.GetComponent<FPSCameraControllers>().m_InterpolatingCameraState.SetFromTransform(Camera.main.transform);
-            */
         }
         else  //discard the created vehicle
         {
-            VehicleEditor._instance.DeleteAllParts();
+            GameManager.Instance.vehicleEditor.DeleteAllParts();
             Resume();
-
-            //StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
-
-            //playerInput.SwitchCurrentActionMap("UI");
-
-            //foreach (Transform child in coreBlock.transform)
-            //{
-            //    if (!child.name.Contains("ThirdPersonCam") && 
-            //        !child.name.Contains("PlayerUI") &&
-            //        !child.name.Contains("Wheels") && 
-            //        !child.name.Contains("BoundingBoxWithDirectionArrow") &&
-            //        !child.name.Contains("TestPart"))
-            //    {
-            //        Destroy(child.gameObject);
-            //    }
-            //}
-
-            //foreach (Transform wheelChild in coreBlock.transform.GetChild(0).transform)
-            //{
-            //    Destroy(wheelChild.gameObject);
-            //}
-
-            //partSelectorUI.SetActive(true);
-            //Cursor.lockState = CursorLockMode.None;
         }
     }
 

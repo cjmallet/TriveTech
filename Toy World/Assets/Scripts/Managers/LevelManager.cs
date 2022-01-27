@@ -6,12 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private static LevelManager instance;
-    public static LevelManager Instance
-    {
-        get { return instance; }
-    }
-
     public CargoSpawner cargoSpawner;
     [SerializeField] private TriggerLevelStart levelTrigger;
     public int cargoCompletionAmount, cargoToSpawn;
@@ -24,14 +18,6 @@ public class LevelManager : MonoBehaviour
     private bool timerStarted = false;
 
     [HideInInspector] public int collectedCargo, displayCargoAmount;
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(this);
-    }
 
     private void Start()
     {

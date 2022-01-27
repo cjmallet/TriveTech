@@ -7,6 +7,6 @@ public class EndLevel : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name.Contains("CoreBlock"))
-            LevelManager.Instance.FinishLevel();
+            GameManager.Instance.levelManager.FinishLevel();
     }
 }
