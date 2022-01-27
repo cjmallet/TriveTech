@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
 		}
 
 		audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
+		AudioListener.volume = 1;
 	}
 
     private void Start()

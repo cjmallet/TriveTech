@@ -58,8 +58,10 @@ public class EscMenuBehaviour : MonoBehaviour
         }
     }
 
-    public void RemovePreview()
+    public void ResetUnnecesaryParts()
     {
+        AudioListener.volume = 0;
+        AudioListener.pause = false;
         GameManager.Instance.vehicleEditor.RemovePreviewPart();
     }
 
