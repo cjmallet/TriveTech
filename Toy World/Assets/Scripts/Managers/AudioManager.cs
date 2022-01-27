@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour
 	public int amountToPool;
 
 	public clips currentMusicClip;
-	[Range(0f, 1f)]
+	[Range(0f, 0.5f)]
 	public float musicVolume;
 	public float timeToFade;
 	private float timeElapsed = 0f;
