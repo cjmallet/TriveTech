@@ -201,9 +201,12 @@ public abstract class Part : MonoBehaviour
         }
 
         transform.parent = null;
+        gameObject.AddComponent<AudioSource>();
+        AudioManager.Instance.Play(AudioManager.clips.PartDestruction, GetComponent<AudioSource>());
         gameObject.AddComponent<Rigidbody>();
         gameObject.GetComponent<Part>().ResetAction();
         gameObject.layer = 0;
+        gameObject.tag = "Untagged";
         Destroy(gameObject.GetComponent<Part>());
     }
 
