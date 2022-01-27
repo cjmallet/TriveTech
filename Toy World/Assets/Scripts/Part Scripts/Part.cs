@@ -111,7 +111,8 @@ public abstract class Part : MonoBehaviour
 
     public bool CheckIfAttachable(Vector3 hitNormal)
     {
-        if (attachablePoints[(int)DetermineSide(hitNormal)])
+        int side = (int)DetermineSide(hitNormal);
+        if (attachablePoints[side] && attachedParts[side] == null)
         {
             return true;
         }
