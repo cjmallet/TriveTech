@@ -7,7 +7,7 @@ public class PartGrid : MonoBehaviour
 {
     public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
-    [SerializeField] private Part[,,] partGrid;
+    [SerializeField] public Part[,,] partGrid;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     //[SerializeField] private GameObject cubePrefab,tempBox;
     public GameObject _boundingBox;
@@ -15,15 +15,19 @@ public class PartGrid : MonoBehaviour
     [HideInInspector]
     public List<Part> allParts = new List<Part>();
 
-    void Start()
+    private void Awake()
     {
-        if(partGrid == null)
+        if (partGrid == null)
         {
             partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
             coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
             partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
         }
+        allParts = ReturnAllParts();
+    }
 
+    void Start()
+    {
         if (_boundingBox == null)
             InstantiateBoundingBoxWithGridSize();
     }
@@ -42,7 +46,6 @@ public class PartGrid : MonoBehaviour
                 Vector3Int index = Vector3Int.RoundToInt(part.transform.localPosition) + coreBlockIndex;
                 partGrid[index.x, index.y, index.z] = part;
             }
-
         }
     }
 
@@ -155,7 +158,6 @@ public class PartGrid : MonoBehaviour
     {
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
-
     /// <summary>
     /// Checks if any block is not connected to the vehicle through an list of all parts
     /// which is checked by the floodfill algorithm

@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
 	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
-	public List<GameObject> audioSourceObjects;
+	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
 
@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
 		}
 
 		audioClips = Resources.LoadAll("Sounds/", typeof(AudioClip)).Cast<AudioClip>().ToList();
+		AudioListener.volume = 1;
 	}
 
     private void Start()

@@ -36,7 +36,7 @@ public class VehicleEditor : MonoBehaviour
             vehicleCam = coreBlock.GetComponentInChildren<Camera>();
         }
 
-        statWindow.GetComponent<StatWindowUI>().allParts = partGrid.allParts;
+        statWindow.GetComponent<StatWindowUI>().allParts = partGrid.ReturnAllParts();
         statWindow.GetComponent<StatWindowUI>().SetupAllParts();
     }
 
@@ -303,6 +303,11 @@ public class VehicleEditor : MonoBehaviour
     public void ResetPreviewRotation()
     {
         partRotation.eulerAngles = Vector3.zero;
+    }
+
+    public void RemovePreviewPart()
+    {
+        Destroy(previewedPart);
     }
 
     /// <summary>

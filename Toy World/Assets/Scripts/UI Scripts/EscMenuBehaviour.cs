@@ -58,11 +58,18 @@ public class EscMenuBehaviour : MonoBehaviour
         }
     }
 
+    public void ResetUnnecesaryParts()
+    {
+        AudioListener.volume = 0;
+        AudioListener.pause = false;
+        GameManager.Instance.vehicleEditor.RemovePreviewPart();
+    }
+
     private IEnumerator LoadScene(string sceneName)
     {
         // Start loading the scene
         AsyncOperation asyncLoadLevel = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-       
+
         if (FPSCameraControllers.canRotate)
         {
             FPSCameraControllers.canRotate = false;

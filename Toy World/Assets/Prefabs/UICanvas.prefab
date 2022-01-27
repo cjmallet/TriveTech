@@ -8221,7 +8221,6 @@ GameObject:
   - component: {fileID: 2478334653474005601}
   - component: {fileID: 6681027207595522256}
   - component: {fileID: 509660691461545947}
-  - component: {fileID: 4114468103435314779}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -8332,7 +8331,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4114468103435314779}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GenericUIChoices, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -8344,18 +8343,6 @@ MonoBehaviour:
           m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4114468103435314779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7173523826733389220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df7c74e07b5c15e4781feb0d0d816215, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7455430291942645678
 GameObject:
   m_ObjectHideFlags: 0
