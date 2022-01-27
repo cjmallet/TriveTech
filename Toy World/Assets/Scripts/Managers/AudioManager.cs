@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
 	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
-	public List<GameObject> audioSourceObjects;
+	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
 
