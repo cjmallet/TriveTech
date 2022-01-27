@@ -154,16 +154,18 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// Stops the sounds played by the audio source.
-	/// </summary>
-	/// <param name="source"></param>
-    public void Stop(AudioSource source)
+
+	public IEnumerator EngineSounds()
     {
-        source.Stop();
+        while (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
+        {
+			Debug.Log("test");
+			yield return new WaitForSeconds(1f);
+        }
     }
 
-    /// <summary>
+
+	/// <summary>
     /// Play a single clip through the looping music source.
     /// </summary>
     /// <param name="clip"></param>
@@ -176,6 +178,12 @@ public class AudioManager : MonoBehaviour
 		StartCoroutine(FadeMusic(clipName, toBePlayedClip));
 	}
 
+	/// <summary>
+	/// The coroutine that handles the fading in and out of the building and driving soundtracks.
+	/// </summary>
+	/// <param name="clipName"></param>
+	/// <param name="toBePlayedClip"></param>
+	/// <returns></returns>
 	private IEnumerator FadeMusic(clips clipName, AudioClip toBePlayedClip)
 	{
 		timeElapsed = 0f;
@@ -210,5 +218,14 @@ public class AudioManager : MonoBehaviour
 
 			MusicSource1.Stop();
 		}
+	}
+
+	/// <summary>
+	/// Stops the sounds played by the audio source.
+	/// </summary>
+	/// <param name="source"></param>
+	public void Stop(AudioSource source)
+	{
+		source.Stop();
 	}
 }
