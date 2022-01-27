@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject objectiveUI, panel, canvasText, timerObject;
     private float timer = 0;
-    private bool timerStarted = false;
+    private bool timerStarted = false, hasBeenPlayed = false;
 
     [HideInInspector] public int collectedCargo, displayCargoAmount;
 
@@ -43,6 +43,12 @@ public class LevelManager : MonoBehaviour
         {
             timerStarted = false;
             OpenEndScreen("You ran out of time");
+
+            if (!FindObjectOfType<CorePart>().GetComponent<AudioSource>().isPlaying && !hasBeenPlayed)
+            {
+                AudioManager.Instance.Play(AudioManager.clips.GameOver, FindObjectOfType<CorePart>().GetComponent<AudioSource>());
+                hasBeenPlayed = true;
+            }
         }
     }
 
@@ -102,6 +108,7 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
+                AudioManager.Instance.Play(AudioManager.clips.GameOver, FindObjectOfType<CorePart>().GetComponent<AudioSource>());
                 OpenEndScreen("You lost too much cargo");
             }
         }

@@ -40,6 +40,8 @@ public class GameStateManager : MonoBehaviour
     {
         GameManager.Instance.stateManager.CurrentGameState = GameState.Playing;
 
+        AudioManager.Instance.SetMusic(AudioManager.clips.DrivingMusic);
+
         EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
         EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 

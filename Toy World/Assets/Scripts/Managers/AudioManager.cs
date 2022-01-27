@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-	//public AudioSource MusicSource;
+	private AudioSource MusicSource1;
+	private AudioSource MusicSource2;
 
 	public static AudioManager Instance = null;
 
@@ -16,6 +17,12 @@ public class AudioManager : MonoBehaviour
 	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
+
+	public clips currentMusicClip;
+	[Range(0f, 1f)]
+	public float musicVolume;
+	public float timeToFade;
+	private float timeElapsed = 0f;
 
 	public enum clips
 	{
@@ -28,7 +35,11 @@ public class AudioManager : MonoBehaviour
 		PartDestruction,
 		MenuOpen,
 		MenuClose,
-		LevelComplete
+		LevelComplete,
+		GameOver,
+		BuildingMusic,
+		DrivingMusic,
+		EngineSound
 	};
 
 	private void Awake()
@@ -48,6 +59,14 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+		MusicSource1 = gameObject.AddComponent<AudioSource>();
+		MusicSource2 = gameObject.AddComponent<AudioSource>();
+
+		MusicSource1.loop = true;
+		MusicSource2.loop = true;
+		
+		SetMusic(currentMusicClip);
+
 		audioSourceObjects = new List<GameObject>();
 
 		GameObject tmp;
@@ -145,12 +164,51 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Play a single clip through the music source.
+    /// Play a single clip through the looping music source.
     /// </summary>
     /// <param name="clip"></param>
-    public void PlayMusic(AudioClip clip)
+    public void SetMusic(clips clipName)
 	{
-		//MusicSource.clip = clip;
-		//MusicSource.Play();
+		// Checks and matches the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
+		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
+
+		StopAllCoroutines();
+		StartCoroutine(FadeMusic(clipName, toBePlayedClip));
+	}
+
+	private IEnumerator FadeMusic(clips clipName, AudioClip toBePlayedClip)
+	{
+		timeElapsed = 0f;
+
+		if (clipName == clips.BuildingMusic)
+        {
+			MusicSource1.clip = toBePlayedClip;
+			MusicSource1.Play();
+			
+            while (timeElapsed < timeToFade)
+            {
+				MusicSource1.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
+				MusicSource2.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
+				timeElapsed += Time.deltaTime;
+				yield return null;
+			}
+
+			MusicSource2.Stop();
+		}
+		else if (clipName == clips.DrivingMusic)
+        {
+			MusicSource2.clip = toBePlayedClip;
+			MusicSource2.Play();
+
+			while (timeElapsed < timeToFade)
+			{
+				MusicSource2.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
+				MusicSource1.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
+				timeElapsed += Time.deltaTime;
+				yield return null;
+			}
+
+			MusicSource1.Stop();
+		}
 	}
 }
