@@ -17,6 +17,8 @@ public class LevelManager : MonoBehaviour
     private float timer = 0;
     private bool timerStarted = false;
 
+    public float timerBeforeCargoSpawn = 1;
+
     [HideInInspector] public int collectedCargo, displayCargoAmount;
 
     private void Start()
@@ -70,8 +72,12 @@ public class LevelManager : MonoBehaviour
         cargoSpawner.ResetItems();
     }
 
-    public void StartLevel()
+    /// <summary>
+    /// Start the level right away with some delay of spawning the cargo.
+    /// </summary>
+    public IEnumerator StartLevel()
     {
+        yield return new WaitForSeconds(timerBeforeCargoSpawn);
         cargoSpawner.SpawnItems();
     }
 

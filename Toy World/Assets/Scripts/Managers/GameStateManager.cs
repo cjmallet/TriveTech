@@ -56,6 +56,8 @@ public class GameStateManager : MonoBehaviour
         RestartText.text = "Restart";
 
         playerInput.SwitchCurrentActionMap("Player");
+
+        StartCoroutine(GameManager.Instance.levelManager.StartLevel());
     }
 
     public enum GameState : int
