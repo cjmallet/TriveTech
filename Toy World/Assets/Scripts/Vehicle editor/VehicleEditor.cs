@@ -82,7 +82,7 @@ public class VehicleEditor : MonoBehaviour
             // Fill list with movement parts for movement script
             if (vehiclePart is MovementPart)
             {
-                if (vehiclePart.transform.position.z > 0)
+                if (vehiclePart.transform.localPosition.z > 0)
                     vehiclePart.GetComponent<MovementPart>().frontPart = true;
                 else
                     vehiclePart.GetComponent<MovementPart>().frontPart = false;
