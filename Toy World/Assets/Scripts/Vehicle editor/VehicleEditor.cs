@@ -55,7 +55,8 @@ public class VehicleEditor : MonoBehaviour
         coreBlock.SetActive(false); //OG coreblock is disabled until back in build mode
 
         //make a copy of the coreblock for playmode
-        coreBlockPlayMode = Instantiate(coreBlock, coreBlock.transform.position, coreBlock.transform.rotation);
+        coreBlockPlayMode = Instantiate(coreBlock, 
+            GameManager.Instance.levelManager.cargoRetrievePosition.transform.position, coreBlock.transform.rotation);
 
         // Clear list of parts if it still has parts
         if (coreBlockPlayMode.GetComponent<VehicleMovement>().wheelInfos.Count != 0)

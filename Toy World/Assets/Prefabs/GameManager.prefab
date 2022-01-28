@@ -203,6 +203,8 @@ MonoBehaviour:
   timeLevelCompletion: 60
   levelUI: {fileID: 0}
   playerSpawn: {fileID: 0}
+  cargoRetrievePosition: {fileID: 0}
+  timerBeforeCargoSpawn: 1
   collectedCargo: 0
   displayCargoAmount: 0
 --- !u!1 &6033746865684395337
