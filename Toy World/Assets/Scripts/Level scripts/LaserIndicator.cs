@@ -5,11 +5,13 @@ using UnityEngine;
 public class LaserIndicator : MonoBehaviour
 {
     private LineRenderer lrLaser;
+    private GameObject laserImpactEffect;
 
     // Start is called before the first frame update
     private void Start()
     {
         lrLaser = GetComponent<LineRenderer>();
+        laserImpactEffect = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class LaserIndicator : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.up, out laserHit))
         {
             lrLaser.SetPosition(1, laserHit.point);
+            laserImpactEffect.transform.position = laserHit.point;
         }
     }
 
