@@ -219,6 +219,12 @@ public abstract class Part : MonoBehaviour
             gameObject.layer = 0;
             gameObject.tag = "Untagged";
             Destroy(gameObject.GetComponent<Part>());
+
+            if (gameObject.GetComponent<UtilityPart>() != null)
+            {
+                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<ActivatePartActions>()
+                    .allUtilityParts.Remove(gameObject.GetComponent<UtilityPart>());
+            }
         }
     }
 

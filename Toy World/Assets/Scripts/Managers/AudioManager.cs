@@ -15,8 +15,6 @@ public class AudioManager : MonoBehaviour
 	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
-	public InputActionAsset controls;
-
 	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
@@ -154,10 +152,13 @@ public class AudioManager : MonoBehaviour
 		// and stops the audioSource if multiple of the same Utility part are activated.
 		foreach (UtilityPart utilityPart in allUtilityParts)
 		{
-			if (utilityPart.GetComponent<AudioSource>().isPlaying &&
-				utilityPart.GetComponent<AudioSource>().clip.name == clipName.ToString())
-			{
-				Stop(utilityPart.GetComponent<AudioSource>());
+			if (utilityPart.GetComponent<AudioSource>() != null)
+            {
+				if (utilityPart.GetComponent<AudioSource>().isPlaying &&
+					utilityPart.GetComponent<AudioSource>().clip.name == clipName.ToString())
+				{
+					Stop(utilityPart.GetComponent<AudioSource>());
+				}
 			}
 		}
 	}
