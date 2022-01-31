@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 
 public class AudioManager : MonoBehaviour
 {
-	private AudioSource MusicSource1;
-	private AudioSource MusicSource2;
+	[HideInInspector] public AudioSource musicSource1;
+	[HideInInspector] public AudioSource musicSource2;
 
 	public static AudioManager Instance = null;
 
@@ -65,11 +65,11 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-		MusicSource1 = gameObject.AddComponent<AudioSource>();
-		MusicSource2 = gameObject.AddComponent<AudioSource>();
+		musicSource1 = gameObject.AddComponent<AudioSource>();
+		musicSource2 = gameObject.AddComponent<AudioSource>();
 
-		MusicSource1.loop = true;
-		MusicSource2.loop = true;
+		musicSource1.loop = true;
+		musicSource2.loop = true;
 		
 		SetMusic(currentMusicClip);
 
@@ -223,33 +223,33 @@ public class AudioManager : MonoBehaviour
 
 		if (clipName == clips.BuildingMusic)
         {
-			MusicSource1.clip = toBePlayedClip;
-			MusicSource1.Play();
+			musicSource1.clip = toBePlayedClip;
+			musicSource1.Play();
 			
             while (timeElapsed < timeToFade)
             {
-				MusicSource1.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
-				MusicSource2.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
+				musicSource1.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
+				musicSource2.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
 				timeElapsed += Time.deltaTime;
 				yield return null;
 			}
 
-			MusicSource2.Stop();
+			musicSource2.Stop();
 		}
 		else if (clipName == clips.DrivingMusic)
         {
-			MusicSource2.clip = toBePlayedClip;
-			MusicSource2.Play();
+			musicSource2.clip = toBePlayedClip;
+			musicSource2.Play();
 
 			while (timeElapsed < timeToFade)
 			{
-				MusicSource2.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
-				MusicSource1.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
+				musicSource2.volume = Mathf.Lerp(0, musicVolume, timeElapsed / timeToFade);
+				musicSource1.volume = Mathf.Lerp(musicVolume, 0, timeElapsed / timeToFade);
 				timeElapsed += Time.deltaTime;
 				yield return null;
 			}
 
-			MusicSource1.Stop();
+			musicSource1.Stop();
 		}
 	}
 

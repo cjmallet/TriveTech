@@ -44,9 +44,10 @@ public class LevelManager : MonoBehaviour
             timerStarted = false;
             OpenEndScreen("You ran out of time");
 
-            if (!FindObjectOfType<CorePart>().GetComponent<AudioSource>().isPlaying && !hasBeenPlayed)
+            if (!hasBeenPlayed)
             {
                 AudioManager.Instance.Play(AudioManager.clips.GameOver, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
+                AudioManager.Instance.Stop(AudioManager.Instance.musicSource2);
                 hasBeenPlayed = true;
             }
         }
