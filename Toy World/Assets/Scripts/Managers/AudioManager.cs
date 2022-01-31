@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AudioManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class AudioManager : MonoBehaviour
 	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
+	public InputActionAsset controls;
+
 	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
@@ -23,6 +26,11 @@ public class AudioManager : MonoBehaviour
 	public float musicVolume;
 	public float timeToFade;
 	private float timeElapsed = 0f;
+
+	public float accelerationSoundTime;
+	public float decelerationSoundTime;
+
+	[HideInInspector] public Vector3 vehicleMove;
 
 	public enum clips
 	{
@@ -157,19 +165,43 @@ public class AudioManager : MonoBehaviour
 
 	public IEnumerator EngineSounds()
     {
-        while (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
-        {
-			Debug.Log("test");
-			yield return new WaitForSeconds(1f);
-        }
-    }
+		coreBlock = GameObject.FindWithTag("CoreBlock");
+		AudioClip engineSound = audioClips.Where(clip => clip.name.Contains(clips.EngineSound.ToString())).FirstOrDefault();
+		coreBlock.GetComponent<AudioSource>().clip = engineSound;
+		coreBlock.GetComponent<AudioSource>().Play();
 
+		float t = 0;
+
+		while (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
+        {
+			while (vehicleMove.z != 0)
+			{
+				coreBlock.GetComponent<AudioSource>().pitch = Mathf.Lerp(0.5f, 1.4f, t / accelerationSoundTime);
+				t += Time.deltaTime;
+
+				if (t >= accelerationSoundTime)
+					t = accelerationSoundTime;
+				yield return null; 
+			}
+			while (vehicleMove.z == 0)
+			{
+				coreBlock.GetComponent<AudioSource>().pitch = Mathf.Lerp(0.5f, 1.4f, t / decelerationSoundTime);
+				t -= Time.deltaTime;
+
+				if (t <= 0)
+					t = 0;
+				yield return null; 
+			}
+
+			yield return null;
+		}
+	}
 
 	/// <summary>
-    /// Play a single clip through the looping music source.
-    /// </summary>
-    /// <param name="clip"></param>
-    public void SetMusic(clips clipName)
+	/// Play a single clip through the looping music source.
+	/// </summary>
+	/// <param name="clip"></param>
+	public void SetMusic(clips clipName)
 	{
 		// Checks and matches the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
 		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();

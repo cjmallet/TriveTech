@@ -352,7 +352,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -1217,7 +1217,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -1632,7 +1632,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -2362,7 +2362,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -3243,7 +3243,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -3988,7 +3988,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 12
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -4338,7 +4338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -4546,7 +4546,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
@@ -4777,6 +4777,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 803988707963064903, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: accelerationSoundTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 803988707963064903, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: decelerationSoundTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6033746865047725053, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: RestartText
       value: 
@@ -4914,7 +4922,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: speed
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 43786742645370282, guid: f6cff3df331036348b70a451abc1e904, type: 3}
       propertyPath: damage
