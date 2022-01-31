@@ -51,7 +51,7 @@ public class VehicleMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        moveVector = context.ReadValue<Vector3>();
+        AudioManager.Instance.vehicleMove = moveVector = context.ReadValue<Vector3>();
     }
 
     public void AddWheel(MovementPart part)
