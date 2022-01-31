@@ -26,6 +26,8 @@ public abstract class Part : MonoBehaviour
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
     private GameObject myDirectionIndicator;
+    private ParticleSystem destructionParticles;
+    private Material particleMaterial;
 
     //! Colliders to switch between
     public Collider playModeCollider, buildModeCollider;
@@ -48,6 +50,12 @@ public abstract class Part : MonoBehaviour
             ShowFrontDirection();
         }
 
+        if (TryGetComponent(out ParticleSystem particles))
+        {
+            destructionParticles = particles;
+            particleMaterial = GetComponentInChildren<MeshRenderer>().material;
+            GetComponent<ParticleSystemRenderer>().material = particleMaterial;
+        }
     }
 
     /// <summary>
@@ -165,6 +173,7 @@ public abstract class Part : MonoBehaviour
             this.health = 0;
             RemovePart(true);
         }
+        destructionParticles.Play();
     }
 
     public void RemovePart(bool start)
