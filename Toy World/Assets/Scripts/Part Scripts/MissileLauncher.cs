@@ -5,6 +5,7 @@ using UnityEngine;
 public class MissileLauncher : OffensivePart
 {
     [SerializeField] private float _cooldown;
+    private bool _onCooldown;
     private float _timeSinceLaunch;
 
 
@@ -17,6 +18,24 @@ public class MissileLauncher : OffensivePart
     // Update is called once per frame
     void FixedUpdate()
     {
-        
+        // if(gamestate playing)
+        // {
+        if (!_onCooldown)
+        {
+            DrawLaser();
+        }
+        else 
+        {
+            _timeSinceLaunch += Time.deltaTime;
+            if (_timeSinceLaunch >= _cooldown)
+                _onCooldown = false;
+        }
+        // }
+    }
+
+
+    void DrawLaser()
+    {
+
     }
 }
