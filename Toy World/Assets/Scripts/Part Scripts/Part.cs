@@ -26,6 +26,8 @@ public abstract class Part : MonoBehaviour
     public bool useDirectionIndicator;
     private GameObject directionIndicatorPrefab;
     private GameObject myDirectionIndicator;
+    private ParticleSystem destructionParticles;
+    private Material particleMaterial;
 
     //! Colliders to switch between
     public Collider playModeCollider, buildModeCollider;
@@ -48,6 +50,12 @@ public abstract class Part : MonoBehaviour
             ShowFrontDirection();
         }
 
+        if (TryGetComponent(out ParticleSystem particles))
+        {
+            destructionParticles = particles;
+            particleMaterial = GetComponentInChildren<MeshRenderer>().material;
+            GetComponent<ParticleSystemRenderer>().material = particleMaterial;
+        }
     }
 
     /// <summary>
@@ -165,6 +173,7 @@ public abstract class Part : MonoBehaviour
             this.health = 0;
             RemovePart(true);
         }
+        destructionParticles.Play();
     }
 
     public void RemovePart(bool start)
@@ -194,20 +203,23 @@ public abstract class Part : MonoBehaviour
             movePart.SwitchColliders();
         }
 
-        if (transform.parent.GetComponent<PartGrid>()!=null|| transform.parent.transform.parent.GetComponent<PartGrid>()!=null)
+        if (GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>() != null)
         {
             if (GetComponent<WheelPart>())
             {
-                transform.parent.transform.parent.GetComponent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
+                    RemovePart(Vector3Int.CeilToInt(transform.localPosition));
             }
             else
             {
-                transform.parent.GetComponent<PartGrid>().RemovePart(Vector3Int.CeilToInt(transform.localPosition));
+                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
+                    RemovePart(Vector3Int.CeilToInt(transform.localPosition));
             }
 
             if (!transform.CompareTag("CoreBlock") && start)
             {
-                transform.parent.GetComponentInParent<PartGrid>().CheckConnection();
+                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
+                    CheckConnection();
                 start = !start;
             }
 
