@@ -45,12 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips: []
+  controls: {fileID: 0}
   audioSourceObjects: []
   audioSourceObjectToPool: {fileID: 8331781768169115720, guid: 3300b7a1b8a44624eabec8de4922477b, type: 3}
   amountToPool: 20
   currentMusicClip: 11
   musicVolume: 0.1
   timeToFade: 0.5
+  accelerationSoundTime: 0.5
+  decelerationSoundTime: 1.5
+  vehicleMove: {x: 0, y: 0, z: 0}
 --- !u!1 &6033746864248031343
 GameObject:
   m_ObjectHideFlags: 0
