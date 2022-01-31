@@ -12,7 +12,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject levelUI;
     [SerializeField] private GameObject playerSpawn;
-    public GameObject cargoRetrievePosition;
 
     private GameObject objectiveUI, panel, canvasText, timerObject;
     private float timer = 0;
