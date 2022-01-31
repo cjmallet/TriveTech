@@ -365,7 +365,7 @@
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -387,7 +387,7 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -398,7 +398,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
