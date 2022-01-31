@@ -22,13 +22,14 @@ public class VehicleEditor : MonoBehaviour
     private GameObject statWindow;
 
     private List<Part> parts = new List<Part>();
+    private List<Part> movementParts = new List<Part>();
 
     void Start()
     {
         coreBlock = DDOL.Instance.P1Coreblock;
         coreBlock.SetActive(true);
         partGrid = coreBlock.GetComponent<PartGrid>();
-        statWindow = GameObject.Find("StatWindow");        
+        statWindow = GameObject.Find("StatWindow");
         SetSelectedPart(selectedPart);
         
         if (vehicleCam == null)
@@ -37,7 +38,12 @@ public class VehicleEditor : MonoBehaviour
         }
 
         statWindow.GetComponent<StatWindowUI>().allParts = partGrid.ReturnAllParts();
-        statWindow.GetComponent<StatWindowUI>().SetupAllParts();
+
+        if (movementParts.Count > 0)
+            movementParts.Clear();
+        movementParts = partGrid.ReturnAllParts().Where(x => x.TryGetComponent(out MovementPart part)).ToList();
+
+        statWindow.GetComponent<StatWindowUI>().SetupAllParts(movementParts.Count);
     }
 
     public void PrepareVehicle()
@@ -175,11 +181,14 @@ public class VehicleEditor : MonoBehaviour
             GameObject placedPart;
 
             if (selectedPart.GetComponent<Part>() is MovementPart)
+            {
                 placedPart = Instantiate(selectedPart, coreBlock.transform.GetChild(0).transform);
+                movementParts.Add(placedPart.GetComponent<Part>());
+            }                
             else
                 placedPart = Instantiate(selectedPart, coreBlock.transform);
 
-            statWindow.GetComponent<StatWindowUI>().UpdateStats(placedPart.GetComponent<Part>(), false);
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(placedPart.GetComponent<Part>(), false, movementParts.Count);
 
             placedPart.transform.localPosition = pos;
             placedPart.transform.localRotation = partRotation;
@@ -226,14 +235,30 @@ public class VehicleEditor : MonoBehaviour
     private bool CheckPlacementValidity(RaycastHit hit)
     {
         Vector3Int hitNormal = Vector3Int.RoundToInt(hit.normal);
-        if (partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal)
-            && previewedPart.transform.GetComponent<Part>().CheckIfAttachable(-hitNormal))
+
+        if (previewedPart.TryGetComponent(out MovementPart part))
         {
-            return true;
+            if (movementParts.Count < 20 && partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal)
+                && previewedPart.transform.GetComponent<Part>().CheckIfAttachable(-hitNormal))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }    
         }
         else
-        {
-            return false;
+        {            
+            if (partGrid.CheckIfInBounds(GetLocalPosition(hit)) && hit.transform.GetComponent<Part>().CheckIfAttachable(hitNormal)
+                && previewedPart.transform.GetComponent<Part>().CheckIfAttachable(-hitNormal))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
@@ -251,8 +276,11 @@ public class VehicleEditor : MonoBehaviour
                     part.attachedParts[part.attachedParts.IndexOf(partToDelete.GetComponent<Part>())] = null;
             }
 
+            if (partToDelete.TryGetComponent(out MovementPart movePart))
+                movementParts.Remove(movePart);
+
             partGrid.RemovePartFromGrid(Vector3Int.RoundToInt(partToDelete.localPosition));
-            statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true);
+            statWindow.GetComponent<StatWindowUI>().UpdateStats(partToDelete.gameObject.GetComponent<Part>(), true, movementParts.Count);
             AudioManager.Instance.Play(AudioManager.clips.RemovePart, Camera.main.GetComponent<AudioSource>());
             Destroy(partToDelete.gameObject);
         }
@@ -262,8 +290,10 @@ public class VehicleEditor : MonoBehaviour
     {
         foreach (Part part in coreBlock.GetComponentsInChildren<Part>())
         {
-            DeleteSelectedPart(part.transform);
+            DeleteSelectedPart(part.transform);            
         }
+        movementParts.Clear();
+
         SetSelectedPart(selectedPart);
     }
 
