@@ -2026,8 +2026,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 48160222}
     - target: {fileID: 6033746865509156030, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: cargoToSpawn
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033746865509156030, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: levelTrigger
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033746865509156030, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: cargoCompletionAmount
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6033746865684395337, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_Name

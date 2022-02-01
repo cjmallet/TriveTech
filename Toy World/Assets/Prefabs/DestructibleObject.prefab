@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 460126035598759074, guid: 3adb92af8e26c984196c87e0d5e37937, type: 3}
-  highDestructionSpeed: 6
-  lowDestructionSpeed: 2
+  highDestructionSpeed: 8
+  lowDestructionSpeed: 4
   highPartDamage: 10
   lowPartDamage: 3
   collideBox: {fileID: 1638998391417436400}
