@@ -106,7 +106,7 @@ public class MissileLauncher : OffensivePart
         }
         else
         {
-            _lineRnd.SetPosition(1, _rotatingLauncherPart.forward * 100f);
+            _lineRnd.SetPosition(1, transform.position + _rotatingLauncherPart.forward  * 100f);
         }
             
     }
