@@ -82,7 +82,7 @@ public class HomingMissile : MonoBehaviour
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity + transform.up * _force, _maxSpeed);
 
         //Rotate by setting angular velocity
-        Quaternion targetRot = Quaternion.FromToRotation(transform.up, (target - transform.position).normalized);
+        Quaternion targetRot = Quaternion.FromToRotation(transform.up, target - transform.position);
         float angleInDegrees;
         Vector3 rotationAxis;
         targetRot.ToAngleAxis(out angleInDegrees, out rotationAxis);
@@ -90,10 +90,10 @@ public class HomingMissile : MonoBehaviour
 
         _rb.angularVelocity = 
             _rb.angularVelocity 
-            + angularDisplacement 
+            + (angularDisplacement 
             * angularDisplacement.magnitude
             * _rotationForce
-            * 0.1f;
+            * 0.1f);
     }
     private void JustGoStraight()
     {
@@ -147,11 +147,11 @@ public class HomingMissile : MonoBehaviour
         DetachSmokeTrail();
         foreach (Collider col in Physics.OverlapSphere(transform.position, explosionRadius))
         {
-            if (TryGetComponent(out ShootingEnemy enemy))
+            if (col.gameObject.TryGetComponent(out ShootingEnemy enemy))
             {
                 Destroy(enemy.gameObject);
             }
-            else if (TryGetComponent(out MoveObstacle enemyAlso))
+            else if (col.gameObject.TryGetComponent(out MoveObstacle enemyAlso))
             {
                 Destroy(enemyAlso.gameObject);
             }
