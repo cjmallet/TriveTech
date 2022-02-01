@@ -48,7 +48,8 @@ public class AudioManager : MonoBehaviour
 		BuildingMusic,
 		DrivingMusic,
 		EngineSound,
-		MenuButtonClick
+		MenuButtonClick,
+		MissileExplosion
 	};
 
 	private void Awake()
@@ -132,7 +133,7 @@ public class AudioManager : MonoBehaviour
 			NoOverlappingUtilityAudio(clipName);
 		}
 		// Start a coroutine for disabling of the audioSource when the destructible clip is done playing
-		else if (clipName.ToString().Contains("Destructible"))
+		else if (clipName.ToString().Contains("Destructible") || clipName.ToString().Contains("MissileExplosion"))
         {			
             StartCoroutine(WaitForEndOfSound(source.gameObject, toBePlayedClip.length));
         }
@@ -275,6 +276,8 @@ public class AudioManager : MonoBehaviour
 		audioSource.SetActive(true);
 
 		Play(clips.MenuButtonClick, audioSource.GetComponent<AudioSource>());
+
+		StartCoroutine(WaitForEndOfSound(audioSource, audioSource.GetComponent<AudioSource>().clip.length));
     }
 
 	/// <summary>

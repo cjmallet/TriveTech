@@ -54,6 +54,13 @@ public class DestructibleObject : MonoBehaviour
                 collideBox.enabled = true;
             }
         }
+        if (collision.CompareTag("Missile"))
+        {
+            HandleDestructionSound();
+
+            //Enable the non trigger collider
+            collideBox.enabled = true;
+        }
     }
 
     //If the player stops touching the object, disable the non trigger collider
