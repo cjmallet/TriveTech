@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Core used to create a rotating camera controller. Used for ThirdPersonCameraControler.
+/// </summary>
 public class RotatingCameraController : MonoBehaviour
 {
     public const int ZOOM_SPEED_DAMPNER = 10;
 
-    // Vector used to store the input from the InputActions
+    //! Vector used to store the input from the InputActions
     private Vector3 inputVector;
 
     private float zoomValue;
@@ -15,11 +18,11 @@ public class RotatingCameraController : MonoBehaviour
     //! Turn of that you need to right click to rotate camera
     public bool needRightMouse = false;
 
-    // Speed factors for vehicle rotation and camera zooming
+    //! Speed factors for vehicle rotation and camera zooming
     [Range(1,10)]
     public float horizontalRotateSpeed, verticalRotateSpeed, cameraZoomSpeed;
 
-    // Distance between the camera and the core block
+    //! Distance between the camera and the core block
     public int minZoomOutDistance, maxZoomOutDistance;
 
     private void Update()
@@ -27,6 +30,11 @@ public class RotatingCameraController : MonoBehaviour
         RotateVehicleMovement(inputVector);
     }
 
+    /// <summary>
+    /// Use the inputvector to adjust camera. 
+    /// Always handles zoom value, but other movements are handled in child scripts.
+    /// </summary>
+    /// <param name="inputVector"></param>
     public virtual void RotateVehicleMovement(Vector3 inputVector)
     {
         inputVector.z = zoomValue;
@@ -34,7 +42,7 @@ public class RotatingCameraController : MonoBehaviour
         Zoom(inputVector.z);
     }
 
-    // Wordt aangeroepen met Unity event en Input Actions
+    //! Gets the input vector based on mouse input of Unity Input system
     public void GetInputVector(InputAction.CallbackContext context)
     {
         if (needRightMouse)
@@ -47,13 +55,13 @@ public class RotatingCameraController : MonoBehaviour
         else inputVector = context.ReadValue<Vector2>();
     }
 
-    // Gets the scroll valuo from Input Actions
+    //! Gets the scroll valuo from Input Actions
     public void GetZoomValue(InputAction.CallbackContext value)
     {
         zoomValue = value.ReadValue<float>();
     }
 
-    // Gets the right mouse button pressed value to check if you may move the camera/vehicle
+    //! Gets the right mouse button pressed value to check if you may move the camera/vehicle
     public void GetRightMousePress(InputAction.CallbackContext value)
     {
         if (needRightMouse)

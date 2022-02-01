@@ -8,7 +8,7 @@ using TMPro;
 public class EscMenuBehaviour : MonoBehaviour
 {
     public GameObject escMenu;
-    public PlayerInput playerInput;
+    public PlayerInput playerInput, gameInput;
     public GameObject partSelectorUI;
 
     public static Vector3 buildCameraPositionStart;
@@ -20,6 +20,7 @@ public class EscMenuBehaviour : MonoBehaviour
             playerInput = GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>();
         escMenu.SetActive(true);
         playerInput.actions.Disable();
+        gameInput.actions.Disable();
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
         AudioListener.pause = true;
@@ -40,6 +41,7 @@ public class EscMenuBehaviour : MonoBehaviour
         }
 
         playerInput.actions.Enable();
+        gameInput.actions.Enable();
         escMenu.SetActive(false);
     }
 
