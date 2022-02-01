@@ -47,6 +47,7 @@ public class VehicleMovement : MonoBehaviour
                 wheelInfo.wheel.steerAngle = steering;
             }
         }
+        Debug.Log(rigidBody.velocity.magnitude);
     }
 
     public void Move(InputAction.CallbackContext context)
