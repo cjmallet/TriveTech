@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public CargoSpawner cargoSpawner;
-    [SerializeField] private TriggerLevelStart levelTrigger;
     public int cargoCompletionAmount, cargoToSpawn;
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject levelUI;
@@ -64,6 +63,7 @@ public class LevelManager : MonoBehaviour
         endLevelScreen.transform.GetChild(6).gameObject.SetActive(succes);
         Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>().enabled=false;
+        GameManager.Instance.inputManager.enabled = false;
         objectiveUI.SetActive(false);
     }
 

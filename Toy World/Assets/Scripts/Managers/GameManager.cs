@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,4 +31,5 @@ public class GameManager : MonoBehaviour
     public PartSelectionManager partSelectionManager;
     public EscMenuBehaviour menuManager;
     public LevelManager levelManager;
+    public PlayerInput inputManager;
 }

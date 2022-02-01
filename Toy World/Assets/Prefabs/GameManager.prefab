@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45535ce87a58dd042a898a44d444ead1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicSource1: {fileID: 0}
+  musicSource2: {fileID: 0}
   audioClips: []
-  controls: {fileID: 0}
   audioSourceObjects: []
   audioSourceObjectToPool: {fileID: 8331781768169115720, guid: 3300b7a1b8a44624eabec8de4922477b, type: 3}
   amountToPool: 20
@@ -195,13 +196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cargoSpawner: {fileID: 0}
-  levelTrigger: {fileID: 0}
-  cargoCompletionAmount: 3
+  cargoCompletionAmount: 5
   cargoToSpawn: 10
-  timeLevelCompletion: 60
+  timeLevelCompletion: 55
   levelUI: {fileID: 0}
   playerSpawn: {fileID: 0}
-  cargoRetrievePosition: {fileID: 0}
   timerBeforeCargoSpawn: 1
   collectedCargo: 0
   displayCargoAmount: 0
@@ -261,6 +260,7 @@ MonoBehaviour:
   partSelectionManager: {fileID: 8605438988039419050}
   menuManager: {fileID: 6033746865790101835}
   levelManager: {fileID: 6033746865509156030}
+  inputManager: {fileID: 6033746866159264802}
 --- !u!1 &6033746865790101833
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   escMenu: {fileID: 0}
   playerInput: {fileID: 6033746866159264802}
+  gameInput: {fileID: 6033746866159264802}
   partSelectorUI: {fileID: 0}
 --- !u!114 &1152515836140923359
 MonoBehaviour:
@@ -594,6 +595,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0b3b46df-e59d-4828-846c-a0af6aa7e471
     m_ActionName: UI/MenuButton[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RotatingCameraController, Assembly-CSharp
+        m_MethodName: GetRightMousePress
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 49b962fd-997b-4336-9d48-5dbbc9ed0cf0
+    m_ActionName: Player/ThirdPersonRotateMoveButton[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RotatingCameraController, Assembly-CSharp
+        m_MethodName: GetInputVector
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: be3bc0b4-09cb-4f67-aad9-38daf626bf61
+    m_ActionName: Player/ThirdPersonMouseMove[/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: RotatingCameraController, Assembly-CSharp
+        m_MethodName: GetZoomValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 73704786-e51f-45e1-8f82-79b0242fca91
+    m_ActionName: Player/ThirdPersonZoom[/Mouse/scroll/y,/Keyboard/numpadMinus,/Keyboard/numpadPlus]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: UI
