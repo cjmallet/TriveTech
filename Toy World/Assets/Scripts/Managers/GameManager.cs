@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton gamemanager allows us to acces all managers everywhere.
+    /// </summary>
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -12,6 +15,7 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+
     void Awake()
     {
         //set the static instance
