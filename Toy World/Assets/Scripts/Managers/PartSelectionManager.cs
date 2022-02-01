@@ -98,7 +98,7 @@ public class PartSelectionManager : MonoBehaviour
         trigger.triggers.Add(exitEvent);
         trigger.triggers.Add(clickEvent);
 
-        if (part.name.Contains("Wheel"))
+        if (part.name.Contains("Wheel") || part.name.Contains("Launcher"))
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
                 ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});

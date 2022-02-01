@@ -139,7 +139,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePart(InputAction.CallbackContext context)
     {
-        if (context.performed && !previewedPart.name.Contains("Wheel"))
+        if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
         {
             partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
             PlacePart(context);
@@ -148,7 +148,7 @@ public class VehicleEditor : MonoBehaviour
 
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
-        if (context.performed && !previewedPart.name.Contains("Wheel"))
+        if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
         {
             if (vCount == 2)
             {
