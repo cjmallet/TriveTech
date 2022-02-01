@@ -31,10 +31,7 @@ public class HomingMissile : MonoBehaviour
     [SerializeField] private float _angularDrag;
 
     [Header("Perlin randomness")]
-    [SerializeField] private bool _addRandomWobble;//enable or disable altogether
-    [SerializeField] private float _perlinMultiplier;//size/strength of the noise
-    [SerializeField] private float _perlinScale;//how "smooth" the noise will be
-    private Vector3 _seed;
+    
     private Vector3 targetPos;
     private bool tracking;
     private bool collisionEnabled = false;
@@ -43,8 +40,6 @@ public class HomingMissile : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //each rocket gets it's own seed so 2 missiles will never fly the same path
-        _seed = new Vector3(Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f), Random.Range(-1000f, 1000f));
         _rb = GetComponent<Rigidbody>();
         _rb.maxAngularVelocity = _maxAngularVelocity;
         _rb.angularDrag = _angularDrag;
@@ -68,7 +63,6 @@ public class HomingMissile : MonoBehaviour
                 //StopTracking();
                 JustGoStraight();
             }
-                
         }
 
         if (!collisionEnabled)
@@ -85,17 +79,11 @@ public class HomingMissile : MonoBehaviour
 
     private void HomeInOnTarget()
     {
-        //give randomness to the target position for that cute wobble during flight, in the form of perlin noise, based on it's location
-        targetPos = target 
-            + GetPerlinValues()
-            * Vector3.Distance(target, transform.position)
-            * 0.05f;
-
         //add velocity. rockets go woosh
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity + transform.up * _force, _maxSpeed);
 
         //Rotate by setting angular velocity
-        Quaternion targetRot = Quaternion.FromToRotation(transform.up, (targetPos - transform.position).normalized);
+        Quaternion targetRot = Quaternion.FromToRotation(transform.up, (target - transform.position).normalized);
         float angleInDegrees;
         Vector3 rotationAxis;
         targetRot.ToAngleAxis(out angleInDegrees, out rotationAxis);
@@ -136,23 +124,6 @@ public class HomingMissile : MonoBehaviour
         }
     }
 
-    Vector3 GetPerlinValues()
-    {
-        Vector3 perlin = Vector3.zero;
-        if (_addRandomWobble)
-        {
-            Vector3 pos = (transform.position + _seed) * _perlinScale;
-            perlin = new Vector3(
-                Mathf.PerlinNoise(pos.y, pos.z) * 2 - 1,
-                Mathf.PerlinNoise(pos.x, pos.z) * 2 - 1,
-                Mathf.PerlinNoise(pos.x, pos.y) * 2 - 1
-                );
-            perlin *= perlin.magnitude * _perlinMultiplier;
-            
-        }
-        return perlin;
-    }
-
     private void LifeTimer()
     {
         _timeAlive += Time.deltaTime;
@@ -180,7 +151,7 @@ public class HomingMissile : MonoBehaviour
         {
             if(TryGetComponent(out ShootingEnemy enemy))
             {
-                //rek enemy. hier is nog geen functie voor
+                Destroy(enemy.gameObject);
             }
         } 
         Destroy(gameObject);

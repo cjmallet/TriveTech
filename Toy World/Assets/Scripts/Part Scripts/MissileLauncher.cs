@@ -14,7 +14,7 @@ public class MissileLauncher : OffensivePart
     private LineRenderer _lineRnd;
     private Transform _vehicleCam;
     private GameObject _missilePrefab;
-    private float _lookAngleCorrection = -15f;
+    private float _lookAngleCorrection = -25f;
 
 
     void Start()
@@ -28,26 +28,28 @@ public class MissileLauncher : OffensivePart
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        Vector3 forward = _vehicleCam.forward;
-        forward.y = 0f;
-        _rotatingLauncherPart.transform.rotation = Quaternion.LookRotation(forward);
-
-        if (!_onCooldown)
+        if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
         {
-            DrawLaser();
-        }
-        else 
-        {
-            _timeSinceLaunch += Time.deltaTime;
-            if (_timeSinceLaunch >= _cooldown)
-                SetCooldown(false);
+            Vector3 forward = _vehicleCam.forward;
+            forward.y = 0f;
+            _rotatingLauncherPart.transform.rotation = Quaternion.LookRotation(forward, transform.up);
+
+            if (!_onCooldown)
+            {
+                DrawLaser();
+            }
+            else
+            {
+                _timeSinceLaunch += Time.deltaTime;
+                if (_timeSinceLaunch >= _cooldown)
+                    SetCooldown(false);
+            }
         }
     }
 
     public override void AttackAction()
     {
-        if(!_onCooldown)
+        if (!_onCooldown)
             LaunchMissile();
     }
 
@@ -84,11 +86,11 @@ public class MissileLauncher : OffensivePart
         }
         else
         {
+            _lineRnd.enabled = true;
             _onCooldown = false;
             _missileProp.SetActive(true);
         }
     }
-
 
     void DrawLaser()
     {
@@ -98,13 +100,13 @@ public class MissileLauncher : OffensivePart
         RaycastHit laserHit;
         if (Physics.Raycast(_laserStart.position, direction, out laserHit, Mathf.Infinity, ~ignoreLayers))
         {
-            if (!_lineRnd.enabled)
-                _lineRnd.enabled = true;
-
             _lineRnd.SetPosition(1, laserHit.point);
             //laserImpactEffect.transform.position = laserHit.point;
         }
         else
-            _lineRnd.enabled = false;
+        {
+            _lineRnd.SetPosition(1, _rotatingLauncherPart.forward * 100f);
+        }
+            
     }
 }

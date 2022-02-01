@@ -5053,9 +5053,6 @@ MonoBehaviour:
   _rotationForce: 20
   _maxAngularVelocity: 5
   _angularDrag: 1
-  _addRandomWobble: 1
-  _perlinMultiplier: 4
-  _perlinScale: 0.1
 --- !u!1 &5266930150539131001
 GameObject:
   m_ObjectHideFlags: 0
@@ -6361,8 +6358,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.69158876, b: 0, a: 0.7411765}
-        key1: {r: 0.3962264, g: 0.18955521, b: 0.0504628, a: 0}
+        key0: {r: 1, g: 0.69158876, b: 0, a: 0.5686275}
+        key1: {r: 0.3962264, g: 0.18955521, b: 0.0504628, a: 0.22352941}
         key2: {r: 0.38679248, g: 0.3594251, b: 0.3594251, a: 0}
         key3: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -6378,8 +6375,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 29684
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -6387,7 +6384,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 4
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
