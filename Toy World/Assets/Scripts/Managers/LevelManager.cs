@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public CargoSpawner cargoSpawner;
-    [SerializeField] private TriggerLevelStart levelTrigger;
     public int cargoCompletionAmount, cargoToSpawn;
     [SerializeField] private int timeLevelCompletion;
     [SerializeField] private GameObject levelUI;
