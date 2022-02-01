@@ -100,13 +100,11 @@ public class MissileLauncher : OffensivePart
         RaycastHit laserHit;
         if (Physics.Raycast(_laserStart.position, direction, out laserHit, Mathf.Infinity, ~ignoreLayers))
         {
-            Debug.Log("laser hit " + laserHit.transform.name);
             _lineRnd.SetPosition(1, laserHit.point);
             //laserImpactEffect.transform.position = laserHit.point;
         }
         else
         {
-            Debug.Log("gewoon recht vooruit, richting" + _rotatingLauncherPart.forward);
             _lineRnd.SetPosition(1, _rotatingLauncherPart.forward * 100f);
         }
             

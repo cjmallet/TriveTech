@@ -73,7 +73,6 @@ public class HomingMissile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.transform.name);
         FuckingExplode();
     }
 
@@ -116,7 +115,6 @@ public class HomingMissile : MonoBehaviour
     /// </summary>
     private void LauncherDistanceCheck()
     {
-        Debug.Log("is there a launcher? " + launcher);
         if(!launcher || Vector3.Distance(transform.position, launcher.transform.position) > 1.5f)
         {
             GetComponent<Collider>().enabled = true;

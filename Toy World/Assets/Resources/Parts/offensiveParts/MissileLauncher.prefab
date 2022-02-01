@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 5183968484727456664}
   m_Layer: 3
   m_Name: MissileLauncher
-  m_TagString: Untagged
+  m_TagString: Part
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   attachablePoints: 000000010000
-  health: 1
+  health: 5
   weight: 25
   description: Use homing missiles to shoot back at enemies.
   floodFilled: 0
