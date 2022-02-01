@@ -34,16 +34,6 @@ public class MoveObstacle : MonoBehaviour
 
             t += (0.5f * Time.deltaTime)*speed;
         }
-        //else if (active && (horizontal || vertical))
-        //{
-        //    if (horizontal && !vertical)
-        //        transform.position = startPos + new Vector3(Mathf.Sin(Time.time) * speed, 0, 0);
-        //    if (vertical && !horizontal)
-        //        transform.position = startPos + new Vector3(0, 0, Mathf.Sin(Time.time) * speed);
-
-        //    if (horizontal && vertical)
-        //        transform.position = startPos + new Vector3(Mathf.Sin(Time.time) * speed, 0, Mathf.Sin(Time.time) * speed);
-        //}
     }
 
     private void OnTriggerEnter(Collider other)

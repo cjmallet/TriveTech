@@ -19,6 +19,8 @@ public class PartSelectionManager : MonoBehaviour
     private List<GameObject> movementParts, offensiveParts, utilityParts, chassisParts;
     private List<GameObject> categoryHolders = new List<GameObject>();
 
+    private static float maxHealth = 15, maxWeight=15,maxAcceleration=225, maxSteering=30;
+
     private int categoryIndex;
     private EventSystem eventSystem;
 
@@ -33,11 +35,13 @@ public class PartSelectionManager : MonoBehaviour
         eventSystem = EventSystem.current;
         ChangeSelectedButton(selectedButton);
 
+        //Retrieve all the part categories that exist
         foreach (ScrollRect categoryHolder in partSelectionCanvas.GetComponentsInChildren<ScrollRect>())
         {
             categoryHolders.Add(categoryHolder.gameObject);
         }
 
+        //Load all the part associated with the category and make a button for each one
         movementParts = LoadParts("movementParts");
         foreach (GameObject part in movementParts)
         {
@@ -62,14 +66,25 @@ public class PartSelectionManager : MonoBehaviour
             CreateButton(part, "Chassis");
         }
 
+        //Start with the chassis category being highlighted and opened
         ChangeCategory("Chassis");
     }
 
+    /// <summary>
+    /// Retrieve all the parts in the respective resource folder and save them to their list
+    /// </summary>
+    /// <param name="partName">The category of a part, like chassisParts</param>
+    /// <returns></returns>
     private List<GameObject> LoadParts(string partName)
     {
         return Resources.LoadAll("Parts/"+partName, typeof(GameObject)).Cast<GameObject>().ToList();
     }
 
+    /// <summary>
+    /// Create a button in the part selection UI
+    /// </summary>
+    /// <param name="part">The part object that will be displayed</param>
+    /// <param name="Category">The category in which the part is displayed</param>
     private void CreateButton(GameObject part, string Category)
     {
         for (int x=0; x<categoryHolders.Count;x++)
@@ -80,10 +95,12 @@ public class PartSelectionManager : MonoBehaviour
             }
         }
 
+        //Create the button and load the correct texture to display
         GameObject newButton = Instantiate(buttonPrefab, categoryHolders[categoryIndex].GetComponentInChildren<GridLayoutGroup>().transform);
         newButton.name = part.name;
         newButton.transform.GetComponentInChildren<RawImage>().texture = (Texture)Resources.Load("UI/Images/"+part.name);
 
+        //Create all the listeners and triggers for the hovering stat window
         EventTrigger trigger = newButton.AddComponent<EventTrigger>();
         EventTrigger.Entry enterEvent = new EventTrigger.Entry();
         EventTrigger.Entry exitEvent = new EventTrigger.Entry();
@@ -98,6 +115,7 @@ public class PartSelectionManager : MonoBehaviour
         trigger.triggers.Add(exitEvent);
         trigger.triggers.Add(clickEvent);
 
+        //Add all the required functionalities to the buttons
         if (part.name.Contains("Wheel"))
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
@@ -109,16 +127,23 @@ public class PartSelectionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// What stats will be shown in the hover stat window
+    /// </summary>
+    /// <param name="partObject">The part displayed in the button</param>
+    /// <param name="data">The pointer data for the button</param>
     public void OnHoverOverButton(GameObject partObject, PointerEventData data)
     {
         Part part = partObject.GetComponent<Part>();
 
         popupWindow.transform.position = data.position;
 
+        //Data that can be set for each button
         for (int x=0; x<4;x++)
         {
             Transform statObject = popupWindow.transform.GetChild(x);
 
+            //Set the UI objects to display the correct stats and activate them
             switch (x)
             {
                 case 0:
@@ -126,45 +151,51 @@ public class PartSelectionManager : MonoBehaviour
                     break;
                 case 2:
                     statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
-                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
-                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
+
+                    //Calculate the gradient fill amount and the color based on part stats
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / maxHealth);
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / maxHealth;
                     break;
                 case 3:
                     statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
-                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate(part.weight / 15f);
-                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.weight / 15f;
+
+                    //Calculate the gradient fill amount and the color based on part stats
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate(part.weight / maxWeight);
+                    statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.weight / maxWeight;
                     break;
             }
             statObject.gameObject.SetActive(true);
         }
 
+        //Data that can only be set for movementParts
         if (part is MovementPart)
         {
             for (int i = 2; i < 7; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
+                //Set the UI objects to display the correct stats and activate them
                 switch (i)
                 {
                     case 2:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Health";
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / 15f);
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / 15f;
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.health / maxHealth);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.health / maxHealth;
                         break;
                     case 3:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Weight";
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate((part.weight - 5) / 15f);
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.weight - 5) / 15f;
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = weightGradient.Evaluate((part.weight - 5) / maxWeight);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.weight - 5) / maxWeight;
                         break;
                     case 5:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Steering";
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().steeringAngle-10) / 30f);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().steeringAngle-10) / maxSteering);
                         statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().steeringAngle - 10) / 30f;
                         break;
                     case 6:
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Acceleration";
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / 225f);
-                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / 225f;
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate((part.GetComponent<MovementPart>().maxTorgue - 25) / maxAcceleration);
+                        statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = (part.GetComponent<MovementPart>().maxTorgue - 25) / maxAcceleration;
                         break;
                 }
                 if (i!=4)
@@ -173,12 +204,14 @@ public class PartSelectionManager : MonoBehaviour
                 }
             }
         }
-        else if (part is BoostPart||part is JumpPart) // Im aware this is double, but that's because more stats might be added.
+        //Data that can only be set for booster and jump parts
+        else if (part is BoostPart||part is JumpPart)
         {
             for (int i = 4; i < 5; i++)
             {
                 Transform statObject = popupWindow.transform.GetChild(i);
 
+                //Set the UI objects to display the correct stats and activate them
                 switch (i)
                 {
                     case 4:
@@ -205,6 +238,11 @@ public class PartSelectionManager : MonoBehaviour
             popupWindow.SetActive(true);
     }
 
+    /// <summary>
+    /// Close the part stat window UI when no longer hovering over button
+    /// </summary>
+    /// <param name="part">The part displayed in the button</param>
+    /// <param name="data">The pointer data for the button</param>
     public void OnHoverExitButton(GameObject part, PointerEventData data)
     {
         for (int i = 1; i < popupWindow.transform.childCount; i++)
@@ -216,6 +254,10 @@ public class PartSelectionManager : MonoBehaviour
             popupWindow.SetActive(false);
     }
 
+    /// <summary>
+    /// Switch the currently active UI and camera mode
+    /// </summary>
+    /// <param name="context"></param>
     public void BuildButton(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -229,6 +271,9 @@ public class PartSelectionManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Enable or disable the part UI and the cursor mode
+    /// </summary>
     public void ChangeActiveBuildState()
     {
         buildUIOpen = !buildUIOpen;
@@ -251,6 +296,10 @@ public class PartSelectionManager : MonoBehaviour
         GameManager.Instance.vehicleEditor.SetSelectedPart(chosenPart);
     }
 
+    /// <summary>
+    /// Switch the active category displayed on the screen
+    /// </summary>
+    /// <param name="categoryName">The name of the category that will be displayed</param>
     public void ChangeCategory(string categoryName)
     {
         foreach (GameObject category in categoryHolders)
@@ -277,6 +326,10 @@ public class PartSelectionManager : MonoBehaviour
         eventSystem.SetSelectedGameObject(selectedButton);
     }
 
+    /// <summary>
+    /// Change the highlighted category button
+    /// </summary>
+    /// <param name="button">The button that was just pressed</param>
     public void ChangeSelectedButton(GameObject button)
     {
         selectedButton.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
