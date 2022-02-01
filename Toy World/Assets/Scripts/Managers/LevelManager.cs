@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour
         DDOL.Instance.P1Coreblock.SetActive(true);
         panel = levelUI.transform.Find("Panel").gameObject;
         canvasText = levelUI.transform.Find("FinishText").gameObject;
-        timerObject = levelUI.transform.Find("TimerObject").gameObject;
+        timerObject = levelUI.transform.Find("Timer").GetChild(0).gameObject;
         objectiveUI = levelUI.transform.Find("Goals").gameObject;
         displayCargoAmount = cargoToSpawn;
     }
@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour
         if (timerStarted)
         {
             timer += Time.deltaTime;
-            timerObject.GetComponent<TextMeshProUGUI>().text = ((int)(timeLevelCompletion - timer)).ToString();
+            timerObject.GetComponent<TextMeshProUGUI>().text = "Time left: " + ((int)(timeLevelCompletion - timer)).ToString();
         }
 
         if (timer > timeLevelCompletion)
@@ -66,18 +66,7 @@ public class LevelManager : MonoBehaviour
     public void StartTimer()
     {
         timerStarted = true;
-    }
-
-    // Dit en alles wat ermee te maken heeft kan volgensmij weg bij de cleanup?? -Leon
-    public void StopTimer()
-    {
-        timerStarted = false;
-        timer = 0;
-        levelTrigger.levelStarted = false;
-        canvasText.SetActive(false);
-        panel.SetActive(false);
-        timerObject.GetComponent<TextMeshProUGUI>().text = "";
-        cargoSpawner.ResetItems();
+        timerObject.transform.parent.gameObject.SetActive(true);
     }
 
     /// <summary>
