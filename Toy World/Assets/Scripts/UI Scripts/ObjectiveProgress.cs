@@ -9,7 +9,9 @@ public class ObjectiveProgress : MonoBehaviour
     private TextMeshProUGUI mainObjectiveTracker;
     private int currentCargo;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Initialize the main goal and the UI
+    /// </summary>
     void Start()
     {
         levelManager = GameManager.Instance.levelManager;
@@ -20,6 +22,10 @@ public class ObjectiveProgress : MonoBehaviour
         mainObjectiveTracker.text = currentCargo + " / " + currentCargo;
     }
 
+    /// <summary>
+    /// Update the cargo amount shown in the main obective
+    /// </summary>
+    /// <param name="cargoAmount"></param>
     public void UpdateCargo(int cargoAmount)
     {
         mainObjectiveTracker.text = cargoAmount + " / " + levelManager.cargoToSpawn;

@@ -15,6 +15,10 @@ public class GenericUIChoices : MonoBehaviour
         UI.SetActive(true);
     }
 
+    /// <summary>
+    /// Load a scene dependent on the scene name given and reset neccesary functions
+    /// </summary>
+    /// <param name="sceneName">The name of the scene to be loaded</param>
     public void LoadScene(string sceneName)
     {
         Time.timeScale = 1;
