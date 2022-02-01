@@ -234,7 +234,7 @@ MonoBehaviour:
   ignoreLayers:
     serializedVersion: 2
     m_Bits: 8
-  _cooldown: 3
+  _cooldown: 15
   _laserStart: {fileID: 2644596535995666507}
   _rotatingLauncherPart: {fileID: 6196287578528162325}
   _missileProp: {fileID: 851492491837345802}
