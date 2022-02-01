@@ -26,6 +26,7 @@ public class ShootingEnemy : MonoBehaviour
             timer += Time.deltaTime;
         }
 
+        //Spawn a projectile when the timer is higher than the attack interval
         if (timer >= attackInterval)
         {
             GameObject spawnedProjectile= Instantiate(projectile, projectileSpawnPoint.transform.position,projectileSpawnPoint.transform.rotation);
@@ -35,6 +36,11 @@ public class ShootingEnemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if a cargo enters its trigger.
+    /// If it is not lost yet, target that cargo.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.name.Contains("Cargo")&& !other.GetComponent<Wood>().lost)
@@ -45,6 +51,10 @@ public class ShootingEnemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if a cargo is in its trigger and if it is not lost
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerStay(Collider other)
     {
         if (other.name.Contains("Cargo") && !other.GetComponent<Wood>().lost && cargoInRange.Count != 0)
@@ -63,6 +73,10 @@ public class ShootingEnemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Remove any cargo from its sight if it gets out of range
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.name.Contains("Cargo"))

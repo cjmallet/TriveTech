@@ -154,12 +154,16 @@ public class PartGrid : MonoBehaviour
         return allParts;
     }
 
+    /// <summary>
+    /// Remove the part at the given position
+    /// </summary>
+    /// <param name="partPosition">The local position of the part</param>
     public void RemovePart(Vector3Int partPosition)
     {
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
     /// <summary>
-    /// Checks if any block is not connected to the vehicle through an list of all parts
+    /// Checks if any block is not connected to the vehicle through a list of all parts
     /// which is checked by the floodfill algorithm
     /// </summary>
     public void CheckConnection()
@@ -189,6 +193,7 @@ public class PartGrid : MonoBehaviour
         Queue<Part> partsToCheck = new Queue<Part>();
         List<Part> neighboursCoreBlock= partGrid[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z].attachedParts;
 
+        //Check each neighbour starting from the coreblock and mark the objects found as floodfilled
         foreach (Part neighbour in neighboursCoreBlock)
         {
             if (neighbour!=null)
@@ -198,6 +203,7 @@ public class PartGrid : MonoBehaviour
             }
         }
 
+        //Keep checking all the connections of the vehicle until no connections are found
         while (partsToCheck.Count>0)
         {
             List<Part> neighbours = partsToCheck.Dequeue().attachedParts;

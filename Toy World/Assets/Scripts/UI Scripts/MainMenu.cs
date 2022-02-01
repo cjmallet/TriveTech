@@ -26,6 +26,7 @@ public class MainMenu : MonoBehaviour
         contentHolder = GetComponentInChildren<GridLayoutGroup>().gameObject;
         levels = Resources.LoadAll("Levels").ToList();
 
+        //Load all the scenes from the build index in build settings and save their number
         for (int x=0; x<SceneManager.sceneCountInBuildSettings;x++)
         {
             if (SceneUtility.GetScenePathByBuildIndex(x).Contains("Level"))
@@ -39,6 +40,7 @@ public class MainMenu : MonoBehaviour
 
         levelNumbers.Sort();
 
+        //Initialize a button for each level number found
         foreach (int levelNumber in levelNumbers)
         {
             string levelName = levelPrefix+levelNumber.ToString();
@@ -46,8 +48,18 @@ public class MainMenu : MonoBehaviour
             button.transform.localScale = new Vector3(1, 1, 1);
             button.name = levelName;
             button.GetComponentInChildren<TextMeshProUGUI>().text = levelName;
-            //button.GetComponent<Image>().sprite=(Sprite)Resources.Load("UI/"+levelName,typeof(Sprite));
+            button.transform.GetChild(0).GetComponent<Image>().sprite=(Sprite)Resources.Load("UI/LevelPreview/"+levelName,typeof(Sprite));
             button.GetComponent<Button>().onClick.AddListener(() => { button.GetComponent<GenericUIChoices>().LoadScene(levelName); });
+
+            if (PlayerPrefs.GetInt(levelName+ "_Cleared")==1)
+            {
+                button.transform.GetChild(2).gameObject.SetActive(true);
+            }
+            else
+            {
+                button.transform.GetChild(2).gameObject.SetActive(false);
+
+            }
 
             //If the level has been completed
             if (PlayerPrefs.GetInt(levelName) == 1)

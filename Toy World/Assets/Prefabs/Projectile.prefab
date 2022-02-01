@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   removeTime: 2
-  damage: 2
+  damage: 3
   speedModifier: 25
 --- !u!54 &6059208560609041669
 Rigidbody:

@@ -248,7 +248,7 @@ MonoBehaviour:
   buildModeCollider: {fileID: 8003115270509702072}
   actionType: 1
   specificActionType: 0
-  jumpStrenght: 1
+  jumpStrenght: 1.5
   jumpSound: 3
   strechyness: 0.75
 --- !u!136 &678811577352676575

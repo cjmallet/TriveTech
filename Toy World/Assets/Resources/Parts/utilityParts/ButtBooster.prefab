@@ -81,7 +81,7 @@ MonoBehaviour:
   buildModeCollider: {fileID: 6415754975100537024}
   actionType: 0
   specificActionType: 0
-  rechargeDurationSeconds: 2
+  rechargeDurationSeconds: 8
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
   boostStrenght: 1
