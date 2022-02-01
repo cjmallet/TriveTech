@@ -50,6 +50,7 @@ public abstract class Part : MonoBehaviour
             ShowFrontDirection();
         }
 
+        //Get the components for the destruction particles
         if (TryGetComponent(out ParticleSystem particles))
         {
             destructionParticles = particles;
@@ -117,6 +118,11 @@ public abstract class Part : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if the side that is being attached has a working attachpoint for both blocks
+    /// </summary>
+    /// <param name="hitNormal">Where the block was hit</param>
+    /// <returns></returns>
     public bool CheckIfAttachable(Vector3 hitNormal)
     {
         int side = (int)DetermineSide(hitNormal);
@@ -142,9 +148,12 @@ public abstract class Part : MonoBehaviour
     public void ToggleDirectionIndicator(bool visible)
     {
         myDirectionIndicator.SetActive(visible);
-        //Debug.Log(transform.parent.parent.name);
     }
 
+    /// <summary>
+    /// Handle the collision of this specific part
+    /// </summary>
+    /// <param name="collider">Object that the part collided with</param>
     public virtual void HandleCollision(Collider collider)
     {
         if (collider.name.Contains("Enemy"))
@@ -176,12 +185,19 @@ public abstract class Part : MonoBehaviour
         destructionParticles.Play();
     }
 
+    /// <summary>
+    /// Remove the part from the vehicle 
+    /// either after taking damage or after floodfill check
+    /// </summary>
+    /// <param name="start"></param>
     public void RemovePart(bool start)
     {
         if (gameObject.TryGetComponent(out CorePart core))
         {
             return;
         }
+
+        //Remove the attached parts from its list and itself from the other parts
         for (int x = 0; x < attachedParts.Count; x++)
         {
             if (attachedParts[x] != null)
@@ -198,6 +214,7 @@ public abstract class Part : MonoBehaviour
                 }
             }
         }
+        //Switch colliders for wheels as wheelcolliders are not very smart while off the vehicle
         if (gameObject.TryGetComponent(out MovementPart movePart))
         {
             movePart.SwitchColliders();
@@ -205,17 +222,11 @@ public abstract class Part : MonoBehaviour
 
         if (GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>() != null)
         {
-            if (GetComponent<WheelPart>())
-            {
-                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
+            //Remove the part from the partGrid
+            GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
                     RemovePart(Vector3Int.CeilToInt(transform.localPosition));
-            }
-            else
-            {
-                GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
-                    RemovePart(Vector3Int.CeilToInt(transform.localPosition));
-            }
 
+            //Start the floodfill algorithm if this was the first part
             if (!transform.CompareTag("CoreBlock") && start)
             {
                 GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PartGrid>().
@@ -223,6 +234,7 @@ public abstract class Part : MonoBehaviour
                 start = !start;
             }
 
+            //Reset all the components that were neccesary for the vehicle to the detached part components
             transform.parent = null;
             gameObject.AddComponent<AudioSource>();
             AudioManager.Instance.Play(AudioManager.clips.PartDestruction, GetComponent<AudioSource>());
@@ -232,6 +244,7 @@ public abstract class Part : MonoBehaviour
             gameObject.tag = "Untagged";
             Destroy(gameObject.GetComponent<Part>());
 
+            //Remove the part from the activation list if it was active
             if (gameObject.GetComponent<UtilityPart>() != null)
             {
                 GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<ActivatePartActions>()

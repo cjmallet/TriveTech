@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class SavePrefabPicture : MonoBehaviour
 {
-
-    // Start is called before the first frame update
+    /// <summary>
+    /// When the scene is started, save the current view in a screenshot file 
+    /// with a name based on the part that is being screenshot
+    /// </summary>
     void Start()
     {
         GameObject picturePrefab = GameObject.FindGameObjectWithTag("Part");

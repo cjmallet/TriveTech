@@ -16,6 +16,7 @@ public class CargoSpawner : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        //If not all cargo has spawned and the timer has finished, spawn cargo
         if (spawningCargo && itemsSpawned < GameManager.Instance.levelManager.cargoToSpawn)
         {
             GameObject cargo = Instantiate(cargoPrefab, cargoSpawnPoint.transform.position, Quaternion.identity);
@@ -26,6 +27,7 @@ public class CargoSpawner : MonoBehaviour
 
             StartCoroutine(SpawnTimer());
         }
+        //Stop spawning cargo when all the cargo has spawned
         else if (itemsSpawned >= GameManager.Instance.levelManager.cargoToSpawn && !finishedSpawning)
         {
             spawningCargo = false;
@@ -34,6 +36,10 @@ public class CargoSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Keep the spawning of the cargo on a set timer
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SpawnTimer()
     {
         yield return new WaitForSeconds(cargoSpawnSpeed);
@@ -41,6 +47,9 @@ public class CargoSpawner : MonoBehaviour
         spawningCargo = true;
     }
 
+    /// <summary>
+    /// Start spawning the cargo
+    /// </summary>
     public void SpawnItems()
     {
         spawningCargo = true;
@@ -51,6 +60,9 @@ public class CargoSpawner : MonoBehaviour
             cargoContainer = new GameObject("Cargo container");
     }
 
+    /// <summary>
+    /// Remove the cargo from the scene
+    /// </summary>
     public void CleanCargo()
     {
         if (cargoContainer != null)
