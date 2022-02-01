@@ -49,7 +49,7 @@ public class MainMenu : MonoBehaviour
             button.name = levelName;
             button.GetComponentInChildren<TextMeshProUGUI>().text = levelName;
             button.transform.GetChild(0).GetComponent<Image>().sprite=(Sprite)Resources.Load("UI/LevelPreview/"+levelName,typeof(Sprite));
-            button.GetComponent<Button>().onClick.AddListener(() => { button.GetComponent<GenericUIChoices>().LoadScene(levelName); });
+            button.GetComponent<Button>().onClick.AddListener(() => { AudioManager.Instance.MenuButtonClickSound(); button.GetComponent<GenericUIChoices>().LoadScene(levelName); });
 
             //If the level has been completed
             if (PlayerPrefs.GetInt(levelName) == 1)

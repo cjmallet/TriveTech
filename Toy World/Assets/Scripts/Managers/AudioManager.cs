@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class AudioManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class AudioManager : MonoBehaviour
 	[HideInInspector]public List<AudioClip> audioClips = new List<AudioClip>();
 	private GameObject coreBlock;
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
+	private Button[] buttonList;
 
 	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
@@ -45,7 +47,8 @@ public class AudioManager : MonoBehaviour
 		GameOver,
 		BuildingMusic,
 		DrivingMusic,
-		EngineSound
+		EngineSound,
+		MenuButtonClick
 	};
 
 	private void Awake()
@@ -63,15 +66,25 @@ public class AudioManager : MonoBehaviour
 		AudioListener.volume = 1;
 	}
 
-    private void Start()
-    {
+	private void Start()
+	{
 		musicSource1 = gameObject.AddComponent<AudioSource>();
 		musicSource2 = gameObject.AddComponent<AudioSource>();
 
 		musicSource1.loop = true;
 		musicSource2.loop = true;
-		
+
 		SetMusic(currentMusicClip);
+
+		buttonList = GameObject.FindObjectsOfType<Button>();
+
+		foreach (Button button in buttonList)
+		{
+			button.onClick.AddListener(() =>
+			{
+				AudioManager.Instance.MenuButtonClickSound();
+			});
+		}
 
 		audioSourceObjects = new List<GameObject>();
 
@@ -106,6 +119,8 @@ public class AudioManager : MonoBehaviour
 	/// </summary>	
 	public void Play(clips clipName, AudioSource source)
 	{
+		Debug.Log(source.gameObject.name);
+
 		// Checks and matches the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
 		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
 
@@ -252,6 +267,15 @@ public class AudioManager : MonoBehaviour
 			musicSource1.Stop();
 		}
 	}
+
+	public void MenuButtonClickSound()
+    {
+		GameObject audioSource = AudioManager.Instance.GetPooledAudioSourceObject();
+		audioSource.transform.localPosition = gameObject.transform.position;
+		audioSource.SetActive(true);
+
+		Play(clips.MenuButtonClick, audioSource.GetComponent<AudioSource>());
+    }
 
 	/// <summary>
 	/// Stops the sounds played by the audio source.

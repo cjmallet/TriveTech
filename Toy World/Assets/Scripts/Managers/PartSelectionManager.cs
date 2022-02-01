@@ -119,11 +119,12 @@ public class PartSelectionManager : MonoBehaviour
         if (part.name.Contains("Wheel"))
         {
             newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI();
-                ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation();});
+                ChangeActiveBuildState(); GameManager.Instance.vehicleEditor.ResetPreviewRotation(); AudioManager.Instance.MenuButtonClickSound(); });
         }
         else
         {
-            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); ChangeActiveBuildState(); });
+            newButton.GetComponent<Button>().onClick.AddListener(() => { ChangeSelectedPart(part); ClosePartSelectionUI(); ChangeActiveBuildState(); AudioManager.Instance.MenuButtonClickSound(); });
+
         }
     }
 
