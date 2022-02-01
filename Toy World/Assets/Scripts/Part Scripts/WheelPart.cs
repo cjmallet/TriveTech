@@ -18,6 +18,9 @@ public class WheelPart : MovementPart
             ApplyLocalPositionToVisuals();
     }
 
+    /// <summary>
+    /// Translates the visual wheel to wheelcollider position.
+    /// </summary>
     public override void ApplyLocalPositionToVisuals()
     {
         if (transform.childCount == 0)
@@ -27,10 +30,5 @@ public class WheelPart : MovementPart
 
         visualWheel.transform.position = wheelPosition;
         visualWheel.transform.rotation = wheelRotation;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("yes");
     }
 }
