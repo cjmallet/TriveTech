@@ -107,8 +107,8 @@ public class VehicleEditor : MonoBehaviour
         coreBlockPlayMode.GetComponent<PartGrid>().CheckConnection();
 
         //grab vehiclecam again, because we have a new coreblock instance for playmode
-        vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
-        vehicleCam.enabled = true;
+        //vehicleCam = coreBlockPlayMode.GetComponentInChildren<Camera>();
+        vehicleCam.gameObject.SetActive(true);
 
         coreBlockPlayMode.SetActive(true);
     }
