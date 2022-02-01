@@ -14,7 +14,7 @@ public class MissileLauncher : OffensivePart
     private LineRenderer _lineRnd;
     private Transform _vehicleCam;
     private GameObject _missilePrefab;
-    private float _lookAngleCorrection = -25f;
+    private float _lookAngleCorrection = -30f;
 
 
     void Start()
@@ -61,7 +61,7 @@ public class MissileLauncher : OffensivePart
         missile.transform.localScale = _missileProp.transform.lossyScale;
         RaycastHit laserHit;
         //correct angle, because you'll be looking slightly down on your vehicle, not straight from behind
-        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, new Vector3(1, 0f, 0f)) * _vehicleCam.forward;
+        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, new Vector3(1f, 0f, 0f)) * _vehicleCam.forward;
 
         if (Physics.Raycast(_laserStart.position, direction, out laserHit, Mathf.Infinity, ~ignoreLayers))
         {
@@ -96,15 +96,17 @@ public class MissileLauncher : OffensivePart
     {
         _lineRnd.SetPosition(0, _laserStart.position);
         //correct angle, because you'll be looking slightly down on your vehicle, not straight from behind
-        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, new Vector3(1, 0f, 0f)) * _vehicleCam.forward;
+        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, _vehicleCam.right) * _vehicleCam.forward;
         RaycastHit laserHit;
         if (Physics.Raycast(_laserStart.position, direction, out laserHit, Mathf.Infinity, ~ignoreLayers))
         {
+            Debug.Log("laser hit " + laserHit.transform.name);
             _lineRnd.SetPosition(1, laserHit.point);
             //laserImpactEffect.transform.position = laserHit.point;
         }
         else
         {
+            Debug.Log("gewoon recht vooruit, richting" + _rotatingLauncherPart.forward);
             _lineRnd.SetPosition(1, _rotatingLauncherPart.forward * 100f);
         }
             

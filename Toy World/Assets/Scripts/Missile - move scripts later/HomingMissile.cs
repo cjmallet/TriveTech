@@ -149,18 +149,22 @@ public class HomingMissile : MonoBehaviour
         DetachSmokeTrail();
         foreach (Collider col in Physics.OverlapSphere(transform.position, explosionRadius))
         {
-            if(TryGetComponent(out ShootingEnemy enemy))
+            if (TryGetComponent(out ShootingEnemy enemy))
             {
                 Destroy(enemy.gameObject);
             }
-        } 
+            else if (TryGetComponent(out MoveObstacle enemyAlso))
+            {
+                Destroy(enemyAlso.gameObject);
+            }
+        }
         Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
     {
         //visualize tracking target
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(targetPos,  0.45f);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawSphere(targetPos,  0.45f);
     }
 }
