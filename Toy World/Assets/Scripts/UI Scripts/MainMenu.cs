@@ -51,6 +51,16 @@ public class MainMenu : MonoBehaviour
             button.transform.GetChild(0).GetComponent<Image>().sprite=(Sprite)Resources.Load("UI/LevelPreview/"+levelName,typeof(Sprite));
             button.GetComponent<Button>().onClick.AddListener(() => { button.GetComponent<GenericUIChoices>().LoadScene(levelName); });
 
+            if (PlayerPrefs.GetInt(levelName+ "_Cleared")==1)
+            {
+                button.transform.GetChild(2).gameObject.SetActive(true);
+            }
+            else
+            {
+                button.transform.GetChild(2).gameObject.SetActive(false);
+
+            }
+
             //If the level has been completed
             if (PlayerPrefs.GetInt(levelName) == 1)
             {

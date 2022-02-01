@@ -106,6 +106,10 @@ public class LevelManager : MonoBehaviour
                 AudioManager.Instance.Play(AudioManager.clips.LevelComplete, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
                 OpenEndScreen("You Finished!", (int)(timeLevelCompletion - timer), collectedCargo,true);
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
+                if (collectedCargo==cargoToSpawn)
+                {
+                    PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_Cleared", 1);
+                }
             }
             else
             {
