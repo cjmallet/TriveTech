@@ -61,7 +61,7 @@ public class MissileLauncher : OffensivePart
         missile.transform.localScale = _missileProp.transform.lossyScale;
         RaycastHit laserHit;
         //correct angle, because you'll be looking slightly down on your vehicle, not straight from behind
-        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, new Vector3(1f, 0f, 0f)) * _vehicleCam.forward;
+        Vector3 direction = Quaternion.AngleAxis(_lookAngleCorrection, _vehicleCam.right) * _vehicleCam.forward;
 
         if (Physics.Raycast(_laserStart.position, direction, out laserHit, Mathf.Infinity, ~ignoreLayers))
         {
