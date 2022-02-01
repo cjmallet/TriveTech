@@ -22,9 +22,6 @@ public class RotatingCameraController : MonoBehaviour
     // Distance between the camera and the core block
     public int minZoomOutDistance, maxZoomOutDistance;
 
-    // Reference to core block so it can be rotated
-    public GameObject vehicleCore;
-
     private void Update()
     {
         RotateVehicleMovement(inputVector);
@@ -92,7 +89,8 @@ public class RotatingCameraController : MonoBehaviour
 
         Vector3 newPosition = transform.position + transform.forward * zoomDirection * cameraZoomSpeed;
 
-        float newDistance = (vehicleCore.transform.position - newPosition).magnitude;
+        float newDistance = (GameManager.Instance.vehicleEditor.coreBlockPlayMode.
+            transform.position - newPosition).magnitude;
 
         if ((newDistance > minZoomOutDistance) && (newDistance < maxZoomOutDistance))
         {
