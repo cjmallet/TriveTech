@@ -36,6 +36,8 @@ public class HomingMissile : MonoBehaviour
     private bool tracking;
     private bool collisionEnabled = false;
 
+    private GameObject audioSourceMissileTravel;
+
 
     // Use this for initialization
     void Start()
@@ -54,6 +56,8 @@ public class HomingMissile : MonoBehaviour
 
         if (tracking)
         {
+            HandleMissileSound();
+
             if (target != Vector3.zero)
             {
                 HomeInOnTarget();
@@ -145,6 +149,7 @@ public class HomingMissile : MonoBehaviour
         _explosionFX.transform.parent = null;
         _explosionFX.gameObject.SetActive(true);
         DetachSmokeTrail();
+        HandleMissileExplodingSound();
         foreach (Collider col in Physics.OverlapSphere(transform.position, explosionRadius))
         {
             if (col.gameObject.TryGetComponent(out ShootingEnemy enemy))
@@ -155,8 +160,32 @@ public class HomingMissile : MonoBehaviour
             {
                 Destroy(enemyAlso.gameObject);
             }
+            else if (col.gameObject.TryGetComponent(out DestructibleObject destructibleObject))
+            {
+                Destroy(destructibleObject.gameObject);
+            }
         }
         Destroy(gameObject);
+    }
+
+    private void HandleMissileSound()
+    {
+        if (!gameObject.GetComponent<AudioSource>().isPlaying)
+        {
+            AudioManager.Instance.Play(AudioManager.clips.ButtBoost, gameObject.GetComponent<AudioSource>());
+            gameObject.GetComponent<AudioSource>().loop = true;
+        }
+    }
+
+    private void HandleMissileExplodingSound()
+    {
+        AudioManager.Instance.Stop(gameObject.GetComponent<AudioSource>());
+
+        GameObject audioSourceMissileExplode = AudioManager.Instance.GetPooledAudioSourceObject();
+        audioSourceMissileExplode.transform.localPosition = gameObject.transform.position;
+        audioSourceMissileExplode.SetActive(true);
+
+        AudioManager.Instance.Play(AudioManager.clips.MissileExplosion, audioSourceMissileExplode.GetComponent<AudioSource>());
     }
 
     private void OnDrawGizmos()

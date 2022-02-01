@@ -4929,7 +4929,7 @@ GameObject:
   - component: {fileID: 8584605787160912040}
   m_Layer: 0
   m_Name: Missile
-  m_TagString: Untagged
+  m_TagString: Missile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5047,7 +5047,7 @@ MonoBehaviour:
   _explosionFX: {fileID: 779950834580224414}
   _smokeTrail: {fileID: 5266930150539131001}
   launcher: {fileID: 0}
-  maxLifespan: 10
+  maxLifespan: 3
   explosionRadius: 2
   _maxSpeed: 30
   _force: 1.8
