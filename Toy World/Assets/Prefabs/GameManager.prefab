@@ -196,7 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cargoSpawner: {fileID: 0}
-  levelTrigger: {fileID: 0}
   cargoCompletionAmount: 5
   cargoToSpawn: 10
   timeLevelCompletion: 55
@@ -261,6 +260,7 @@ MonoBehaviour:
   partSelectionManager: {fileID: 8605438988039419050}
   menuManager: {fileID: 6033746865790101835}
   levelManager: {fileID: 6033746865509156030}
+  inputManager: {fileID: 6033746866159264802}
 --- !u!1 &6033746865790101833
 GameObject:
   m_ObjectHideFlags: 0

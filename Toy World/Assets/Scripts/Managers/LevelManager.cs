@@ -63,6 +63,7 @@ public class LevelManager : MonoBehaviour
         endLevelScreen.transform.GetChild(6).gameObject.SetActive(succes);
         Cursor.lockState = CursorLockMode.None;
         GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>().enabled=false;
+        GameManager.Instance.inputManager.enabled = false;
         objectiveUI.SetActive(false);
     }
 
