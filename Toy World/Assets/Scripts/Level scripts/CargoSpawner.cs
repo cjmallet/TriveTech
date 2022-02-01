@@ -73,15 +73,4 @@ public class CargoSpawner : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Reset the settings for spawning the cargo
-    /// </summary>
-    public void ResetItems()
-    {
-        spawningCargo = false;
-        finishedSpawning = true;
-        itemsSpawned = GameManager.Instance.levelManager.cargoToSpawn;
-        GameManager.Instance.levelManager.collectedCargo = 0;
-    }
 }
