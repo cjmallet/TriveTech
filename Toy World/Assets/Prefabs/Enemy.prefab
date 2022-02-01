@@ -115,7 +115,7 @@ MonoBehaviour:
   horizontal: 0
   vertical: 0
   startSide: 1
-  speed: 15
+  speed: 1
   damage: 20
   distance: 25
 --- !u!54 &-3380767153339699316
