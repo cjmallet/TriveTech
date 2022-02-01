@@ -28,7 +28,8 @@ public class PreviewPart : MonoBehaviour
             for (int i = 0; i < renderer.materials.Length; i++)
             {
                 mats[i] = Instantiate(mat);
-                mats[i].SetTexture("_AlbedoTexture", renderer.materials[i].GetTexture("_BaseMap"));
+                if(renderer.materials[i].GetTexture("_BaseMap") != null)//null check for weird materials
+                    mats[i].SetTexture("_AlbedoTexture", renderer.materials[i].GetTexture("_BaseMap"));
                 materials.Add(mats[i]);
             }
             renderer.materials = mats;

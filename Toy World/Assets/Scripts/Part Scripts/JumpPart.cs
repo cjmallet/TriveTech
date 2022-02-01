@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Gives a bouncy force to the vehicle in the direction the jump part is aimed
+/// </summary>
 public class JumpPart : UtilityPart
 {
     const int FORCE_MULTIPLIER = 1000;
@@ -62,6 +65,9 @@ public class JumpPart : UtilityPart
         }
     }
 
+    /// <summary>
+    /// Use this method in child scripts to have different animations for different jump parts
+    /// </summary>
     public virtual void JumpAnimation()
     {
 

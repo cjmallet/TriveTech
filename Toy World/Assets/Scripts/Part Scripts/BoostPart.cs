@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Gives a boost to the vehicle when this part is activated
+/// </summary>
 public class BoostPart : UtilityPart
 {
     const int FORCE_MULTIPLIER = 1500;
