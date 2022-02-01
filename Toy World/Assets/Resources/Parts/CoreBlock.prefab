@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 2864444613395339373}
   - component: {fileID: 8173900786519902703}
   - component: {fileID: 5386600056686863872}
+  - component: {fileID: 1107602155740029364}
   m_Layer: 3
   m_Name: CoreBlock
   m_TagString: CoreBlock
@@ -274,6 +275,7 @@ MonoBehaviour:
   attachablePoints: 010101010101
   health: 10
   weight: 10
+  description: 
   floodFilled: 0
   useDirectionIndicator: 0
   playModeCollider: {fileID: 2951135595205152615}
@@ -308,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allParts: []
+  allUtilityParts: []
 --- !u!114 &8173900786519902703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,8 +546,8 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
+  m_Pitch: 0.5
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -626,6 +629,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &1107602155740029364
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099009681357930406}
+  m_Enabled: 1
 --- !u!1001 &4473818504291700309
 PrefabInstance:
   m_ObjectHideFlags: 0

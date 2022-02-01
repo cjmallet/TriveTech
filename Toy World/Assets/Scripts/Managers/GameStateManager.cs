@@ -40,6 +40,9 @@ public class GameStateManager : MonoBehaviour
     {
         GameManager.Instance.stateManager.CurrentGameState = GameState.Playing;
 
+        AudioManager.Instance.SetMusic(AudioManager.clips.DrivingMusic);
+        AudioManager.Instance.StartCoroutine(AudioManager.Instance.EngineSounds());
+
         EscMenuBehaviour.buildCameraPositionStart = mainCam.transform.position;
         EscMenuBehaviour.buildCameraRotationStart = mainCam.transform.rotation;
 
@@ -56,6 +59,8 @@ public class GameStateManager : MonoBehaviour
         RestartText.text = "Restart";
 
         playerInput.SwitchCurrentActionMap("Player");
+
+        StartCoroutine(GameManager.Instance.levelManager.StartLevel());
     }
 
     public enum GameState : int

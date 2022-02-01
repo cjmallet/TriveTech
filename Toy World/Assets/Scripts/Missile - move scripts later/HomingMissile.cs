@@ -8,7 +8,7 @@ using UnityEngine;
 public class HomingMissile : MonoBehaviour
 {
 
-    public GameObject target;
+    public Vector3 target;//change to transform or gameobject if you wanna track moving stuff
 
     //public float rotationSpeed;
     //public float velocity;
@@ -48,7 +48,7 @@ public class HomingMissile : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _rb.maxAngularVelocity = _maxAngularVelocity;
         _rb.angularDrag = _angularDrag;
-        //GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         tracking = true;
     }
 
@@ -59,12 +59,16 @@ public class HomingMissile : MonoBehaviour
 
         if (tracking)
         {
-            if (target)
+            if (target != Vector3.zero)
             {
                 HomeInOnTarget();
             }
             else
-                StopTracking();
+            {
+                //StopTracking();
+                JustGoStraight();
+            }
+                
         }
 
         if (!collisionEnabled)
@@ -75,15 +79,16 @@ public class HomingMissile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.collider.transform.name);
         FuckingExplode();
     }
 
     private void HomeInOnTarget()
     {
         //give randomness to the target position for that cute wobble during flight, in the form of perlin noise, based on it's location
-        targetPos = target.transform.position 
+        targetPos = target 
             + GetPerlinValues()
-            * Vector3.Distance(target.transform.position, transform.position)
+            * Vector3.Distance(target, transform.position)
             * 0.05f;
 
         //add velocity. rockets go woosh
@@ -103,6 +108,10 @@ public class HomingMissile : MonoBehaviour
             * _rotationForce
             * 0.1f;
     }
+    private void JustGoStraight()
+    {
+        _rb.velocity = Vector3.ClampMagnitude(_rb.velocity + transform.up * _force, _maxSpeed);
+    }
 
     private void StopTracking()
     {
@@ -119,6 +128,7 @@ public class HomingMissile : MonoBehaviour
     /// </summary>
     private void LauncherDistanceCheck()
     {
+        Debug.Log("is there a launcher? " + launcher);
         if(!launcher || Vector3.Distance(transform.position, launcher.transform.position) > 1.5f)
         {
             GetComponent<Collider>().enabled = true;

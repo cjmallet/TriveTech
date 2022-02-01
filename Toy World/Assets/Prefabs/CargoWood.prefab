@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9126322411781850710}
   - component: {fileID: 9126322411781850706}
   - component: {fileID: -458430478963984870}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CargoWood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
