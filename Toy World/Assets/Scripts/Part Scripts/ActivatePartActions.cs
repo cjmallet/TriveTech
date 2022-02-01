@@ -170,8 +170,6 @@ public class ActivatePartActions : MonoBehaviour
     {
         if (value.started)
             ActivateAttackActions();
-        if (value.canceled)
-            ActivateAttackActions();
     }
 
     public void UseDefenseAction(InputAction.CallbackContext value)

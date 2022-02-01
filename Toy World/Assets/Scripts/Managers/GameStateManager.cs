@@ -12,6 +12,9 @@ public class GameStateManager : MonoBehaviour
 
     public PlayerInput playerInput;
 
+    /// <summary>
+    /// Getter/Setter for gamestate.
+    /// </summary>
     public GameState CurrentGameState
     {
         get { return currentGameState; }
@@ -30,12 +33,20 @@ public class GameStateManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("UI");
     }
 
+    /// <summary>
+    /// Called to switch to a new state.
+    /// </summary>
+    /// <param name="previousState">State before switch.</param>
+    /// <param name="nextState">State we're switching to.</param>
     private void SwitchState(GameState previousState, GameState nextState)
     {
         if (nextState == GameState.Playing && previousState == GameState.Building)
             GameManager.Instance.vehicleEditor.PrepareVehicle();
     }
 
+    /// <summary>
+    /// Switches to play-mode from building mode by setting up the scene and UI.
+    /// </summary>
     public void SwitchToPlay()
     {
         GameManager.Instance.stateManager.CurrentGameState = GameState.Playing;
@@ -63,6 +74,9 @@ public class GameStateManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.levelManager.StartLevel());
     }
 
+    /// <summary>
+    /// Current gamestates.
+    /// </summary>
     public enum GameState : int
     {
         Building,
