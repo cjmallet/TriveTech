@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject levelUI;
     [SerializeField] private GameObject playerSpawn;
 
-    private GameObject objectiveUI, panel, canvasText, timerObject;
+    private GameObject objectiveUI, endLevelScreen, timerObject;
     private float timer = 0;
     private bool timerStarted = false, hasBeenPlayed = false;
 
@@ -26,8 +27,7 @@ public class LevelManager : MonoBehaviour
         //set coreblock to spawn location
         DDOL.Instance.P1Coreblock.transform.SetPositionAndRotation(playerSpawn.transform.position, playerSpawn.transform.rotation);
         DDOL.Instance.P1Coreblock.SetActive(true);
-        panel = levelUI.transform.Find("Panel").gameObject;
-        canvasText = levelUI.transform.Find("FinishText").gameObject;
+        endLevelScreen = levelUI.transform.Find("EndLevelScreen").gameObject;
         timerObject = levelUI.transform.Find("Timer").GetChild(0).gameObject;
         objectiveUI = levelUI.transform.Find("Goals").gameObject;
         displayCargoAmount = cargoToSpawn;
@@ -44,7 +44,7 @@ public class LevelManager : MonoBehaviour
         if (timer > timeLevelCompletion)
         {
             timerStarted = false;
-            OpenEndScreen("You ran out of time");
+            OpenEndScreen("You ran out of time",0,0,false);
 
             if (!hasBeenPlayed)
             {
@@ -55,11 +55,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void OpenEndScreen(string completionMessage)
+    private void OpenEndScreen(string completionMessage,int time, int cargoDelivered,bool succes)
     {
-        canvasText.GetComponent<TextMeshProUGUI>().text = completionMessage;
-        canvasText.SetActive(true);
-        panel.SetActive(true);
+        endLevelScreen.SetActive(true);
+        endLevelScreen.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = completionMessage;
+        endLevelScreen.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Time Left: "+time.ToString();
+        endLevelScreen.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "Cargo: "+cargoDelivered.ToString() +" / "+ cargoToSpawn;
+        endLevelScreen.transform.GetChild(6).gameObject.SetActive(succes);
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Instance.vehicleEditor.coreBlockPlayMode.GetComponent<PlayerInput>().enabled=false;
         objectiveUI.SetActive(false);
     }
 
@@ -100,13 +104,13 @@ public class LevelManager : MonoBehaviour
             if (collectedCargo >= cargoCompletionAmount)
             {
                 AudioManager.Instance.Play(AudioManager.clips.LevelComplete, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
-                OpenEndScreen("You Finished!\nCargo:" + collectedCargo + "/" + cargoToSpawn + "\nTime left: " + (int)(timeLevelCompletion - timer));
+                OpenEndScreen("You Finished!", (int)(timeLevelCompletion - timer), collectedCargo,true);
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
             }
             else
             {
                 AudioManager.Instance.Play(AudioManager.clips.GameOver, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
-                OpenEndScreen("You lost too much cargo");
+                OpenEndScreen("You lost too much cargo", (int)(timeLevelCompletion - timer), collectedCargo,false);
             }
         }
     }
