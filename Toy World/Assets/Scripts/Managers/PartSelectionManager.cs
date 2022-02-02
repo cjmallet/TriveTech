@@ -19,7 +19,7 @@ public class PartSelectionManager : MonoBehaviour
     private List<GameObject> movementParts, offensiveParts, utilityParts, chassisParts;
     private List<GameObject> categoryHolders = new List<GameObject>();
 
-    private static float maxHealth = 15, maxWeight=15,maxAcceleration=225, maxSteering=30;
+    private static float maxHealth = 15, maxWeight=15,maxAcceleration=225, maxSteering=30,maxBoostPower=3,maxJumpPower=3;
 
     private int categoryIndex;
     private EventSystem eventSystem;
@@ -220,14 +220,14 @@ public class PartSelectionManager : MonoBehaviour
                         statObject.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power";
                         if (part is BoostPart)
                         {
-                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<BoostPart>().boostStrenght / 3f);
-                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<BoostPart>().boostStrenght / 3f;
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<BoostPart>().boostStrenght / maxBoostPower);
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<BoostPart>().boostStrenght / maxBoostPower;
                             break;
                         }
                         else
                         {
-                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<JumpPart>().jumpStrenght / 3f);
-                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<JumpPart>().jumpStrenght / 3f;
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = statGradient.Evaluate(part.GetComponent<JumpPart>().jumpStrenght / maxJumpPower);
+                            statObject.GetChild(1).transform.GetChild(0).GetComponent<Image>().fillAmount = part.GetComponent<JumpPart>().jumpStrenght / maxJumpPower;
                             break;
                         }
                         

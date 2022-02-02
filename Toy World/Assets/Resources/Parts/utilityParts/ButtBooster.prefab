@@ -84,7 +84,7 @@ MonoBehaviour:
   rechargeDurationSeconds: 8
   boostDurationSeconds: 2
   boostParticles: {fileID: 35627922}
-  boostStrenght: 1
+  boostStrenght: 2
   boostReadyClip: 1
   boostSoundClip: 2
 --- !u!136 &6597778181677201141
