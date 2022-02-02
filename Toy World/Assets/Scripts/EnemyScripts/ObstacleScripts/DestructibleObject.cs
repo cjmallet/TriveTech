@@ -10,6 +10,8 @@ public class DestructibleObject : MonoBehaviour
     [SerializeField] private BoxCollider collideBox;
     private bool collided;
 
+    public AudioManager.clips destructionAudio;
+
     /// <summary>
     /// Check if the player hits the object and his destructive power
     /// is great enough.
@@ -78,6 +80,6 @@ public class DestructibleObject : MonoBehaviour
         audioSource.transform.localPosition = gameObject.transform.position;
         audioSource.SetActive(true);
 
-        AudioManager.Instance.Play(AudioManager.clips.BreakDestructibleObject, audioSource.GetComponent<AudioSource>());
+        AudioManager.Instance.Play(destructionAudio, audioSource.GetComponent<AudioSource>());
     }  
 }

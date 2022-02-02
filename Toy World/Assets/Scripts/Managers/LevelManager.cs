@@ -78,6 +78,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public IEnumerator StartLevel()
     {
+        GameManager.Instance.partSelectionManager.toolTipWindow.SetActive(false);
         yield return new WaitForSeconds(timerBeforeCargoSpawn);
         cargoSpawner.SpawnItems();
     }
@@ -103,7 +104,7 @@ public class LevelManager : MonoBehaviour
         {
             if (collectedCargo >= cargoCompletionAmount)
             {
-                AudioManager.Instance.Play(AudioManager.clips.LevelComplete, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
+                AudioManager.Instance.Play(AudioManager.clips.LevelComplete, GameObject.FindGameObjectWithTag("DeliveryPort").GetComponent<AudioSource>());
                 AudioManager.Instance.Stop(AudioManager.Instance.musicSource2);
                 OpenEndScreen("You Finished!", (int)(timeLevelCompletion - timer), collectedCargo,true);
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
@@ -114,7 +115,7 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                AudioManager.Instance.Play(AudioManager.clips.GameOver, FindObjectOfType<EndLevel>().GetComponent<AudioSource>());
+                AudioManager.Instance.Play(AudioManager.clips.GameOver, GameObject.FindGameObjectWithTag("DeliveryPort").GetComponent<AudioSource>());
                 AudioManager.Instance.Stop(AudioManager.Instance.musicSource2);
                 OpenEndScreen("You lost too much cargo", (int)(timeLevelCompletion - timer), collectedCargo,false);
             }
