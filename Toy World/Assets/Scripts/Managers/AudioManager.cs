@@ -120,8 +120,6 @@ public class AudioManager : MonoBehaviour
 	/// </summary>	
 	public void Play(clips clipName, AudioSource source)
 	{
-		Debug.Log(source.gameObject.name);
-
 		// Checks and matches the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
 		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
 
