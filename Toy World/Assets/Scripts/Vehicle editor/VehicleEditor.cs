@@ -5,6 +5,11 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using TMPro;
 
+/// <summary>
+/// The vehicle editor handles the creation of the vehicle. It places parts on the coreblock and registers the connections of the parts.
+/// On play, it creates a copy of the coreblock and sets it up for play mode. This means things like switching colliders on and off and setting/resetting certain values.
+/// By Ruben de Graaf, mostly.
+/// </summary>
 public class VehicleEditor : MonoBehaviour
 {
     public Quaternion partRotation;
@@ -46,6 +51,11 @@ public class VehicleEditor : MonoBehaviour
         statWindow.GetComponent<StatWindowUI>().SetupAllParts(movementParts.Count);
     }
 
+    /// <summary>
+    /// Creates a copy of the coreBlock from the DontDestroyOnLoad reference and prepares it for play mode. 
+    /// Sets up the rigid body, sets up the movement parts, correctly sets the part values for the UI and 
+    /// recreates the partgrid on the new core block, since array references don't copy properly during instantiate.
+    /// </summary>
     public void PrepareVehicle()
     {
         DestroyImmediate(previewedPart);
@@ -113,6 +123,11 @@ public class VehicleEditor : MonoBehaviour
         coreBlockPlayMode.SetActive(true);
     }
 
+    /// <summary>
+    /// When input is given, call PlaceSelectedPart() or DeleteSelectedPart() on the raycasted part. 
+    /// Uses the previewedPart object to indicate if the placement is valid and what the rotation is like.
+    /// </summary>
+    /// <param name="context">Input context</param>
     public void PlacePart(InputAction.CallbackContext context)
     {
         RaycastHit hit = RaycastMousePosition();
@@ -137,6 +152,10 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rotates the currently selected part over the Y axis.
+    /// </summary>
+    /// <param name="context">Input context</param>
     public void RotatePart(InputAction.CallbackContext context)
     {
         if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
@@ -146,6 +165,10 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Rotates the currently selected part vertically.
+    /// </summary>
+    /// <param name="context">Input context</param>
     public void RotatePartVertical(InputAction.CallbackContext context)
     {
         if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
@@ -168,6 +191,12 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Used to place the currently selected part on another part, registers the connections between the parts and adds it to the PartGrid component on the coreBlock. 
+    /// Uses CheckPlacementValidity() to check if placement is possible.
+    /// This also updates the stats UI window.
+    /// </summary>
+    /// <param name="hit"> raycast hit to check which part and which side on said part to attach to</param>
     void PlaceSelectedPart(RaycastHit hit)
     {
         Vector3Int pos = GetLocalPosition(hit);
@@ -218,6 +247,11 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// A raycast hit gives a world position. This is used to translate that hit to a perfectly rounded position relative to the coreblock.
+    /// </summary>
+    /// <param name="hit"></param>
+    /// <returns>Rounded Vector3Int to make sure no accidental float roundoffs are returned. These will be used as indices in the PartGrid.</returns>
     private Vector3Int GetLocalPosition(RaycastHit hit)
     {
         Vector3Int pos = Vector3Int.RoundToInt(Quaternion.Inverse(coreBlock.transform.rotation) * hit.normal);
@@ -229,7 +263,7 @@ public class VehicleEditor : MonoBehaviour
     }
 
     /// <summary>
-    /// Check if the part has attachmentPoints available and is within the PartGrid bounds.
+    /// Check if the part has attachmentPoints available, isn't already connected and is within the PartGrid bounds.
     /// </summary>
     /// <param name="pos"></param>
     private bool CheckPlacementValidity(RaycastHit hit)
@@ -286,6 +320,9 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deletes and unregisters all parts currently attached to the coreBlock.
+    /// </summary>
     public void DeleteAllParts()
     {
         foreach (Part part in coreBlock.GetComponentsInChildren<Part>())
@@ -297,6 +334,10 @@ public class VehicleEditor : MonoBehaviour
         SetSelectedPart(selectedPart);
     }
 
+    /// <summary>
+    /// Enables the previewedPart, places it at the hit location and makes it green or red, based on the validity of the potential placement.
+    /// </summary>
+    /// <param name="hit">Part that is raycasted based on mouse pos</param>
     void PreviewPart(RaycastHit hit)
     {
         previewedPart.SetActive(true);
@@ -316,6 +357,10 @@ public class VehicleEditor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called from the Build UI. Sets the currently selected part and recreates the previewedPart to represent it.
+    /// </summary>
+    /// <param name="slctPart">Newly selected part to place and preview</param>
     public void SetSelectedPart(GameObject slctPart)
     {
         selectedPart = slctPart;
@@ -330,11 +375,17 @@ public class VehicleEditor : MonoBehaviour
         previewedPart.SetActive(false);
     }
 
+    /// <summary>
+    /// Resets the current set part rotation. Used when parts that shouldn't be rotated are selected.
+    /// </summary>
     public void ResetPreviewRotation()
     {
         partRotation.eulerAngles = Vector3.zero;
     }
 
+    /// <summary>
+    /// Deletes the previewedPart. 
+    /// </summary>
     public void RemovePreviewPart()
     {
         Destroy(previewedPart);
