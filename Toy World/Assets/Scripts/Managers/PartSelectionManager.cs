@@ -262,7 +262,7 @@ public class PartSelectionManager : MonoBehaviour
     /// <param name="context"></param>
     public void BuildButton(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Building)
         {
             ChangeActiveBuildState();
 
