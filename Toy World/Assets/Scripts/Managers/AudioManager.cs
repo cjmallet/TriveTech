@@ -137,7 +137,8 @@ public class AudioManager : MonoBehaviour
         }
 
 		source.clip = toBePlayedClip;
-		source.Play();
+		if (source.isActiveAndEnabled)
+			source.Play();
 	}
 
 	/// <summary>
