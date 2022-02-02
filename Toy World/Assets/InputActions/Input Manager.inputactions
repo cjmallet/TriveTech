@@ -6,15 +6,6 @@
             "id": "403eea16-78bb-469a-b406-eab50439f865",
             "actions": [
                 {
-                    "name": "PlayButton",
-                    "type": "Button",
-                    "id": "cb981a79-a67a-4241-8d34-5996823d625f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MenuButton",
                     "type": "Button",
                     "id": "c90c3454-8882-456d-b30a-4d100ee9bdd5",
@@ -22,20 +13,36 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ThirdPersonRotateMoveButton",
+                    "type": "Button",
+                    "id": "49b962fd-997b-4336-9d48-5dbbc9ed0cf0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ThirdPersonMouseMove",
+                    "type": "Value",
+                    "id": "be3bc0b4-09cb-4f67-aad9-38daf626bf61",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ThirdPersonZoom",
+                    "type": "PassThrough",
+                    "id": "73704786-e51f-45e1-8f82-79b0242fca91",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "e2ff0c07-5262-4089-876a-a70dc721eb98",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "PlayButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "f59e123b-27ca-4739-93bb-537780c58700",
@@ -46,6 +53,72 @@
                     "action": "MenuButton",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb8c83db-4625-4d73-9990-1cd5e335acfa",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonRotateMoveButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c281f4c2-9804-4007-ade6-93c26779fcf1",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Touch",
+                    "action": "ThirdPersonMouseMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f484780f-6ce6-4ee3-864b-cf316d4ba630",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Zoom Buttons",
+                    "id": "df905c9f-1729-49bb-93c3-264cea4f11d4",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "00e198b4-d666-4ca5-9f81-c153e5166e97",
+                    "path": "<Keyboard>/numpadMinus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "eab367a1-b945-4b58-b057-b49037f19150",
+                    "path": "<Keyboard>/numpadPlus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ThirdPersonZoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -57,15 +130,6 @@
                     "name": "PlayButton",
                     "type": "Button",
                     "id": "d7d86527-afa4-4dd3-9d64-1e9bb7790487",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RotateButton",
-                    "type": "Button",
-                    "id": "51a6386a-a671-4038-af0e-78c94d95d576",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -126,15 +190,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RotateVerticalButton",
-                    "type": "Button",
-                    "id": "a25b8023-c41b-4063-8a76-75f38bc14312",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "UIRotateMove",
                     "type": "Value",
                     "id": "7885c868-02c5-4f62-af54-c789ed315636",
@@ -165,6 +220,33 @@
                     "name": "MenuButton",
                     "type": "Button",
                     "id": "0b3b46df-e59d-4828-846c-a0af6aa7e471",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateX",
+                    "type": "Button",
+                    "id": "b176f657-a79b-4e96-9545-22295899d122",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateY",
+                    "type": "Button",
+                    "id": "eda3a713-a5ef-49c3-a4d1-fb12375b1a3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateZ",
+                    "type": "Button",
+                    "id": "39707c29-c4ab-46a2-86c4-fa2af44e11a2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -252,7 +334,7 @@
                 {
                     "name": "down",
                     "id": "ebbbb7e2-8fe4-4b7c-b1fa-f56ce85aee75",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -328,17 +410,6 @@
                 },
                 {
                     "name": "",
-                    "id": "61a51330-d04a-47fd-a52d-2977e467e76e",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RotateButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e3011be1-03cf-4430-9687-9d89b85b244c",
                     "path": "<Keyboard>/p",
                     "interactions": "",
@@ -350,22 +421,11 @@
                 },
                 {
                     "name": "",
-                    "id": "ed66a007-b5fa-48bb-a813-96335578678e",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RotateVerticalButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fd509c84-d10e-4ba5-b6d0-cc234411f8cb",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -387,7 +447,7 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -398,7 +458,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "UIZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -554,6 +614,39 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "MenuButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9f32a4f-2598-4f19-8ae5-71f2526104dc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RotateX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0226a64e-9df6-46e6-a097-901b51efcdac",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "850db143-0fdf-46f0-9c01-b00d052679b4",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateZ",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

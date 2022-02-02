@@ -19,6 +19,7 @@ public class DDOL : MonoBehaviour
         get { return _p1Coreblock; }
     }
     /*
+    //in case of split screen multiplayer implementations later on
     public GameObject P2Coreblock
     {
         get { return _p2Coreblock; }
@@ -41,6 +42,9 @@ public class DDOL : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Instantiates the prefab of the coreblock, for keepsies. 
+    /// </summary>
     private void InstantiatePersistentObjects()
     {
         if (_p1Coreblock == null)

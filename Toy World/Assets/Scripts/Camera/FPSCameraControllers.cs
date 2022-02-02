@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// This is Unity's camera controller edited to fit our purposes.
+/// </summary>
 public class FPSCameraControllers : MonoBehaviour
 {
     public class CameraState

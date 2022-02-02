@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Core of the bounding box.
+/// </summary>
 public class BoundingBox : MonoBehaviour
 {
     public float MyHeight { get; set; }
@@ -14,6 +17,9 @@ public class BoundingBox : MonoBehaviour
         CreateBoundingBox();
     }
 
+    /// <summary>
+    /// Creates the bounding box through script
+    /// </summary>
     private void CreateBoundingBox()
     {
         Vector3[] vertices = {

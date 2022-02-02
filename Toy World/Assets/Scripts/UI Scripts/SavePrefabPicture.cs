@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.IO;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Used when making new screenshots of new parts in the game.
+/// </summary>
 public class SavePrefabPicture : MonoBehaviour
 {
-
-    // Start is called before the first frame update
+    /// <summary>
+    /// When the scene is started, save the current view in a screenshot file 
+    /// with a name based on the part that is being screenshot
+    /// </summary>
     void Start()
     {
         GameObject picturePrefab = GameObject.FindGameObjectWithTag("Part");
@@ -23,6 +27,5 @@ public class SavePrefabPicture : MonoBehaviour
 
         byte[] textureBytes = readableTexture.EncodeToPNG();
         File.WriteAllBytes("Assets/Resources/UI/Images/"+picturePrefab.name+".PNG", textureBytes);
-        AssetDatabase.Refresh();
     }
 }

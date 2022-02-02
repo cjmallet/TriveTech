@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Keeps track of all the placed parts. Also used to limit the player from building a skyscraper and indicating the building limit.
+/// </summary>
 public class PartGrid : MonoBehaviour
 {
     public bool gizmos;
     [SerializeField] private Vector3Int gridDimensions;
-    [SerializeField] private Part[,,] partGrid;
+    [SerializeField] public Part[,,] partGrid;
     [SerializeField] private Vector3Int coreBlockIndex;//refactor to coreblock index when merge with desktop branch
     //[SerializeField] private GameObject cubePrefab,tempBox;
     public GameObject _boundingBox;
@@ -15,19 +18,27 @@ public class PartGrid : MonoBehaviour
     [HideInInspector]
     public List<Part> allParts = new List<Part>();
 
-    void Start()
+    private void Awake()
     {
-        if(partGrid == null)
+        if (partGrid == null)
         {
             partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
             coreBlockIndex = new Vector3Int(Mathf.CeilToInt((float)gridDimensions.x * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.y * 0.5f) - 1, Mathf.CeilToInt((float)gridDimensions.z * 0.5f) - 1);
             partGrid[coreBlockIndex.x, coreBlockIndex.y, coreBlockIndex.z] = this.gameObject.GetComponent<Part>();//put coreblock in the center 
         }
+        allParts = ReturnAllParts();
+    }
 
+    void Start()
+    {
         if (_boundingBox == null)
             InstantiateBoundingBoxWithGridSize();
     }
 
+    /// <summary>
+    /// Used to recreate the array using all parts currently attached to this gameobject. 
+    /// Necessary when a new coreBlock is instantiated, as arrays don't copy over during instantiation.
+    /// </summary>
     public void RemakePartGrid()
     {
         partGrid = new Part[gridDimensions.x, gridDimensions.y, gridDimensions.z];
@@ -42,10 +53,14 @@ public class PartGrid : MonoBehaviour
                 Vector3Int index = Vector3Int.RoundToInt(part.transform.localPosition) + coreBlockIndex;
                 partGrid[index.x, index.y, index.z] = part;
             }
-
         }
     }
 
+    /// <summary>
+    /// Adds a reference of a part to the 3D array
+    /// </summary>
+    /// <param name="partToAdd">Part to add</param>
+    /// <param name="relativePos">Position relative to the coreblock. This is used to determine the array index</param>
     public void AddPartToGrid(Part partToAdd, Vector3Int relativePos)
     {
         if (CheckIfInBounds(relativePos))
@@ -59,6 +74,10 @@ public class PartGrid : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes a part from the grid.
+    /// </summary>
+    /// <param name="relativePos">Position relative to the coreblock. This is used to determine the array indexparam>
     public void RemovePartFromGrid(Vector3Int relativePos)
     {
         if (CheckIfInBounds(relativePos))
@@ -108,6 +127,7 @@ public class PartGrid : MonoBehaviour
         }
         return neighbours;
     }
+
     /// <summary>
     /// Checks if a local position, relative to the core block, is within grid bounds
     /// </summary>
@@ -128,6 +148,10 @@ public class PartGrid : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns a list of all parts in the grid
+    /// </summary>
+    /// <returns>Returns a list of all parts in the grid</returns>
     public List<Part> ReturnAllParts()
     {
         //List<Part> allParts = new List<Part>();
@@ -151,13 +175,18 @@ public class PartGrid : MonoBehaviour
         return allParts;
     }
 
+    /// <summary>
+    /// Remove the part at the given position.
+    /// Someone made another function to remove a part it seems
+    /// </summary>
+    /// <param name="partPosition">The local position of the part</param>
     public void RemovePart(Vector3Int partPosition)
     {
         partGrid[coreBlockIndex.x + partPosition.x, coreBlockIndex.y + partPosition.y, coreBlockIndex.z + partPosition.z] = null;
     }
 
     /// <summary>
-    /// Checks if any block is not connected to the vehicle through an list of all parts
+    /// Checks if any block is not connected to the vehicle through a list of all parts
     /// which is checked by the floodfill algorithm
     /// </summary>
     public void CheckConnection()
@@ -187,6 +216,7 @@ public class PartGrid : MonoBehaviour
         Queue<Part> partsToCheck = new Queue<Part>();
         List<Part> neighboursCoreBlock= partGrid[coreBlockIndex.x,coreBlockIndex.y,coreBlockIndex.z].attachedParts;
 
+        //Check each neighbour starting from the coreblock and mark the objects found as floodfilled
         foreach (Part neighbour in neighboursCoreBlock)
         {
             if (neighbour!=null)
@@ -196,6 +226,7 @@ public class PartGrid : MonoBehaviour
             }
         }
 
+        //Keep checking all the connections of the vehicle until no connections are found
         while (partsToCheck.Count>0)
         {
             List<Part> neighbours = partsToCheck.Dequeue().attachedParts;
@@ -212,7 +243,8 @@ public class PartGrid : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the vehicle over the grid. Can take multiple axes at once, as long as they're 1 or -1
+    /// Moves the vehicle over the grid, so you can move your vehicle within the build limits if you've hit a wall or ceiling.
+    /// Can take multiple axes at once, as long as they're 1 or -1 (so used the "digital" input method in the action map for this).
     /// </summary>
     /// <param name="context">input</param>
     public void MoveVehicleInGrid(InputAction.CallbackContext context)
@@ -388,11 +420,18 @@ public class PartGrid : MonoBehaviour
     //    }
     //}
 
+    /// <summary>
+    /// Sets the bounding box on or off to indicate the building limits
+    /// </summary>
+    /// <param name="state"> On or off.</param>
     public void ToggleBoundingBox(bool state)
     {
         _boundingBox.SetActive(state);
     }
 
+    /// <summary>
+    /// Creates the bounding box.
+    /// </summary>
     public void InstantiateBoundingBoxWithGridSize()
     {
         GameObject boundingBoxAndArrow = Resources.Load("BoundingBoxWithDirectionArrow") as GameObject;
@@ -407,6 +446,11 @@ public class PartGrid : MonoBehaviour
                                                      transform.position.z - (_boundingBox.GetComponentInChildren<BoundingBoxAndArrow>().boxL * 0.5f));
     }
 
+    /// <summary>
+    /// Function not finished due to unknown design variables. Ended up being unnecessary for the scope of the project.
+    /// Idea was that it could be used to change the grid size during runtime, so that you could "upgrade" your build limitations.
+    /// </summary>
+    /// <param name="newDimensions"></param>
     public void ChangeGridSize(Vector3Int newDimensions)
     {
         gridDimensions = newDimensions;
@@ -428,6 +472,11 @@ public class PartGrid : MonoBehaviour
         }
         gridDimensions = newDimensions;
     }
+
+    /// <summary>
+    /// Used to visualize the size of the grid and how it's filled.
+    /// This was such a great help during debugging, omg.
+    /// </summary>
     void OnDrawGizmos()
     {
         if (gizmos && partGrid != null)

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A simple moving obstacle to be placed.
+/// </summary>
 public class MoveObstacle : MonoBehaviour
 {
     public bool horizontal, vertical, startSide; // startSide true = left to right; startSide false = right to left 
@@ -32,18 +35,8 @@ public class MoveObstacle : MonoBehaviour
                 transform.position = new Vector3(Mathf.Lerp(startPos.x, startPos.x - distance, t), startPos.y, startPos.z);
             }
 
-            t += 0.5f * Time.deltaTime;
+            t += (0.5f * Time.deltaTime)*speed;
         }
-        //else if (active && (horizontal || vertical))
-        //{
-        //    if (horizontal && !vertical)
-        //        transform.position = startPos + new Vector3(Mathf.Sin(Time.time) * speed, 0, 0);
-        //    if (vertical && !horizontal)
-        //        transform.position = startPos + new Vector3(0, 0, Mathf.Sin(Time.time) * speed);
-
-        //    if (horizontal && vertical)
-        //        transform.position = startPos + new Vector3(Mathf.Sin(Time.time) * speed, 0, Mathf.Sin(Time.time) * speed);
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,7 +49,7 @@ public class MoveObstacle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name.Contains("CoreBlock") || collision.gameObject.name.Contains("part") || collision.gameObject.name.Contains("Spike") || collision.gameObject.name.Contains("Butt"))
+        if (collision.gameObject.CompareTag("Part"))
         {
             StartCoroutine(IAmWalkingHere());
         }

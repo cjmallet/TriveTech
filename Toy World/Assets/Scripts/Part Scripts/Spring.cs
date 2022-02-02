@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A jump part that is a bouncy spring
+/// </summary>
 public class Spring : JumpPart
 {
     private float t = 0;
@@ -10,6 +13,10 @@ public class Spring : JumpPart
     private bool isRetracting = false;
     private bool isFirstFrame = true;
     Vector3 defaultSpringPosition, defaultSpringScale, springPosition, springScale;
+
+    /// <summary>
+    /// Handles animation for the spring by scaling the object up and down using a lerp function
+    /// </summary>
     public override void JumpAnimation()
     {
         if (isFirstFrame)

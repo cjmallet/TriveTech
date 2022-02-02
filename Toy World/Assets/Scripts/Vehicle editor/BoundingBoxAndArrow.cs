@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bounding box helper class.
+/// </summary>
 public class BoundingBoxAndArrow : MonoBehaviour
 {
     public float boxL;
@@ -17,6 +20,9 @@ public class BoundingBoxAndArrow : MonoBehaviour
     public float MyArrowWidth { get; set; }
     public float MyArrowLength { get; set; }
 
+    /// <summary>
+    /// Creates the boundingbox and arrow with the values passed here. These values are set in the PartGrid.cs script in the method InstantiateBoundingBoxWithGridSize()
+    /// </summary>
     private void Start()
     {
         MyLength = boxL;

@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Tracks progress of the objectives in the level / game.
+/// </summary>
 public class ObjectiveProgress : MonoBehaviour
 {
     private LevelManager levelManager;
     private TextMeshProUGUI mainObjectiveTracker;
     private int currentCargo;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Initialize the main goal and the UI
+    /// </summary>
     void Start()
     {
-        levelManager = LevelManager.Instance;
+        levelManager = GameManager.Instance.levelManager;
         currentCargo = levelManager.cargoToSpawn;
         mainObjectiveTracker = transform.Find("MainGoalProgress").GetComponent<TextMeshProUGUI>();
 
@@ -20,6 +25,10 @@ public class ObjectiveProgress : MonoBehaviour
         mainObjectiveTracker.text = currentCargo + " / " + currentCargo;
     }
 
+    /// <summary>
+    /// Update the cargo amount shown in the main obective
+    /// </summary>
+    /// <param name="cargoAmount"></param>
     public void UpdateCargo(int cargoAmount)
     {
         mainObjectiveTracker.text = cargoAmount + " / " + levelManager.cargoToSpawn;

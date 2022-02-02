@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// The wheel part that apply's visuals to a wheel collider.
+/// </summary>
 public class WheelPart : MovementPart
 {
     private Transform visualWheel;
@@ -18,6 +21,9 @@ public class WheelPart : MovementPart
             ApplyLocalPositionToVisuals();
     }
 
+    /// <summary>
+    /// Translates the visual wheel to wheelcollider position.
+    /// </summary>
     public override void ApplyLocalPositionToVisuals()
     {
         if (transform.childCount == 0)
@@ -27,10 +33,5 @@ public class WheelPart : MovementPart
 
         visualWheel.transform.position = wheelPosition;
         visualWheel.transform.rotation = wheelRotation;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("yes");
     }
 }

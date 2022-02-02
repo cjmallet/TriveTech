@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+/// <summary>
+/// Organizes different parts that have actions and assigns input buttons to each of them.
+/// This script is connected with the Unity Input System.
+/// </summary>
 public class ActivatePartActions : MonoBehaviour
 {
     [HideInInspector]
     public List<Part> allParts;
     private List<OffensivePart> allOffensiveParts = new List<OffensivePart>();
-    private List<DefensivePart> allDefensiveParts = new List<DefensivePart>();
-    private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
+    public List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 
     /// <summary>
     /// Activates attack action for each offensive part on vehicle
@@ -20,17 +24,6 @@ public class ActivatePartActions : MonoBehaviour
         {
             offensivePart.AttackAction();
         }
-    }
-
-    /// <summary>
-    /// Activates defence action for each defensivepart on vehicle
-    /// </summary>
-    private void ActivateDefenseActions()
-    { 
-        foreach (DefensivePart defensivePart in allDefensiveParts)
-        {
-            defensivePart.DefenceAction();
-        }   
     }
 
     /// <summary>
@@ -45,14 +38,14 @@ public class ActivatePartActions : MonoBehaviour
         }
     }
 
-    public void CategorizePartsInList()
+    public void CategorizePartsInList(List<Part> partList)
     {
+        allParts = partList;
+
         foreach (Part part in allParts)
         {
             if (part is OffensivePart)
                 allOffensiveParts.Add((OffensivePart)part);
-            else if (part is DefensivePart)
-                allDefensiveParts.Add((DefensivePart)part);
             else if (part is UtilityPart)
                 allUtilityParts.Add((UtilityPart)part);
             else
@@ -60,6 +53,8 @@ public class ActivatePartActions : MonoBehaviour
                 // do nothing
             }
         }
+
+        SetSpecificActionType();
     }
 
     /// <summary>
@@ -72,16 +67,11 @@ public class ActivatePartActions : MonoBehaviour
         {
             part.ResetAction();
         }
-        foreach (DefensivePart part in allDefensiveParts)
-        {
-            part.ResetAction();
-        }
         foreach (UtilityPart part in allUtilityParts)
         {
             part.ResetAction();
         }
         allOffensiveParts.Clear();
-        allDefensiveParts.Clear();
         allUtilityParts.Clear();
     }
 
@@ -166,16 +156,6 @@ public class ActivatePartActions : MonoBehaviour
     {
         if (value.started)
             ActivateAttackActions();
-        if (value.canceled)
-            ActivateAttackActions();
-    }
-
-    public void UseDefenseAction(InputAction.CallbackContext value)
-    {
-        if (value.started)
-            ActivateDefenseActions();
-        if (value.canceled)
-            ActivateDefenseActions();
     }
 
     public void UseSprintAction(InputAction.CallbackContext value)
