@@ -1,4 +1,4 @@
-# TriveTech
+# TriveTech (Car-GO)
 
 This is the GitHub page of the game Car-GO. Which is made for Trive by students of the Amsterdam University of Applied Sciences.
 
