@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class BoostPart : UtilityPart
 {
-    const int FORCE_MULTIPLIER = 1500;
+    const int FORCE_MULTIPLIER = 800;
 
     [SerializeField]
     private int rechargeDurationSeconds;
