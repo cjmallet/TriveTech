@@ -78,6 +78,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public IEnumerator StartLevel()
     {
+        GameManager.Instance.partSelectionManager.toolTipWindow.SetActive(false);
         yield return new WaitForSeconds(timerBeforeCargoSpawn);
         cargoSpawner.SpawnItems();
     }
