@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Manager for all audio.
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
 	public static AudioManager Instance = null;

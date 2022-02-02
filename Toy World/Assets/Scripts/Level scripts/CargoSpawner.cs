@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// The spawner for cargo that is at the start of each level.
+/// </summary>
 public class CargoSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject cargoPrefab, cargoSpawnPoint;

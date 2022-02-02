@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows the arrow in the starting bounding box to be shown.
+/// </summary>
 public class DirectionArrowBoundingBox : MonoBehaviour
 {
     public float MyArrowWidth { get; set; }

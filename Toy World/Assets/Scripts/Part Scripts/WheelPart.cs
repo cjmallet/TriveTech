@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// The wheel part that apply's visuals to a wheel collider.
+/// </summary>
 public class WheelPart : MovementPart
 {
     private Transform visualWheel;

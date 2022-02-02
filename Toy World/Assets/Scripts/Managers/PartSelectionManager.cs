@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manager for what part is selected and how it could be used.
+/// </summary>
 public class PartSelectionManager : MonoBehaviour
 {
     [SerializeField] private GameObject partSelectionCanvas, buttonPrefab;

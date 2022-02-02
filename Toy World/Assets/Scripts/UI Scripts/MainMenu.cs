@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Main menu controller and manager.
+/// </summary>
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;

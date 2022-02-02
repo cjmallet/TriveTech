@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Manager for all possible game states.
+/// </summary>
 public class GameStateManager : MonoBehaviour
 {
     private GameState currentGameState;

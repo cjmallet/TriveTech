@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A simple moving obstacle to be placed.
+/// </summary>
 public class MoveObstacle : MonoBehaviour
 {
     public bool horizontal, vertical, startSide; // startSide true = left to right; startSide false = right to left 

@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager for all level specific triggers.
+/// </summary>
 public class LevelManager : MonoBehaviour
 {
     public CargoSpawner cargoSpawner;
@@ -54,6 +57,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When the level ends, this opens the end screen.
+    /// </summary>
+    /// <param name="completionMessage">Succes or failure message.</param>
+    /// <param name="time">Time left.</param>
+    /// <param name="cargoDelivered">Amount of cargo delivered.</param>
+    /// <param name="succes">Succesfull or not.</param>
     private void OpenEndScreen(string completionMessage,int time, int cargoDelivered,bool succes)
     {
         endLevelScreen.SetActive(true);
@@ -67,6 +77,9 @@ public class LevelManager : MonoBehaviour
         objectiveUI.SetActive(false);
     }
 
+    /// <summary>
+    /// Starts the game timer.
+    /// </summary>
     public void StartTimer()
     {
         timerStarted = true;
@@ -83,6 +96,9 @@ public class LevelManager : MonoBehaviour
         cargoSpawner.SpawnItems();
     }
 
+    /// <summary>
+    /// Called when cargo is dropped on the floor.
+    /// </summary>
     public void LoseCargo()
     {
         collectedCargo--;
@@ -90,12 +106,18 @@ public class LevelManager : MonoBehaviour
         objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(displayCargoAmount);
     }
 
+    /// <summary>
+    /// Resets all cargo in the level.
+    /// </summary>
     public void ResetCargo()
     {
         displayCargoAmount = cargoToSpawn;
         objectiveUI.GetComponent<ObjectiveProgress>().UpdateCargo(displayCargoAmount);
     }
 
+    /// <summary>
+    /// Finishes the level when the player crosses the gate.
+    /// </summary>
     public void FinishLevel()
     {
         timerStarted = false;

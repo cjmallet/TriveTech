@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bounding box helper class.
+/// </summary>
 public class BoundingBoxAndArrow : MonoBehaviour
 {
     public float boxL;

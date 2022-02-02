@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Type of cargo.
+/// </summary>
 public class Wood : MonoBehaviour
 {
     [HideInInspector]public bool lost = false;

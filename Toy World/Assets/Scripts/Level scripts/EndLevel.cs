@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The gameobject that detects when the player has 'ended' the level.
+/// </summary>
 public class EndLevel : MonoBehaviour
 {
     /// <summary>

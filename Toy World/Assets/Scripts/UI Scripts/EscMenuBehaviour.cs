@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 
+/// <summary>
+/// Takes care of all behaviour that concerns the pause menu (esc menu).
+/// </summary>
 public class EscMenuBehaviour : MonoBehaviour
 {
     public GameObject escMenu;

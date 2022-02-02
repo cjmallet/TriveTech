@@ -4,6 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// The core for every type of part is inherited from here.
+/// </summary>
 public abstract class Part : MonoBehaviour
 {
     [NamedListAttribute(new string[] { "Right", "Left", "Top", "Bottom", "Back", "Front" })]

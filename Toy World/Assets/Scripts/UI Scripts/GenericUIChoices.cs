@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Allows for some generic UI options to be called.
+/// </summary>
 public class GenericUIChoices : MonoBehaviour
 {
     public void CloseUI(GameObject UI)

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Called when the level begins after they player hits the start button.
+/// </summary>
 public class TriggerLevelStart : MonoBehaviour
 {
     public bool levelStarted;

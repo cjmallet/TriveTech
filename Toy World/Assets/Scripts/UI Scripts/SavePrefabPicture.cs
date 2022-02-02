@@ -4,6 +4,9 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Used when making new screenshots of new parts in the game.
+/// </summary>
 public class SavePrefabPicture : MonoBehaviour
 {
     /// <summary>

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The lighting part that can be turned on and off.
+/// </summary>
 public class LightingPart : UtilityPart
 {
     [SerializeField]

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base for projectiles that are fired at the player.
+/// </summary>
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float removeTime;

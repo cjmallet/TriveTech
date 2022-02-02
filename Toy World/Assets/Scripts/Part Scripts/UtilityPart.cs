@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base for all utility parts.
+/// </summary>
 public class UtilityPart : Part
 {
     // Direct reference to check if action button is being pressed

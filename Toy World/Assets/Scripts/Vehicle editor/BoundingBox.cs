@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Core of the bounding box.
+/// </summary>
 public class BoundingBox : MonoBehaviour
 {
     public float MyHeight { get; set; }

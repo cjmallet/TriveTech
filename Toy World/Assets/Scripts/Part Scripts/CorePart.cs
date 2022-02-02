@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The core part of every vehicle.
+/// </summary>
 public class CorePart : Part
 {
     private List<Collider> colliders = new List<Collider>();

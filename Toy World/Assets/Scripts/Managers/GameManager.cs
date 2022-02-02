@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Manager for all other manager scripts.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     /// <summary>

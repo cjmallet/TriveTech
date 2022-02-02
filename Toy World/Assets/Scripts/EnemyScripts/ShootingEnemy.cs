@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enemy type that shoots bullets at the cargo when the player is near.
+/// </summary>
 public class ShootingEnemy : MonoBehaviour
 {
     [SerializeField] private GameObject projectile;

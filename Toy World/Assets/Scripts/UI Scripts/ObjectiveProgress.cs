@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Tracks progress of the objectives in the level / game.
+/// </summary>
 public class ObjectiveProgress : MonoBehaviour
 {
     private LevelManager levelManager;

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base for any destructable object.
+/// </summary>
 public class DestructibleObject : MonoBehaviour
 {
     [SerializeField] private GameObject particles;

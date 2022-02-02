@@ -5,6 +5,9 @@ using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Stat window that shows current vehicle stats.
+/// </summary>
 public class StatWindowUI : MonoBehaviour
 {
     public Gradient statGradient, speedGradient;
