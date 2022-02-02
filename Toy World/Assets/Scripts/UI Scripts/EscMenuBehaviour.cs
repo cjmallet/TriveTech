@@ -14,6 +14,9 @@ public class EscMenuBehaviour : MonoBehaviour
     public static Vector3 buildCameraPositionStart;
     public static Quaternion buildCameraRotationStart;
 
+    /// <summary>
+    /// Method that pauses the game 
+    /// </summary>
     public void Pause()
     {
         if (GameManager.Instance.vehicleEditor.coreBlockPlayMode != null)
@@ -26,6 +29,9 @@ public class EscMenuBehaviour : MonoBehaviour
         AudioListener.pause = true;
     }
 
+    /// <summary>
+    /// Method that resumes the game 
+    /// </summary>
     public void Resume()
     {
         Time.timeScale = 1;
@@ -45,6 +51,9 @@ public class EscMenuBehaviour : MonoBehaviour
         escMenu.SetActive(false);
     }
 
+    /// <summary>
+    /// Method that restarts the scene if a player wants to restart in a level
+    /// </summary>
     public void Restart()
     {
         if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing) //restart the level if playing
@@ -60,6 +69,9 @@ public class EscMenuBehaviour : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method that fixes the preview part not staying in the scene when it is not supposed to be there
+    /// </summary>
     public void ResetUnnecesaryParts()
     {
         AudioListener.volume = 0;
@@ -67,6 +79,11 @@ public class EscMenuBehaviour : MonoBehaviour
         GameManager.Instance.vehicleEditor.RemovePreviewPart();
     }
 
+    /// <summary>
+    /// Enumerator that handles loading of the scene given in the parameter
+    /// </summary>
+    /// <param name="sceneName"></param>
+    /// <returns></returns>
     private IEnumerator LoadScene(string sceneName)
     {
         // Start loading the scene
