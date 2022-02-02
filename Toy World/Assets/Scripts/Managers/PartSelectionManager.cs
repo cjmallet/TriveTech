@@ -18,7 +18,8 @@ public class PartSelectionManager : MonoBehaviour
     //All lists for the UI categories
     private List<GameObject> movementParts, offensiveParts, utilityParts, chassisParts;
     private List<GameObject> categoryHolders = new List<GameObject>();
-    private GameObject toolTipWindow;
+    
+    [HideInInspector]public GameObject toolTipWindow;
 
     private static float maxHealth = 15, maxWeight=15,maxAcceleration=225, maxSteering=30,maxBoostPower=3,maxJumpPower=3;
 
@@ -283,6 +284,7 @@ public class PartSelectionManager : MonoBehaviour
     {
         buildUIOpen = !buildUIOpen;
         toolTipWindow.SetActive(!buildUIOpen);
+
         if (buildUIOpen)
         {
             Cursor.lockState = CursorLockMode.None;
