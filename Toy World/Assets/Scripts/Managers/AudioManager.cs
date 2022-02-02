@@ -7,31 +7,34 @@ using UnityEngine.InputSystem;
 
 public class AudioManager : MonoBehaviour
 {
-	[HideInInspector] public AudioSource musicSource1;
-	[HideInInspector] public AudioSource musicSource2;
-
 	public static AudioManager Instance = null;
 
-	[HideInInspector]public List<AudioClip> audioClips = new List<AudioClip>();
 	private GameObject coreBlock;
+
+	[HideInInspector]public List<AudioClip> audioClips = new List<AudioClip>();
 	private List<UtilityPart> allUtilityParts = new List<UtilityPart>();
 	private Button[] buttonList;
 
+	//Variables for audio source object pooling
 	[HideInInspector]public List<GameObject> audioSourceObjects;
 	public GameObject audioSourceObjectToPool;
 	public int amountToPool;
 
+	// Variables for the building and driving music 
+	[HideInInspector] public AudioSource musicSource1;
+	[HideInInspector] public AudioSource musicSource2;
 	public clips currentMusicClip;
 	[Range(0f, 0.5f)]
 	public float musicVolume;
 	public float timeToFade;
 	private float timeElapsed = 0f;
 
+	// Variables for the engine osund effects
 	public float accelerationSoundTime;
 	public float decelerationSoundTime;
-
 	[HideInInspector] public Vector3 vehicleMove;
 
+	// Enum used for ease of use of implementing any sound effect
 	public enum clips
 	{
 		BreakDestructibleObject,
@@ -52,6 +55,7 @@ public class AudioManager : MonoBehaviour
 		MissileExplosion
 	};
 
+	// Makes an instance of audiomanager to be used in other places, can be rewritten to the gamemanager instance
 	private void Awake()
 	{
 		if (Instance == null)
@@ -69,6 +73,7 @@ public class AudioManager : MonoBehaviour
 
 	private void Start()
 	{
+		// Creates the music sources and plays the clip selected as current music clip
 		musicSource1 = gameObject.AddComponent<AudioSource>();
 		musicSource2 = gameObject.AddComponent<AudioSource>();
 
@@ -77,6 +82,7 @@ public class AudioManager : MonoBehaviour
 
 		SetMusic(currentMusicClip);
 
+		// Check the scene for all UI button, and adds a sound effect to their on click
 		buttonList = GameObject.FindObjectsOfType<Button>();
 
 		foreach (Button button in buttonList)
@@ -87,6 +93,7 @@ public class AudioManager : MonoBehaviour
 			});
 		}
 
+		// Create the audio source object pool used in the project
 		audioSourceObjects = new List<GameObject>();
 
 		GameObject tmp;
@@ -137,6 +144,8 @@ public class AudioManager : MonoBehaviour
         }
 
 		source.clip = toBePlayedClip;
+
+		// Only play the sound when the source is still enabled
 		if (source.isActiveAndEnabled)
 			source.Play();
 	}
@@ -155,7 +164,8 @@ public class AudioManager : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Method that checks is there is overlapping utility audio playing, if so disable the excess audiosources
+	/// Method that checks is there already is a audiosource that is playing a Utility part sound effect, 
+	/// if so disable the excess audiosources to stop multiplying the sound
 	/// </summary>
 	/// <param name="clipName"></param>
 	private void NoOverlappingUtilityAudio(clips clipName)
@@ -163,8 +173,6 @@ public class AudioManager : MonoBehaviour
 		if (allUtilityParts.Count == 0)
 			allUtilityParts = coreBlock.GetComponent<ActivatePartActions>().allUtilityParts;
 
-		// Checks each active utility part before playing the sound
-		// and stops the audioSource if multiple of the same Utility part are activated.
 		foreach (UtilityPart utilityPart in allUtilityParts)
 		{
 			if (utilityPart.GetComponent<AudioSource>() != null)
@@ -178,14 +186,20 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-
+	/// <summary>
+	/// Enumerator that handles the sound effects for the engine sounds.
+	/// </summary>
+	/// <returns></returns>
 	public IEnumerator EngineSounds()
     {
+		// Find the engine in the scene, named coreblock and play the engine sound audio clip.
 		coreBlock = GameObject.FindWithTag("CoreBlock");
 		AudioClip engineSound = audioClips.Where(clip => clip.name.Contains(clips.EngineSound.ToString())).FirstOrDefault();
 		coreBlock.GetComponent<AudioSource>().clip = engineSound;
 		coreBlock.GetComponent<AudioSource>().Play();
 
+
+		// Makes a loop in order to dinamically change the pitch of the engine sound at runtime to simulate acceleration en decceleration 
 		float t = 0;
 
 		while (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
@@ -214,7 +228,7 @@ public class AudioManager : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Play a single clip through the looping music source.
+	/// Play a music clip through the looping music source.
 	/// </summary>
 	/// <param name="clip"></param>
 	public void SetMusic(clips clipName)
@@ -222,6 +236,7 @@ public class AudioManager : MonoBehaviour
 		// Checks and matches the enum in the method parameter to one of the clips in the Resource/Sounds/ folder.
 		AudioClip toBePlayedClip = audioClips.Where(clip => clip.name.Contains(clipName.ToString())).FirstOrDefault();
 
+		// and starts the coroutine for fading the music
 		StopAllCoroutines();
 		StartCoroutine(FadeMusic(clipName, toBePlayedClip));
 	}
@@ -268,6 +283,9 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Method that gets a object from the audio source object pool and plays the menu button click sound effect.
+	/// </summary>
 	public void MenuButtonClickSound()
     {
 		GameObject audioSource = AudioManager.Instance.GetPooledAudioSourceObject();
@@ -280,7 +298,7 @@ public class AudioManager : MonoBehaviour
     }
 
 	/// <summary>
-	/// Stops the sounds played by the audio source.
+	/// Stops the sounds played by the audio source given.
 	/// </summary>
 	/// <param name="source"></param>
 	public void Stop(AudioSource source)

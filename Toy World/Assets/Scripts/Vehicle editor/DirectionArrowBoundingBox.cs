@@ -14,12 +14,12 @@ public class DirectionArrowBoundingBox : MonoBehaviour
         CreateArrow();
         SetPosition();
     }
-
+    /// <summary>
+    /// Creates the arrow indicating the direction where the player needs to build to 
+    /// </summary>
     private void CreateArrow()
     {
         Vector3[] vertices = {
-
-           // Create Arrow
             new Vector3(0, 0, 0),
             new Vector3(MyArrowWidth, 0, 0),
             new Vector3(0, 0, MyArrowLength),
@@ -47,6 +47,9 @@ public class DirectionArrowBoundingBox : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
+    /// <summary>
+    /// Method that sets the arrows position to always be in the center of the bottom face of the boundingbox
+    /// </summary>
     private void SetPosition()
     {
         transform.localPosition = new Vector3((MyWidth / 2) - (MyArrowWidth / 2), 0, (MyLength / 2) - (MyArrowLength / 2));

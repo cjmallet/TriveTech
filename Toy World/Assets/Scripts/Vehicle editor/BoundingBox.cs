@@ -14,6 +14,9 @@ public class BoundingBox : MonoBehaviour
         CreateBoundingBox();
     }
 
+    /// <summary>
+    /// Creates the bounding box through script
+    /// </summary>
     private void CreateBoundingBox()
     {
         Vector3[] vertices = {
