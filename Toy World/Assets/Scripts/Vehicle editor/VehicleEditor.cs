@@ -156,37 +156,42 @@ public class VehicleEditor : MonoBehaviour
     /// Rotates the currently selected part over the Y axis.
     /// </summary>
     /// <param name="context">Input context</param>
-    public void RotatePart(InputAction.CallbackContext context)
+    public void RotatePartYaxis(InputAction.CallbackContext context)
     {
         if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
         {
-            partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(0, 90, 0));
+            previewedPart.transform.Rotate(0, 90, 0);
+            partRotation = previewedPart.transform.rotation; // You know what, fuck this.
+
             PlacePart(context);
         }
     }
 
     /// <summary>
-    /// Rotates the currently selected part vertically.
+    /// Rotates the currently selected part over X axis.
     /// </summary>
     /// <param name="context">Input context</param>
-    public void RotatePartVertical(InputAction.CallbackContext context)
+    public void RotatePartXaxis(InputAction.CallbackContext context)
     {
         if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
         {
-            if (vCount == 2)
-            {
-                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(-90, 0, 0));
-            }
-            else
-            {
-                partRotation.eulerAngles = Vector3Int.RoundToInt(partRotation.eulerAngles + new Vector3(90, 0, 0));
-            }
+            previewedPart.transform.Rotate(90, 0, 0);
+            partRotation = previewedPart.transform.rotation; // You know what, fuck this.
 
-            vCount++;
-            if (vCount == 4)
-            {
-                vCount = 0;
-            }
+            PlacePart(context);
+        }
+    }
+    /// <summary>
+    /// Rotates the currently selected part over Z axis.
+    /// </summary>
+    /// <param name="context">Input context</param>
+    public void RotatePartZaxis(InputAction.CallbackContext context)
+    {
+        if (context.performed && !previewedPart.name.Contains("Wheel") && !previewedPart.name.Contains("Launcher"))
+        {
+            previewedPart.transform.Rotate(0, 0, 90);
+            partRotation = previewedPart.transform.rotation; // You know what, fuck this.
+
             PlacePart(context);
         }
     }

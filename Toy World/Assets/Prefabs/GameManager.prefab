@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45535ce87a58dd042a898a44d444ead1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource1: {fileID: 0}
-  musicSource2: {fileID: 0}
   audioClips: []
   audioSourceObjects: []
   audioSourceObjectToPool: {fileID: 8331781768169115720, guid: 3300b7a1b8a44624eabec8de4922477b, type: 3}
   amountToPool: 20
+  musicSource1: {fileID: 0}
+  musicSource2: {fileID: 0}
   currentMusicClip: 11
   musicVolume: 0.1
   timeToFade: 0.5
@@ -413,10 +413,10 @@ MonoBehaviour:
     m_ActionName: UI/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6033746864248031336}
-        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
-        m_MethodName: Play
-        m_Mode: 0
+      - m_Target: {fileID: 6033746865047725053}
+        m_TargetAssemblyTypeName: GameStateManager, Assembly-CSharp
+        m_MethodName: SwitchToPlay
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -501,22 +501,6 @@ MonoBehaviour:
     m_ActionName: UI/PlayButton[/Keyboard/p]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6033746864248031336}
-        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
-        m_MethodName: RotatePart
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 51a6386a-a671-4038-af0e-78c94d95d576
-    m_ActionName: UI/RotateButton[/Keyboard/r]
-  - m_PersistentCalls:
-      m_Calls:
       - m_Target: {fileID: 8605438988039419050}
         m_TargetAssemblyTypeName: PartSelectionManager, Assembly-CSharp
         m_MethodName: BuildButton
@@ -531,22 +515,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 857b7a18-5d0e-482d-adb1-ec81fb76ba80
     m_ActionName: UI/BuildButton[/Keyboard/b]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6033746864248031336}
-        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
-        m_MethodName: RotatePartVertical
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a25b8023-c41b-4063-8a76-75f38bc14312
-    m_ActionName: UI/RotateVerticalButton[/Keyboard/t]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 69eab551-9f29-482a-9133-889aecc1b058
@@ -643,6 +611,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 73704786-e51f-45e1-8f82-79b0242fca91
     m_ActionName: Player/ThirdPersonZoom[/Mouse/scroll/y,/Keyboard/numpadMinus,/Keyboard/numpadPlus]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6033746864248031336}
+        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
+        m_MethodName: RotatePartXaxis
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b176f657-a79b-4e96-9545-22295899d122
+    m_ActionName: UI/RotateX[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6033746864248031336}
+        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
+        m_MethodName: RotatePartYaxis
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eda3a713-a5ef-49c3-a4d1-fb12375b1a3b
+    m_ActionName: UI/RotateY[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6033746864248031336}
+        m_TargetAssemblyTypeName: VehicleEditor, Assembly-CSharp
+        m_MethodName: RotatePartZaxis
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 39707c29-c4ab-46a2-86c4-fa2af44e11a2
+    m_ActionName: UI/RotateZ[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: UI

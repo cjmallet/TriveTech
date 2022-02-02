@@ -1411,20 +1411,44 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1369909582}
     - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1666343009}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1666343009}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1666343009}
     - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1666343009}
+      objectReference: {fileID: 1971897450}
     - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1666343009}
+      objectReference: {fileID: 1971897450}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetRightMousePress
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GetInputVector
+      objectReference: {fileID: 0}
     - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetRightMousePress
+      value: GetZoomValue
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RotatePartXaxis
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RotatePartYaxis
       objectReference: {fileID: 0}
     - target: {fileID: 8605438988039419050, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: statUI
@@ -1468,6 +1492,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fc598c583921d14b842ebb0c0628d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1971897450 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6033746864248031336, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+  m_PrefabInstance: {fileID: 1971897447}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f38d35d60f7b1143a0728364d02b7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6375818863208437203

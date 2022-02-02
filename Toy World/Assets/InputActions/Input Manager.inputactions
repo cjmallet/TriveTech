@@ -156,15 +156,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RotateButton",
-                    "type": "Button",
-                    "id": "51a6386a-a671-4038-af0e-78c94d95d576",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "BuildButton",
                     "type": "Button",
                     "id": "857b7a18-5d0e-482d-adb1-ec81fb76ba80",
@@ -219,15 +210,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "RotateVerticalButton",
-                    "type": "Button",
-                    "id": "a25b8023-c41b-4063-8a76-75f38bc14312",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "UIRotateMove",
                     "type": "Value",
                     "id": "7885c868-02c5-4f62-af54-c789ed315636",
@@ -258,6 +240,33 @@
                     "name": "MenuButton",
                     "type": "Button",
                     "id": "0b3b46df-e59d-4828-846c-a0af6aa7e471",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateX",
+                    "type": "Button",
+                    "id": "b176f657-a79b-4e96-9545-22295899d122",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateY",
+                    "type": "Button",
+                    "id": "eda3a713-a5ef-49c3-a4d1-fb12375b1a3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RotateZ",
+                    "type": "Button",
+                    "id": "39707c29-c4ab-46a2-86c4-fa2af44e11a2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -345,7 +354,7 @@
                 {
                     "name": "down",
                     "id": "ebbbb7e2-8fe4-4b7c-b1fa-f56ce85aee75",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -421,34 +430,12 @@
                 },
                 {
                     "name": "",
-                    "id": "61a51330-d04a-47fd-a52d-2977e467e76e",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RotateButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "e3011be1-03cf-4430-9687-9d89b85b244c",
                     "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "PlayButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ed66a007-b5fa-48bb-a813-96335578678e",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "RotateVerticalButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -647,6 +634,39 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "MenuButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9f32a4f-2598-4f19-8ae5-71f2526104dc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RotateX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0226a64e-9df6-46e6-a097-901b51efcdac",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "850db143-0fdf-46f0-9c01-b00d052679b4",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RotateZ",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
