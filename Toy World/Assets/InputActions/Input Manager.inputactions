@@ -6,15 +6,6 @@
             "id": "403eea16-78bb-469a-b406-eab50439f865",
             "actions": [
                 {
-                    "name": "PlayButton",
-                    "type": "Button",
-                    "id": "cb981a79-a67a-4241-8d34-5996823d625f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MenuButton",
                     "type": "Button",
                     "id": "c90c3454-8882-456d-b30a-4d100ee9bdd5",
@@ -52,17 +43,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "e2ff0c07-5262-4089-876a-a70dc721eb98",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "PlayButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "f59e123b-27ca-4739-93bb-537780c58700",
