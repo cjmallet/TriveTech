@@ -14,3 +14,5 @@ CODE STRUCTURE (DOXYGEN):
 https://drive.google.com/file/d/1ONYZl5fL4GnjB-OSCHDIDOY22F93rtjr/view?usp=sharing
 
 (To open the DoxyGen page, extract the downloaded zip and open the file: index.html) 
+
+By Chris, Koen, Leon, Ruben, Thomas
