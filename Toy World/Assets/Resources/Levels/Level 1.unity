@@ -1240,14 +1240,6 @@ PrefabInstance:
       propertyPath: cargoSpawner
       value: 
       objectReference: {fileID: 1115968452}
-    - target: {fileID: 6033746865509156030, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
-      propertyPath: levelTrigger
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6033746865509156030, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
-      propertyPath: cargoCompletionAmount
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 6033746865684395337, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1313,21 +1305,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1369909582}
     - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 775903321}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 775903321}
+    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 775903321}
-    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 775903321}
-    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 775903321}
-    - target: {fileID: 6033746866159264802, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[15].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetRightMousePress
-      objectReference: {fileID: 0}
     - target: {fileID: 8605438988039419050, guid: e1f20331c3859c042a4d106c3fe4053a, type: 3}
       propertyPath: statUI
       value: 
