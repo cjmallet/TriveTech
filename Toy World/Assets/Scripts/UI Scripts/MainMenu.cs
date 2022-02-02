@@ -16,12 +16,21 @@ public class MainMenu : MonoBehaviour
     private List<int> levelNumbers = new List<int>();
     private char[]  charToTrimEnd;
     private string levelPrefix = "Level ";
+    private static bool start=true;
 
     /// <summary>
     /// Initialize the level select UI with correct completion
     /// </summary>
     void Start()
     {
+        if (start)
+        { 
+            start = false;
+        }
+        else
+        {
+            Camera.main.GetComponent<AudioListener>().enabled = false;
+        }
         charToTrimEnd = ".unity".ToCharArray();
         contentHolder = GetComponentInChildren<GridLayoutGroup>().gameObject;
         levels = Resources.LoadAll("Levels").ToList();
