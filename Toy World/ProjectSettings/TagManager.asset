@@ -8,6 +8,7 @@ TagManager:
   - CoreBlock
   - Part
   - Missile
+  - DeliveryPort
   layers:
   - Default
   - TransparentFX
