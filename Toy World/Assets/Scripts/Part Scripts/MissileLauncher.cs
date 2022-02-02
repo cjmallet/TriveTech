@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The missile launcher rotates and aims using the vehicle camera during play mode and launches missiles to destroy enemies and destructable objects.
+/// By Ruben de Graaf.
+/// </summary>
 public class MissileLauncher : OffensivePart
 {
     public LayerMask ignoreLayers;
@@ -25,7 +29,7 @@ public class MissileLauncher : OffensivePart
         _missilePrefab = Resources.Load("Missile") as GameObject;
     }
 
-    // Update is called once per frame
+    
     void FixedUpdate()
     {
         if (GameManager.Instance.stateManager.CurrentGameState == GameStateManager.GameState.Playing)
@@ -47,12 +51,19 @@ public class MissileLauncher : OffensivePart
         }
     }
 
+    /// <summary>
+    /// Overrides the AttackAction from base class OffensivePart to call 
+    /// LaunchMissile() when the attack button is pressed and it's not _onCooldown.
+    /// </summary>
     public override void AttackAction()
     {
         if (!_onCooldown)
             LaunchMissile();
     }
 
+    /// <summary>
+    /// Instantiates the missile prefab and sets it's target to a raycast point, based on camera direction. Then resets the cooldown.
+    /// </summary>
     private void LaunchMissile()
     {
         //spawn missile
@@ -74,6 +85,10 @@ public class MissileLauncher : OffensivePart
         SetCooldown(true);
     }
 
+    /// <summary>
+    /// Used to set the cooldown on or off. This shows or hides the missile model and the laser pointer on the launcher as an indicator.
+    /// </summary>
+    /// <param name="state">Pass true if the missile fired and the launcher is on cooldown. False if it's ready to fire again.</param>
     void SetCooldown(bool state)
     {
         if (state)
@@ -92,6 +107,11 @@ public class MissileLauncher : OffensivePart
         }
     }
 
+    /// <summary>
+    /// This draws a line using the attached LineRenderer component between the attached _laserStart transform and whatever the raycast hits.
+    /// The raycast is the same as in the LaunchMissile() method (I should've made it a seperate method, welp). 
+    /// If the raycast doesn't hit anything, the laser just aims straight forward over the Z axis.
+    /// </summary>
     void DrawLaser()
     {
         _lineRnd.SetPosition(0, _laserStart.position);

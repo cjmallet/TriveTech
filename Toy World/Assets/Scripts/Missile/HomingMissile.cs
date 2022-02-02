@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Homing missile by Ruben de Graaf
+/// Pass a target vector and it will home in on this point using rigid body physics.
+/// Used by the MissileLauncher class.
+/// By Ruben de Graaf
 /// </summary>
 public class HomingMissile : MonoBehaviour
 {
@@ -29,17 +31,10 @@ public class HomingMissile : MonoBehaviour
     [SerializeField] private float _rotationForce;//the speed at which it can change direction
     [SerializeField] private float _maxAngularVelocity;
     [SerializeField] private float _angularDrag;
-
-    [Header("Perlin randomness")]
     
-    private Vector3 targetPos;
     private bool tracking;
     private bool collisionEnabled = false;
 
-    private GameObject audioSourceMissileTravel;
-
-
-    // Use this for initialization
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -49,7 +44,6 @@ public class HomingMissile : MonoBehaviour
         tracking = true;
     }
 
-    // Update is called once per frame
     private void FixedUpdate()
     {
         LifeTimer();
@@ -75,11 +69,18 @@ public class HomingMissile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Explodes on contact with another collider
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         FuckingExplode();
     }
 
+    /// <summary>
+    /// When a target is given, use the set variables to home in towards the target using rigidBody physics
+    /// </summary>
     private void HomeInOnTarget()
     {
         //add velocity. rockets go woosh
@@ -99,11 +100,19 @@ public class HomingMissile : MonoBehaviour
             * _rotationForce
             * 0.1f);
     }
+
+    /// <summary>
+    /// When no target is given or target is lost, just fly straight ahead.
+    /// </summary>
     private void JustGoStraight()
     {
         _rb.velocity = Vector3.ClampMagnitude(_rb.velocity + transform.up * _force, _maxSpeed);
     }
 
+    /// <summary>
+    /// Alternative, currently unused behaviour, where the missile will stop it's engine, 
+    /// lower it's remaining lifetime and fall to the floor when it's target is lost. 
+    /// </summary>
     private void StopTracking()
     {
         tracking = false;
@@ -115,7 +124,8 @@ public class HomingMissile : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if there's a bit of distance between the launcher and the missile before turning the collider on to prevent it from colliding with the launcher itself and exploding right away.
+    /// Checks if there's a bit of distance between the launcher and the missile before turning the collider on 
+    /// to prevent it from colliding with the launcher itself and exploding right away.
     /// </summary>
     private void LauncherDistanceCheck()
     {
@@ -126,6 +136,9 @@ public class HomingMissile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tracks it's current _timeAlive and maxLifespan. Explode if it's lifetime expires.
+    /// </summary>
     private void LifeTimer()
     {
         _timeAlive += Time.deltaTime;
@@ -133,6 +146,10 @@ public class HomingMissile : MonoBehaviour
             FuckingExplode();
     }
 
+    /// <summary>
+    /// Detaches the _smokeTrail object from the missile and adds a self destruct timer to it. 
+    /// This is so that the smoke trail can dissipate normally after the missile explodes and is destroyed.
+    /// </summary>
     private void DetachSmokeTrail()
     {
         if(_smokeTrail)
@@ -143,6 +160,10 @@ public class HomingMissile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Explode the missile. This enables the explosion effect, detaches the smoke, 
+    /// calls a sound and destroys nearby entities that are affected by explosions.
+    /// </summary>
     public void FuckingExplode()
     {
         _explosionFX.AddComponent<TimedSelfDestruct>().maxLifeSpan = 5f;
@@ -168,6 +189,9 @@ public class HomingMissile : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Plays the rocket engine sound from the audiosource component on this.gameObject.
+    /// </summary>
     private void HandleMissileSound()
     {
         if (!gameObject.GetComponent<AudioSource>().isPlaying)
@@ -177,6 +201,9 @@ public class HomingMissile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Explosion sound from the AudioManager that plays when, you guessed it, the missile explodes.
+    /// </summary>
     private void HandleMissileExplodingSound()
     {
         AudioManager.Instance.Stop(gameObject.GetComponent<AudioSource>());
@@ -188,10 +215,15 @@ public class HomingMissile : MonoBehaviour
         AudioManager.Instance.Play(AudioManager.clips.MissileExplosion, audioSourceMissileExplode.GetComponent<AudioSource>());
     }
 
+    /// <summary>
+    /// Used to visualize missile targets. Uncomment when this becomes relevant for debugging.
+    /// </summary>
     private void OnDrawGizmos()
     {
-        //visualize tracking target
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawSphere(targetPos,  0.45f);
+        /*
+        visualize tracking target
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(target,  0.45f);
+        */
     }
 }
